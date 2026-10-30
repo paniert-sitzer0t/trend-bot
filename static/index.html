@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trend-Bot</title>
+<style>
+:root{--bg:#0f1318;--card:#181e26;--line:#26303b;--tx:#e6edf3;--mut:#8b98a5;--g:#2ecc71;--r:#ff5c5c;--y:#f1c40f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px system-ui,sans-serif;padding:16px}
+h1{font-size:18px;margin:0 0 12px}h2{font-size:14px;margin:0 0 8px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px;overflow-x:auto}
+.k{color:var(--mut);font-size:12px}.v{font-size:20px;font-weight:600}
+.g{color:var(--g)}.r{color:var(--r)}.y{color:var(--y)}
+table{width:100%;border-collapse:collapse;white-space:nowrap}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}th{color:var(--mut);font-weight:500}
+button{background:#263241;color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:7px 12px;cursor:pointer}
+button:hover{background:#2f3d50}button.d{background:#5a2323;border-color:#7a3030}
+.badge{padding:2px 8px;border-radius:99px;font-size:12px;background:#263241}
+.log{font:12px monospace;color:var(--mut);max-height:200px;overflow:auto}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:3px;background:#3a4656}.dot.on{background:var(--g)}
+</style>
+</head>
+<body>
+<h1>Trend-Bot <span id="mode" class="badge y">PAPER</span> <span id="stat" class="badge"></span></h1>
+<div class="bar">
+  <button id="pbtn" onclick="togglePause()">Pause</button>
+  <button onclick="act('/api/rotate','Rotation jetzt ausführen?')">Rotation jetzt</button>
+  <button class="d" onclick="act('/api/close_all','Wirklich ALLE Positionen schließen?')">Alle schließen</button>
+</div>
+<div class="grid" id="kpi"></div>
+<div class="card"><h2>Equity-Verlauf</h2><svg id="chart" viewBox="0 0 600 120" width="100%" height="120" preserveAspectRatio="none"></svg></div>
+<div class="card"><h2>Offene Positionen</h2><table id="open"></table></div>
+<div class="card"><h2>Ranking der letzten Rotation</h2>
+<div class="k">Sortiert nach Stärke der 24h-Bewegung. Signale: 24h, 7 Tage, 30 Tage. Mindestens 2 von 3 bestimmen Long oder Short.</div><table id="rank"></table></div>
+<div class="card"><h2>Letzte Trades</h2><table id="closed"></table></div>
+<div class="card"><h2>Log</h2><div class="log" id="log"></div></div>
+<script>
+var TOKEN=new URLSearchParams(location.search).get('t')||localStorage.getItem('tok')||'';
+try{localStorage.setItem('tok',TOKEN)}catch(e){}
+var S=null;
+function f(x,d){if(d===undefined)d=2;return Number(x).toLocaleString('de-AT',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function c(x){return x>=0?'g':'r'}
+function sg(x,d){return (x>=0?'+':'')+f(x,d)}
+function $(id){return document.getElementById(id)}
+async function api(path,method){
+  var r=await fetch(path,{method:method||'GET',headers:{'X-Token':TOKEN}});
+  if(r.status==401){TOKEN=prompt('Dashboard-Token:')||'';try{localStorage.setItem('tok',TOKEN)}catch(e){};return null}
+  return r.json();
+}
+async function act(p,q){if(q&&!confirm(q))return;await api(p,'POST');load()}
+async function togglePause(){await api('/api/pause/'+(S.paused?0:1),'POST');load()}
+function fmtT(ts){return new Date(ts*1000).toLocaleString('de-AT',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}
+function side(s){return s=='long'?'<span class="g">LONG</span>':'<span class="r">SHORT</span>'}
+async function load(){
+  var s=await api('/api/state');if(!s)return;S=s;
+  $('stat').textContent=s.paused?'pausiert':'läuft';
+  $('pbtn').textContent=s.paused?'Fortsetzen':'Pause';
+  var left=Math.max(0,s.next_rotation-s.now),hh=Math.floor(left/3600),mm=Math.floor((left%3600)/60);
+  var k=[['Equity',f(s.equity)+' USDT',''],['Gesamt P&L',sg(s.total_pnl)+' USDT',c(s.total_pnl)],
+   ['Gesamt %',sg(s.total_pnl/s.start*100)+' %',c(s.total_pnl)],['Freies Cash',f(s.cash)+' USDT',''],
+   ['Nächste Rotation','in '+hh+' h '+mm+' min',''],['Trades',s.trades+' ('+f(s.winrate,0)+' % Treffer)','']];
+  $('kpi').innerHTML=k.map(function(x){return '<div class="card" style="margin:0"><div class="k">'+x[0]+'</div><div class="v '+x[2]+'">'+x[1]+'</div></div>'}).join('');
+  var h='<tr><th>Symbol</th><th>Seite</th><th>Einsatz</th><th>Einstieg</th><th>Kurs</th><th>P&L %</th><th>P&L USDT</th><th></th></tr>';
+  if(s.open.length){h+=s.open.map(function(p){return '<tr><td>'+p.symbol+'</td><td>'+side(p.side)+'</td><td>'+f(p.notional)+'</td><td>'+f(p.entry,4)+'</td><td>'+f(p.price,4)+'</td><td class="'+c(p.upct)+'">'+sg(p.upct)+' %</td><td class="'+c(p.upnl)+'">'+sg(p.upnl)+'</td><td><button class="d" onclick="act(\'/api/close/'+p.id+'\',\''+p.symbol+' schließen?\')">Schließen</button></td></tr>'}).join('')}
+  else{h+='<tr><td colspan=8 class="k">Keine offenen Positionen</td></tr>'}
+  $('open').innerHTML=h;
+  var w='<tr><th>Symbol</th><th>Kurs</th><th>24h</th><th>7d</th><th>30d</th><th>Signal</th><th>Auswahl</th></tr>';
+  w+=s.ranking.map(function(x){
+    return '<tr><td>'+x.symbol+'</td><td>'+f(x.price,4)+'</td><td class="'+c(x.c24)+'">'+sg(x.c24*100,1)+' %</td><td class="'+c(x.c7)+'">'+sg(x.c7*100,1)+' %</td><td class="'+c(x.c30)+'">'+sg(x.c30*100,1)+' %</td><td>'+side(x.side)+' '+x.agree+'/3</td><td>'+(x.selected?'<span class="g">gewählt</span>':'')+'</td></tr>'}).join('');
+  if(!s.ranking.length)w+='<tr><td colspan=7 class="k">Noch keine Rotation seit dem Start</td></tr>';
+  $('rank').innerHTML=w;
+  var cl='<tr><th>Zeit</th><th>Symbol</th><th>Seite</th><th>Ein</th><th>Aus</th><th>P&L</th><th>Grund</th></tr>';
+  cl+=s.closed.map(function(p){return '<tr><td>'+fmtT(p.closed)+'</td><td>'+p.symbol+'</td><td>'+side(p.side)+'</td><td>'+f(p.entry,4)+'</td><td>'+f(p.exit,4)+'</td><td class="'+c(p.pnl)+'">'+sg(p.pnl)+'</td><td>'+p.reason+'</td></tr>'}).join('');
+  $('closed').innerHTML=cl;
+  $('log').innerHTML=s.logs.join('<br>');
+  var cv=s.curve;
+  if(cv.length>1){
+    var ys=cv.map(function(x){return x[1]}),mn=Math.min.apply(null,ys),mx=Math.max.apply(null,ys),sp=(mx-mn)||1;
+    var pts=cv.map(function(x,i){return ((i/(cv.length-1))*600)+','+(115-((x[1]-mn)/sp)*110)}).join(' ');
+    $('chart').innerHTML='<polyline fill="none" stroke="#2ecc71" stroke-width="2" points="'+pts+'"/>';
+  }
+}
+load();setInterval(load,3000);
+</script>
+</body>
+</html>

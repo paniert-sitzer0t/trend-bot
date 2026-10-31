@@ -79,7 +79,7 @@ def load_all(syms, days, progress=None, path="candles.db", pause=0.12):
         except Exception:
             if sym == "BTCUSDT":
                 real = False
-        c, h, l = (array.array("d", [NAN]) * H for _ in range(3))
+        c, h, l = (array.array("f", [NAN]) * H for _ in range(3))
         got = 0
         for t, cc, hi, lo in db.execute("SELECT t,c,h,l FROM k WHERE s=? AND t>=? AND t<? ORDER BY t", (sym, start_ms, end_ms)):
             j = (t - start_ms) // HOUR_MS
@@ -96,23 +96,10 @@ def load_all(syms, days, progress=None, path="candles.db", pause=0.12):
     return dict(H=H, start=start_day, hc=hc, hh=hh, hl=hl, fund=fund, real=real and bool(fund))
 
 
-def derive_daily(b):
-    """Tagesreihen (Liste mit None) aus den Stundenreihen."""
+def derive_funding(b):
+    """Tägliche Summe der Funding-Raten je Symbol (Liste mit None, wo es keine Daten gibt)."""
     n = b["H"] // 24
-    closes, HI, LO, dfund = {}, {}, {}, {}
-    for s, c in b["hc"].items():
-        h, l = b["hh"][s], b["hl"][s]
-        cc, hi, lo = [None] * n, [None] * n, [None] * n
-        for d in range(n):
-            a = 24 * d
-            x = c[a + 23]
-            if x == x:
-                cc[d] = x
-            seg = [v for v in h[a:a + 24] if v == v]
-            if seg:
-                hi[d] = max(seg)
-                lo[d] = min(v for v in l[a:a + 24] if v == v)
-        closes[s], HI[s], LO[s] = cc, hi, lo
+    dfund = {}
     for s, fr in b["fund"].items():
         out = [None] * n
         for j, r in fr.items():
@@ -120,10 +107,10 @@ def derive_daily(b):
             if 0 <= d < n:
                 out[d] = (out[d] or 0.0) + r
         dfund[s] = out
-    return n, closes, HI, LO, dfund
+    return dfund
 
 
-def sim_hourly(strat, b, closes, ctx, first=31):
+def sim_hourly(strat, b, closes, ctx, first=31, members=None):
     """Stundengenaue Simulation für Strategien mit Hebel, Trailing-Stop oder 6-h-Rotation.
     Gibt (Kurve je Tag, Tagesindizes, Konto, Anzahl Anpassungen, Liquidationsdatum) zurück."""
     hc, hh, hl, fund, H = b["hc"], b["hh"], b["hl"], b["fund"], b["H"]
@@ -137,6 +124,16 @@ def sim_hourly(strat, b, closes, ctx, first=31):
     mult = S.LEV.get(strat, 1)
     trail = S.TRAIL[strat][1] if strat in S.TRAIL else None
     last = {}
+    views = {}
+
+    def view(d):
+        if members is None:
+            return closes
+        v = views.get(d)
+        if v is None:
+            v = views[d] = {s: closes[s] for s in members[d] if s in closes}
+        return v
+
     curve, dayidx, rebs, liq = [], [], 0, None
     last_d = -10 ** 9
     h = 24 * first + 23
@@ -151,12 +148,14 @@ def sim_hourly(strat, b, closes, ctx, first=31):
     while h < H - 1:
         d = h // 24
         if not acc.dead and (isR or d - last_d >= S.PERIOD[strat]):
-            px = {s: c[h] for s, c in hc.items() if c[h] == c[h]}
+            mem = members[d] if members is not None else None
+            px = {s: hc[s][h] for s in (hc if mem is None else (set(mem) | set(acc.pos))) if s in hc and hc[s][h] == hc[s][h]}
             if isR:
-                rets = {s: p / hc[s][h - 24] - 1 for s, p in px.items() if hc[s][h - 24] == hc[s][h - 24] and hc[s][h - 24] > 0}
+                rets = {s: p / hc[s][h - 24] - 1 for s, p in px.items()
+                        if (mem is None or s in mem) and hc[s][h - 24] == hc[s][h - 24] and hc[s][h - 24] > 0}
                 w = {s: v * mult for s, v in S.rank_weights(base, rets).items()}
             else:
-                w = S.sized(strat, acc, px, closes, d, ctx)
+                w = S.sized(strat, acc, px, view(d), d, ctx)
             for s, v in px.items():
                 last[s] = v
             acc.rebalance(px, w)

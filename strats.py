@@ -71,6 +71,7 @@ for _k, (_b, _p, _l) in TRAIL.items():
         LEV[_k] = _l
 LEV.update({"RG1_2": 2, "RG2_3": 3})
 BASEOF.update({"RG1_2": "RG1", "RG2_3": "RG2"})
+EXCLUDE = {"SOXLBUSDT", "XAUTUSDT"}   # Tokenisierte Börsen- und Rohstoffprodukte, keine normalen Coins
 MM = 0.005              # Erhaltungsmarge 0,5 % des Positionswerts: darunter wird liquidiert
 LEV_FUND = 0.0003       # Funding und Zinsen auf den gesamten Positionswert bei Hebel, pro Tag
 MEMES = ["DOGEUSDT", "SHIBUSDT", "PEPEUSDT", "FLOKIUSDT", "BONKUSDT", "WIFUSDT", "BOMEUSDT", "MEMEUSDT", "TURBOUSDT",
@@ -108,7 +109,7 @@ def universe():
         if not s.endswith("USDT"):
             continue
         base = s[:-4]
-        if base in STABLE or (len(base) > 4 and base.endswith(("UP", "DOWN", "BULL", "BEAR"))):
+        if s in EXCLUDE or base in STABLE or (len(base) > 4 and base.endswith(("UP", "DOWN", "BULL", "BEAR"))):
             continue
         out.append((float(x["quoteVolume"]), s))
     out.sort(reverse=True)
@@ -444,41 +445,99 @@ def stats(curve, days_per_year=365):
                 maxdd=mdd * 100, sharpe=mean / sd * math.sqrt(days_per_year))
 
 
+def pool(min_vol=3e5, cap=450):
+    """Alle USDT-Paare auf Binance (ohne Stablecoins, gehebelte und Sonderprodukte) mit Mindestumsatz heute."""
+    out = []
+    for x in api("/api/v3/ticker/24hr"):
+        sy = x["symbol"]
+        if not sy.endswith("USDT") or sy in EXCLUDE:
+            continue
+        base = sy[:-4]
+        if base in STABLE or (len(base) > 4 and base.endswith(("UP", "DOWN", "BULL", "BEAR"))):
+            continue
+        v = float(x["quoteVolume"])
+        if v >= min_vol:
+            out.append((v, sy))
+    out.sort(reverse=True)
+    syms = [sy for _, sy in out[:cap]]
+    if "BTCUSDT" not in syms:
+        syms.append("BTCUSDT")
+    return syms
+
+
+def rolling_members(closes, vol, n, top=NUM, window=30):
+    """Je Tag die `top` Coins mit dem höchsten Umsatz der letzten `window` Tage (nur damals bekannte Daten)."""
+    import array
+    pre, cnt = {}, {}
+    for sy in closes:
+        p, k = array.array("d", [0.0]) * (n + 1), array.array("i", [0]) * (n + 1)
+        v = vol.get(sy) or []
+        for d in range(n):
+            x = v[d] if d < len(v) else None
+            p[d + 1] = p[d] + (x or 0.0)
+            k[d + 1] = k[d] + (1 if x else 0)
+        pre[sy], cnt[sy] = p, k
+    members = [frozenset(["BTCUSDT"])] * n
+    for d in range(window, n):
+        sc = []
+        for sy, p in pre.items():
+            k = cnt[sy][d + 1] - cnt[sy][d + 1 - window]
+            if k >= 20 and closes[sy][d] is not None:
+                sc.append((p[d + 1] - p[d + 1 - window], sy))
+        sc.sort(reverse=True)
+        m = {sy for _, sy in sc[:top]}
+        m.add("BTCUSDT")
+        members[d] = frozenset(m)
+    return members
+
+
 def run_backtest(days=2700, progress=None, data=None, hourly=None):
-    dfund, note_extra = None, ""
+    dfund, note_extra, members = None, "", None
     if data is None:
-        syms = universe()
+        syms = pool()
+        if progress:
+            progress(f"Tageskerzen für {len(syms)} Coins ...")
+        n0, closes0, start0, ext = load_history(syms, days)
+        members = rolling_members(closes0, ext["v"], n0)
+        if progress:
+            progress("Lade Meme-Coins ...")
+        mdata = load_history(MEMES, days)
+        hi = dict(ext["h"]); hi.update(mdata[3]["h"])
+        lo = dict(ext["l"]); lo.update(mdata[3]["l"])
+        data = (n0, closes0, start0, None, mdata[1], mdata[3]["v"], hi, lo)
+        hsyms = sorted(set().union(*members[31:]) & set(closes0)) if n0 > 31 else ["BTCUSDT"]
         try:
             import hbt
-            hourly = hbt.load_all(syms, days, progress)
+            hourly = hbt.load_all(hsyms, days, progress)
+            if hourly["start"] != start0:
+                raise ValueError("Zeitraum passt nicht")
+            dfund = hbt.derive_funding(hourly)
         except Exception as e:
-            hourly = None
+            hourly, dfund = None, None
             note_extra = f" Stundendaten nicht verfügbar ({e}), Tagesdaten verwendet."
-            days = min(days, 1900)
-        if hourly is not None:
-            n, dcl, dhi, dlo, dfund = hbt.derive_daily(hourly)
-            if progress:
-                progress("Lade Meme-Coins ...")
-            mdata = load_history(MEMES, days)
-            hi = dict(dhi); hi.update(mdata[3]["h"])
-            lo = dict(dlo); lo.update(mdata[3]["l"])
-            data = (n, dcl, hourly["start"], None, mdata[1], mdata[3]["v"], hi, lo)
-        else:
-            if progress:
-                progress(f"Lade {len(syms)} Coins, {days} Tage ...")
-            data = load_history(syms, days)
-            if progress:
-                progress("Lade Meme-Coins ...")
-            mdata = load_history(MEMES, days)
-            hi = dict(data[3]["h"]); hi.update(mdata[3]["h"])
-            lo = dict(data[3]["l"]); lo.update(mdata[3]["l"])
-            data = data[:3] + (data[3], mdata[1], mdata[3]["v"], hi, lo)
     n, closes, start, _v, memes, memv, HI, LO = (data + (None, None))[:8] if len(data) == 6 else data
     ctx = (memes, memv)
     allp = dict(closes)
     allp.update(memes)
     first = 31
     res = {}
+    views = {}
+
+    def view(i):
+        if members is None:
+            return closes
+        v = views.get(i)
+        if v is None:
+            v = views[i] = {s: closes[s] for s in members[i] if s in closes}
+        return v
+
+    def lastp(s, i):
+        c = allp[s]
+        for j in range(i, max(-1, i - 30), -1):
+            if c[j] is not None:
+                return c[j]
+        return 0.0
+
     for strat in NAMES:
         acc, curve, dayidx, rebs = Account(100.0), [], [], 0
         acc.lev = strat in LEV
@@ -487,15 +546,24 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
         use_h = hourly is not None and (strat in LEV or strat in TRAIL or strat in RKEYS)
         if use_h:
             import hbt
-            curve, dayidx, acc, rebs, liq = hbt.sim_hourly(strat, hourly, closes, ctx, first)
+            curve, dayidx, acc, rebs, liq = hbt.sim_hourly(strat, hourly, closes, ctx, first, members)
         for i in range(first, n - 1 if not use_h else first):
-            px_i = {s: c[i] for s, c in allp.items() if c[i] is not None}
+            if members is None:
+                px_i = {s: c[i] for s, c in allp.items() if c[i] is not None}
+            else:
+                px_i = {s: closes[s][i] for s in members[i] if s in closes and closes[s][i] is not None}
+                for s, c in memes.items():
+                    if c[i] is not None:
+                        px_i[s] = c[i]
+                for s in acc.pos:
+                    if s not in px_i:
+                        px_i[s] = lastp(s, i)
             if not acc.dead and i - last_reb >= PERIOD[strat]:
-                w = sized(strat, acc, px_i, closes, i, ctx)
+                w = sized(strat, acc, px_i, view(i), i, ctx)
                 acc.rebalance(px_i, w)
                 rebs += 1
                 last_reb = i
-            px_n = {s: (c[i + 1] if c[i + 1] is not None else px_i.get(s, 0)) for s, c in allp.items()}
+            px_n = {s: (allp[s][i + 1] if allp[s][i + 1] is not None else px_i.get(s) or lastp(s, i)) for s in acc.pos}
             if not acc.dead and acc.pos and strat in TRAIL:
                 hh = {sy: ((HI or {}).get(sy) or [None] * (i + 2))[i + 1] or px_n.get(sy) for sy in acc.pos}
                 ll = {sy: ((LO or {}).get(sy) or [None] * (i + 2))[i + 1] or px_n.get(sy) for sy in acc.pos}
@@ -536,14 +604,14 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
         st.update(years=out, costs=acc.costs, rebalances=rebs, final=curve[-1] if curve else 100.0, curve=pts,
                   leverage=LEV.get(strat, 1), stops=acc.stops, liquidated=liq, best_year=peak_year)
         res[strat] = dict(name=NAMES[strat], **st)
-    return dict(ts=time.time(), days=n, coins=len(closes), start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
+    return dict(ts=time.time(), days=n, coins=len(closes), universe=("mitwandernd: je Tag Top %d nach 30-Tage-Umsatz" % NUM) if members else "heutige Top %d" % NUM, start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
                 results=res,
                 hourly=bool(hourly), funding_real=bool(dfund),
                 note=("Stundenkerzen: Korb-Strategien rotieren alle 6 h, Trailing-Stops und Liquidationen werden stundengenau geprüft. "
                       if hourly is not None else "Nur Tagesdaten: Korb-Strategien werden täglich statt alle 6 h gerechnet. ")
                      + ("Funding mit echten Binance-Raten (wo vorhanden, sonst 0,03 % pro Tag). " if dfund else "Funding pauschal 0,03 % pro Tag. ")
-                     + "Universum = heutige Top-Coins nach Umsatz (Survivorship-Bias begünstigt Long-Strategien). "
-                     "Keine Parameter wurden angepasst. Kosten 0,13 % pro Seite." + note_extra)
+                     + ("Universum: je Tag die 40 umsatzstärksten Coins der letzten 30 Tage aus allen heute noch gelisteten Binance-USDT-Paaren (Delistete fehlen, Rest-Survivorship-Bias). " if members else "Universum = heutige Top-Coins nach Umsatz (Survivorship-Bias begünstigt Long-Strategien). ")
+                     + "Keine Parameter wurden angepasst. Kosten 0,13 % pro Seite." + note_extra)
 
 
 def run_and_save(path="backtest.json", progress=None):

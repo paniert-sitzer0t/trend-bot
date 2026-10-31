@@ -836,9 +836,14 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
     import hbt
     if data is None:
         syms = pool()
-        if progress:
-            progress(f"Tageskerzen für {len(syms)} Coins ...")
-        n0, closes0, start0, ext = load_history(syms, days)
+        closes0, ext = {}, {"v": {}, "h": {}, "l": {}}
+        for c0 in range(0, len(syms), 25):
+            if progress:
+                progress(f"Tageskerzen {min(c0 + 25, len(syms))}/{len(syms)}")
+            n0, cl, start0, ex = load_history(syms[c0:c0 + 25], days)
+            closes0.update(cl)
+            for key in ("v", "h", "l"):
+                ext[key].update(ex[key])
         data_ext = True
         members = rolling_members(closes0, ext["v"], n0)
         if progress:
@@ -885,7 +890,9 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
                 return c[j]
         return 0.0
 
-    for strat in NAMES:
+    for sn, strat in enumerate(NAMES):
+        if progress:
+            progress(f"Rechne {sn + 1}/{len(NAMES)}: {strat}")
         acc, curve, dayidx, rebs = Account(100.0), [], [], 0
         acc.lev = strat in LEV
         liq = None

@@ -285,9 +285,22 @@ function sorted(){
   rs.sort(function(a, z){ var u = SORT == 'bt' ? a.bt : a.pct, v = SORT == 'bt' ? z.bt : z.pct; return (v === null ? -1e18 : v) - (u === null ? -1e18 : u); });
   return rs;
 }
+function btBanner(){
+  if (!CMP || !CMP.running) return '';
+  var e = CMP.eta || {}, pct = e.pct || 0;
+  return '<div class="card" style="border-color:var(--acc)"><div style="display:flex;justify-content:space-between;gap:8px;font-weight:700"><span>Backtest läuft</span><span class="num">'+pct+' %</span></div>'
+    + '<div style="height:8px;border-radius:9px;background:var(--s2);margin:10px 0;overflow:hidden"><div style="height:100%;width:'+Math.max(2, pct)+'%;background:var(--acc);transition:width .5s"></div></div>'
+    + '<div class="mut">'+(e.eta ? 'Noch ca. '+e.eta+' Min, läuft seit '+(e.elapsed || 0)+' Min.' : 'Wird gestartet ...')+' '+esc(CMP.progress || '')+'</div></div>';
+}
+function startBt(){
+  if (CMP && CMP.running) return;
+  if (!confirm('Backtest neu starten? Das dauert einige Minuten, das Ranking bleibt währenddessen sichtbar.')) return;
+  api('/api/backtest/run', 'POST').then(function(){ if (CMP) { CMP.running = true; CMP.eta = null; CMP.progress = 'Startet ...'; render(); } setTimeout(loadCmp, 1500); });
+}
 function renderHome(){
   var h = '';
   if (!CMP) { $('v-home').innerHTML = '<div class="empty">Daten werden geladen</div>'; return; }
+  h += btBanner();
   var rs = sorted();
   if (!rs.length) { rs = rows(); }
   var lead = rs[0], val = SORT == 'bt' ? lead.bt : lead.pct;
@@ -313,7 +326,7 @@ function renderHome(){
   var bt = CMP.backtest;
   h += '<div class="card"><details><summary>So ist gerechnet</summary><p>'+(CMP.running ? 'Der Backtest läuft gerade. '+esc(CMP.progress || '') : bt && bt.error ? 'Backtest-Fehler: '+esc(bt.error) : bt ? esc(bt.coins+' Coins, '+bt.days+' Tage seit '+bt.start+'. '+bt.note) : 'Backtest noch nicht fertig.')+'</p>';
   h += '<p>Der Paper-Test läuft in Echtzeit mit Spielgeld. Der Backtest rechnet dieselben Regeln auf alten Kursen. Short-Positionen sind nur simuliert, weil Pionex sie per API nicht anbietet.</p></details></div>';
-  h += '<button class="btn" onclick="act(\'/api/backtest/run\',\'Backtest neu starten? Das dauert einige Minuten.\')">Backtest neu starten</button>';
+  h += '<button class="btn" onclick="startBt()"'+(CMP.running ? ' disabled style="opacity:.6"' : '')+'>'+(CMP.running ? 'Backtest läuft, noch ca. '+((CMP.eta || {}).eta || '?')+' Min' : 'Backtest neu starten')+'</button>';
   $('v-home').innerHTML = h;
 }
 
@@ -432,7 +445,7 @@ function render(){ renderHome(); renderStrat(); renderMain(); renderLog(); show(
 async function loadState(){ var s = await api('/api/state'); if (!s) return; S = s; $('stat').textContent = s.paused ? 'pausiert' : 'läuft'; $('dot').classList.toggle('off', !!s.paused); render(); }
 async function loadCmp(){ var c = await api('/api/compare'); if (!c) return; CMP = c; render(); }
 function loadAll(){ loadState(); loadCmp(); }
-loadAll(); setInterval(loadState, 5000); setInterval(loadCmp, 20000);
+loadAll(); setInterval(loadState, 5000); setInterval(loadCmp, 20000); setInterval(function(){ if (CMP && CMP.running) loadCmp(); }, 5000);
 </script>
 </body>
 </html>

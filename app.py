@@ -9,19 +9,57 @@ fwd = strats.Forward(start=bot.START_BALANCE)
 BT = {"running": False, "progress": ""}
 
 
+def _frac(m):
+    """Fortschritt 0..1 aus der Statusmeldung."""
+    import re
+    x = re.search(r"(\d+)/(\d+)", m or "")
+    p = int(x.group(1)) / max(int(x.group(2)), 1) if x else 0.0
+    if m.startswith("Tageskerzen"):
+        return 0.02 + 0.18 * p
+    if m.startswith("Lade Meme"):
+        return 0.2
+    if m.startswith("Stundenkerzen"):
+        return 0.22 + 0.5 * p
+    if m.startswith("Rechne"):
+        return 0.72 + 0.28 * p
+    return 0.01
+
+
 def run_bt():
     if BT["running"]:
         return False
-    BT["running"] = True
+    BT.update(running=True, started=time.time(), frac=0.0, progress="Startet ...")
+
+    def prog(m):
+        BT.update(progress=m, frac=max(BT.get("frac", 0.0), _frac(m)))
 
     def job():
+        t0 = time.time()
         try:
-            strats.run_and_save("backtest.json", progress=lambda m: BT.update(progress=m))
+            r = strats.run_and_save("backtest.json", progress=prog)
+            r["duration"] = time.time() - t0
+            with open("backtest.json", "w") as f:
+                json.dump(r, f)
         finally:
-            BT["running"] = False
-            BT["progress"] = ""
+            BT.update(running=False, progress="", frac=0.0)
     threading.Thread(target=job, daemon=True).start()
     return True
+
+
+def bt_eta():
+    """Geschätzte Restdauer in Minuten (aus Fortschritt und Dauer des letzten Laufs)."""
+    if not BT["running"]:
+        return None
+    el = time.time() - BT.get("started", time.time())
+    fr = BT.get("frac", 0.0)
+    last = (load_bt() or {}).get("duration")
+    if fr >= 0.25:
+        total = el / fr
+    elif last:
+        total = max(last, el / max(fr, 0.01) if fr > 0.05 else last)
+    else:
+        total = 45 * 60
+    return dict(eta=max(1, round((total - el) / 60)), elapsed=round(el / 60), pct=round(fr * 100))
 
 
 def load_bt():
@@ -82,7 +120,7 @@ def compare(x_token: str = Header("")):
     orig = dict(key="ORIG", name="Original: Top-Mover mit 8-h-Rotation (Hauptbot)", curve=o["curve"], equity=o["equity"],
                 pnl=o["total_pnl"], pct=o["total_pnl"] / o["start"] * 100, rebalances=o["trades"], costs=0,
                 positions=[dict(symbol=p["symbol"], side=p["side"], value=p["notional"]) for p in o["open"]])
-    return {"forward": fwd.snapshot() + [orig], "backtest": load_bt(), "running": BT["running"], "progress": BT["progress"],
+    return {"forward": fwd.snapshot() + [orig], "backtest": load_bt(), "running": BT["running"], "progress": BT["progress"], "eta": bt_eta(),
             "start": bot.START_BALANCE}
 
 

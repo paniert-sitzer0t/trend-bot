@@ -380,7 +380,26 @@ function renderMain(){
 async function togglePause(){ await api('/api/pause/'+(S.paused ? 0 : 1), 'POST'); loadAll(); }
 
 function renderLog(){
-  $('v-log').innerHTML = '<h2>Protokoll</h2><div class="card"><div class="log">'+(S ? S.logs.map(esc).join('<br>') : 'Wird geladen')+'</div></div>';
+  var v = $('v-log');
+  if (!$('logbody')) {
+    v.innerHTML = '<h2>Protokoll</h2><div class="card" id="ghc"><div style="font-weight:700">Claude-Zugang</div>'
+      + '<div class="mut" style="margin:4px 0 10px">Der Server legt alle 30 Minuten eine Zusammenfassung im GitHub-Branch „status“ ab, damit Claude Ranking und Backtest lesen kann. Dafür hier den GitHub-Token einfügen (nur Schreibrecht für dieses Repo).</div>'
+      + '<input id="ghi" type="password" autocomplete="off" placeholder="GitHub-Token einfügen" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--s1);color:inherit;font-size:16px">'
+      + '<button class="chip" style="margin-top:10px" onclick="saveGh()">Speichern und prüfen</button><div id="ghm" class="mut" style="margin-top:8px"></div></div>'
+      + '<div class="card"><div class="log" id="logbody"></div></div>';
+    api('/api/status/token').then(function(r){ if (r && r.set) $('ghm').textContent = 'Zugang ist eingerichtet.'; });
+  }
+  $('logbody').innerHTML = S ? S.logs.map(esc).join('<br>') : 'Wird geladen';
+}
+async function saveGh(){
+  var t = $('ghi').value.trim(); if (!t) return;
+  $('ghm').textContent = 'Prüfe ...';
+  try {
+    var r = await fetch('/api/status/token', {method: 'POST', headers: {'X-Token': TOKEN, 'Content-Type': 'application/json'}, body: JSON.stringify({token: t})});
+    var j = await r.json();
+    $('ghm').textContent = r.ok ? 'Gespeichert. Die erste Zusammenfassung folgt in etwa einer Minute.' : ('Fehler: ' + (j.detail || r.status));
+    if (r.ok) $('ghi').value = '';
+  } catch (e) { $('ghm').textContent = 'Fehler beim Senden'; }
 }
 function render(){ renderHome(); renderStrat(); renderMain(); renderLog(); show(); }
 async function loadState(){ var s = await api('/api/state'); if (!s) return; S = s; $('stat').textContent = s.paused ? 'pausiert' : 'läuft'; $('dot').classList.toggle('off', !!s.paused); render(); }

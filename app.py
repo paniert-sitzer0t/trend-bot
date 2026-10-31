@@ -86,6 +86,25 @@ def compare(x_token: str = Header("")):
             "start": bot.START_BALANCE}
 
 
+@app.get("/api/status/token")
+def status_token_get(x_token: str = Header("")):
+    auth(x_token)
+    import status
+    return {"set": status.has_token()}
+
+
+@app.post("/api/status/token")
+def status_token_set(body: dict, x_token: str = Header("")):
+    auth(x_token)
+    import status
+    try:
+        status.set_token(str(body.get("token", "")).strip())
+    except Exception as e:
+        raise HTTPException(400, str(e))
+    status._force[0] = True
+    return {"set": True}
+
+
 @app.post("/api/backtest/run")
 def backtest_run(x_token: str = Header("")):
     auth(x_token)
@@ -95,6 +114,8 @@ def backtest_run(x_token: str = Header("")):
 if __name__ == "__main__":
     threading.Thread(target=engine.run, daemon=True).start()
     threading.Thread(target=fwd.run, daemon=True).start()
+    import status
+    threading.Thread(target=status.run, args=(lambda: compare(TOKEN),), daemon=True).start()
     bt = load_bt()
     if not bt or "error" in bt or "hourly" not in bt or time.time() - bt.get("ts", 0) > 7 * 86400:
         run_bt()

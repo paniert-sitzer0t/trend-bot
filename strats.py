@@ -19,8 +19,9 @@ NAMES = {
     "F": "F: wie B, fest 35 % Einsatz (Kontrolle)",
     "G": "G: wie B, Martingale x1,1 nach Verlustwoche",
     "H": "H: wie B, Martingale x1,4 nach Verlustwoche",
+    "K": "K: Long-Momentum mit Trendfilter und Risikosteuerung (wöchentlich)",
 }
-PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7}
+PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, "K": 7}
 BASE = 0.35                          # Grundeinsatz der Martingale-Varianten (Anteil am Kapital)
 MARTI = {"F": 1.0, "G": 1.1, "H": 1.4}
 DAY = 86400
@@ -89,11 +90,43 @@ def ret(c, i, n):
     return a / b - 1
 
 
+def weights_k(closes, i):
+    """K: nur Long. Nur wenn BTC über der 200-Tage-Linie liegt. Ranking nach 30d/60d-Rendite OHNE den letzten Tag
+    (vermeidet den kurzfristigen Rücksetzer nach Extrembewegungen). Coin selbst muss über seiner 50-Tage-Linie liegen.
+    Einsatz sinkt, wenn BTC stark schwankt (Ziel: etwa 45 % jährliche Schwankung, maximal 95 % investiert)."""
+    btc = closes["BTCUSDT"]
+    if i < 200 or btc[i] is None:
+        return {}
+    win = [x for x in btc[i - 199:i + 1] if x is not None]
+    if len(win) < 150 or btc[i] <= sum(win) / len(win):
+        return {}
+    cand = {}
+    for s, c in closes.items():
+        if c[i] is None or c[i - 1] is None or c[i - 31] is None or c[i - 61] is None:
+            continue
+        w50 = [x for x in c[i - 49:i + 1] if x is not None]
+        if len(w50) < 40 or c[i] <= sum(w50) / len(w50):
+            continue
+        cand[s] = ((c[i - 1] / c[i - 31] - 1) + (c[i - 1] / c[i - 61] - 1)) / 2
+    top = sorted(cand, key=cand.get, reverse=True)[:3]
+    if not top:
+        return {}
+    r = [btc[j] / btc[j - 1] - 1 for j in range(i - 29, i + 1) if btc[j] and btc[j - 1]]
+    if len(r) < 20:
+        return {}
+    m = sum(r) / len(r)
+    vol = math.sqrt(sum((x - m) ** 2 for x in r) / len(r)) * math.sqrt(365)
+    expo = min(INVEST, 0.45 / max(vol, 0.05))
+    return {s: expo / len(top) for s in top}
+
+
 def weights(strat, closes, i):
     """Zielgewichte (positiv = Long, negativ = Short) auf Basis der Daten bis einschließlich Tag i."""
     btc = closes["BTCUSDT"]
     if strat == "E":
         return {"BTCUSDT": INVEST}
+    if strat == "K":
+        return weights_k(closes, i)
     scores = {}
     for s, c in closes.items():
         if c[i] is None:

@@ -16,8 +16,13 @@ NAMES = {
     "B": "B: Momentum 7d/30d Long+Short (wöchentlich)",
     "C": "C: Momentum nur Long mit BTC-Filter (wöchentlich)",
     "E": "E: BTC halten",
+    "F": "F: wie B, fest 35 % Einsatz (Kontrolle)",
+    "G": "G: wie B, Martingale x1,1 nach Verlustwoche",
+    "H": "H: wie B, Martingale x1,4 nach Verlustwoche",
 }
-PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9}
+PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7}
+BASE = 0.35                          # Grundeinsatz der Martingale-Varianten (Anteil am Kapital)
+MARTI = {"F": 1.0, "G": 1.1, "H": 1.4}
 DAY = 86400
 
 
@@ -109,7 +114,7 @@ def weights(strat, closes, i):
         return w
     mom = {s: (v[1] + v[2]) / 2 for s, v in scores.items()}
     order = sorted(mom, key=mom.get, reverse=True)
-    if strat == "B":
+    if strat in ("B", "F", "G", "H"):
         w = {s: INVEST / 6 for s in order[:3]}
         w.update({s: -INVEST / 6 for s in order[-3:]})
         return w
@@ -121,11 +126,26 @@ def weights(strat, closes, i):
     return {}
 
 
+def sized(strat, acc, px, closes, i):
+    """Zielgewichte inklusive Martingale-Skalierung: Einsatz wächst nach jeder Verlustperiode um den Faktor,
+    gedeckelt bei 95 % des Kapitals (1x Hebel), und springt nach einer Gewinnperiode auf den Grundeinsatz zurück."""
+    w = weights(strat, closes, i)
+    if strat in MARTI:
+        eq = acc.equity(px)
+        if acc.last_eq is not None:
+            acc.losses = acc.losses + 1 if eq < acc.last_eq else 0
+        acc.last_eq = eq
+        exposure = min(INVEST, BASE * MARTI[strat] ** acc.losses)
+        w = {s: v * exposure / INVEST for s, v in w.items()}
+    return w
+
+
 class Account:
     """Einfaches Paper-Konto mit vorzeichenbehafteten Stückzahlen (Short = negativ)."""
 
-    def __init__(self, cash, pos=None):
+    def __init__(self, cash, pos=None, losses=0, last_eq=None):
         self.cash, self.pos, self.costs = cash, dict(pos or {}), 0.0
+        self.losses, self.last_eq = losses, last_eq
 
     def equity(self, px):
         return self.cash + sum(q * px.get(s, 0) for s, q in self.pos.items())
@@ -185,7 +205,7 @@ def run_backtest(days=1900, progress=None, data=None):
         for i in range(first, n - 1):
             px_i = {s: c[i] for s, c in closes.items() if c[i] is not None}
             if i - last_reb >= PERIOD[strat]:
-                w = weights(strat, closes, i)
+                w = sized(strat, acc, px_i, closes, i)
                 acc.rebalance(px_i, w)
                 rebs += 1
                 last_reb = i
@@ -257,15 +277,15 @@ class Forward:
                 i = days - 1
                 for k in NAMES:
                     s = self.get(k)
-                    acc = Account(s["cash"], s["pos"])
+                    acc = Account(s["cash"], s["pos"], s.get("losses", 0), s.get("last_eq"))
                     acc.costs = s["costs"]
                     if s["last_reb"] == 0 or today - s["last_reb"] >= PERIOD[k]:
                         if not (k == "E" and s["rebs"]):
-                            acc.rebalance(self.px, weights(k, closes, i))
+                            acc.rebalance(self.px, sized(k, acc, self.px, closes, i))
                             s["rebs"] += 1
                         s["last_reb"] = today
                     acc.funding(self.px)
-                    s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs)
+                    s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs, losses=acc.losses, last_eq=acc.last_eq)
                     self.put(k, s)
                 self.put("_day", today)
             now = time.time()

@@ -172,6 +172,15 @@ var INFO = {A:'Kauft oder shortet täglich die 3 Coins mit der größten 24-Stun
 var KEYS = ['A','D','B','C','E','F','G','H','K','M','N','E2','E3','T3','T5','K2','K3','B2','X10','X25','ORIG'];
 var LEVF = 'all';
 var COL = {A:'#7aa7ff',D:'#ff6b6b',B:'#f5c451',C:'#3ddc97',E:'#d6dbe6',F:'#b58cff',G:'#ff9f6b',H:'#ff7ac8',K:'#2ee6d6',M:'#9be15d',N:'#ff8a8a',ORIG:'#ffffff',E2:'#a3b8ff',E3:'#6f8dff',T3:'#7ef0b2',T5:'#34c98a',K2:'#5ff2e4',K3:'#16b5a8',B2:'#ffd877',X10:'#ff9a5c',X25:'#ff5c5c'};
+var RM = {TL:['Trend Long','Kauft die stärksten Coins der letzten 24 h.'], TS:['Trend Short','Shortet die schwächsten Coins der letzten 24 h.'],
+  CS:['Gegen Trend Short','Shortet die Coins, die in 24 h am stärksten gestiegen sind.'], CL:['Gegen Trend Long','Kauft die Coins, die in 24 h am stärksten gefallen sind.'],
+  TB:['Trend Long+Short','Long auf die stärksten, Short auf die schwächsten Coins.'], CB:['Gegen Trend Long+Short','Short auf die stärksten, Long auf die schwächsten Coins.']};
+['TL','TS','CS','CL','TB','CB'].forEach(function(m, mi){ [3,5,10,15].forEach(function(n, ni){
+  var k = 'R_'+m+n; KEYS.splice(KEYS.length - 1, 0, k);
+  LABEL[k] = RM[m][0]+', '+n+' Coins'; INFO[k] = RM[m][1]+' Je Seite '+n+' Coins, Rotation alle 6 Stunden, gleich gewichtet. Im Backtest täglich gerechnet.';
+  COL[k] = 'hsl('+(mi * 60)+','+(55 + ni * 8)+'%,'+(78 - ni * 9)+'%)';
+}); });
+function isR(k){ return k.indexOf('R_') == 0; }
 
 function $(id){return document.getElementById(id)}
 function f(x,d){d=d===undefined?2:d;return Number(x).toLocaleString('de-AT',{minimumFractionDigits:d,maximumFractionDigits:d})}
@@ -234,7 +243,7 @@ function rows(){
   });
 }
 function sorted(){
-  var rs = rows().filter(function(r){ return LEVF == 'all' || (LEVF == 'lev' ? r.lev > 1 : r.lev == 1); });
+  var rs = rows().filter(function(r){ return LEVF == 'all' || (LEVF == 'rot' ? isR(r.k) : LEVF == 'lev' ? r.lev > 1 : (r.lev == 1 && !isR(r.k))); });
   rs.sort(function(a, z){ var u = SORT == 'bt' ? a.bt : a.pct, v = SORT == 'bt' ? z.bt : z.pct; return (v === null ? -1e18 : v) - (u === null ? -1e18 : u); });
   return rs;
 }
@@ -251,7 +260,7 @@ function renderHome(){
   h += '<div class="big num '+(val === null ? 'mut' : cl(val))+'">'+(val === null ? '–' : sg(val, SORT == 'bt' ? 0 : 2)+' %')+'</div>';
   h += '<div class="meta">'+(SORT == 'bt' ? 'Rechnung mit Gebühren, ohne Zukunftswissen' : 'Seit Start mit '+f(CMP.start, 0)+' USDT je Strategie')+'</div>';
   h += '<div class="seg"><button class="'+(SORT == 'pct' ? 'on' : '')+'" onclick="setSort(\'pct\')">Paper-Test</button><button class="'+(SORT == 'bt' ? 'on' : '')+'" onclick="setSort(\'bt\')">Backtest</button></div></div>';
-  h += '<div class="seg" style="margin-top:0"><button class="'+(LEVF == 'all' ? 'on' : '')+'" onclick="setLev(\'all\')">Alle</button><button class="'+(LEVF == 'spot' ? 'on' : '')+'" onclick="setLev(\'spot\')">Ohne Hebel</button><button class="'+(LEVF == 'lev' ? 'on' : '')+'" onclick="setLev(\'lev\')">Mit Hebel</button></div>';
+  h += '<div class="seg" style="margin-top:0"><button class="'+(LEVF == 'all' ? 'on' : '')+'" onclick="setLev(\'all\')">Alle</button><button class="'+(LEVF == 'spot' ? 'on' : '')+'" onclick="setLev(\'spot\')">Klassisch</button><button class="'+(LEVF == 'rot' ? 'on' : '')+'" onclick="setLev(\'rot\')">Körbe 6 h</button><button class="'+(LEVF == 'lev' ? 'on' : '')+'" onclick="setLev(\'lev\')">Mit Hebel</button></div>';
   h += '<div class="card flat" style="margin-top:12px"><ul class="rank">';
   rs.forEach(function(r, i){
     var v = SORT == 'bt' ? r.bt : r.pct, o = SORT == 'bt' ? r.pct : r.bt;

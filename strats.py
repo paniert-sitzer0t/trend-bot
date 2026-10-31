@@ -32,6 +32,15 @@ NAMES = {
     "X10": "X10: BTC 10x Hebel, Ausbruchs-Trend",
     "X25": "X25: BTC 25x Hebel, Ausbruchs-Trend",
 }
+# Korb-Strategien: Rangliste nach 24-h-Veränderung, Rotation alle 6 h (Vorwärtstest), im Backtest täglich
+RMODES = {"TL": "Trend: Long auf die stärksten", "TS": "Trend: Short auf die schwächsten",
+          "CS": "Gegen den Trend: Short auf die stärksten", "CL": "Gegen den Trend: Long auf die schwächsten",
+          "TB": "Trend: Long stärkste, Short schwächste", "CB": "Gegen den Trend: Short stärkste, Long schwächste"}
+RSIZES = (3, 5, 10, 15)
+RKEYS = [f"R_{m}{n}" for m in RMODES for n in RSIZES]
+for _k in RKEYS:
+    NAMES[_k] = f"{_k}: {RMODES[_k[2:4]]} ({_k[4:]} Coins je Seite, 6 h)"
+SLOT = 6 * 3600
 LEV = {"E2": 2, "E3": 3, "T3": 3, "T5": 5, "K2": 2, "K3": 3, "B2": 2, "X10": 10, "X25": 25}
 BASEOF = {"E2": "E", "E3": "E", "T3": "TREND", "T5": "TREND", "K2": "K", "K3": "K", "B2": "B", "X10": "X", "X25": "X"}
 MM = 0.005              # Erhaltungsmarge 0,5 % des Positionswerts: darunter wird liquidiert
@@ -42,6 +51,7 @@ MEMES = ["DOGEUSDT", "SHIBUSDT", "PEPEUSDT", "FLOKIUSDT", "BONKUSDT", "WIFUSDT",
 MEME_JUMP, MEME_VOL, MEME_EXPO = 0.20, 3.0, 0.20   # Tagesplus ab 20 %, Umsatz mindestens 3x Schnitt, 20 % je Coin
 PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, "K": 7, "M": 1, "N": 1,
           "E2": 10 ** 9, "E3": 10 ** 9, "T3": 1, "T5": 1, "K2": 7, "K3": 7, "B2": 7, "X10": 1, "X25": 1}
+PERIOD.update({k: 1 for k in RKEYS})
 BASE = 0.35                          # Grundeinsatz der Martingale-Varianten (Anteil am Kapital)
 MARTI = {"F": 1.0, "G": 1.1, "H": 1.4}
 DAY = 86400
@@ -172,12 +182,36 @@ def weights_k(closes, i):
     return {s: expo / len(top) for s in top}
 
 
+def rank_weights(strat, rets):
+    """Gleichgewichtete Körbe aus einer Rangliste (sym -> Veränderung). Gesamteinsatz 95 %."""
+    mode, n = strat[2:4], int(strat[4:])
+    order = sorted(rets, key=rets.get, reverse=True)
+    if len(order) < 2 * n + 2:
+        return {}
+    top, bot = order[:n], order[-n:]
+    both = mode in ("TB", "CB")
+    each = INVEST / n / (2 if both else 1)
+    w = {}
+    if mode in ("TL", "TB"):
+        w.update({x: each for x in top})
+    if mode in ("TS", "TB"):
+        w.update({x: -each for x in bot})
+    if mode in ("CS", "CB"):
+        w.update({x: -each for x in top})
+    if mode in ("CL", "CB"):
+        w.update({x: each for x in bot})
+    return w
+
+
 def weights(strat, closes, i, ctx=None):
     """Zielgewichte (positiv = Long, negativ = Short) auf Basis der Daten bis einschließlich Tag i."""
     btc = closes["BTCUSDT"]
     if strat in LEV:
         base = weights(BASEOF[strat], closes, i, ctx)
         return {s: v * LEV[strat] for s, v in base.items()}
+    if strat.startswith("R_"):
+        rets = {s: r for s, c in closes.items() if (r := ret(c, i, 1)) is not None}
+        return rank_weights(strat, rets)
     if strat == "E":
         return {"BTCUSDT": INVEST}
     if strat in ("TREND", "X"):
@@ -279,12 +313,12 @@ class Account:
             else:
                 self.pos[s] = target
 
-    def funding(self, px):
+    def funding(self, px, frac=1.0):
         if self.lev:
-            self.cash -= self.gross(px) * LEV_FUND
+            self.cash -= self.gross(px) * LEV_FUND * frac
             return
         short = sum(-q * px.get(s, 0) for s, q in self.pos.items() if q < 0)
-        self.cash -= short * SHORT_FUND
+        self.cash -= short * SHORT_FUND * frac
 
 
 def stats(curve, days_per_year=365):
@@ -369,7 +403,7 @@ def run_backtest(days=1900, progress=None, data=None):
         res[strat] = dict(name=NAMES[strat], **st)
     return dict(ts=time.time(), days=n, coins=len(closes), start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
                 results=res,
-                note="Universum = heutige Top-Coins nach Umsatz (Survivorship-Bias begünstigt Long-Strategien). "
+                note="Korb-Strategien (R_) werden im Backtest mit Tagesdaten täglich rotiert, im Paper-Test alle 6 h. Universum = heutige Top-Coins nach Umsatz (Survivorship-Bias begünstigt Long-Strategien). "
                      "Keine Parameter wurden angepasst. Short mit 0,03 % Funding pro Tag, Kosten 0,13 % pro Seite.")
 
 
@@ -420,6 +454,8 @@ class Forward:
                 ctx = (memes, mext["v"])
                 i = days - 1
                 for k in NAMES:
+                    if k in RKEYS:
+                        continue
                     s = self.get(k)
                     acc = Account(s["cash"], s["pos"], s.get("losses", 0), s.get("last_eq"))
                     acc.costs = s["costs"]
@@ -435,6 +471,23 @@ class Forward:
                     s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs, losses=acc.losses, last_eq=acc.last_eq)
                     self.put(k, s)
                 self.put("_day", today)
+            slot = int(time.time() // SLOT)
+            todo = [k for k in RKEYS if (self.get(k).get("slot") or 0) < slot]
+            if todo and self.px:
+                uni = set(universe())
+                tk = {x["symbol"]: float(x["priceChangePercent"]) / 100 for x in api("/api/v3/ticker/24hr")
+                      if x["symbol"] in uni and x["symbol"] in self.px}
+                for k in todo:
+                    s = self.get(k)
+                    acc = Account(s["cash"], s["pos"])
+                    acc.costs = s["costs"]
+                    if s.get("dead"):
+                        continue
+                    if s.get("slot"):
+                        acc.funding(self.px, 0.25)
+                    acc.rebalance(self.px, rank_weights(k, tk))
+                    s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs, slot=slot, rebs=s["rebs"] + 1)
+                    self.put(k, s)
             for k in NAMES:                  # Liquidationsprüfung mit dem aktuellen Kurs
                 s = self.get(k)
                 if s.get("dead") or not s["pos"]:

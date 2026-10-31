@@ -41,8 +41,24 @@ RKEYS = [f"R_{m}{n}" for m in RMODES for n in RSIZES]
 for _k in RKEYS:
     NAMES[_k] = f"{_k}: {RMODES[_k[2:4]]} ({_k[4:]} Coins je Seite, 6 h)"
 SLOT = 6 * 3600
+# Trailing-Stop-Varianten: Schluessel -> (Basisstrategie, Abstand zum Hoechst- bzw. Tiefstkurs, Hebel)
+TRAIL = {
+    "K_T8": ("K", 0.08, 1), "K_T15": ("K", 0.15, 1), "B_T8": ("B", 0.08, 1), "B_T15": ("B", 0.15, 1),
+    "C_T10": ("C", 0.10, 1), "A_T5": ("A", 0.05, 1),
+    "BTC_T10": ("TREND", 0.10, 1), "BTC_T20": ("TREND", 0.20, 1),
+    "R_TL5_T5": ("R_TL5", 0.05, 1), "R_TB5_T5": ("R_TB5", 0.05, 1), "R_CL5_T5": ("R_CL5", 0.05, 1),
+    "R_CS5_T5": ("R_CS5", 0.05, 1), "R_TL10_T8": ("R_TL10", 0.08, 1),
+    "T3_T5": ("TREND", 0.05, 3), "X10_T3": ("X", 0.03, 10),
+}
+_BN = {"TREND": "BTC über 200-Tage-Linie", "X": "BTC Ausbruchs-Trend"}
+for _k, (_b, _p, _l) in TRAIL.items():
+    NAMES[_k] = f"{_k}: {_BN.get(_b) or NAMES[_b].split(': ', 1)[1]} mit Trailing-Stop {int(_p * 100)} %" + (f" und {_l}x Hebel" if _l > 1 else "")
 LEV = {"E2": 2, "E3": 3, "T3": 3, "T5": 5, "K2": 2, "K3": 3, "B2": 2, "X10": 10, "X25": 25}
 BASEOF = {"E2": "E", "E3": "E", "T3": "TREND", "T5": "TREND", "K2": "K", "K3": "K", "B2": "B", "X10": "X", "X25": "X"}
+for _k, (_b, _p, _l) in TRAIL.items():
+    BASEOF[_k] = _b
+    if _l > 1:
+        LEV[_k] = _l
 MM = 0.005              # Erhaltungsmarge 0,5 % des Positionswerts: darunter wird liquidiert
 LEV_FUND = 0.0003       # Funding und Zinsen auf den gesamten Positionswert bei Hebel, pro Tag
 MEMES = ["DOGEUSDT", "SHIBUSDT", "PEPEUSDT", "FLOKIUSDT", "BONKUSDT", "WIFUSDT", "BOMEUSDT", "MEMEUSDT", "TURBOUSDT",
@@ -52,6 +68,8 @@ MEME_JUMP, MEME_VOL, MEME_EXPO = 0.20, 3.0, 0.20   # Tagesplus ab 20 %, Umsatz m
 PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, "K": 7, "M": 1, "N": 1,
           "E2": 10 ** 9, "E3": 10 ** 9, "T3": 1, "T5": 1, "K2": 7, "K3": 7, "B2": 7, "X10": 1, "X25": 1}
 PERIOD.update({k: 1 for k in RKEYS})
+for _k, (_b, _p, _l) in TRAIL.items():
+    PERIOD[_k] = 1 if _b in ("TREND", "X") else PERIOD[_b]
 BASE = 0.35                          # Grundeinsatz der Martingale-Varianten (Anteil am Kapital)
 MARTI = {"F": 1.0, "G": 1.1, "H": 1.4}
 DAY = 86400
@@ -206,9 +224,9 @@ def rank_weights(strat, rets):
 def weights(strat, closes, i, ctx=None):
     """Zielgewichte (positiv = Long, negativ = Short) auf Basis der Daten bis einschließlich Tag i."""
     btc = closes["BTCUSDT"]
-    if strat in LEV:
+    if strat in LEV or strat in TRAIL:
         base = weights(BASEOF[strat], closes, i, ctx)
-        return {s: v * LEV[strat] for s, v in base.items()}
+        return {s: v * LEV.get(strat, 1) for s, v in base.items()}
     if strat.startswith("R_"):
         rets = {s: r for s, c in closes.items() if (r := ret(c, i, 1)) is not None}
         return rank_weights(strat, rets)
@@ -280,6 +298,7 @@ class Account:
         self.cash, self.pos, self.costs = cash, dict(pos or {}), 0.0
         self.losses, self.last_eq = losses, last_eq
         self.dead, self.lev = False, False
+        self.peak, self.stops = {}, 0
 
     def gross(self, px):
         return sum(abs(q) * px.get(s, 0) for s, q in self.pos.items())
@@ -302,7 +321,10 @@ class Account:
             if not p:
                 continue
             target = eq * w.get(s, 0) / p
-            dq = target - self.pos.get(s, 0)
+            old = self.pos.get(s, 0)
+            if target and (not old or (old > 0) != (target > 0)):
+                self.peak[s] = p
+            dq = target - old
             if abs(dq * p) < 1e-9:
                 continue
             cost = abs(dq * p) * (FEE + SLIP)
@@ -310,8 +332,31 @@ class Account:
             self.costs += cost
             if abs(target) < 1e-12:
                 self.pos.pop(s, None)
+                self.peak.pop(s, None)
             else:
                 self.pos[s] = target
+
+    def track(self, hi, lo, pct):
+        """Trailing-Stop: Long folgt dem Hoechstkurs, Short dem Tiefstkurs. Gibt die Anzahl Ausstiege zurueck."""
+        n = 0
+        for s, q in list(self.pos.items()):
+            h, l = hi.get(s), lo.get(s)
+            if not h or not l:
+                continue
+            pk = self.peak.get(s, h if q > 0 else l)
+            hit = l <= pk * (1 - pct) if q > 0 else h >= pk * (1 + pct)
+            if hit:
+                stop = pk * (1 - pct) if q > 0 else pk * (1 + pct)
+                cost = abs(q) * stop * (FEE + SLIP)
+                self.cash += q * stop - cost
+                self.costs += cost
+                self.pos.pop(s)
+                self.peak.pop(s, None)
+                n += 1
+            else:
+                self.peak[s] = max(pk, h) if q > 0 else min(pk, l)
+        self.stops += n
+        return n
 
     def funding(self, px, frac=1.0):
         if self.lev:
@@ -369,6 +414,10 @@ def run_backtest(days=1900, progress=None, data=None):
                 rebs += 1
                 last_reb = i
             px_n = {s: (c[i + 1] if c[i + 1] is not None else px_i.get(s, 0)) for s, c in allp.items()}
+            if not acc.dead and acc.pos and strat in TRAIL:
+                hh = {sy: ((HI or {}).get(sy) or [None] * (i + 2))[i + 1] or px_n.get(sy) for sy in acc.pos}
+                ll = {sy: ((LO or {}).get(sy) or [None] * (i + 2))[i + 1] or px_n.get(sy) for sy in acc.pos}
+                acc.track(hh, ll, TRAIL[strat][1])
             if not acc.dead and acc.pos:
                 worst = {}
                 for sy, q in acc.pos.items():
@@ -399,7 +448,7 @@ def run_backtest(days=1900, progress=None, data=None):
             pts.append([dayidx[-1], round(curve[-1], 2)])
         peak_year = max(out.values()) if out else 0.0
         st.update(years=out, costs=acc.costs, rebalances=rebs, final=curve[-1] if curve else 100.0, curve=pts,
-                  leverage=LEV.get(strat, 1), liquidated=liq, best_year=peak_year)
+                  leverage=LEV.get(strat, 1), stops=acc.stops, liquidated=liq, best_year=peak_year)
         res[strat] = dict(name=NAMES[strat], **st)
     return dict(ts=time.time(), days=n, coins=len(closes), start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
                 results=res,
@@ -460,6 +509,7 @@ class Forward:
                     acc = Account(s["cash"], s["pos"], s.get("losses", 0), s.get("last_eq"))
                     acc.costs = s["costs"]
                     acc.lev = k in LEV
+                    acc.peak = dict(s.get("peak", {}))
                     if s.get("dead"):
                         continue
                     if s["last_reb"] == 0 or today - s["last_reb"] >= PERIOD[k]:
@@ -468,7 +518,7 @@ class Forward:
                             s["rebs"] += 1
                         s["last_reb"] = today
                     acc.funding(self.px)
-                    s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs, losses=acc.losses, last_eq=acc.last_eq)
+                    s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs, losses=acc.losses, last_eq=acc.last_eq, peak=acc.peak)
                     self.put(k, s)
                 self.put("_day", today)
             slot = int(time.time() // SLOT)
@@ -481,12 +531,22 @@ class Forward:
                     s = self.get(k)
                     acc = Account(s["cash"], s["pos"])
                     acc.costs = s["costs"]
+                    acc.peak = dict(s.get("peak", {}))
                     if s.get("dead"):
                         continue
                     if s.get("slot"):
                         acc.funding(self.px, 0.25)
                     acc.rebalance(self.px, rank_weights(k, tk))
-                    s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs, slot=slot, rebs=s["rebs"] + 1)
+                    s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs, slot=slot, rebs=s["rebs"] + 1, peak=acc.peak)
+                    self.put(k, s)
+            for k in TRAIL:                  # Trailing-Stops mit dem aktuellen Kurs
+                s = self.get(k)
+                if s.get("dead") or not s["pos"]:
+                    continue
+                a = Account(s["cash"], s["pos"])
+                a.costs, a.peak = s["costs"], dict(s.get("peak", {}))
+                if a.track(self.px, self.px, TRAIL[k][1]) or a.peak != s.get("peak", {}):
+                    s.update(cash=a.cash, pos=a.pos, costs=a.costs, peak=a.peak, stops=s.get("stops", 0) + a.stops)
                     self.put(k, s)
             for k in NAMES:                  # Liquidationsprüfung mit dem aktuellen Kurs
                 s = self.get(k)
@@ -517,7 +577,7 @@ class Forward:
                     "SELECT ts, v FROM (SELECT ts, v FROM eq WHERE k=? ORDER BY ts DESC LIMIT 500) ORDER BY ts", (k,))]
                 out.append(dict(key=k, name=NAMES[k], curve=cv, equity=eq, pnl=eq - self.start, pct=(eq / self.start - 1) * 100,
                                 positions=pos, rebalances=s["rebs"], costs=s["costs"], lev=LEV.get(k, 1),
-                                liq=s.get("liq_ts")))
+                                liq=s.get("liq_ts"), stops=s.get("stops", 0)))
             return out
 
     def run(self):

@@ -181,6 +181,17 @@ var RM = {TL:['Trend Long','Kauft die stärksten Coins der letzten 24 h.'], TS:[
   COL[k] = 'hsl('+(mi * 60)+','+(55 + ni * 8)+'%,'+(78 - ni * 9)+'%)';
 }); });
 function isR(k){ return k.indexOf('R_') == 0; }
+var TRK = {K_T8:['Momentum Long, Trailing 8 %',8],K_T15:['Momentum Long, Trailing 15 %',15],B_T8:['Momentum Long+Short, Trailing 8 %',8],B_T15:['Momentum Long+Short, Trailing 15 %',15],
+  C_T10:['Momentum mit BTC-Filter, Trailing 10 %',10],A_T5:['Top-Mover täglich, Trailing 5 %',5],BTC_T10:['Bitcoin-Trend, Trailing 10 %',10],BTC_T20:['Bitcoin-Trend, Trailing 20 %',20],
+  R_TL5_T5:['Trend Long 5 Coins, Trailing 5 %',5],R_TB5_T5:['Trend Long+Short 5 Coins, Trailing 5 %',5],R_CL5_T5:['Gegen Trend Long 5 Coins, Trailing 5 %',5],
+  R_CS5_T5:['Gegen Trend Short 5 Coins, Trailing 5 %',5],R_TL10_T8:['Trend Long 10 Coins, Trailing 8 %',8],T3_T5:['Bitcoin 3x, Trailing 5 %',5],X10_T3:['Bitcoin 10x, Trailing 3 %',3]};
+Object.keys(TRK).forEach(function(k, ni){
+  KEYS.splice(KEYS.length - 1, 0, k);
+  LABEL[k] = TRK[k][0];
+  INFO[k] = 'Wie die Basisstrategie, aber jede Position wird automatisch geschlossen, wenn der Kurs '+TRK[k][1]+' % vom besten Kurs seit Einstieg zurückfällt (Short: vom tiefsten Kurs hochsteigt). Danach bleibt das Geld bis zur nächsten Anpassung in bar.';
+  COL[k] = 'hsl('+(30 + ni * 22)+',85%,'+(58 + (ni % 3) * 7)+'%)';
+});
+function isT(k){ return !!TRK[k]; }
 
 function $(id){return document.getElementById(id)}
 function f(x,d){d=d===undefined?2:d;return Number(x).toLocaleString('de-AT',{minimumFractionDigits:d,maximumFractionDigits:d})}
@@ -243,7 +254,7 @@ function rows(){
   });
 }
 function sorted(){
-  var rs = rows().filter(function(r){ return LEVF == 'all' || (LEVF == 'rot' ? isR(r.k) : LEVF == 'lev' ? r.lev > 1 : (r.lev == 1 && !isR(r.k))); });
+  var rs = rows().filter(function(r){ return LEVF == 'all' || (LEVF == 'rot' ? isR(r.k) && !isT(r.k) : LEVF == 'trail' ? isT(r.k) : LEVF == 'lev' ? r.lev > 1 : (r.lev == 1 && !isR(r.k) && !isT(r.k))); });
   rs.sort(function(a, z){ var u = SORT == 'bt' ? a.bt : a.pct, v = SORT == 'bt' ? z.bt : z.pct; return (v === null ? -1e18 : v) - (u === null ? -1e18 : u); });
   return rs;
 }
@@ -260,7 +271,7 @@ function renderHome(){
   h += '<div class="big num '+(val === null ? 'mut' : cl(val))+'">'+(val === null ? '–' : sg(val, SORT == 'bt' ? 0 : 2)+' %')+'</div>';
   h += '<div class="meta">'+(SORT == 'bt' ? 'Rechnung mit Gebühren, ohne Zukunftswissen' : 'Seit Start mit '+f(CMP.start, 0)+' USDT je Strategie')+'</div>';
   h += '<div class="seg"><button class="'+(SORT == 'pct' ? 'on' : '')+'" onclick="setSort(\'pct\')">Paper-Test</button><button class="'+(SORT == 'bt' ? 'on' : '')+'" onclick="setSort(\'bt\')">Backtest</button></div></div>';
-  h += '<div class="seg" style="margin-top:0"><button class="'+(LEVF == 'all' ? 'on' : '')+'" onclick="setLev(\'all\')">Alle</button><button class="'+(LEVF == 'spot' ? 'on' : '')+'" onclick="setLev(\'spot\')">Klassisch</button><button class="'+(LEVF == 'rot' ? 'on' : '')+'" onclick="setLev(\'rot\')">Körbe 6 h</button><button class="'+(LEVF == 'lev' ? 'on' : '')+'" onclick="setLev(\'lev\')">Mit Hebel</button></div>';
+  h += '<div class="seg" style="margin-top:0"><button class="'+(LEVF == 'all' ? 'on' : '')+'" onclick="setLev(\'all\')">Alle</button><button class="'+(LEVF == 'spot' ? 'on' : '')+'" onclick="setLev(\'spot\')">Klassisch</button><button class="'+(LEVF == 'rot' ? 'on' : '')+'" onclick="setLev(\'rot\')">Körbe</button><button class="'+(LEVF == 'lev' ? 'on' : '')+'" onclick="setLev(\'lev\')">Hebel</button><button class="'+(LEVF == 'trail' ? 'on' : '')+'" onclick="setLev(\'trail\')">Trailing</button></div>';
   h += '<div class="card flat" style="margin-top:12px"><ul class="rank">';
   rs.forEach(function(r, i){
     var v = SORT == 'bt' ? r.bt : r.pct, o = SORT == 'bt' ? r.pct : r.bt;

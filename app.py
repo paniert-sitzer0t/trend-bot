@@ -78,7 +78,12 @@ def rotate(x_token: str = Header("")):
 @app.get("/api/compare")
 def compare(x_token: str = Header("")):
     auth(x_token)
-    return {"forward": fwd.snapshot(), "backtest": load_bt(), "running": BT["running"], "progress": BT["progress"]}
+    o = engine.snapshot()
+    orig = dict(key="ORIG", name="Original: Top-Mover mit 8-h-Rotation (Hauptbot)", curve=o["curve"], equity=o["equity"],
+                pnl=o["total_pnl"], pct=o["total_pnl"] / o["start"] * 100, rebalances=o["trades"], costs=0,
+                positions=[dict(symbol=p["symbol"], side=p["side"], value=p["notional"]) for p in o["open"]])
+    return {"forward": fwd.snapshot() + [orig], "backtest": load_bt(), "running": BT["running"], "progress": BT["progress"],
+            "start": bot.START_BALANCE}
 
 
 @app.post("/api/backtest/run")

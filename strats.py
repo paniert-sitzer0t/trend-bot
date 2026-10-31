@@ -300,7 +300,10 @@ def run_backtest(days=1900, progress=None, data=None):
         for y in sorted(years):
             out[str(y)] = (years[y][1] / prev - 1) * 100
             prev = years[y][1]
-        st.update(years=out, costs=acc.costs, rebalances=rebs, final=curve[-1] if curve else 100.0)
+        pts = [[d, round(e, 2)] for k2, (d, e) in enumerate(zip(dayidx, curve)) if k2 % 7 == 0]
+        if curve and (len(curve) - 1) % 7:
+            pts.append([dayidx[-1], round(curve[-1], 2)])
+        st.update(years=out, costs=acc.costs, rebalances=rebs, final=curve[-1] if curve else 100.0, curve=pts)
         res[strat] = dict(name=NAMES[strat], **st)
     return dict(ts=time.time(), days=n, coins=len(closes), start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
                 results=res,
@@ -384,7 +387,9 @@ class Forward:
                 eq = acc.equity(self.px) if self.px else s["cash"]
                 pos = [dict(symbol=a, side="long" if q > 0 else "short", value=abs(q * self.px.get(a, 0)))
                        for a, q in s["pos"].items()]
-                out.append(dict(key=k, name=NAMES[k], equity=eq, pnl=eq - self.start, pct=(eq / self.start - 1) * 100,
+                cv = [[r[0], r[1]] for r in self.db.execute(
+                    "SELECT ts, v FROM (SELECT ts, v FROM eq WHERE k=? ORDER BY ts DESC LIMIT 500) ORDER BY ts", (k,))]
+                out.append(dict(key=k, name=NAMES[k], curve=cv, equity=eq, pnl=eq - self.start, pct=(eq / self.start - 1) * 100,
                                 positions=pos, rebalances=s["rebs"], costs=s["costs"]))
             return out
 

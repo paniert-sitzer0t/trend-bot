@@ -29,8 +29,11 @@ button:hover{background:#2f3d50}button.d{background:#5a2323;border-color:#7a3030
   <button class="d" onclick="act('/api/close_all','Wirklich ALLE Positionen schließen?')">Alle schließen</button>
 </div>
 <div class="grid" id="kpi"></div>
-<div class="card"><h2>Strategie-Vergleich (Paper, parallel, je gleiches Startkapital)</h2><div class="k">Tägliche Anpassung um 00:10 UTC, Daten von Binance. Zeigt, welche Regel nach Kosten wirklich besser ist.</div><table id="fwd"></table></div>
-<div class="card"><h2>Backtest (Tagesdaten)</h2><div class="k" id="btnote"></div><table id="bt"></table><div style="margin-top:8px"><button onclick="act('/api/backtest/run','Backtest neu starten? Dauert einige Minuten.')">Backtest neu starten</button></div></div>
+<div class="card"><h2>Gesamtranking der Strategien</h2>
+<div class="bar"><button id="so1" onclick="setSort('pct')">Sortiert nach Paper-Ergebnis</button><button id="so2" onclick="setSort('bt')">Sortiert nach Backtest</button></div>
+<table id="rankall"></table><div class="k" id="btnote"></div></div>
+<div class="card"><h2>Strategie-Ansicht</h2><div class="bar" id="tabs" style="overflow-x:auto;flex-wrap:nowrap"></div><div id="view"></div>
+<div style="margin-top:8px"><button onclick="act('/api/backtest/run','Backtest neu starten? Dauert einige Minuten.')">Backtest neu starten</button></div></div>
 <div class="card"><h2>Equity-Verlauf</h2><svg id="chart" viewBox="0 0 600 120" width="100%" height="120" preserveAspectRatio="none"></svg></div>
 <div class="card"><h2>Offene Positionen</h2><table id="open"></table></div>
 <div class="card"><h2>Ranking der letzten Rotation</h2>
@@ -84,24 +87,64 @@ async function load(){
   }
 }
 load();setInterval(load,3000);
-async function loadCmp(){
-  var c=await api('/api/compare');if(!c)return;
-  var h='<tr><th>Strategie</th><th>Equity</th><th>P&L %</th><th>Positionen</th><th>Kosten</th></tr>';
-  h+=c.forward.map(function(x){return '<tr><td>'+x.name+'</td><td>'+f(x.equity)+'</td><td class="'+c_(x.pct)+'">'+sg(x.pct)+' %</td><td>'+x.positions.map(function(p){return (p.side=='long'?'L ':'S ')+p.symbol.replace('USDT','')}).join(', ')+'</td><td>'+f(x.costs)+'</td></tr>'}).join('');
-  $('fwd').innerHTML=h;
-  var b=c.backtest,t='';
-  if(c.running){$('btnote').textContent='Backtest läuft ... '+(c.progress||'')}
-  else if(!b){$('btnote').textContent='Noch kein Ergebnis'}
-  else if(b.error){$('btnote').textContent='Fehler: '+b.error}
-  else{
-    $('btnote').textContent=b.coins+' Coins seit '+b.start+' ('+b.days+' Tage). '+b.note;
-    var ys=[];Object.keys(b.results).forEach(function(k){Object.keys(b.results[k].years).forEach(function(y){if(ys.indexOf(y)<0)ys.push(y)})});ys.sort();
-    t='<tr><th>Strategie</th><th>Gesamt %</th><th>pro Jahr %</th><th>Max. Rückgang</th><th>Sharpe</th>'+ys.map(function(y){return '<th>'+y+'</th>'}).join('')+'</tr>';
-    t+=Object.keys(b.results).map(function(k){var r=b.results[k];return '<tr><td>'+r.name+'</td><td class="'+c_(r.total)+'">'+sg(r.total,0)+'</td><td class="'+c_(r.cagr)+'">'+sg(r.cagr,0)+'</td><td class="r">'+f(r.maxdd,0)+' %</td><td>'+f(r.sharpe)+'</td>'+ys.map(function(y){var v=r.years[y];return v===undefined?'<td></td>':'<td class="'+c_(v)+'">'+sg(v,0)+'</td>'}).join('')+'</tr>'}).join('');
-  }
-  $('bt').innerHTML=t;
-}
+var CMP=null,SEL='ALL',SORT='pct';
+try{SEL=localStorage.getItem('sel')||'ALL';SORT=localStorage.getItem('sort')||'pct'}catch(e){}
+var COL=['#2ecc71','#e74c3c','#3498db','#f1c40f','#9b59b6','#e67e22','#1abc9c','#ecf0f1','#fd79a8','#a29bfe','#00cec9','#fab1a0'];
 function c_(x){return x>=0?'g':'r'}
+function setSort(k){SORT=k;try{localStorage.setItem('sort',k)}catch(e){};render()}
+function pick(k){SEL=k;try{localStorage.setItem('sel',k)}catch(e){};render()}
+function short(n){return n.split(':')[0]}
+function lines(series,base,h){
+  var W=600,H=h||140,x0=1e18,x1=-1e18,y0=1e18,y1=-1e18;
+  series.forEach(function(s){s.pts.forEach(function(p){x0=Math.min(x0,p[0]);x1=Math.max(x1,p[0]);y0=Math.min(y0,p[1]);y1=Math.max(y1,p[1])})});
+  if(base!==null){y0=Math.min(y0,base);y1=Math.max(y1,base)}
+  var sx=(x1-x0)||1,sy=(y1-y0)||1,o='';
+  if(base!==null){var yb=H-5-((base-y0)/sy)*(H-10);o+='<line x1="0" x2="'+W+'" y1="'+yb+'" y2="'+yb+'" stroke="#3a4656" stroke-dasharray="4 4"/>'}
+  series.forEach(function(s){
+    if(s.pts.length<2)return;
+    var p=s.pts.map(function(q){return (((q[0]-x0)/sx)*W).toFixed(1)+','+(H-5-((q[1]-y0)/sy)*(H-10)).toFixed(1)}).join(' ');
+    o+='<polyline fill="none" stroke="'+s.color+'" stroke-width="'+(s.w||1.6)+'" points="'+p+'"/>';
+  });
+  return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+H+'" preserveAspectRatio="none">'+o+'</svg>';
+}
+function pctSeries(cv,st){return cv.map(function(q){return [q[0],(q[1]/st-1)*100]})}
+function render(){
+  var c=CMP;if(!c)return;
+  var b=c.backtest&&!c.backtest.error?c.backtest.results:null;
+  $('btnote').textContent=c.running?('Backtest läuft ... '+(c.progress||'')):(c.backtest&&c.backtest.error?'Backtest-Fehler: '+c.backtest.error:(b?c.backtest.coins+' Coins seit '+c.backtest.start+'. '+c.backtest.note:'Backtest noch nicht fertig'));
+  var rows=c.forward.map(function(x){var r=b&&b[x.key]?b[x.key]:null;return {k:x.key,name:x.name,eq:x.equity,pct:x.pct,bt:r?r.total:null,dd:r?r.maxdd:null,sh:r?r.sharpe:null,cagr:r?r.cagr:null}});
+  rows.sort(function(a,z){var u=SORT=='bt'?a.bt:a.pct,v=SORT=='bt'?z.bt:z.pct;return (v===null?-1e18:v)-(u===null?-1e18:u)});
+  var t='<tr><th>#</th><th>Strategie</th><th>Paper %</th><th>Backtest %</th><th>pro Jahr %</th><th>Max. Rückgang</th><th>Sharpe</th></tr>';
+  t+=rows.map(function(r,i){return '<tr style="cursor:pointer" onclick="pick(\''+r.k+'\')"><td>'+(i+1)+'</td><td>'+r.name+'</td><td class="'+c_(r.pct)+'">'+sg(r.pct)+'</td><td class="'+(r.bt===null?'':c_(r.bt))+'">'+(r.bt===null?'-':sg(r.bt,0))+'</td><td>'+(r.cagr===null?'-':sg(r.cagr,0))+'</td><td>'+(r.dd===null?'-':f(r.dd,0)+' %')+'</td><td>'+(r.sh===null?'-':f(r.sh))+'</td></tr>'}).join('');
+  $('rankall').innerHTML=t;
+  var tabs='<button onclick="pick(\'ALL\')" style="'+(SEL=='ALL'?'background:#3a5a8a':'')+'">Alle</button>';
+  tabs+=c.forward.map(function(x){return '<button onclick="pick(\''+x.key+'\')" style="white-space:nowrap;'+(SEL==x.key?'background:#3a5a8a':'')+'">'+(x.key=='ORIG'?'Hauptbot':x.key)+'</button>'}).join('');
+  $('tabs').innerHTML=tabs;
+  var v='';
+  if(SEL=='ALL'){
+    var ser=c.forward.map(function(x,i){return {color:COL[i%COL.length],pts:pctSeries(x.curve,c.start)}});
+    v+='<div class="k">Paper-Verlauf aller Strategien in % seit Start (gestrichelt = 0 %)</div>'+lines(ser,0,180);
+    v+='<div style="margin-top:6px">'+c.forward.map(function(x,i){return '<span style="margin-right:10px;white-space:nowrap"><span class="dot" style="background:'+COL[i%COL.length]+'"></span>'+short(x.name)+' '+sg(x.pct)+' %</span>'}).join('')+'</div>';
+    if(b){var ser2=c.forward.filter(function(x){return b[x.key]}).map(function(x){var i=c.forward.indexOf(x);return {color:COL[i%COL.length],pts:b[x.key].curve}});
+      v+='<div class="k" style="margin-top:12px">Backtest-Verlauf (Start = 100, Log-Skala nicht verwendet)</div>'+lines(ser2,100,180)}
+  }else{
+    var x=c.forward.filter(function(z){return z.key==SEL})[0];
+    if(x){
+      var r=b&&b[x.key]?b[x.key]:null;
+      v+='<div style="font-weight:600;margin-bottom:6px">'+x.name+'</div>';
+      v+='<div class="grid"><div class="card" style="margin:0"><div class="k">Equity (Paper)</div><div class="v">'+f(x.equity)+'</div></div><div class="card" style="margin:0"><div class="k">P&L</div><div class="v '+c_(x.pct)+'">'+sg(x.pct)+' %</div></div><div class="card" style="margin:0"><div class="k">Anpassungen / Kosten</div><div class="v">'+x.rebalances+' / '+f(x.costs)+'</div></div></div>';
+      v+='<div class="k" style="margin-top:10px">Paper-Verlauf (Equity)</div>'+lines([{color:'#2ecc71',pts:x.curve}],c.start,140);
+      v+='<div class="k" style="margin-top:10px">Offene Positionen</div><table><tr><th>Symbol</th><th>Seite</th><th>Wert</th></tr>'+(x.positions.length?x.positions.map(function(p){return '<tr><td>'+p.symbol+'</td><td>'+side(p.side)+'</td><td>'+f(p.value)+'</td></tr>'}).join(''):'<tr><td colspan=3 class="k">Keine (Cash)</td></tr>')+'</table>';
+      if(r){
+        v+='<div class="k" style="margin-top:10px">Backtest-Verlauf (Start = 100)</div>'+lines([{color:'#3498db',pts:r.curve}],100,140);
+        v+='<div class="k" style="margin-top:6px">Gesamt '+sg(r.total,0)+' % | pro Jahr '+sg(r.cagr,0)+' % | max. Rückgang '+f(r.maxdd,0)+' % | Sharpe '+f(r.sharpe)+' | Kosten '+f(r.costs,0)+'</div>';
+        v+='<table><tr>'+Object.keys(r.years).map(function(y){return '<th>'+y+'</th>'}).join('')+'</tr><tr>'+Object.keys(r.years).map(function(y){return '<td class="'+c_(r.years[y])+'">'+sg(r.years[y],0)+' %</td>'}).join('')+'</tr></table>';
+      }
+    }
+  }
+  $('view').innerHTML=v;
+}
+async function loadCmp(){var c=await api('/api/compare');if(!c)return;CMP=c;render()}
 loadCmp();setInterval(loadCmp,30000);
 
 </script>

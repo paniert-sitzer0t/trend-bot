@@ -199,12 +199,18 @@ var RGL = {RG1:['Regime: K-Long, Bärenmarkt Short Coins','Aufwärtstrend (Bitco
   RG5:['Nur Bärenmarkt: Bitcoin short','Nur im Bärenmarkt aktiv, Bitcoin short. Sonst in bar.'],
   RG1_2:['Regime RG1 mit 2x Hebel','Wie RG1, mit doppeltem Einsatz.'],RG2_3:['Regime RG2 mit 3x Hebel','Wie RG2, mit dreifachem Einsatz.'],
   RG1_T10:['Regime RG1, Trailing 10 %','Wie RG1, jede Position wird bei 10 % Rückgang vom besten Kurs seit Einstieg geschlossen.'],
-  RG2_T10:['Regime RG2, Trailing 10 %','Wie RG2, mit Trailing-Stop 10 %.']};
+  RG2_T10:['Regime RG2, Trailing 10 %','Wie RG2, mit Trailing-Stop 10 %.'],
+  NL1:['Neu-Listing: kaufen, 3 Tage','Kauft jeden neu auf Binance gelisteten Coin am Ende des ersten Handelstags und hält ihn 3 Tage. Je Coin höchstens 35 % des Kapitals, 1 % Extra-Slippage.'],
+  NL2:['Neu-Listing: kaufen, 14 Tage','Wie NL1, aber 14 Tage Haltedauer.'],NL3:['Neu-Listing: kaufen, 30 Tage','Wie NL1, aber 30 Tage Haltedauer.'],
+  NL4:['Neu-Listing: Short ab Tag 2','Shortet neue Coins ab dem zweiten Handelstag bis Tag 10, setzt auf das Abflauen des Hypes.'],
+  NL5:['Neu-Listing: 7 Tage, konzentriert','Wie NL1, 7 Tage Haltedauer, bis zu 60 % je Coin.'],
+  NL2_3:['Neu-Listing NL2 mit 3x Hebel','Wie NL2 mit dreifachem Einsatz.'],NL1_5:['Neu-Listing NL1 mit 5x Hebel','Wie NL1 mit fünffachem Einsatz.'],
+  NL1_T15:['Neu-Listing NL1, Trailing 15 %','Wie NL1, Stop bei 15 % Rückgang vom besten Kurs.'],NL2_T20:['Neu-Listing NL2, Trailing 20 %','Wie NL2, Stop bei 20 % Rückgang vom besten Kurs.']};
 Object.keys(RGL).forEach(function(k, ni){
   KEYS.splice(KEYS.length - 1, 0, k); LABEL[k] = RGL[k][0]; INFO[k] = RGL[k][1]+' Shorts sind nur simuliert.';
   COL[k] = 'hsl('+(160 + ni * 24)+',70%,'+(60 + (ni % 2) * 10)+'%)';
 });
-function isG(k){ return k.indexOf('RG') == 0; }
+function isG(k){ return k.indexOf('RG') == 0 || k.indexOf('NL') == 0; }
 
 function $(id){return document.getElementById(id)}
 function f(x,d){d=d===undefined?2:d;return Number(x).toLocaleString('de-AT',{minimumFractionDigits:d,maximumFractionDigits:d})}
@@ -284,7 +290,7 @@ function renderHome(){
   h += '<div class="big num '+(val === null ? 'mut' : cl(val))+'">'+(val === null ? '–' : sg(val, SORT == 'bt' ? 0 : 2)+' %')+'</div>';
   h += '<div class="meta">'+(SORT == 'bt' ? 'Rechnung mit Gebühren, ohne Zukunftswissen' : 'Seit Start mit '+f(CMP.start, 0)+' USDT je Strategie')+'</div>';
   h += '<div class="seg"><button class="'+(SORT == 'pct' ? 'on' : '')+'" onclick="setSort(\'pct\')">Paper-Test</button><button class="'+(SORT == 'bt' ? 'on' : '')+'" onclick="setSort(\'bt\')">Backtest</button></div></div>';
-  h += '<div class="seg" style="margin-top:0"><button class="'+(LEVF == 'all' ? 'on' : '')+'" onclick="setLev(\'all\')">Alle</button><button class="'+(LEVF == 'spot' ? 'on' : '')+'" onclick="setLev(\'spot\')">Basis</button><button class="'+(LEVF == 'rot' ? 'on' : '')+'" onclick="setLev(\'rot\')">Körbe</button><button class="'+(LEVF == 'lev' ? 'on' : '')+'" onclick="setLev(\'lev\')">Hebel</button><button class="'+(LEVF == 'trail' ? 'on' : '')+'" onclick="setLev(\'trail\')">Trailing</button><button class="'+(LEVF == 'reg' ? 'on' : '')+'" onclick="setLev(\'reg\')">Regime</button></div>';
+  h += '<div class="seg" style="margin-top:0"><button class="'+(LEVF == 'all' ? 'on' : '')+'" onclick="setLev(\'all\')">Alle</button><button class="'+(LEVF == 'spot' ? 'on' : '')+'" onclick="setLev(\'spot\')">Basis</button><button class="'+(LEVF == 'rot' ? 'on' : '')+'" onclick="setLev(\'rot\')">Körbe</button><button class="'+(LEVF == 'lev' ? 'on' : '')+'" onclick="setLev(\'lev\')">Hebel</button><button class="'+(LEVF == 'trail' ? 'on' : '')+'" onclick="setLev(\'trail\')">Trailing</button><button class="'+(LEVF == 'reg' ? 'on' : '')+'" onclick="setLev(\'reg\')">Spezial</button></div>';
   h += '<div class="card flat" style="margin-top:12px"><ul class="rank">';
   rs.forEach(function(r, i){
     var v = SORT == 'bt' ? r.bt : r.pct, o = SORT == 'bt' ? r.pct : r.bt;

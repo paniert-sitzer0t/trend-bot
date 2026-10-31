@@ -51,6 +51,17 @@ NAMES.update({
     "RG5": "RG5: nur Bärenmarkt, Bitcoin short",
     "RG1_2": "RG1_2: RG1 mit 2x Hebel", "RG2_3": "RG2_3: RG2 mit 3x Hebel",
 })
+# Neu-Listing-Strategien: Alter = Tage seit dem ersten Handelstag auf Binance. (frühestes Alter, spätestes Alter, Seite, Max-Anteil je Coin)
+NL = {"NL1": (0, 2, 1, 0.35), "NL2": (0, 13, 1, 0.35), "NL3": (0, 29, 1, 0.35), "NL4": (1, 9, -1, 0.35), "NL5": (0, 6, 1, 0.6)}
+NAMES.update({
+    "NL1": "NL1: Neu gelistete Coins kaufen, 3 Tage halten",
+    "NL2": "NL2: Neu gelistete Coins kaufen, 14 Tage halten",
+    "NL3": "NL3: Neu gelistete Coins kaufen, 30 Tage halten",
+    "NL4": "NL4: Neu gelistete Coins ab Tag 2 shorten (nach dem Hype), bis Tag 10",
+    "NL5": "NL5: Neu gelistete Coins kaufen, 7 Tage halten, bis 60 % je Coin",
+    "NL2_3": "NL2_3: NL2 mit 3x Hebel", "NL1_5": "NL1_5: NL1 mit 5x Hebel",
+})
+_POOL = {}
 # Trailing-Stop-Varianten: Schluessel -> (Basisstrategie, Abstand zum Hoechst- bzw. Tiefstkurs, Hebel)
 TRAIL = {
     "K_T8": ("K", 0.08, 1), "K_T15": ("K", 0.15, 1), "B_T8": ("B", 0.08, 1), "B_T15": ("B", 0.15, 1),
@@ -58,7 +69,7 @@ TRAIL = {
     "BTC_T10": ("TREND", 0.10, 1), "BTC_T20": ("TREND", 0.20, 1),
     "R_TL5_T5": ("R_TL5", 0.05, 1), "R_TB5_T5": ("R_TB5", 0.05, 1), "R_CL5_T5": ("R_CL5", 0.05, 1),
     "R_CS5_T5": ("R_CS5", 0.05, 1), "R_TL10_T8": ("R_TL10", 0.08, 1),
-    "T3_T5": ("TREND", 0.05, 3), "RG1_T10": ("RG1", 0.10, 1), "RG2_T10": ("RG2", 0.10, 1), "X10_T3": ("X", 0.03, 10),
+    "T3_T5": ("TREND", 0.05, 3), "RG1_T10": ("RG1", 0.10, 1), "NL1_T15": ("NL1", 0.15, 1), "NL2_T20": ("NL2", 0.20, 1), "RG2_T10": ("RG2", 0.10, 1), "X10_T3": ("X", 0.03, 10),
 }
 _BN = {"TREND": "BTC über 200-Tage-Linie", "X": "BTC Ausbruchs-Trend"}
 for _k, (_b, _p, _l) in TRAIL.items():
@@ -69,8 +80,8 @@ for _k, (_b, _p, _l) in TRAIL.items():
     BASEOF[_k] = _b
     if _l > 1:
         LEV[_k] = _l
-LEV.update({"RG1_2": 2, "RG2_3": 3})
-BASEOF.update({"RG1_2": "RG1", "RG2_3": "RG2"})
+LEV.update({"RG1_2": 2, "RG2_3": 3, "NL2_3": 3, "NL1_5": 5})
+BASEOF.update({"RG1_2": "RG1", "RG2_3": "RG2", "NL2_3": "NL2", "NL1_5": "NL1"})
 EXCLUDE = {"SOXLBUSDT", "XAUTUSDT"}   # Tokenisierte Börsen- und Rohstoffprodukte, keine normalen Coins
 MM = 0.005              # Erhaltungsmarge 0,5 % des Positionswerts: darunter wird liquidiert
 LEV_FUND = 0.0003       # Funding und Zinsen auf den gesamten Positionswert bei Hebel, pro Tag
@@ -81,6 +92,7 @@ MEME_JUMP, MEME_VOL, MEME_EXPO = 0.20, 3.0, 0.20   # Tagesplus ab 20 %, Umsatz m
 PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, "K": 7, "M": 1, "N": 1,
           "E2": 10 ** 9, "E3": 10 ** 9, "T3": 1, "T5": 1, "K2": 7, "K3": 7, "B2": 7, "X10": 1, "X25": 1}
 PERIOD.update({k: 1 for k in RKEYS})
+PERIOD.update({k: 1 for k in ("NL1", "NL2", "NL3", "NL4", "NL5", "NL2_3", "NL1_5")})
 PERIOD.update({"RG1": 3, "RG2": 1, "RG3": 3, "RG4": 3, "RG5": 1, "RG1_2": 3, "RG2_3": 1})
 for _k, (_b, _p, _l) in TRAIL.items():
     PERIOD[_k] = 1 if _b in ("TREND", "X") else PERIOD[_b]
@@ -214,6 +226,25 @@ def weights_k(closes, i):
     return {s: expo / len(top) for s in top}
 
 
+def is_nl(strat):
+    while strat in BASEOF:
+        strat = BASEOF[strat]
+    return strat in NL
+
+
+def weights_nl(strat, i):
+    """Neu gelistete Coins (aus dem globalen Pool), gleich gewichtet, je Coin höchstens `cap` des Kapitals."""
+    lo, hi, side, cap = NL[strat]
+    closes, first = _POOL.get("closes"), _POOL.get("first")
+    if not closes:
+        return {}
+    picks = [sy for sy, f in first.items() if f > 0 and lo <= i - f <= hi and closes[sy][i] is not None]
+    if not picks:
+        return {}
+    each = min(INVEST / len(picks), cap)
+    return {sy: side * each for sy in picks}
+
+
 def weights_rg(strat, closes, i):
     """Regime: Bitcoin über dem 200-Tage-Durchschnitt = Aufwärtstrend, darunter = Bärenmarkt."""
     btc = closes["BTCUSDT"]
@@ -278,6 +309,8 @@ def weights(strat, closes, i, ctx=None):
         return {s: v * LEV.get(strat, 1) for s, v in base.items()}
     if strat in RG:
         return weights_rg(strat, closes, i)
+    if strat in NL:
+        return weights_nl(strat, i)
     if strat.startswith("R_"):
         rets = {s: r for s, c in closes.items() if (r := ret(c, i, 1)) is not None}
         return rank_weights(strat, rets)
@@ -349,7 +382,7 @@ class Account:
         self.cash, self.pos, self.costs = cash, dict(pos or {}), 0.0
         self.losses, self.last_eq = losses, last_eq
         self.dead, self.lev = False, False
-        self.peak, self.stops = {}, 0
+        self.peak, self.stops, self.slip_extra = {}, 0, 0.0
 
     def gross(self, px):
         return sum(abs(q) * px.get(s, 0) for s, q in self.pos.items())
@@ -378,7 +411,7 @@ class Account:
             dq = target - old
             if abs(dq * p) < 1e-9:
                 continue
-            cost = abs(dq * p) * (FEE + SLIP)
+            cost = abs(dq * p) * (FEE + SLIP + self.slip_extra)
             self.cash -= dq * p + cost
             self.costs += cost
             if abs(target) < 1e-12:
@@ -517,6 +550,8 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
             note_extra = f" Stundendaten nicht verfügbar ({e}), Tagesdaten verwendet."
     n, closes, start, _v, memes, memv, HI, LO = (data + (None, None))[:8] if len(data) == 6 else data
     ctx = (memes, memv)
+    _POOL["closes"] = closes
+    _POOL["first"] = {sy: next((j for j, x in enumerate(c) if x is not None), 0) for sy, c in closes.items()}
     allp = dict(closes)
     allp.update(memes)
     first = 31
@@ -543,7 +578,9 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
         acc.lev = strat in LEV
         liq = None
         last_reb = -10 ** 9
-        use_h = hourly is not None and (strat in LEV or strat in TRAIL or strat in RKEYS)
+        nlish = is_nl(strat)
+        acc.slip_extra = 0.01 if nlish else 0.0     # neue Coins: zusätzlich 1 % Slippage je Seite
+        use_h = hourly is not None and not nlish and (strat in LEV or strat in TRAIL or strat in RKEYS)
         if use_h:
             import hbt
             curve, dayidx, acc, rebs, liq = hbt.sim_hourly(strat, hourly, closes, ctx, first, members)
@@ -555,6 +592,8 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
                 for s, c in memes.items():
                     if c[i] is not None:
                         px_i[s] = c[i]
+                if nlish:
+                    px_i.update({s: c[i] for s, c in closes.items() if c[i] is not None})
                 for s in acc.pos:
                     if s not in px_i:
                         px_i[s] = lastp(s, i)
@@ -647,6 +686,22 @@ class Forward:
         self.db.execute("INSERT OR REPLACE INTO st VALUES(?,?)", (k, json.dumps(v)))
         self.db.commit()
 
+    def track_listings(self):
+        """Merkt sich neue USDT-Paare mit dem Tag ihres ersten Auftauchens (für die Neu-Listing-Strategien)."""
+        cur = sorted(sy for sy in self.px if sy.endswith("USDT") and sy not in EXCLUDE)
+        seen = self.get("_seen")
+        if not seen:
+            self.put("_seen", cur)
+            return
+        new = [sy for sy in cur if sy not in seen]
+        if new:
+            listed = self.get("_listed") or {}
+            day = int(time.time() // DAY)
+            for sy in new:
+                listed[sy] = day
+            self.put("_listed", listed)
+            self.put("_seen", sorted(set(seen) | set(new)))
+
     def prices(self):
         self.px = {x["symbol"]: float(x["price"]) for x in api("/api/v3/ticker/price")}
 
@@ -657,6 +712,9 @@ class Forward:
             done = int((self.get("_day") or 0))
             if today > done and time.time() % DAY > 600:
                 days, closes, _, _x = load_history(universe(), 260)
+                lst = self.get("_listed") or {}
+                _POOL["closes"] = {sy: [None] * (days - 1) + [self.px[sy]] for sy in lst if sy in self.px}
+                _POOL["first"] = {sy: days - 1 - (today - d) for sy, d in lst.items()}
                 _d, memes, _s, mext = load_history(MEMES, 260)
                 ctx = (memes, mext["v"])
                 i = days - 1
@@ -668,6 +726,7 @@ class Forward:
                     acc.costs = s["costs"]
                     acc.lev = k in LEV
                     acc.peak = dict(s.get("peak", {}))
+                    acc.slip_extra = 0.01 if is_nl(k) else 0.0
                     if s.get("dead"):
                         continue
                     if s["last_reb"] == 0 or today - s["last_reb"] >= PERIOD[k]:
@@ -679,6 +738,7 @@ class Forward:
                     s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs, losses=acc.losses, last_eq=acc.last_eq, peak=acc.peak)
                     self.put(k, s)
                 self.put("_day", today)
+            self.track_listings()
             slot = int(time.time() // SLOT)
             todo = [k for k in RKEYS if (self.get(k).get("slot") or 0) < slot]
             if todo and self.px:

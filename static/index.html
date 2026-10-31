@@ -29,12 +29,12 @@ button:hover{background:#2f3d50}button.d{background:#5a2323;border-color:#7a3030
   <button class="d" onclick="act('/api/close_all','Wirklich ALLE Positionen schließen?')">Alle schließen</button>
 </div>
 <div class="grid" id="kpi"></div>
+<div class="card"><h2>Strategie-Vergleich (Paper, parallel, je gleiches Startkapital)</h2><div class="k">Tägliche Anpassung um 00:10 UTC, Daten von Binance. Zeigt, welche Regel nach Kosten wirklich besser ist.</div><table id="fwd"></table></div>
+<div class="card"><h2>Backtest (Tagesdaten)</h2><div class="k" id="btnote"></div><table id="bt"></table><div style="margin-top:8px"><button onclick="act('/api/backtest/run','Backtest neu starten? Dauert einige Minuten.')">Backtest neu starten</button></div></div>
 <div class="card"><h2>Equity-Verlauf</h2><svg id="chart" viewBox="0 0 600 120" width="100%" height="120" preserveAspectRatio="none"></svg></div>
 <div class="card"><h2>Offene Positionen</h2><table id="open"></table></div>
 <div class="card"><h2>Ranking der letzten Rotation</h2>
 <div class="k">Sortiert nach Stärke der 24h-Bewegung. Signale: 24h, 7 Tage, 30 Tage. Mindestens 2 von 3 bestimmen Long oder Short.</div><table id="rank"></table></div>
-<div class="card"><h2>Strategie-Vergleich (Paper, parallel, je gleiches Startkapital)</h2><div class="k">Tägliche Anpassung um 00:10 UTC, Daten von Binance. Zeigt, welche Regel nach Kosten wirklich besser ist.</div><table id="fwd"></table></div>
-<div class="card"><h2>Backtest (Tagesdaten)</h2><div class="k" id="btnote"></div><table id="bt"></table><div style="margin-top:8px"><button onclick="act('/api/backtest/run','Backtest neu starten? Dauert einige Minuten.')">Backtest neu starten</button></div></div>
 <div class="card"><h2>Letzte Trades</h2><table id="closed"></table></div>
 <div class="card"><h2>Log</h2><div class="log" id="log"></div></div>
 <script>

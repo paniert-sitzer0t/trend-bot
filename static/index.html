@@ -52,7 +52,7 @@ h2:first-child{margin-top:18px}
 .hero .meta{color:var(--mut);font-size:13px;margin-top:6px}
 
 .seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:var(--s2);border-radius:12px;padding:3px;gap:3px;margin:14px 0 4px}
-.seg button{padding:9px 6px;border-radius:9px;color:var(--mut);font-weight:600;font-size:14px}
+.seg button{padding:9px 2px;border-radius:9px;color:var(--mut);font-weight:600;font-size:13px;white-space:nowrap}
 .seg button.on{background:var(--bg);color:var(--tx)}
 
 /* Rangliste mit Balken um die Nulllinie */
@@ -192,6 +192,19 @@ Object.keys(TRK).forEach(function(k, ni){
   COL[k] = 'hsl('+(30 + ni * 22)+',85%,'+(58 + (ni % 3) * 7)+'%)';
 });
 function isT(k){ return !!TRK[k]; }
+var RGL = {RG1:['Regime: K-Long, Bärenmarkt Short Coins','Aufwärtstrend (Bitcoin über 200-Tage-Linie): Strategie K, Long auf die 3 stärksten Coins. Bärenmarkt: Short auf die 3 schwächsten Coins unter ihrer 50-Tage-Linie.'],
+  RG2:['Regime: Bitcoin long / short','Bitcoin long, solange er über der 200-Tage-Linie liegt, darunter Bitcoin short.'],
+  RG3:['Regime: K-Long, Bärenmarkt Bitcoin short','Aufwärtstrend: Strategie K. Bärenmarkt: Bitcoin short.'],
+  RG4:['Nur Bärenmarkt: Short Coins','Nur im Bärenmarkt aktiv, Short auf die 3 schwächsten Coins. Sonst in bar.'],
+  RG5:['Nur Bärenmarkt: Bitcoin short','Nur im Bärenmarkt aktiv, Bitcoin short. Sonst in bar.'],
+  RG1_2:['Regime RG1 mit 2x Hebel','Wie RG1, mit doppeltem Einsatz.'],RG2_3:['Regime RG2 mit 3x Hebel','Wie RG2, mit dreifachem Einsatz.'],
+  RG1_T10:['Regime RG1, Trailing 10 %','Wie RG1, jede Position wird bei 10 % Rückgang vom besten Kurs seit Einstieg geschlossen.'],
+  RG2_T10:['Regime RG2, Trailing 10 %','Wie RG2, mit Trailing-Stop 10 %.']};
+Object.keys(RGL).forEach(function(k, ni){
+  KEYS.splice(KEYS.length - 1, 0, k); LABEL[k] = RGL[k][0]; INFO[k] = RGL[k][1]+' Shorts sind nur simuliert.';
+  COL[k] = 'hsl('+(160 + ni * 24)+',70%,'+(60 + (ni % 2) * 10)+'%)';
+});
+function isG(k){ return k.indexOf('RG') == 0; }
 
 function $(id){return document.getElementById(id)}
 function f(x,d){d=d===undefined?2:d;return Number(x).toLocaleString('de-AT',{minimumFractionDigits:d,maximumFractionDigits:d})}
@@ -254,7 +267,7 @@ function rows(){
   });
 }
 function sorted(){
-  var rs = rows().filter(function(r){ return LEVF == 'all' || (LEVF == 'rot' ? isR(r.k) && !isT(r.k) : LEVF == 'trail' ? isT(r.k) : LEVF == 'lev' ? r.lev > 1 : (r.lev == 1 && !isR(r.k) && !isT(r.k))); });
+  var rs = rows().filter(function(r){ return LEVF == 'all' || (LEVF == 'rot' ? isR(r.k) && !isT(r.k) : LEVF == 'trail' ? isT(r.k) : LEVF == 'reg' ? isG(r.k) : LEVF == 'lev' ? r.lev > 1 : (r.lev == 1 && !isR(r.k) && !isT(r.k) && !isG(r.k))); });
   rs.sort(function(a, z){ var u = SORT == 'bt' ? a.bt : a.pct, v = SORT == 'bt' ? z.bt : z.pct; return (v === null ? -1e18 : v) - (u === null ? -1e18 : u); });
   return rs;
 }
@@ -271,7 +284,7 @@ function renderHome(){
   h += '<div class="big num '+(val === null ? 'mut' : cl(val))+'">'+(val === null ? '–' : sg(val, SORT == 'bt' ? 0 : 2)+' %')+'</div>';
   h += '<div class="meta">'+(SORT == 'bt' ? 'Rechnung mit Gebühren, ohne Zukunftswissen' : 'Seit Start mit '+f(CMP.start, 0)+' USDT je Strategie')+'</div>';
   h += '<div class="seg"><button class="'+(SORT == 'pct' ? 'on' : '')+'" onclick="setSort(\'pct\')">Paper-Test</button><button class="'+(SORT == 'bt' ? 'on' : '')+'" onclick="setSort(\'bt\')">Backtest</button></div></div>';
-  h += '<div class="seg" style="margin-top:0"><button class="'+(LEVF == 'all' ? 'on' : '')+'" onclick="setLev(\'all\')">Alle</button><button class="'+(LEVF == 'spot' ? 'on' : '')+'" onclick="setLev(\'spot\')">Klassisch</button><button class="'+(LEVF == 'rot' ? 'on' : '')+'" onclick="setLev(\'rot\')">Körbe</button><button class="'+(LEVF == 'lev' ? 'on' : '')+'" onclick="setLev(\'lev\')">Hebel</button><button class="'+(LEVF == 'trail' ? 'on' : '')+'" onclick="setLev(\'trail\')">Trailing</button></div>';
+  h += '<div class="seg" style="margin-top:0"><button class="'+(LEVF == 'all' ? 'on' : '')+'" onclick="setLev(\'all\')">Alle</button><button class="'+(LEVF == 'spot' ? 'on' : '')+'" onclick="setLev(\'spot\')">Basis</button><button class="'+(LEVF == 'rot' ? 'on' : '')+'" onclick="setLev(\'rot\')">Körbe</button><button class="'+(LEVF == 'lev' ? 'on' : '')+'" onclick="setLev(\'lev\')">Hebel</button><button class="'+(LEVF == 'trail' ? 'on' : '')+'" onclick="setLev(\'trail\')">Trailing</button><button class="'+(LEVF == 'reg' ? 'on' : '')+'" onclick="setLev(\'reg\')">Regime</button></div>';
   h += '<div class="card flat" style="margin-top:12px"><ul class="rank">';
   rs.forEach(function(r, i){
     var v = SORT == 'bt' ? r.bt : r.pct, o = SORT == 'bt' ? r.pct : r.bt;

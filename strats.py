@@ -41,6 +41,16 @@ RKEYS = [f"R_{m}{n}" for m in RMODES for n in RSIZES]
 for _k in RKEYS:
     NAMES[_k] = f"{_k}: {RMODES[_k[2:4]]} ({_k[4:]} Coins je Seite, 6 h)"
 SLOT = 6 * 3600
+# Regime-Strategien: Bärenmarkt = Bitcoin unter dem 200-Tage-Durchschnitt. (Verhalten im Aufwärtstrend, im Bärenmarkt)
+RG = {"RG1": ("K", "S3"), "RG2": ("BTC", "BTC"), "RG3": ("K", "BTC"), "RG4": (None, "S3"), "RG5": (None, "BTC")}
+NAMES.update({
+    "RG1": "RG1: Aufwärtstrend K-Long, Bärenmarkt Short auf die 3 schwächsten Coins",
+    "RG2": "RG2: Bitcoin long im Aufwärtstrend, Bitcoin short im Bärenmarkt",
+    "RG3": "RG3: K-Long im Aufwärtstrend, Bitcoin short im Bärenmarkt",
+    "RG4": "RG4: nur Bärenmarkt, Short auf die 3 schwächsten Coins",
+    "RG5": "RG5: nur Bärenmarkt, Bitcoin short",
+    "RG1_2": "RG1_2: RG1 mit 2x Hebel", "RG2_3": "RG2_3: RG2 mit 3x Hebel",
+})
 # Trailing-Stop-Varianten: Schluessel -> (Basisstrategie, Abstand zum Hoechst- bzw. Tiefstkurs, Hebel)
 TRAIL = {
     "K_T8": ("K", 0.08, 1), "K_T15": ("K", 0.15, 1), "B_T8": ("B", 0.08, 1), "B_T15": ("B", 0.15, 1),
@@ -48,7 +58,7 @@ TRAIL = {
     "BTC_T10": ("TREND", 0.10, 1), "BTC_T20": ("TREND", 0.20, 1),
     "R_TL5_T5": ("R_TL5", 0.05, 1), "R_TB5_T5": ("R_TB5", 0.05, 1), "R_CL5_T5": ("R_CL5", 0.05, 1),
     "R_CS5_T5": ("R_CS5", 0.05, 1), "R_TL10_T8": ("R_TL10", 0.08, 1),
-    "T3_T5": ("TREND", 0.05, 3), "X10_T3": ("X", 0.03, 10),
+    "T3_T5": ("TREND", 0.05, 3), "RG1_T10": ("RG1", 0.10, 1), "RG2_T10": ("RG2", 0.10, 1), "X10_T3": ("X", 0.03, 10),
 }
 _BN = {"TREND": "BTC über 200-Tage-Linie", "X": "BTC Ausbruchs-Trend"}
 for _k, (_b, _p, _l) in TRAIL.items():
@@ -59,6 +69,8 @@ for _k, (_b, _p, _l) in TRAIL.items():
     BASEOF[_k] = _b
     if _l > 1:
         LEV[_k] = _l
+LEV.update({"RG1_2": 2, "RG2_3": 3})
+BASEOF.update({"RG1_2": "RG1", "RG2_3": "RG2"})
 MM = 0.005              # Erhaltungsmarge 0,5 % des Positionswerts: darunter wird liquidiert
 LEV_FUND = 0.0003       # Funding und Zinsen auf den gesamten Positionswert bei Hebel, pro Tag
 MEMES = ["DOGEUSDT", "SHIBUSDT", "PEPEUSDT", "FLOKIUSDT", "BONKUSDT", "WIFUSDT", "BOMEUSDT", "MEMEUSDT", "TURBOUSDT",
@@ -68,6 +80,7 @@ MEME_JUMP, MEME_VOL, MEME_EXPO = 0.20, 3.0, 0.20   # Tagesplus ab 20 %, Umsatz m
 PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, "K": 7, "M": 1, "N": 1,
           "E2": 10 ** 9, "E3": 10 ** 9, "T3": 1, "T5": 1, "K2": 7, "K3": 7, "B2": 7, "X10": 1, "X25": 1}
 PERIOD.update({k: 1 for k in RKEYS})
+PERIOD.update({"RG1": 3, "RG2": 1, "RG3": 3, "RG4": 3, "RG5": 1, "RG1_2": 3, "RG2_3": 1})
 for _k, (_b, _p, _l) in TRAIL.items():
     PERIOD[_k] = 1 if _b in ("TREND", "X") else PERIOD[_b]
 BASE = 0.35                          # Grundeinsatz der Martingale-Varianten (Anteil am Kapital)
@@ -200,6 +213,41 @@ def weights_k(closes, i):
     return {s: expo / len(top) for s in top}
 
 
+def weights_rg(strat, closes, i):
+    """Regime: Bitcoin über dem 200-Tage-Durchschnitt = Aufwärtstrend, darunter = Bärenmarkt."""
+    btc = closes["BTCUSDT"]
+    if i < 200 or btc[i] is None:
+        return {}
+    win = [x for x in btc[i - 199:i + 1] if x is not None]
+    if len(win) < 150:
+        return {}
+    bull_mode, bear_mode = RG[strat]
+    if btc[i] > sum(win) / len(win):
+        if bull_mode == "K":
+            return weights_k(closes, i)
+        return {"BTCUSDT": INVEST} if bull_mode == "BTC" else {}
+    if bear_mode == "BTC":
+        return {"BTCUSDT": -INVEST}
+    cand = {}
+    for sy, c in closes.items():
+        if c[i] is None or c[i - 1] is None or c[i - 31] is None or c[i - 61] is None:
+            continue
+        w50 = [x for x in c[i - 49:i + 1] if x is not None]
+        if len(w50) < 40 or c[i] >= sum(w50) / len(w50):
+            continue
+        cand[sy] = ((c[i - 1] / c[i - 31] - 1) + (c[i - 1] / c[i - 61] - 1)) / 2
+    low = sorted(cand, key=cand.get)[:3]
+    if not low:
+        return {}
+    r = [btc[j] / btc[j - 1] - 1 for j in range(i - 29, i + 1) if btc[j] and btc[j - 1]]
+    if len(r) < 20:
+        return {}
+    m = sum(r) / len(r)
+    vol = math.sqrt(sum((x - m) ** 2 for x in r) / len(r)) * math.sqrt(365)
+    expo = min(INVEST, 0.45 / max(vol, 0.05))
+    return {sy: -expo / len(low) for sy in low}
+
+
 def rank_weights(strat, rets):
     """Gleichgewichtete Körbe aus einer Rangliste (sym -> Veränderung). Gesamteinsatz 95 %."""
     mode, n = strat[2:4], int(strat[4:])
@@ -227,6 +275,8 @@ def weights(strat, closes, i, ctx=None):
     if strat in LEV or strat in TRAIL:
         base = weights(BASEOF[strat], closes, i, ctx)
         return {s: v * LEV.get(strat, 1) for s, v in base.items()}
+    if strat in RG:
+        return weights_rg(strat, closes, i)
     if strat.startswith("R_"):
         rets = {s: r for s, c in closes.items() if (r := ret(c, i, 1)) is not None}
         return rank_weights(strat, rets)

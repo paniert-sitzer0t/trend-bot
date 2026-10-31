@@ -96,6 +96,6 @@ if __name__ == "__main__":
     threading.Thread(target=engine.run, daemon=True).start()
     threading.Thread(target=fwd.run, daemon=True).start()
     bt = load_bt()
-    if not bt or "error" in bt or time.time() - bt.get("ts", 0) > 7 * 86400:
+    if not bt or "error" in bt or "hourly" not in bt or time.time() - bt.get("ts", 0) > 7 * 86400:
         run_bt()
     uvicorn.run(app, host=bot.env("HOST", "127.0.0.1"), port=int(bot.env("PORT", "8000")), log_level="warning")

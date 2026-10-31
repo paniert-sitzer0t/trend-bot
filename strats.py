@@ -358,6 +358,17 @@ class Account:
         self.stops += n
         return n
 
+    def funding_real(self, px, rates, frac=1.0):
+        """Funding mit echten Raten (positiv: Long zahlt, Short erhält). Fehlt die Rate, gilt der Standardwert."""
+        for s, q in list(self.pos.items()):
+            if q < 0 or self.lev:
+                p = px.get(s, 0)
+                r = rates.get(s)
+                if r is None:
+                    self.cash -= abs(q) * p * (LEV_FUND if self.lev else SHORT_FUND) * frac
+                else:
+                    self.cash -= q * p * r
+
     def funding(self, px, frac=1.0):
         if self.lev:
             self.cash -= self.gross(px) * LEV_FUND * frac
@@ -383,18 +394,35 @@ def stats(curve, days_per_year=365):
                 maxdd=mdd * 100, sharpe=mean / sd * math.sqrt(days_per_year))
 
 
-def run_backtest(days=1900, progress=None, data=None):
+def run_backtest(days=2700, progress=None, data=None, hourly=None):
+    dfund, note_extra = None, ""
     if data is None:
         syms = universe()
-        if progress:
-            progress(f"Lade {len(syms)} Coins, {days} Tage ...")
-        data = load_history(syms, days)
-        if progress:
-            progress("Lade Meme-Coins ...")
-        mdata = load_history(MEMES, days)
-        hi = dict(data[3]["h"]); hi.update(mdata[3]["h"])
-        lo = dict(data[3]["l"]); lo.update(mdata[3]["l"])
-        data = data[:3] + (data[3], mdata[1], mdata[3]["v"], hi, lo)
+        try:
+            import hbt
+            hourly = hbt.load_all(syms, days, progress)
+        except Exception as e:
+            hourly = None
+            note_extra = f" Stundendaten nicht verfügbar ({e}), Tagesdaten verwendet."
+            days = min(days, 1900)
+        if hourly is not None:
+            n, dcl, dhi, dlo, dfund = hbt.derive_daily(hourly)
+            if progress:
+                progress("Lade Meme-Coins ...")
+            mdata = load_history(MEMES, days)
+            hi = dict(dhi); hi.update(mdata[3]["h"])
+            lo = dict(dlo); lo.update(mdata[3]["l"])
+            data = (n, dcl, hourly["start"], None, mdata[1], mdata[3]["v"], hi, lo)
+        else:
+            if progress:
+                progress(f"Lade {len(syms)} Coins, {days} Tage ...")
+            data = load_history(syms, days)
+            if progress:
+                progress("Lade Meme-Coins ...")
+            mdata = load_history(MEMES, days)
+            hi = dict(data[3]["h"]); hi.update(mdata[3]["h"])
+            lo = dict(data[3]["l"]); lo.update(mdata[3]["l"])
+            data = data[:3] + (data[3], mdata[1], mdata[3]["v"], hi, lo)
     n, closes, start, _v, memes, memv, HI, LO = (data + (None, None))[:8] if len(data) == 6 else data
     ctx = (memes, memv)
     allp = dict(closes)
@@ -406,7 +434,11 @@ def run_backtest(days=1900, progress=None, data=None):
         acc.lev = strat in LEV
         liq = None
         last_reb = -10 ** 9
-        for i in range(first, n - 1):
+        use_h = hourly is not None and (strat in LEV or strat in TRAIL or strat in RKEYS)
+        if use_h:
+            import hbt
+            curve, dayidx, acc, rebs, liq = hbt.sim_hourly(strat, hourly, closes, ctx, first)
+        for i in range(first, n - 1 if not use_h else first):
             px_i = {s: c[i] for s, c in allp.items() if c[i] is not None}
             if not acc.dead and i - last_reb >= PERIOD[strat]:
                 w = sized(strat, acc, px_i, closes, i, ctx)
@@ -427,7 +459,11 @@ def run_backtest(days=1900, progress=None, data=None):
                     acc.liquidate()
                     liq = time.strftime("%d.%m.%Y", time.gmtime((start + i + 1) * DAY))
             if not acc.dead:
-                acc.funding(px_n)
+                if dfund:
+                    rt = {sy: dfund[sy][i + 1] for sy in acc.pos if sy in dfund and dfund[sy][i + 1] is not None}
+                    acc.funding_real(px_n, rt)
+                else:
+                    acc.funding(px_n)
                 if acc.lev and acc.equity(px_n) <= 0:
                     acc.liquidate()
                     liq = time.strftime("%d.%m.%Y", time.gmtime((start + i + 1) * DAY))
@@ -452,8 +488,12 @@ def run_backtest(days=1900, progress=None, data=None):
         res[strat] = dict(name=NAMES[strat], **st)
     return dict(ts=time.time(), days=n, coins=len(closes), start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
                 results=res,
-                note="Korb-Strategien (R_) werden im Backtest mit Tagesdaten täglich rotiert, im Paper-Test alle 6 h. Universum = heutige Top-Coins nach Umsatz (Survivorship-Bias begünstigt Long-Strategien). "
-                     "Keine Parameter wurden angepasst. Short mit 0,03 % Funding pro Tag, Kosten 0,13 % pro Seite.")
+                hourly=bool(hourly), funding_real=bool(dfund),
+                note=("Stundenkerzen: Korb-Strategien rotieren alle 6 h, Trailing-Stops und Liquidationen werden stundengenau geprüft. "
+                      if hourly is not None else "Nur Tagesdaten: Korb-Strategien werden täglich statt alle 6 h gerechnet. ")
+                     + ("Funding mit echten Binance-Raten (wo vorhanden, sonst 0,03 % pro Tag). " if dfund else "Funding pauschal 0,03 % pro Tag. ")
+                     + "Universum = heutige Top-Coins nach Umsatz (Survivorship-Bias begünstigt Long-Strategien). "
+                     "Keine Parameter wurden angepasst. Kosten 0,13 % pro Seite." + note_extra)
 
 
 def run_and_save(path="backtest.json", progress=None):

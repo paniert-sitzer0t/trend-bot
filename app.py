@@ -116,7 +116,18 @@ if __name__ == "__main__":
     threading.Thread(target=fwd.run, daemon=True).start()
     import status
     threading.Thread(target=status.run, args=(lambda: compare(TOKEN),), daemon=True).start()
-    bt = load_bt()
-    if not bt or "error" in bt or "hourly" not in bt or time.time() - bt.get("ts", 0) > 7 * 86400:
-        run_bt()
+    def bt_scheduler():
+        """Backtest automatisch zweimal täglich (ab 01:30 und 13:30 UTC) und beim Start, wenn er fehlt oder alt ist."""
+        while True:
+            try:
+                bt = load_bt()
+                ts = (bt or {}).get("ts", 0)
+                now = time.time()
+                slot = now - ((now - 5400) % 43200)          # letzter Zeitpunkt 01:30 oder 13:30 UTC
+                if not BT["running"] and (not bt or "error" in bt or "hourly" not in bt or ts < slot):
+                    run_bt()
+            except Exception as e:
+                print("Backtest-Planer Fehler:", e, flush=True)
+            time.sleep(300)
+    threading.Thread(target=bt_scheduler, daemon=True).start()
     uvicorn.run(app, host=bot.env("HOST", "127.0.0.1"), port=int(bot.env("PORT", "8000")), log_level="warning")

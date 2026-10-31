@@ -20,8 +20,14 @@ NAMES = {
     "G": "G: wie B, Martingale x1,1 nach Verlustwoche",
     "H": "H: wie B, Martingale x1,4 nach Verlustwoche",
     "K": "K: Long-Momentum mit Trendfilter und Risikosteuerung (wöchentlich)",
+    "M": "M: Meme-Hype, Long am Folgetag (1 Tag Haltedauer)",
+    "N": "N: Meme-Hype, Gegenbewegung per Short (1 Tag)",
 }
-PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, "K": 7}
+MEMES = ["DOGEUSDT", "SHIBUSDT", "PEPEUSDT", "FLOKIUSDT", "BONKUSDT", "WIFUSDT", "BOMEUSDT", "MEMEUSDT", "TURBOUSDT",
+         "NEIROUSDT", "PNUTUSDT", "ACTUSDT", "MOODENGUSDT", "GOATUSDT", "PENGUUSDT", "TRUMPUSDT", "POPCATUSDT",
+         "MEWUSDT", "DOGSUSDT", "HMSTRUSDT", "ORDIUSDT", "1000SATSUSDT", "BRETTUSDT", "FARTCOINUSDT"]
+MEME_JUMP, MEME_VOL, MEME_EXPO = 0.20, 3.0, 0.20   # Tagesplus ab 20 %, Umsatz mindestens 3x Schnitt, 20 % je Coin
+PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, "K": 7, "M": 1, "N": 1}
 BASE = 0.35                          # Grundeinsatz der Martingale-Varianten (Anteil am Kapital)
 MARTI = {"F": 1.0, "G": 1.1, "H": 1.4}
 DAY = 86400
@@ -58,29 +64,36 @@ def universe():
 
 
 def load_history(syms, days):
-    """Gibt (Anzahl Tage, {symbol: [Schlusskurs oder None]}, erster Tag als Tagesnummer) zurück."""
+    """Gibt (Anzahl Tage, {symbol: [Schlusskurs oder None]}, erster Tag, {symbol: [Umsatz in USDT oder None]}) zurück.
+    Symbole, die es nicht gibt, bekommen nur None."""
     end = int(time.time() // DAY)            # heutiger (noch offener) Tag wird verworfen
     start = end - days
-    raw = {}
+    raw, rawv = {}, {}
     for s in syms:
-        cur, rows = start * DAY * 1000, {}
-        while True:
-            k = api("/api/v3/klines", {"symbol": s, "interval": "1d", "limit": 1000, "startTime": cur})
-            if not k:
-                break
-            for x in k:
-                d = int(x[0]) // 86400000
-                if d < end:
-                    rows[d] = float(x[4])
-            nxt = int(k[-1][0]) + 86400000
-            if len(k) < 1000 or nxt // 86400000 >= end:
-                break
-            cur = nxt
-            time.sleep(0.05)
-        raw[s] = rows
+        cur, rows, vrows = start * DAY * 1000, {}, {}
+        try:
+            while True:
+                k = api("/api/v3/klines", {"symbol": s, "interval": "1d", "limit": 1000, "startTime": cur})
+                if not k:
+                    break
+                for x in k:
+                    d = int(x[0]) // 86400000
+                    if d < end:
+                        rows[d] = float(x[4])
+                        vrows[d] = float(x[7])
+                nxt = int(k[-1][0]) + 86400000
+                if len(k) < 1000 or nxt // 86400000 >= end:
+                    break
+                cur = nxt
+                time.sleep(0.05)
+        except Exception:
+            if s == "BTCUSDT":
+                raise
+        raw[s], rawv[s] = rows, vrows
         time.sleep(0.05)
     closes = {s: [raw[s].get(start + i) for i in range(days)] for s in syms}
-    return days, closes, start
+    vols = {s: [rawv[s].get(start + i) for i in range(days)] for s in syms}
+    return days, closes, start, vols
 
 
 def ret(c, i, n):
@@ -88,6 +101,28 @@ def ret(c, i, n):
     if a is None or b is None or b <= 0:
         return None
     return a / b - 1
+
+
+def weights_meme(strat, ctx, i):
+    """Meme-Hype: Coin springt an einem Tag um 20 % oder mehr, bei mindestens 3-fachem Umsatz. Am Folgetag
+    M: Long (Hype geht weiter), N: Short (Hype kippt). Nur die 2 stärksten, je 20 % des Kapitals, 1 Tag Haltedauer."""
+    if not ctx:
+        return {}
+    memes, memv = ctx
+    hits = {}
+    for s, c in memes.items():
+        v = memv[s]
+        if i < 21 or c[i] is None or c[i - 1] is None or v[i] is None:
+            continue
+        past = [x for x in v[i - 20:i] if x]
+        if len(past) < 10:
+            continue
+        r1 = c[i] / c[i - 1] - 1
+        if r1 >= MEME_JUMP and v[i] >= MEME_VOL * sum(past) / len(past):
+            hits[s] = r1
+    top = sorted(hits, key=hits.get, reverse=True)[:2]
+    side = 1 if strat == "M" else -1
+    return {s: side * MEME_EXPO for s in top}
 
 
 def weights_k(closes, i):
@@ -120,13 +155,15 @@ def weights_k(closes, i):
     return {s: expo / len(top) for s in top}
 
 
-def weights(strat, closes, i):
+def weights(strat, closes, i, ctx=None):
     """Zielgewichte (positiv = Long, negativ = Short) auf Basis der Daten bis einschließlich Tag i."""
     btc = closes["BTCUSDT"]
     if strat == "E":
         return {"BTCUSDT": INVEST}
     if strat == "K":
         return weights_k(closes, i)
+    if strat in ("M", "N"):
+        return weights_meme(strat, ctx, i)
     scores = {}
     for s, c in closes.items():
         if c[i] is None:
@@ -159,10 +196,10 @@ def weights(strat, closes, i):
     return {}
 
 
-def sized(strat, acc, px, closes, i):
+def sized(strat, acc, px, closes, i, ctx=None):
     """Zielgewichte inklusive Martingale-Skalierung: Einsatz wächst nach jeder Verlustperiode um den Faktor,
     gedeckelt bei 95 % des Kapitals (1x Hebel), und springt nach einer Gewinnperiode auf den Grundeinsatz zurück."""
-    w = weights(strat, closes, i)
+    w = weights(strat, closes, i, ctx)
     if strat in MARTI:
         eq = acc.equity(px)
         if acc.last_eq is not None:
@@ -229,20 +266,27 @@ def run_backtest(days=1900, progress=None, data=None):
         if progress:
             progress(f"Lade {len(syms)} Coins, {days} Tage ...")
         data = load_history(syms, days)
-    n, closes, start = data
+        if progress:
+            progress("Lade Meme-Coins ...")
+        mdata = load_history(MEMES, days)
+        data = data + (mdata[1], mdata[3])
+    n, closes, start, _v, memes, memv = data
+    ctx = (memes, memv)
+    allp = dict(closes)
+    allp.update(memes)
     first = 31
     res = {}
     for strat in NAMES:
         acc, curve, dayidx, rebs = Account(100.0), [], [], 0
         last_reb = -10 ** 9
         for i in range(first, n - 1):
-            px_i = {s: c[i] for s, c in closes.items() if c[i] is not None}
+            px_i = {s: c[i] for s, c in allp.items() if c[i] is not None}
             if i - last_reb >= PERIOD[strat]:
-                w = sized(strat, acc, px_i, closes, i)
+                w = sized(strat, acc, px_i, closes, i, ctx)
                 acc.rebalance(px_i, w)
                 rebs += 1
                 last_reb = i
-            px_n = {s: (c[i + 1] if c[i + 1] is not None else px_i.get(s, 0)) for s, c in closes.items()}
+            px_n = {s: (c[i + 1] if c[i + 1] is not None else px_i.get(s, 0)) for s, c in allp.items()}
             acc.funding(px_n)
             curve.append(acc.equity(px_n))
             dayidx.append(start + i + 1)
@@ -306,7 +350,9 @@ class Forward:
             today = int(time.time() // DAY)
             done = int((self.get("_day") or 0))
             if today > done and time.time() % DAY > 600:
-                days, closes, _ = load_history(universe(), 260)
+                days, closes, _, _v = load_history(universe(), 260)
+                _d, memes, _s, memv = load_history(MEMES, 260)
+                ctx = (memes, memv)
                 i = days - 1
                 for k in NAMES:
                     s = self.get(k)
@@ -314,7 +360,7 @@ class Forward:
                     acc.costs = s["costs"]
                     if s["last_reb"] == 0 or today - s["last_reb"] >= PERIOD[k]:
                         if not (k == "E" and s["rebs"]):
-                            acc.rebalance(self.px, sized(k, acc, self.px, closes, i))
+                            acc.rebalance(self.px, sized(k, acc, self.px, closes, i, ctx))
                             s["rebs"] += 1
                         s["last_reb"] = today
                     acc.funding(self.px)

@@ -154,7 +154,9 @@ try { VIEW = localStorage.getItem('view') || 'home'; SEL = localStorage.getItem(
 
 var LABEL = {A:'Top-Mover täglich', D:'Gegenbewegung zu A', B:'Momentum Long und Short', C:'Momentum Long mit BTC-Filter',
   E:'Bitcoin halten', F:'B mit festem Einsatz', G:'B mit Martingale ×1,1', H:'B mit Martingale ×1,4',
-  K:'Trend-Momentum mit Risikosteuerung', M:'Meme-Hype Long', N:'Meme-Hype Short', ORIG:'Hauptbot, 8-h-Rotation'};
+  K:'Trend-Momentum mit Risikosteuerung', M:'Meme-Hype Long', N:'Meme-Hype Short', ORIG:'Hauptbot, 8-h-Rotation',
+  E2:'Bitcoin halten, 2x Hebel', E3:'Bitcoin halten, 3x Hebel', T3:'Bitcoin 3x mit Trendfilter', T5:'Bitcoin 5x mit Trendfilter',
+  K2:'Strategie K mit 2x Hebel', K3:'Strategie K mit 3x Hebel', B2:'Strategie B mit 2x Hebel', X10:'Bitcoin 10x, Ausbruchs-Trend', X25:'Bitcoin 25x, Ausbruchs-Trend'};
 var INFO = {A:'Kauft oder shortet täglich die 3 Coins mit der größten 24-Stunden-Bewegung.',
   D:'Macht bei A genau das Gegenteil.', B:'Wöchentlich: 3 Gewinner long, 3 Verlierer short, nach 7- und 30-Tage-Trend.',
   C:'Wöchentlich 3 Gewinner long, aber nur wenn Bitcoin über der 200-Tage-Linie liegt.', E:'Vergleichswert: Bitcoin kaufen und liegen lassen.',
@@ -162,9 +164,14 @@ var INFO = {A:'Kauft oder shortet täglich die 3 Coins mit der größten 24-Stun
   H:'Wie F, der Einsatz wächst nach jeder Verlustwoche um 40 %.',
   K:'Nur Long, nur im Aufwärtstrend, Ranking ohne den letzten Tag, weniger Einsatz bei hoher Schwankung.',
   M:'Nach einem Meme-Sprung von 20 % mit hohem Umsatz am Folgetag long.', N:'Nach demselben Sprung am Folgetag short.',
-  ORIG:'Der echte Paper-Bot mit Rotation alle 8 Stunden.'};
-var KEYS = ['A','D','B','C','E','F','G','H','K','M','N','ORIG'];
-var COL = {A:'#7aa7ff',D:'#ff6b6b',B:'#f5c451',C:'#3ddc97',E:'#d6dbe6',F:'#b58cff',G:'#ff9f6b',H:'#ff7ac8',K:'#2ee6d6',M:'#9be15d',N:'#ff8a8a',ORIG:'#ffffff'};
+  ORIG:'Der echte Paper-Bot mit Rotation alle 8 Stunden.',
+  E2:'Bitcoin kaufen und halten, mit doppeltem Hebel.', E3:'Bitcoin kaufen und halten, mit dreifachem Hebel.',
+  T3:'Täglich geprüft: 3x long, solange Bitcoin über der 200-Tage-Linie liegt, sonst in bar.', T5:'Wie T3 mit 5x Hebel.',
+  K2:'Strategie K, aber mit doppeltem Einsatz auf Kredit.', K3:'Strategie K, aber mit dreifachem Einsatz auf Kredit.', B2:'Strategie B (Long und Short), aber mit doppeltem Einsatz.',
+  X10:'Bitcoin 10x long, solange er über der 50-Tage-Linie liegt und die letzte Woche im Plus war.', X25:'Wie X10, aber mit 25x Hebel. Ein Rückgang von etwa 4 % löscht das Konto.'};
+var KEYS = ['A','D','B','C','E','F','G','H','K','M','N','E2','E3','T3','T5','K2','K3','B2','X10','X25','ORIG'];
+var LEVF = 'all';
+var COL = {A:'#7aa7ff',D:'#ff6b6b',B:'#f5c451',C:'#3ddc97',E:'#d6dbe6',F:'#b58cff',G:'#ff9f6b',H:'#ff7ac8',K:'#2ee6d6',M:'#9be15d',N:'#ff8a8a',ORIG:'#ffffff',E2:'#a3b8ff',E3:'#6f8dff',T3:'#7ef0b2',T5:'#34c98a',K2:'#5ff2e4',K3:'#16b5a8',B2:'#ffd877',X10:'#ff9a5c',X25:'#ff5c5c'};
 
 function $(id){return document.getElementById(id)}
 function f(x,d){d=d===undefined?2:d;return Number(x).toLocaleString('de-AT',{minimumFractionDigits:d,maximumFractionDigits:d})}
@@ -189,6 +196,13 @@ function show(){
   document.querySelectorAll('#nav button').forEach(function(b){ b.classList.toggle('on', b.dataset.v == VIEW); });
 }
 document.querySelectorAll('#nav button').forEach(function(b){ b.onclick = function(){ go(b.dataset.v); }; });
+function setLev(k){ LEVF = k; render(); }
+function levBadges(r){
+  var o = '';
+  if (r.lev > 1) o += '<span class="tag" style="background:rgba(245,196,81,.16);color:var(--warn)">'+r.lev+'x Hebel</span>';
+  if (SORT == 'bt' ? r.liqBt : r.liqFw) o += '<span class="tag short">Liquidiert'+(SORT == 'bt' ? ' '+r.liqBt : '')+'</span>';
+  return o;
+}
 function setSort(k){ SORT = k; try { localStorage.setItem('sort', k) } catch (e) {} render(); }
 function pick(k){ SEL = k; try { localStorage.setItem('sel', k) } catch (e) {} VIEW = 'strat'; try { localStorage.setItem('view', 'strat') } catch (e) {} show(); render(); window.scrollTo(0, 0); }
 function setCh(k){ CH = k; render(); }
@@ -216,18 +230,20 @@ function rows(){
   var c = CMP, b = c.backtest && !c.backtest.error ? c.backtest.results : null;
   return c.forward.map(function(x){
     var r = b && b[x.key] ? b[x.key] : null;
-    return {k: x.key, eq: x.equity, pct: x.pct, bt: r ? r.total : null, dd: r ? r.maxdd : null, sh: r ? r.sharpe : null, cagr: r ? r.cagr : null};
+    return {k: x.key, eq: x.equity, pct: x.pct, bt: r ? r.total : null, dd: r ? r.maxdd : null, sh: r ? r.sharpe : null, cagr: r ? r.cagr : null, lev: x.lev || 1, liqBt: r ? r.liquidated : null, liqFw: x.liq || null, best: r ? r.best_year : null};
   });
 }
 function sorted(){
-  var rs = rows();
+  var rs = rows().filter(function(r){ return LEVF == 'all' || (LEVF == 'lev' ? r.lev > 1 : r.lev == 1); });
   rs.sort(function(a, z){ var u = SORT == 'bt' ? a.bt : a.pct, v = SORT == 'bt' ? z.bt : z.pct; return (v === null ? -1e18 : v) - (u === null ? -1e18 : u); });
   return rs;
 }
 function renderHome(){
   var h = '';
   if (!CMP) { $('v-home').innerHTML = '<div class="empty">Daten werden geladen</div>'; return; }
-  var rs = sorted(), lead = rs[0], val = SORT == 'bt' ? lead.bt : lead.pct;
+  var rs = sorted();
+  if (!rs.length) { rs = rows(); }
+  var lead = rs[0], val = SORT == 'bt' ? lead.bt : lead.pct;
   var mx = 0; rs.forEach(function(r){ var v = SORT == 'bt' ? r.bt : r.pct; if (v !== null) mx = Math.max(mx, Math.abs(v)); }); mx = mx || 1;
   h += '<h2>Welche Strategie gewinnt?</h2>';
   h += '<div class="card hero"><div class="lead">'+(SORT == 'bt' ? 'Vorne im Backtest seit '+(CMP.backtest ? CMP.backtest.start : '') : 'Vorne im Paper-Test')+'</div>';
@@ -235,12 +251,13 @@ function renderHome(){
   h += '<div class="big num '+(val === null ? 'mut' : cl(val))+'">'+(val === null ? '–' : sg(val, SORT == 'bt' ? 0 : 2)+' %')+'</div>';
   h += '<div class="meta">'+(SORT == 'bt' ? 'Rechnung mit Gebühren, ohne Zukunftswissen' : 'Seit Start mit '+f(CMP.start, 0)+' USDT je Strategie')+'</div>';
   h += '<div class="seg"><button class="'+(SORT == 'pct' ? 'on' : '')+'" onclick="setSort(\'pct\')">Paper-Test</button><button class="'+(SORT == 'bt' ? 'on' : '')+'" onclick="setSort(\'bt\')">Backtest</button></div></div>';
-  h += '<div class="card flat"><ul class="rank">';
+  h += '<div class="seg" style="margin-top:0"><button class="'+(LEVF == 'all' ? 'on' : '')+'" onclick="setLev(\'all\')">Alle</button><button class="'+(LEVF == 'spot' ? 'on' : '')+'" onclick="setLev(\'spot\')">Ohne Hebel</button><button class="'+(LEVF == 'lev' ? 'on' : '')+'" onclick="setLev(\'lev\')">Mit Hebel</button></div>';
+  h += '<div class="card flat" style="margin-top:12px"><ul class="rank">';
   rs.forEach(function(r, i){
     var v = SORT == 'bt' ? r.bt : r.pct, o = SORT == 'bt' ? r.pct : r.bt;
     var w = v === null ? 0 : Math.min(50, Math.abs(v) / mx * 50);
     var bar = v === null ? '' : '<i style="background:'+(v >= 0 ? 'var(--pos)' : 'var(--neg)')+';width:'+w+'%;'+(v >= 0 ? 'left:50%' : 'left:'+(50 - w)+'%')+'"></i>';
-    h += '<li><button class="row" onclick="pick(\''+r.k+'\')"><span class="no num">'+(i + 1)+'</span><span class="t">'+LABEL[r.k]+'</span>';
+    h += '<li><button class="row" onclick="pick(\''+r.k+'\')"><span class="no num">'+(i + 1)+'</span><span class="t">'+LABEL[r.k]+levBadges(r)+'</span>';
     h += '<span class="v num '+(v === null ? 'mut' : cl(v))+'">'+(v === null ? '–' : sg(v, SORT == 'bt' ? 0 : 2)+' %')+'</span>';
     h += '<span class="bar"><b></b>'+bar+'</span></button></li>';
   });
@@ -277,6 +294,12 @@ function renderStrat(){
     if (x) {
       var r = b && b[x.key] ? b[x.key] : null;
       h += '<div class="card"><div style="font:700 20px var(--head);letter-spacing:-.01em">'+LABEL[x.key]+'</div><div class="mut" style="margin-top:4px">'+INFO[x.key]+'</div></div>';
+      if (x.lev > 1) {
+        var lq = r && r.liquidated, fq = x.liq;
+        h += '<div class="card" style="border-color:'+(lq || fq ? 'var(--neg)' : 'var(--warn)')+'"><div style="font-weight:700">'+x.lev+'x Hebel: ca. '+f(100 / x.lev, 0)+' % Kursrückgang löschen das Konto</div><div class="mut" style="margin-top:4px">'
+          + (r ? (lq ? 'Im Backtest wäre das Konto am '+lq+' liquidiert worden.' : 'Im Backtest wäre das Konto nicht liquidiert worden (Tageshoch und Tagestief berücksichtigt).') : 'Backtest noch nicht fertig.')
+          + (fq ? ' Im Paper-Test liquidiert am '+fmtT(fq)+'.' : '') + '</div></div>';
+      }
       h += '<div class="tiles"><div class="tile"><div class="k">Paper-Konto</div><div class="v num">'+f(x.equity)+' USDT</div></div>';
       h += '<div class="tile"><div class="k">Ergebnis</div><div class="v num '+cl(x.pct)+'">'+sg(x.pct)+' %</div></div>';
       h += '<div class="tile"><div class="k">Anpassungen</div><div class="v num">'+x.rebalances+'</div></div>';
@@ -288,7 +311,8 @@ function renderStrat(){
       h += '</div>';
       if (r && CH == 'bt') {
         h += '<div class="tiles"><div class="tile"><div class="k">Gesamt</div><div class="v num '+cl(r.total)+'">'+sg(r.total, 0)+' %</div></div><div class="tile"><div class="k">Pro Jahr</div><div class="v num '+cl(r.cagr)+'">'+sg(r.cagr, 0)+' %</div></div>';
-        h += '<div class="tile"><div class="k">Größter Rückgang</div><div class="v num neg">'+f(r.maxdd, 0)+' %</div></div><div class="tile"><div class="k">Sharpe-Wert</div><div class="v num">'+f(r.sharpe)+'</div></div></div>';
+        h += '<div class="tile"><div class="k">Größter Rückgang</div><div class="v num neg">'+f(r.maxdd, 0)+' %</div></div><div class="tile"><div class="k">Sharpe-Wert</div><div class="v num">'+f(r.sharpe)+'</div></div>';
+        h += '<div class="tile"><div class="k">Bestes Jahr</div><div class="v num '+cl(r.best_year)+'">'+sg(r.best_year, 0)+' %</div></div><div class="tile"><div class="k">Liquidiert</div><div class="v num '+(r.liquidated ? 'neg' : 'pos')+'">'+(r.liquidated || 'nein')+'</div></div></div>';
         h += '<h2>Ergebnis pro Jahr</h2><div class="years">'+Object.keys(r.years).map(function(y){ return '<div><span>'+y+'</span><b class="num '+cl(r.years[y])+'">'+sg(r.years[y], 0)+' %</b></div>'; }).join('')+'</div>';
       }
       h += '<h2>Offene Positionen</h2><div class="card flat"><ul class="list">';

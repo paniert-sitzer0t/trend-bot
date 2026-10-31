@@ -22,12 +22,26 @@ NAMES = {
     "K": "K: Long-Momentum mit Trendfilter und Risikosteuerung (wöchentlich)",
     "M": "M: Meme-Hype, Long am Folgetag (1 Tag Haltedauer)",
     "N": "N: Meme-Hype, Gegenbewegung per Short (1 Tag)",
+    "E2": "E2: BTC halten mit 2x Hebel",
+    "E3": "E3: BTC halten mit 3x Hebel",
+    "T3": "T3: BTC 3x Hebel mit Trendfilter",
+    "T5": "T5: BTC 5x Hebel mit Trendfilter",
+    "K2": "K2: Strategie K mit 2x Hebel",
+    "K3": "K3: Strategie K mit 3x Hebel",
+    "B2": "B2: Strategie B mit 2x Hebel",
+    "X10": "X10: BTC 10x Hebel, Ausbruchs-Trend",
+    "X25": "X25: BTC 25x Hebel, Ausbruchs-Trend",
 }
+LEV = {"E2": 2, "E3": 3, "T3": 3, "T5": 5, "K2": 2, "K3": 3, "B2": 2, "X10": 10, "X25": 25}
+BASEOF = {"E2": "E", "E3": "E", "T3": "TREND", "T5": "TREND", "K2": "K", "K3": "K", "B2": "B", "X10": "X", "X25": "X"}
+MM = 0.005              # Erhaltungsmarge 0,5 % des Positionswerts: darunter wird liquidiert
+LEV_FUND = 0.0003       # Funding und Zinsen auf den gesamten Positionswert bei Hebel, pro Tag
 MEMES = ["DOGEUSDT", "SHIBUSDT", "PEPEUSDT", "FLOKIUSDT", "BONKUSDT", "WIFUSDT", "BOMEUSDT", "MEMEUSDT", "TURBOUSDT",
          "NEIROUSDT", "PNUTUSDT", "ACTUSDT", "MOODENGUSDT", "GOATUSDT", "PENGUUSDT", "TRUMPUSDT", "POPCATUSDT",
          "MEWUSDT", "DOGSUSDT", "HMSTRUSDT", "ORDIUSDT", "1000SATSUSDT", "BRETTUSDT", "FARTCOINUSDT"]
 MEME_JUMP, MEME_VOL, MEME_EXPO = 0.20, 3.0, 0.20   # Tagesplus ab 20 %, Umsatz mindestens 3x Schnitt, 20 % je Coin
-PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, "K": 7, "M": 1, "N": 1}
+PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, "K": 7, "M": 1, "N": 1,
+          "E2": 10 ** 9, "E3": 10 ** 9, "T3": 1, "T5": 1, "K2": 7, "K3": 7, "B2": 7, "X10": 1, "X25": 1}
 BASE = 0.35                          # Grundeinsatz der Martingale-Varianten (Anteil am Kapital)
 MARTI = {"F": 1.0, "G": 1.1, "H": 1.4}
 DAY = 86400
@@ -64,13 +78,13 @@ def universe():
 
 
 def load_history(syms, days):
-    """Gibt (Anzahl Tage, {symbol: [Schlusskurs oder None]}, erster Tag, {symbol: [Umsatz in USDT oder None]}) zurück.
+    """Gibt (Anzahl Tage, {symbol: [Schlusskurs oder None]}, erster Tag, {"v": Umsatz, "h": Hoch, "l": Tief je Symbol}) zurück.
     Symbole, die es nicht gibt, bekommen nur None."""
     end = int(time.time() // DAY)            # heutiger (noch offener) Tag wird verworfen
     start = end - days
-    raw, rawv = {}, {}
+    raw, rawv, rawh, rawl = {}, {}, {}, {}
     for s in syms:
-        cur, rows, vrows = start * DAY * 1000, {}, {}
+        cur, rows, vrows, hrows, lrows = start * DAY * 1000, {}, {}, {}, {}
         try:
             while True:
                 k = api("/api/v3/klines", {"symbol": s, "interval": "1d", "limit": 1000, "startTime": cur})
@@ -81,6 +95,7 @@ def load_history(syms, days):
                     if d < end:
                         rows[d] = float(x[4])
                         vrows[d] = float(x[7])
+                        hrows[d], lrows[d] = float(x[2]), float(x[3])
                 nxt = int(k[-1][0]) + 86400000
                 if len(k) < 1000 or nxt // 86400000 >= end:
                     break
@@ -89,11 +104,13 @@ def load_history(syms, days):
         except Exception:
             if s == "BTCUSDT":
                 raise
-        raw[s], rawv[s] = rows, vrows
+        raw[s], rawv[s], rawh[s], rawl[s] = rows, vrows, hrows, lrows
         time.sleep(0.05)
     closes = {s: [raw[s].get(start + i) for i in range(days)] for s in syms}
-    vols = {s: [rawv[s].get(start + i) for i in range(days)] for s in syms}
-    return days, closes, start, vols
+    ext = dict(v={s: [rawv[s].get(start + i) for i in range(days)] for s in syms},
+               h={s: [rawh[s].get(start + i) for i in range(days)] for s in syms},
+               l={s: [rawl[s].get(start + i) for i in range(days)] for s in syms})
+    return days, closes, start, ext
 
 
 def ret(c, i, n):
@@ -158,7 +175,19 @@ def weights_k(closes, i):
 def weights(strat, closes, i, ctx=None):
     """Zielgewichte (positiv = Long, negativ = Short) auf Basis der Daten bis einschließlich Tag i."""
     btc = closes["BTCUSDT"]
+    if strat in LEV:
+        base = weights(BASEOF[strat], closes, i, ctx)
+        return {s: v * LEV[strat] for s, v in base.items()}
     if strat == "E":
+        return {"BTCUSDT": INVEST}
+    if strat in ("TREND", "X"):
+        n = 200 if strat == "TREND" else 50
+        win = [x for x in btc[max(0, i - n + 1):i + 1] if x is not None]
+        r7 = ret(btc, i, 7)
+        if btc[i] is None or i < n or len(win) < n * 0.75 or btc[i] <= sum(win) / len(win):
+            return {}
+        if strat == "X" and (r7 is None or r7 <= 0):
+            return {}
         return {"BTCUSDT": INVEST}
     if strat == "K":
         return weights_k(closes, i)
@@ -216,6 +245,18 @@ class Account:
     def __init__(self, cash, pos=None, losses=0, last_eq=None):
         self.cash, self.pos, self.costs = cash, dict(pos or {}), 0.0
         self.losses, self.last_eq = losses, last_eq
+        self.dead, self.lev = False, False
+
+    def gross(self, px):
+        return sum(abs(q) * px.get(s, 0) for s, q in self.pos.items())
+
+    def liquidated(self, px_worst):
+        """True, wenn das Eigenkapital im ungünstigsten Kurs unter die Erhaltungsmarge fällt."""
+        g = self.gross(px_worst)
+        return g > 0 and self.equity(px_worst) <= MM * g
+
+    def liquidate(self):
+        self.cash, self.pos, self.dead = 0.0, {}, True
 
     def equity(self, px):
         return self.cash + sum(q * px.get(s, 0) for s, q in self.pos.items())
@@ -239,6 +280,9 @@ class Account:
                 self.pos[s] = target
 
     def funding(self, px):
+        if self.lev:
+            self.cash -= self.gross(px) * LEV_FUND
+            return
         short = sum(-q * px.get(s, 0) for s, q in self.pos.items() if q < 0)
         self.cash -= short * SHORT_FUND
 
@@ -248,7 +292,7 @@ def stats(curve, days_per_year=365):
     c = [x for x in curve if x is not None]
     if len(c) < 3:
         return {}
-    rets = [c[i] / c[i - 1] - 1 for i in range(1, len(c))]
+    rets = [(c[i] / c[i - 1] - 1) if c[i - 1] > 0 else 0.0 for i in range(1, len(c))]
     mean = sum(rets) / len(rets)
     sd = math.sqrt(sum((r - mean) ** 2 for r in rets) / len(rets)) or 1e-12
     peak, mdd = c[0], 0.0
@@ -269,8 +313,10 @@ def run_backtest(days=1900, progress=None, data=None):
         if progress:
             progress("Lade Meme-Coins ...")
         mdata = load_history(MEMES, days)
-        data = data + (mdata[1], mdata[3])
-    n, closes, start, _v, memes, memv = data
+        hi = dict(data[3]["h"]); hi.update(mdata[3]["h"])
+        lo = dict(data[3]["l"]); lo.update(mdata[3]["l"])
+        data = data[:3] + (data[3], mdata[1], mdata[3]["v"], hi, lo)
+    n, closes, start, _v, memes, memv, HI, LO = (data + (None, None))[:8] if len(data) == 6 else data
     ctx = (memes, memv)
     allp = dict(closes)
     allp.update(memes)
@@ -278,17 +324,31 @@ def run_backtest(days=1900, progress=None, data=None):
     res = {}
     for strat in NAMES:
         acc, curve, dayidx, rebs = Account(100.0), [], [], 0
+        acc.lev = strat in LEV
+        liq = None
         last_reb = -10 ** 9
         for i in range(first, n - 1):
             px_i = {s: c[i] for s, c in allp.items() if c[i] is not None}
-            if i - last_reb >= PERIOD[strat]:
+            if not acc.dead and i - last_reb >= PERIOD[strat]:
                 w = sized(strat, acc, px_i, closes, i, ctx)
                 acc.rebalance(px_i, w)
                 rebs += 1
                 last_reb = i
             px_n = {s: (c[i + 1] if c[i + 1] is not None else px_i.get(s, 0)) for s, c in allp.items()}
-            acc.funding(px_n)
-            curve.append(acc.equity(px_n))
+            if not acc.dead and acc.pos:
+                worst = {}
+                for sy, q in acc.pos.items():
+                    ex = ((LO if q > 0 else HI) or {}).get(sy)
+                    worst[sy] = (ex[i + 1] if ex and ex[i + 1] else None) or px_n.get(sy, 0)
+                if acc.liquidated(worst):
+                    acc.liquidate()
+                    liq = time.strftime("%d.%m.%Y", time.gmtime((start + i + 1) * DAY))
+            if not acc.dead:
+                acc.funding(px_n)
+                if acc.lev and acc.equity(px_n) <= 0:
+                    acc.liquidate()
+                    liq = time.strftime("%d.%m.%Y", time.gmtime((start + i + 1) * DAY))
+            curve.append(0.0 if acc.dead else acc.equity(px_n))
             dayidx.append(start + i + 1)
         st = stats([100.0] + curve)
         years = {}
@@ -298,12 +358,14 @@ def run_backtest(days=1900, progress=None, data=None):
             years[y][1] = e
         prev, out = 100.0, {}
         for y in sorted(years):
-            out[str(y)] = (years[y][1] / prev - 1) * 100
+            out[str(y)] = (years[y][1] / prev - 1) * 100 if prev > 0 else 0.0
             prev = years[y][1]
         pts = [[d, round(e, 2)] for k2, (d, e) in enumerate(zip(dayidx, curve)) if k2 % 7 == 0]
         if curve and (len(curve) - 1) % 7:
             pts.append([dayidx[-1], round(curve[-1], 2)])
-        st.update(years=out, costs=acc.costs, rebalances=rebs, final=curve[-1] if curve else 100.0, curve=pts)
+        peak_year = max(out.values()) if out else 0.0
+        st.update(years=out, costs=acc.costs, rebalances=rebs, final=curve[-1] if curve else 100.0, curve=pts,
+                  leverage=LEV.get(strat, 1), liquidated=liq, best_year=peak_year)
         res[strat] = dict(name=NAMES[strat], **st)
     return dict(ts=time.time(), days=n, coins=len(closes), start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
                 results=res,
@@ -353,16 +415,19 @@ class Forward:
             today = int(time.time() // DAY)
             done = int((self.get("_day") or 0))
             if today > done and time.time() % DAY > 600:
-                days, closes, _, _v = load_history(universe(), 260)
-                _d, memes, _s, memv = load_history(MEMES, 260)
-                ctx = (memes, memv)
+                days, closes, _, _x = load_history(universe(), 260)
+                _d, memes, _s, mext = load_history(MEMES, 260)
+                ctx = (memes, mext["v"])
                 i = days - 1
                 for k in NAMES:
                     s = self.get(k)
                     acc = Account(s["cash"], s["pos"], s.get("losses", 0), s.get("last_eq"))
                     acc.costs = s["costs"]
+                    acc.lev = k in LEV
+                    if s.get("dead"):
+                        continue
                     if s["last_reb"] == 0 or today - s["last_reb"] >= PERIOD[k]:
-                        if not (k == "E" and s["rebs"]):
+                        if not (PERIOD[k] >= 10 ** 9 and s["rebs"]):
                             acc.rebalance(self.px, sized(k, acc, self.px, closes, i, ctx))
                             s["rebs"] += 1
                         s["last_reb"] = today
@@ -370,6 +435,14 @@ class Forward:
                     s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs, losses=acc.losses, last_eq=acc.last_eq)
                     self.put(k, s)
                 self.put("_day", today)
+            for k in NAMES:                  # Liquidationsprüfung mit dem aktuellen Kurs
+                s = self.get(k)
+                if s.get("dead") or not s["pos"]:
+                    continue
+                a = Account(s["cash"], s["pos"])
+                if a.liquidated(self.px):
+                    s.update(cash=0.0, pos={}, dead=True, liq_ts=time.time())
+                    self.put(k, s)
             now = time.time()
             if now - self.last_eq > 600:
                 self.last_eq = now
@@ -390,7 +463,8 @@ class Forward:
                 cv = [[r[0], r[1]] for r in self.db.execute(
                     "SELECT ts, v FROM (SELECT ts, v FROM eq WHERE k=? ORDER BY ts DESC LIMIT 500) ORDER BY ts", (k,))]
                 out.append(dict(key=k, name=NAMES[k], curve=cv, equity=eq, pnl=eq - self.start, pct=(eq / self.start - 1) * 100,
-                                positions=pos, rebalances=s["rebs"], costs=s["costs"]))
+                                positions=pos, rebalances=s["rebs"], costs=s["costs"], lev=LEV.get(k, 1),
+                                liq=s.get("liq_ts")))
             return out
 
     def run(self):

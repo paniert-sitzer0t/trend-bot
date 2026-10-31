@@ -62,6 +62,42 @@ NAMES.update({
     "NL2_3": "NL2_3: NL2 mit 3x Hebel", "NL1_5": "NL1_5: NL1 mit 5x Hebel",
 })
 _POOL = {}
+_EXT = {}                   # Zusatzdaten für die Strategien: v (Umsatz), h/l (Hoch/Tief), f (Funding je Tag), day0
+# Ideen-Strategien (recherchierte Anomalien und kreative Ansätze)
+IDEAS = {
+    "DON": "DON: Bitcoin Donchian-Ausbruch 20/10 (Turtle), nur Long",
+    "DONLS": "DONLS: Bitcoin Donchian-Ausbruch 20/10, Long und Short",
+    "GX": "GX: Bitcoin Golden Cross (50 über 200 Tage), sonst bar",
+    "GXLS": "GXLS: Bitcoin Golden Cross Long, Death Cross Short",
+    "RSI2": "RSI2: Bitcoin Rücksetzer kaufen (RSI 2 unter 10 im Aufwärtstrend), Ausstieg über 5-Tage-Linie",
+    "VT": "VT: Bitcoin mit Volatilitätssteuerung, Ziel 50 % Schwankung, bis 1,9x Hebel",
+    "HALV": "HALV: Bitcoin-Halving-Zyklus, 12 Monate vor bis 18 Monate nach dem Halving long",
+    "TOM": "TOM: Monatswechsel, Bitcoin nur vom 28. bis 3. halten",
+    "ETHBTC": "ETHBTC: Rotation Ethereum oder Bitcoin nach ETH/BTC-Trend",
+    "DM": "DM: Dual Momentum BTC/ETH/BNB, stärkster der letzten 60 Tage, sonst bar",
+    "MOM28": "MOM28: Querschnitts-Momentum 28 Tage, Top 5 Long, wöchentlich",
+    "MOM7": "MOM7: Querschnitts-Momentum 7 Tage, Top 5 Long, wöchentlich",
+    "TSM": "TSM: Zeitreihen-Momentum je Coin (28 Tage), Long oder Short, nach Risiko gewichtet",
+    "LVOL": "LVOL: Niedrig-Volatilitäts-Anomalie, 5 ruhigste Coins Long, wöchentlich",
+    "MAXLS": "MAXLS: Lotterie-Effekt, Short auf Coins mit größtem Tagessprung, Long auf die ruhigsten",
+    "MAXM": "MAXM: MAX-Momentum, Long auf Coins mit größtem Tagessprung der letzten 30 Tage",
+    "H180": "H180: Nähe zum 180-Tage-Hoch, Top 5 Long im Aufwärtstrend",
+    "VBRK": "VBRK: Volumen-Ausbruch (3x Umsatz und +5 %), 3 Tage halten",
+    "ALTS": "ALTS: Altcoin-Saison-Schalter, Altcoin-Momentum oder Bitcoin",
+    "FCON": "FCON: Funding-Kontra, Short auf überhitzte Longs, Long auf überhitzte Shorts",
+    "FCAR": "FCAR: Funding-Carry marktneutral (Spot long, Future short), Top 5 Funding",
+    "H22": "H22: Bitcoin nur 22 bis 24 Uhr UTC halten (Tageszeit-Effekt)",
+    "OVN": "OVN: Bitcoin über Nacht (21 bis 14 Uhr UTC) nach 10-Tage-Hoch, Mo/Di/Fr",
+    "DON_3": "DON_3: Donchian-Ausbruch mit 3x Hebel",
+    "GX_3": "GX_3: Golden Cross mit 3x Hebel",
+    "H180_2": "H180_2: 180-Tage-Hoch mit 2x Hebel",
+    "MOM28_T20": "MOM28_T20: Momentum 28 Tage mit Trailing-Stop 20 %",
+}
+NAMES.update(IDEAS)
+HOURK = {"H22", "OVN"}      # stundengenaue Strategien
+CARRY = {"FCAR"}            # marktneutral, verdient nur Funding
+MAJORS = {"BTCUSDT", "ETHUSDT"}
+SLIP_MAJOR = 0.0002         # Slippage für BTC/ETH (sehr liquide), sonst SLIP
 # Trailing-Stop-Varianten: Schluessel -> (Basisstrategie, Abstand zum Hoechst- bzw. Tiefstkurs, Hebel)
 TRAIL = {
     "K_T8": ("K", 0.08, 1), "K_T15": ("K", 0.15, 1), "B_T8": ("B", 0.08, 1), "B_T15": ("B", 0.15, 1),
@@ -69,7 +105,7 @@ TRAIL = {
     "BTC_T10": ("TREND", 0.10, 1), "BTC_T20": ("TREND", 0.20, 1),
     "R_TL5_T5": ("R_TL5", 0.05, 1), "R_TB5_T5": ("R_TB5", 0.05, 1), "R_CL5_T5": ("R_CL5", 0.05, 1),
     "R_CS5_T5": ("R_CS5", 0.05, 1), "R_TL10_T8": ("R_TL10", 0.08, 1),
-    "T3_T5": ("TREND", 0.05, 3), "RG1_T10": ("RG1", 0.10, 1), "NL1_T15": ("NL1", 0.15, 1), "NL2_T20": ("NL2", 0.20, 1), "RG2_T10": ("RG2", 0.10, 1), "X10_T3": ("X", 0.03, 10),
+    "T3_T5": ("TREND", 0.05, 3), "RG1_T10": ("RG1", 0.10, 1), "NL1_T15": ("NL1", 0.15, 1), "MOM28_T20": ("MOM28", 0.20, 1), "NL2_T20": ("NL2", 0.20, 1), "RG2_T10": ("RG2", 0.10, 1), "X10_T3": ("X", 0.03, 10),
 }
 _BN = {"TREND": "BTC über 200-Tage-Linie", "X": "BTC Ausbruchs-Trend"}
 for _k, (_b, _p, _l) in TRAIL.items():
@@ -80,8 +116,8 @@ for _k, (_b, _p, _l) in TRAIL.items():
     BASEOF[_k] = _b
     if _l > 1:
         LEV[_k] = _l
-LEV.update({"RG1_2": 2, "RG2_3": 3, "NL2_3": 3, "NL1_5": 5})
-BASEOF.update({"RG1_2": "RG1", "RG2_3": "RG2", "NL2_3": "NL2", "NL1_5": "NL1"})
+LEV.update({"RG1_2": 2, "RG2_3": 3, "NL2_3": 3, "NL1_5": 5, "DON_3": 3, "GX_3": 3, "H180_2": 2, "VT": 2})
+BASEOF.update({"RG1_2": "RG1", "RG2_3": "RG2", "NL2_3": "NL2", "NL1_5": "NL1", "DON_3": "DON", "GX_3": "GX", "H180_2": "H180", "VT": "VTB"})
 EXCLUDE = {"SOXLBUSDT", "XAUTUSDT"}   # Tokenisierte Börsen- und Rohstoffprodukte, keine normalen Coins
 MM = 0.005              # Erhaltungsmarge 0,5 % des Positionswerts: darunter wird liquidiert
 LEV_FUND = 0.0003       # Funding und Zinsen auf den gesamten Positionswert bei Hebel, pro Tag
@@ -92,6 +128,9 @@ MEME_JUMP, MEME_VOL, MEME_EXPO = 0.20, 3.0, 0.20   # Tagesplus ab 20 %, Umsatz m
 PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, "K": 7, "M": 1, "N": 1,
           "E2": 10 ** 9, "E3": 10 ** 9, "T3": 1, "T5": 1, "K2": 7, "K3": 7, "B2": 7, "X10": 1, "X25": 1}
 PERIOD.update({k: 1 for k in RKEYS})
+PERIOD.update({"DON": 1, "DONLS": 1, "GX": 1, "GXLS": 1, "RSI2": 1, "VT": 1, "HALV": 1, "TOM": 1, "ETHBTC": 1, "DM": 7,
+               "MOM28": 7, "MOM7": 7, "TSM": 7, "LVOL": 7, "MAXLS": 7, "MAXM": 7, "H180": 7, "VBRK": 1, "ALTS": 7, "FCON": 3,
+               "FCAR": 1, "H22": 1, "OVN": 1, "DON_3": 1, "GX_3": 1, "H180_2": 7})
 PERIOD.update({k: 1 for k in ("NL1", "NL2", "NL3", "NL4", "NL5", "NL2_3", "NL1_5")})
 PERIOD.update({"RG1": 3, "RG2": 1, "RG3": 3, "RG4": 3, "RG5": 1, "RG1_2": 3, "RG2_3": 1})
 for _k, (_b, _p, _l) in TRAIL.items():
@@ -226,6 +265,271 @@ def weights_k(closes, i):
     return {s: expo / len(top) for s in top}
 
 
+# ---------------------------------------------------------------- Ideen-Strategien
+_ST = {}
+
+
+def _sma(c, i, n):
+    if i < n - 1:
+        return None
+    w = [x for x in c[i - n + 1:i + 1] if x is not None]
+    return sum(w) / len(w) if len(w) >= n * 0.8 else None
+
+
+def _vol(c, i, n=30):
+    r = [c[j] / c[j - 1] - 1 for j in range(max(1, i - n + 1), i + 1) if c[j] is not None and c[j - 1]]
+    if len(r) < n * 0.7:
+        return None
+    m = sum(r) / len(r)
+    return math.sqrt(sum((x - m) ** 2 for x in r) / len(r)) * math.sqrt(365)
+
+
+def _stateful(name, c, i, step):
+    """Zustand (z. B. investiert ja/nein), Tag für Tag fortgeschrieben, nur mit Daten bis Tag i."""
+    key = (name, id(c), len(c))
+    st = _ST.get(key)
+    if st is None:
+        if len(_ST) > 64:
+            _ST.clear()
+        st = _ST[key] = {}
+    if i in st:
+        return st[i]
+    j = i
+    while j > 0 and (j - 1) not in st and i - j < 400:
+        j -= 1
+    prev = st.get(j - 1, 0)
+    for k in range(j, i + 1):
+        prev = st[k] = step(c, k, prev)
+    return prev
+
+
+def _don_step(short):
+    def f(c, k, p):
+        x = c[k]
+        if x is None or k < 20:
+            return p
+        w20 = [v for v in c[k - 20:k] if v is not None]
+        w10 = [v for v in c[k - 10:k] if v is not None]
+        if len(w20) < 16 or not w10:
+            return p
+        if x > max(w20):
+            return 1
+        if short and x < min(w20):
+            return -1
+        if p == 1 and x < min(w10):
+            return 0
+        if p == -1 and x > max(w10):
+            return 0
+        return p
+    return f
+
+
+def _rsi(c, k, n=2):
+    g = l = 0.0
+    for j in range(k - n + 1, k + 1):
+        if c[j] is None or c[j - 1] is None:
+            return None
+        d = c[j] - c[j - 1]
+        g, l = g + max(d, 0), l + max(-d, 0)
+    return 100.0 if l == 0 else 100 - 100 / (1 + g / l)
+
+
+def _rsi_step(c, k, p):
+    x = c[k]
+    if x is None or k < 200:
+        return p
+    if p == 0:
+        r, m200 = _rsi(c, k), _sma(c, k, 200)
+        return 1 if r is not None and m200 and r < 10 and x > m200 else 0
+    m5 = _sma(c, k, 5)
+    return 0 if m5 and x > m5 else 1
+
+
+def _date(i):
+    return time.gmtime(((_EXT.get("day0") or 0) + i) * DAY)
+
+
+def _halvings():
+    import calendar
+    return [calendar.timegm(t) // DAY for t in ((2016, 7, 9, 0, 0, 0), (2020, 5, 11, 0, 0, 0), (2024, 4, 20, 0, 0, 0), (2028, 4, 15, 0, 0, 0))]
+
+
+def _top(scores, n, reverse=True):
+    return sorted(scores, key=scores.get, reverse=reverse)[:n]
+
+
+def _maxret(c, i, n=30):
+    r = [c[j] / c[j - 1] - 1 for j in range(i - n + 1, i + 1) if c[j] is not None and c[j - 1]]
+    return max(r) if len(r) >= n * 0.7 else None
+
+
+def _btc_bull(closes, i):
+    b = closes["BTCUSDT"]
+    m = _sma(b, i, 200)
+    return b[i] is not None and m is not None and b[i] > m
+
+
+def _fund_avg(sy, i, n=3):
+    f = (_EXT.get("f") or {}).get(sy)
+    if not f:
+        return None
+    w = [x for x in f[max(0, i - n + 1):i + 1] if x is not None]
+    return sum(w) / len(w) if w else None
+
+
+def carry_picks(i, n=5, min_rate=0.0003):
+    sc = {}
+    for sy in (_EXT.get("f") or {}):
+        a = _fund_avg(sy, i)
+        if a is not None and a > min_rate:
+            sc[sy] = a
+    return _top(sc, n)
+
+
+def weights_idea(strat, closes, i):
+    btc = closes["BTCUSDT"]
+    if btc[i] is None:
+        return {}
+    if strat in ("DON", "DONLS"):
+        st = _stateful(strat, btc, i, _don_step(strat == "DONLS"))
+        return {"BTCUSDT": st * INVEST} if st else {}
+    if strat in ("GX", "GXLS"):
+        a, b = _sma(btc, i, 50), _sma(btc, i, 200)
+        if a is None or b is None:
+            return {}
+        if a > b:
+            return {"BTCUSDT": INVEST}
+        return {"BTCUSDT": -INVEST} if strat == "GXLS" else {}
+    if strat == "RSI2":
+        return {"BTCUSDT": INVEST} if _stateful("RSI2", btc, i, _rsi_step) else {}
+    if strat == "VTB":
+        v = _vol(btc, i, 30)
+        return {"BTCUSDT": min(INVEST, 0.25 / max(v, 0.05))} if v else {}
+    if strat == "HALV":
+        d = (_EXT.get("day0") or 0) + i
+        return {"BTCUSDT": INVEST} if any(h - 365 <= d <= h + 540 for h in _halvings()) else {}
+    if strat == "TOM":
+        nxt = _date(i + 1).tm_mday
+        return {"BTCUSDT": INVEST} if nxt >= 28 or nxt <= 3 else {}
+    if strat == "ETHBTC":
+        eth = closes.get("ETHUSDT")
+        if not eth or eth[i] is None:
+            return {"BTCUSDT": INVEST}
+        ratio = [(e / b if e is not None and b else None) for e, b in zip(eth[max(0, i - 49):i + 1], btc[max(0, i - 49):i + 1])]
+        r = [x for x in ratio if x is not None]
+        if len(r) < 40:
+            return {"BTCUSDT": INVEST}
+        return {"ETHUSDT": INVEST} if r[-1] > sum(r) / len(r) else {"BTCUSDT": INVEST}
+    if strat == "DM":
+        sc = {sy: ret(closes[sy], i, 60) for sy in ("BTCUSDT", "ETHUSDT", "BNBUSDT") if sy in closes}
+        sc = {k: v for k, v in sc.items() if v is not None}
+        if not sc:
+            return {}
+        best = max(sc, key=sc.get)
+        return {best: INVEST} if sc[best] > 0 else {}
+    if strat in ("MOM28", "MOM7"):
+        n = 28 if strat == "MOM28" else 7
+        sc = {sy: r for sy, c in closes.items() if (r := ret(c, i, n)) is not None}
+        if len(sc) < 10:
+            return {}
+        return {sy: INVEST / 5 for sy in _top(sc, 5)}
+    if strat == "TSM":
+        w = {}
+        for sy, c in closes.items():
+            r, v = ret(c, i, 28), _vol(c, i, 30)
+            if r is None or not v:
+                continue
+            w[sy] = (1 if r > 0 else -1) / v
+        tot = sum(abs(x) for x in w.values())
+        return {sy: INVEST * x / tot for sy, x in w.items()} if tot else {}
+    if strat == "LVOL":
+        sc = {sy: v for sy, c in closes.items() if c[i] is not None and (v := _vol(c, i, 30))}
+        return {sy: INVEST / 5 for sy in _top(sc, 5, reverse=False)} if len(sc) >= 10 else {}
+    if strat in ("MAXLS", "MAXM"):
+        sc = {sy: m for sy, c in closes.items() if c[i] is not None and (m := _maxret(c, i)) is not None}
+        if len(sc) < 12:
+            return {}
+        if strat == "MAXM":
+            return {sy: INVEST / 5 for sy in _top(sc, 5)}
+        w = {sy: -INVEST / 10 for sy in _top(sc, 5)}
+        w.update({sy: INVEST / 10 for sy in _top(sc, 5, reverse=False)})
+        return w
+    if strat == "H180":
+        if not _btc_bull(closes, i):
+            return {}
+        sc = {}
+        for sy, c in closes.items():
+            win = [x for x in c[max(0, i - 179):i + 1] if x is not None]
+            if c[i] is not None and len(win) >= 150:
+                sc[sy] = c[i] / max(win)
+        return {sy: INVEST / 5 for sy in _top(sc, 5)} if len(sc) >= 10 else {}
+    if strat == "VBRK":
+        vol = _EXT.get("v") or {}
+        picks = set()
+        for sy, c in closes.items():
+            v = vol.get(sy)
+            if not v:
+                continue
+            for j in (i, i - 1, i - 2):
+                base = [x for x in v[max(0, j - 30):j] if x]
+                r = ret(c, j, 1)
+                if len(base) >= 20 and v[j] and r is not None and v[j] > 3 * sum(base) / len(base) and r > 0.05:
+                    picks.add(sy)
+                    break
+        if not picks:
+            return {}
+        each = min(INVEST / len(picks), 0.25)
+        return {sy: each for sy in picks}
+    if strat == "ALTS":
+        if not _btc_bull(closes, i):
+            return {}
+        rb = ret(btc, i, 30)
+        alts = {sy: r for sy, c in closes.items() if sy != "BTCUSDT" and (r := ret(c, i, 30)) is not None}
+        if rb is None or len(alts) < 10:
+            return {}
+        med = sorted(alts.values())[len(alts) // 2]
+        if med > rb:
+            return {sy: INVEST / 5 for sy in _top(alts, 5)}
+        return {"BTCUSDT": INVEST}
+    if strat == "FCON":
+        sc = {sy: a for sy in closes if closes[sy][i] is not None and (a := _fund_avg(sy, i)) is not None}
+        if len(sc) < 12:
+            return {}
+        w = {sy: -INVEST / 10 for sy in _top(sc, 5)}
+        w.update({sy: INVEST / 10 for sy in _top(sc, 5, reverse=False)})
+        return w
+    return {}
+
+
+def hour_weights(strat, h, hc, start_day):
+    """Stundenstrategien: Entscheidung am Ende der Stunde h für die nächste Stunde."""
+    nxt = (h + 1) % 24
+    if strat == "H22":
+        return {"BTCUSDT": INVEST} if nxt in (22, 23) else {}
+    if strat == "OVN":
+        b = hc.get("BTCUSDT")
+        if b is None:
+            return {}
+        for k in range(h, max(240, h - 66), -1):
+            if (k + 1) % 24 != 21:
+                continue
+            wd = (start_day + (k + 1) // 24 + 3) % 7          # 0 = Montag
+            hold = 65 if wd == 4 else 17
+            if wd not in (0, 1, 4) or h - k >= hold:
+                return {}
+            x = b[k]
+            win = [v for v in b[k - 240:k] if v == v]
+            return {"BTCUSDT": INVEST} if x == x and win and x >= max(win) else {}
+        return {}
+    return {}
+
+
+def base_of(strat):
+    while strat in BASEOF:
+        strat = BASEOF[strat]
+    return strat
+
+
 def is_nl(strat):
     while strat in BASEOF:
         strat = BASEOF[strat]
@@ -311,6 +615,8 @@ def weights(strat, closes, i, ctx=None):
         return weights_rg(strat, closes, i)
     if strat in NL:
         return weights_nl(strat, i)
+    if strat in IDEAS or strat == "VTB":
+        return weights_idea(strat, closes, i)
     if strat.startswith("R_"):
         rets = {s: r for s, c in closes.items() if (r := ret(c, i, 1)) is not None}
         return rank_weights(strat, rets)
@@ -383,6 +689,7 @@ class Account:
         self.losses, self.last_eq = losses, last_eq
         self.dead, self.lev = False, False
         self.peak, self.stops, self.slip_extra = {}, 0, 0.0
+        self.carry, self.cnot = set(), 0.0
 
     def gross(self, px):
         return sum(abs(q) * px.get(s, 0) for s, q in self.pos.items())
@@ -411,7 +718,7 @@ class Account:
             dq = target - old
             if abs(dq * p) < 1e-9:
                 continue
-            cost = abs(dq * p) * (FEE + SLIP + self.slip_extra)
+            cost = abs(dq * p) * (FEE + (SLIP_MAJOR if s in MAJORS else SLIP) + self.slip_extra)
             self.cash -= dq * p + cost
             self.costs += cost
             if abs(target) < 1e-12:
@@ -431,7 +738,7 @@ class Account:
             hit = l <= pk * (1 - pct) if q > 0 else h >= pk * (1 + pct)
             if hit:
                 stop = pk * (1 - pct) if q > 0 else pk * (1 + pct)
-                cost = abs(q) * stop * (FEE + SLIP)
+                cost = abs(q) * stop * (FEE + (SLIP_MAJOR if s in MAJORS else SLIP) + self.slip_extra)
                 self.cash += q * stop - cost
                 self.costs += cost
                 self.pos.pop(s)
@@ -525,12 +832,14 @@ def rolling_members(closes, vol, n, top=NUM, window=30):
 
 
 def run_backtest(days=2700, progress=None, data=None, hourly=None):
-    dfund, note_extra, members = None, "", None
+    dfund, note_extra, members, data_ext, ext = None, "", None, False, None
+    import hbt
     if data is None:
         syms = pool()
         if progress:
             progress(f"Tageskerzen für {len(syms)} Coins ...")
         n0, closes0, start0, ext = load_history(syms, days)
+        data_ext = True
         members = rolling_members(closes0, ext["v"], n0)
         if progress:
             progress("Lade Meme-Coins ...")
@@ -550,6 +859,9 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
             note_extra = f" Stundendaten nicht verfügbar ({e}), Tagesdaten verwendet."
     n, closes, start, _v, memes, memv, HI, LO = (data + (None, None))[:8] if len(data) == 6 else data
     ctx = (memes, memv)
+    _EXT.clear()
+    _EXT.update(v=(ext["v"] if data_ext else ((_v or {}).get("v") or {}) if isinstance(_v, dict) else {}), h=HI or {}, l=LO or {}, f=dfund or {}, day0=start)
+    MHI, MLO = (hbt.derive_mark(hourly) if hourly is not None else ({}, {}))
     _POOL["closes"] = closes
     _POOL["first"] = {sy: next((j for j, x in enumerate(c) if x is not None), 0) for sy, c in closes.items()}
     allp = dict(closes)
@@ -580,7 +892,7 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
         last_reb = -10 ** 9
         nlish = is_nl(strat)
         acc.slip_extra = 0.01 if nlish else 0.0     # neue Coins: zusätzlich 1 % Slippage je Seite
-        use_h = hourly is not None and not nlish and (strat in LEV or strat in TRAIL or strat in RKEYS)
+        use_h = hourly is not None and not nlish and (strat in LEV or strat in TRAIL or strat in RKEYS or strat in HOURK)
         if use_h:
             import hbt
             curve, dayidx, acc, rebs, liq = hbt.sim_hourly(strat, hourly, closes, ctx, first, members)
@@ -597,6 +909,22 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
                 for s in acc.pos:
                     if s not in px_i:
                         px_i[s] = lastp(s, i)
+            if strat in CARRY:
+                if i - last_reb >= PERIOD[strat]:
+                    picks = set(carry_picks(i))
+                    eq = acc.cash
+                    note = eq * INVEST / 2 / max(len(picks), 1)
+                    cost = len(picks ^ acc.carry) * note * 2 * (FEE + SLIP)
+                    acc.cash -= cost
+                    acc.costs += cost
+                    acc.carry, acc.cnot = picks, note
+                    rebs += 1
+                    last_reb = i
+                acc.cash += sum(acc.cnot * dfund[sy][i + 1] for sy in acc.carry
+                                if dfund and sy in dfund and dfund[sy][i + 1] is not None)
+                curve.append(acc.cash)
+                dayidx.append(start + i + 1)
+                continue
             if not acc.dead and i - last_reb >= PERIOD[strat]:
                 w = sized(strat, acc, px_i, view(i), i, ctx)
                 acc.rebalance(px_i, w)
@@ -610,7 +938,7 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
             if not acc.dead and acc.pos:
                 worst = {}
                 for sy, q in acc.pos.items():
-                    ex = ((LO if q > 0 else HI) or {}).get(sy)
+                    ex = (MLO if q > 0 else MHI).get(sy) or ((LO if q > 0 else HI) or {}).get(sy)   # Mark-Preis statt Docht
                     worst[sy] = (ex[i + 1] if ex and ex[i + 1] else None) or px_n.get(sy, 0)
                 if acc.liquidated(worst):
                     acc.liquidate()
@@ -686,6 +1014,25 @@ class Forward:
         self.db.execute("INSERT OR REPLACE INTO st VALUES(?,?)", (k, json.dumps(v)))
         self.db.commit()
 
+    def hour_signal(self, k):
+        """Live-Version der Stundenstrategien (Uhrzeit in UTC)."""
+        t = time.gmtime()
+        if k == "H22":
+            return {"BTCUSDT": INVEST} if t.tm_hour in (22, 23) else {}
+        if k == "OVN":
+            st = self.get("_ovn") or {}
+            now = time.time()
+            if t.tm_hour == 21 and st.get("day") != int(now // DAY):
+                st = {"day": int(now // DAY), "until": 0}
+                if t.tm_wday in (0, 1, 4):
+                    k10 = api("/api/v3/klines", {"symbol": "BTCUSDT", "interval": "1h", "limit": 241})
+                    hi = max(float(x[4]) for x in k10[:-1])
+                    if self.px["BTCUSDT"] >= hi:
+                        st["until"] = now + (65 if t.tm_wday == 4 else 17) * 3600 - 60
+                self.put("_ovn", st)
+            return {"BTCUSDT": INVEST} if st.get("until", 0) > now else {}
+        return {}
+
     def track_listings(self):
         """Merkt sich neue USDT-Paare mit dem Tag ihres ersten Auftauchens (für die Neu-Listing-Strategien)."""
         cur = sorted(sy for sy in self.px if sy.endswith("USDT") and sy not in EXCLUDE)
@@ -711,7 +1058,15 @@ class Forward:
             today = int(time.time() // DAY)
             done = int((self.get("_day") or 0))
             if today > done and time.time() % DAY > 600:
-                days, closes, _, _x = load_history(universe(), 260)
+                days, closes, day0, _x = load_history(universe(), 260)
+                try:
+                    fr = {x["symbol"]: float(x["lastFundingRate"]) * 3 for x in requests.get(
+                        "https://fapi.binance.com/fapi/v1/premiumIndex", timeout=20).json()}
+                except Exception:
+                    fr = {}
+                _EXT.clear()
+                _EXT.update(v=_x["v"], h=_x["h"], l=_x["l"], day0=day0,
+                            f={sy: [None] * (days - 1) + [r] for sy, r in fr.items() if sy in closes})
                 lst = self.get("_listed") or {}
                 _POOL["closes"] = {sy: [None] * (days - 1) + [self.px[sy]] for sy in lst if sy in self.px}
                 _POOL["first"] = {sy: days - 1 - (today - d) for sy, d in lst.items()}
@@ -719,9 +1074,19 @@ class Forward:
                 ctx = (memes, mext["v"])
                 i = days - 1
                 for k in NAMES:
-                    if k in RKEYS:
+                    if base_of(k).startswith("R_") or k in HOURK:
                         continue
                     s = self.get(k)
+                    if k in CARRY:
+                        if s.get("carry") and s.get("cday") and s["cday"] < today:
+                            s["cash"] += sum(s["cnot"] * fr.get(sy, 0.0) * (today - s["cday"]) for sy in s["carry"])
+                        picks = set(carry_picks(days - 1))
+                        note = s["cash"] * INVEST / 2 / max(len(picks), 1)
+                        cost = len(picks ^ set(s.get("carry") or [])) * note * 2 * (FEE + SLIP)
+                        s.update(cash=s["cash"] - cost, costs=s["costs"] + cost, carry=sorted(picks), cnot=note, cday=today,
+                                 rebs=s["rebs"] + 1, last_reb=today)
+                        self.put(k, s)
+                        continue
                     acc = Account(s["cash"], s["pos"], s.get("losses", 0), s.get("last_eq"))
                     acc.costs = s["costs"]
                     acc.lev = k in LEV
@@ -740,7 +1105,8 @@ class Forward:
                 self.put("_day", today)
             self.track_listings()
             slot = int(time.time() // SLOT)
-            todo = [k for k in RKEYS if (self.get(k).get("slot") or 0) < slot]
+            rk = [k for k in NAMES if base_of(k).startswith("R_")]
+            todo = [k for k in rk if (self.get(k).get("slot") or 0) < slot]
             if todo and self.px:
                 uni = set(universe())
                 tk = {x["symbol"]: float(x["priceChangePercent"]) / 100 for x in api("/api/v3/ticker/24hr")
@@ -754,9 +1120,22 @@ class Forward:
                         continue
                     if s.get("slot"):
                         acc.funding(self.px, 0.25)
-                    acc.rebalance(self.px, rank_weights(k, tk))
+                    acc.lev = k in LEV
+                    acc.rebalance(self.px, {sy: v * LEV.get(k, 1) for sy, v in rank_weights(base_of(k), tk).items()})
                     s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs, slot=slot, rebs=s["rebs"] + 1, peak=acc.peak)
                     self.put(k, s)
+            hslot = int(time.time() // 3600)
+            for k in HOURK:                  # Stundenstrategien
+                s = self.get(k)
+                if (s.get("hslot") or 0) >= hslot or s.get("dead") or "BTCUSDT" not in self.px:
+                    continue
+                w = self.hour_signal(k)
+                acc = Account(s["cash"], s["pos"])
+                acc.costs = s["costs"]
+                acc.rebalance(self.px, w)
+                s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs, hslot=hslot,
+                         rebs=s["rebs"] + (1 if bool(w) != bool(s["pos"]) else 0))
+                self.put(k, s)
             for k in TRAIL:                  # Trailing-Stops mit dem aktuellen Kurs
                 s = self.get(k)
                 if s.get("dead") or not s["pos"]:
@@ -791,6 +1170,7 @@ class Forward:
                 eq = acc.equity(self.px) if self.px else s["cash"]
                 pos = [dict(symbol=a, side="long" if q > 0 else "short", value=abs(q * self.px.get(a, 0)))
                        for a, q in s["pos"].items()]
+                pos += [dict(symbol=a, side="carry", value=s.get("cnot", 0)) for a in s.get("carry") or []]
                 cv = [[r[0], r[1]] for r in self.db.execute(
                     "SELECT ts, v FROM (SELECT ts, v FROM eq WHERE k=? ORDER BY ts DESC LIMIT 500) ORDER BY ts", (k,))]
                 out.append(dict(key=k, name=NAMES[k], curve=cv, equity=eq, pnl=eq - self.start, pct=(eq / self.start - 1) * 100,

@@ -96,6 +96,20 @@ def load_all(syms, days, progress=None, path="candles.db", pause=0.12):
     return dict(H=H, start=start_day, hc=hc, hh=hh, hl=hl, fund=fund, real=real and bool(fund))
 
 
+def derive_mark(b):
+    """Tageshoch und -tief der Stunden-Schlusskurse (Näherung für den Mark-Preis, der Dochte glättet)."""
+    n = b["H"] // 24
+    mhi, mlo = {}, {}
+    for s, c in b["hc"].items():
+        hi, lo = [None] * n, [None] * n
+        for d in range(n):
+            seg = [v for v in c[24 * d:24 * d + 24] if v == v]
+            if seg:
+                hi[d], lo[d] = max(seg), min(seg)
+        mhi[s], mlo[s] = hi, lo
+    return mhi, mlo
+
+
 def derive_funding(b):
     """Tägliche Summe der Funding-Raten je Symbol (Liste mit None, wo es keine Daten gibt)."""
     n = b["H"] // 24
@@ -120,7 +134,8 @@ def sim_hourly(strat, b, closes, ctx, first=31, members=None):
     while base in S.BASEOF:
         base = S.BASEOF[base]
     isR = base.startswith("R_")
-    step = 6 if isR else 24
+    isH = base in S.HOURK
+    step = 1 if isH else (6 if isR else 24)
     mult = S.LEV.get(strat, 1)
     trail = S.TRAIL[strat][1] if strat in S.TRAIL else None
     last = {}
@@ -147,10 +162,12 @@ def sim_hourly(strat, b, closes, ctx, first=31, members=None):
 
     while h < H - 1:
         d = h // 24
-        if not acc.dead and (isR or d - last_d >= S.PERIOD[strat]):
+        if not acc.dead and (isR or isH or d - last_d >= S.PERIOD[strat]):
             mem = members[d] if members is not None else None
             px = {s: hc[s][h] for s in (hc if mem is None else (set(mem) | set(acc.pos))) if s in hc and hc[s][h] == hc[s][h]}
-            if isR:
+            if isH:
+                w = {s: v * mult for s, v in S.hour_weights(base, h, hc, b["start"]).items()}
+            elif isR:
                 rets = {s: p / hc[s][h - 24] - 1 for s, p in px.items()
                         if (mem is None or s in mem) and hc[s][h - 24] == hc[s][h - 24] and hc[s][h - 24] > 0}
                 w = {s: v * mult for s, v in S.rank_weights(base, rets).items()}
@@ -172,7 +189,7 @@ def sim_hourly(strat, b, closes, ctx, first=31, members=None):
                 if trail:
                     acc.track(hi, lo, trail)
                 if acc.pos:
-                    worst = {s: (lo[s] if q > 0 else hi[s]) for s, q in acc.pos.items()}
+                    worst = {s: price(s, j) for s in acc.pos}       # Liquidation nach Mark-Preis (Stundenschluss), nicht nach Docht
                     if acc.liquidated(worst):
                         acc.liquidate()
                         liq = time.strftime("%d.%m.%Y", time.gmtime((b["start"] * 24 + j) * 3600))

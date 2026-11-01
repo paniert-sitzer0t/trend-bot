@@ -96,6 +96,51 @@ def load_all(syms, days, progress=None, path="candles.db", pause=0.12):
     return dict(H=H, start=start_day, hc=hc, hh=hh, hl=hl, fund=fund, real=real and bool(fund))
 
 
+def sanitize(b, closes, tol=0.05):
+    """Gleicht Stundendaten mit den Tageskerzen ab. Tage, an denen der 23-Uhr-Schlusskurs mehr als 5 % vom
+    Tagesschluss abweicht, werden verworfen; einzelne Ausreißer-Stunden (Sprung und sofortige Rückkehr) ebenso.
+    Coins mit mehr als 2 % fehlerhaften Tagen fliegen ganz aus den Stundendaten. Gibt einen Bericht zurück."""
+    hc, hh, hl = b["hc"], b["hh"], b["hl"]
+    rep, dropped = {}, []
+    for s in list(hc):
+        c, hi, lo = hc[s], hh[s], hl[s]
+        cl = closes.get(s)
+        bad = good = spikes = 0
+        n = len(c) // 24
+        for d in range(n):
+            hv = c[24 * d + 23]
+            dv = cl[d] if cl is not None and d < len(cl) else None
+            if hv != hv or not dv:
+                continue
+            if abs(hv / dv - 1) > tol:
+                bad += 1
+                for j in range(24 * d, 24 * d + 24):
+                    c[j] = hi[j] = lo[j] = NAN
+            else:
+                good += 1
+        for j in range(1, len(c) - 1):
+            a, x, z = c[j - 1], c[j], c[j + 1]
+            if a == a and x == x and z == z and a > 0 and z > 0 and x > 0:
+                r1, r2 = x / a, z / a
+                if (r1 > 2 or r1 < 0.5) and 0.8 < r2 < 1.25:
+                    c[j] = hi[j] = lo[j] = NAN
+                    spikes += 1
+            if c[j] == c[j] and hi[j] == hi[j] and c[j] > 0:
+                ref = max(c[j], c[j - 1]) if c[j - 1] == c[j - 1] else c[j]
+                if hi[j] > 3 * ref:
+                    hi[j] = ref
+                ref = min(c[j], c[j - 1]) if c[j - 1] == c[j - 1] else c[j]
+                if lo[j] < ref / 3:
+                    lo[j] = ref
+        if bad or spikes:
+            rep[s] = (bad, spikes)
+        if good + bad and bad > 0.02 * (good + bad) and s != "BTCUSDT":
+            dropped.append(s)
+            for k in ("hc", "hh", "hl"):
+                b[k].pop(s, None)
+    return dict(korrigiert=len(rep), entfernt=dropped, details={k: v for k, v in sorted(rep.items(), key=lambda x: -x[1][0])[:15]})
+
+
 def derive_mark(b):
     """Tageshoch und -tief der Stunden-Schlusskurse (Näherung für den Mark-Preis, der Dochte glättet)."""
     n = b["H"] // 24
@@ -150,6 +195,7 @@ def sim_hourly(strat, b, closes, ctx, first=31, members=None):
         return v
 
     curve, dayidx, rebs, liq = [], [], 0, None
+    jumps = []                                   # größte Tagesgewinne zur Kontrolle auf Datenfehler
     last_d = -10 ** 9
     h = 24 * first + 23
 
@@ -165,6 +211,9 @@ def sim_hourly(strat, b, closes, ctx, first=31, members=None):
         if not acc.dead and (isR or isH or d - last_d >= S.PERIOD[strat]):
             mem = members[d] if members is not None else None
             px = {s: hc[s][h] for s in (hc if mem is None else (set(mem) | set(acc.pos))) if s in hc and hc[s][h] == hc[s][h]}
+            for s in acc.pos:                    # Datenlücke bei gehaltenem Coin: letzter bekannter Kurs
+                if s not in px:
+                    px[s] = price(s, h)
             if isH:
                 w = {s: v * mult for s, v in S.hour_weights(base, h, hc, b["start"]).items()}
             elif isR:
@@ -201,7 +250,13 @@ def sim_hourly(strat, b, closes, ctx, first=31, members=None):
                     acc.liquidate()
                     liq = time.strftime("%d.%m.%Y", time.gmtime((b["start"] * 24 + j) * 3600))
             if j % 24 == 23:
-                curve.append(0.0 if acc.dead else acc.equity({s: price(s, j) for s in acc.pos}) if acc.pos else acc.cash)
+                eq_now = 0.0 if acc.dead else acc.equity({s: price(s, j) for s in acc.pos}) if acc.pos else acc.cash
+                if curve and curve[-1] > 0 and eq_now / curve[-1] > 1.5:
+                    top = max(acc.pos, key=lambda s: abs(acc.pos[s]) * price(s, j)) if acc.pos else "-"
+                    jumps.append((round((eq_now / curve[-1] - 1) * 100, 1),
+                                  time.strftime("%d.%m.%Y", time.gmtime((b["start"] * 24 + j) * 3600)), top))
+                curve.append(eq_now)
                 dayidx.append(b["start"] + j // 24)
         h += step
+    acc.jumps = sorted(jumps, reverse=True)[:5]
     return curve, dayidx, acc, rebs, liq

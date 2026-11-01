@@ -691,8 +691,18 @@ class Account:
         self.peak, self.stops, self.slip_extra = {}, 0, 0.0
         self.carry, self.cnot = set(), 0.0
 
+    def _px(self, px, s):
+        """Kurs eines gehaltenen Coins. Fehlt er (Datenlücke), gilt der letzte bekannte Kurs statt 0.
+        Sonst würde ein Short ohne Kurs das Eigenkapital künstlich aufblähen und die nächste Anpassung überhebeln."""
+        lp = self.__dict__.setdefault("lp", {})
+        p = px.get(s)
+        if p:
+            lp[s] = p
+            return p
+        return lp.get(s, 0)
+
     def gross(self, px):
-        return sum(abs(q) * px.get(s, 0) for s, q in self.pos.items())
+        return sum(abs(q) * self._px(px, s) for s, q in self.pos.items())
 
     def liquidated(self, px_worst):
         """True, wenn das Eigenkapital im ungünstigsten Kurs unter die Erhaltungsmarge fällt."""
@@ -703,7 +713,7 @@ class Account:
         self.cash, self.pos, self.dead = 0.0, {}, True
 
     def equity(self, px):
-        return self.cash + sum(q * px.get(s, 0) for s, q in self.pos.items())
+        return self.cash + sum(q * self._px(px, s) for s, q in self.pos.items())
 
     def rebalance(self, px, w):
         eq = self.equity(px)
@@ -854,6 +864,7 @@ def rolling_members(closes, vol, n, top=NUM, window=30):
 
 def run_backtest(days=2700, progress=None, data=None, hourly=None):
     dfund, note_extra, members, data_ext, ext = None, "", None, False, None
+    check = None
     import hbt
     if data is None:
         syms = pool()
@@ -888,6 +899,7 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
             if hourly["start"] != start0:
                 raise ValueError("Zeitraum passt nicht")
             dfund = hbt.derive_funding(hourly)
+            check = hbt.sanitize(hourly, closes0)
         except Exception as e:
             hourly, dfund = None, None
             note_extra = f" Stundendaten nicht verfügbar ({e}), Tagesdaten verwendet."
@@ -1004,17 +1016,25 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
         if curve and (len(curve) - 1) % 7:
             pts.append([dayidx[-1], round(curve[-1], 2)])
         peak_year = max(out.values()) if out else 0.0
+        jumps, prev_e = [], 100.0
+        for d, e in zip(dayidx, curve):
+            if prev_e > 0 and e / prev_e > 1.5:
+                jumps.append([round((e / prev_e - 1) * 100, 1), time.strftime("%d.%m.%Y", time.gmtime(d * DAY))])
+            prev_e = e
+        st["ausreisser"] = sorted(jumps, reverse=True)[:5] + [list(x) for x in getattr(acc, "jumps", [])[:3]]
         st.update(years=out, costs=acc.costs, rebalances=rebs, final=curve[-1] if curve else 100.0, curve=pts,
                   leverage=LEV.get(strat, 1), stops=acc.stops, liquidated=liq, best_year=peak_year)
         res[strat] = dict(name=NAMES[strat], **st)
     return dict(ts=time.time(), days=n, coins=len(closes), universe=("mitwandernd: je Tag Top %d nach 30-Tage-Umsatz" % NUM) if members else "heutige Top %d" % NUM, start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
                 results=res,
-                hourly=bool(hourly), funding_real=bool(dfund),
+                hourly=bool(hourly), funding_real=bool(dfund), datenpruefung=check,
                 note=("Stundenkerzen: Korb-Strategien rotieren alle 6 h, Trailing-Stops und Liquidationen werden stundengenau geprüft. "
                       if hourly is not None else "Nur Tagesdaten: Korb-Strategien werden täglich statt alle 6 h gerechnet. ")
                      + ("Funding mit echten Binance-Raten (wo vorhanden, sonst 0,03 % pro Tag). " if dfund else "Funding pauschal 0,03 % pro Tag. ")
                      + ("Universum: je Tag die 40 umsatzstärksten Coins der letzten 30 Tage aus allen heute noch gelisteten Binance-USDT-Paaren (Delistete fehlen, Rest-Survivorship-Bias). " if members else "Universum = heutige Top-Coins nach Umsatz (Survivorship-Bias begünstigt Long-Strategien). ")
-                     + "Keine Parameter wurden angepasst. Kosten 0,13 % pro Seite." + note_extra)
+                     + "Keine Parameter wurden angepasst. Kosten 0,13 % pro Seite."
+                     + (f" Datenprüfung: Stundendaten von {check['korrigiert']} Coins bereinigt, {len(check['entfernt'])} Coins wegen fehlerhafter Stundendaten entfernt." if check else "")
+                     + note_extra)
 
 
 def run_and_save(path="backtest.json", progress=None):

@@ -72,10 +72,10 @@ def summary(payload):
     res = {}
     for k, v in (bt.get("results") or {}).items():
         res[k] = {f: (round(v[f], 1) if isinstance(v.get(f), float) else v.get(f))
-                  for f in ("total", "cagr", "maxdd", "sharpe", "liquidated", "best_year", "stops", "rebalances", "years") if f in v}
+                  for f in ("total", "cagr", "maxdd", "sharpe", "liquidated", "best_year", "stops", "rebalances", "years", "ausreisser") if f in v}
     return dict(erzeugt=time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()), dashboard_adresse=tunnel_url(), paper_ranking=fw,
                 backtest=dict(start=bt.get("start"), tage=bt.get("days"), stunden=bt.get("hourly"), funding_echt=bt.get("funding_real"),
-                              notiz=bt.get("note"), ergebnisse=res, fehler=bt.get("error")),
+                              notiz=bt.get("note"), datenpruefung=bt.get("datenpruefung"), ergebnisse=res, fehler=bt.get("error")),
                 backtest_laeuft=payload.get("running"), fortschritt=payload.get("progress"))
 
 

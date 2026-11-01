@@ -11,6 +11,18 @@ API = "https://api.github.com/repos/" + REPO
 H = {"Authorization": "Bearer " + TOKEN, "Accept": "application/vnd.github+json"}
 
 
+def tunnel_url():
+    """Aktuelle Dashboard-Adresse (ohne Passwort) aus dem Tunnel-Protokoll. Ändert sich bei jedem Tunnel-Neustart."""
+    import re, subprocess
+    try:
+        out = subprocess.run(["sudo", "-n", "journalctl", "-u", "pionex-tunnel", "--no-pager", "-n", "300"],
+                             capture_output=True, text=True, timeout=20).stdout
+        urls = re.findall(r"https://[a-z0-9-]+\.trycloudflare\.com", out)
+        return urls[-1] if urls else None
+    except Exception:
+        return None
+
+
 def summary(payload):
     fw = []
     for x in payload["forward"]:
@@ -24,7 +36,7 @@ def summary(payload):
     for k, v in (bt.get("results") or {}).items():
         res[k] = {f: (round(v[f], 1) if isinstance(v.get(f), float) else v.get(f))
                   for f in ("total", "cagr", "maxdd", "sharpe", "liquidated", "best_year", "stops", "rebalances", "years") if f in v}
-    return dict(erzeugt=time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()), paper_ranking=fw,
+    return dict(erzeugt=time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()), dashboard_adresse=tunnel_url(), paper_ranking=fw,
                 backtest=dict(start=bt.get("start"), tage=bt.get("days"), stunden=bt.get("hourly"), funding_echt=bt.get("funding_real"),
                               notiz=bt.get("note"), ergebnisse=res, fehler=bt.get("error")),
                 backtest_laeuft=payload.get("running"), fortschritt=payload.get("progress"))
@@ -66,6 +78,12 @@ def run(get_payload, every=1800):
     last = 0.0
     time.sleep(60)
     while True:
+        if TOKEN:
+            u = tunnel_url()
+            if u and u != _link[0]:
+                if _link[0] is not None:
+                    _force[0] = True          # Adresse hat sich geändert: sofort neu veröffentlichen
+                _link[0] = u
         if TOKEN and (time.time() - last >= every or _force[0]):
             _force[0] = False
             try:
@@ -78,3 +96,4 @@ def run(get_payload, every=1800):
 
 
 _force = [False]
+_link = [None]

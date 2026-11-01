@@ -60,6 +60,15 @@ def restart_tunnel():
         _tun["fehler"] = str(e)[:200]
 
 
+def _opt(o):
+    if not o or o.get("fehler"):
+        return o
+    q = {k: v for k, v in o.items() if k not in ("beste", "rueckblick")}
+    q["beste"] = [{k: v for k, v in b.items() if k != "kurve"} for b in o.get("beste", [])]
+    q["rueckblick"] = o.get("rueckblick")
+    return q
+
+
 def summary(payload):
     fw = []
     for x in payload["forward"]:
@@ -75,7 +84,7 @@ def summary(payload):
                   for f in ("total", "cagr", "maxdd", "sharpe", "liquidated", "best_year", "stops", "rebalances", "years", "ausreisser") if f in v}
     return dict(erzeugt=time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()), dashboard_adresse=tunnel_url(), paper_ranking=fw,
                 backtest=dict(start=bt.get("start"), tage=bt.get("days"), stunden=bt.get("hourly"), funding_echt=bt.get("funding_real"),
-                              notiz=bt.get("note"), datenpruefung=bt.get("datenpruefung"), ergebnisse=res, fehler=bt.get("error")),
+                              notiz=bt.get("note"), datenpruefung=bt.get("datenpruefung"), optimierung=_opt(bt.get("optimierung")), ergebnisse=res, fehler=bt.get("error")),
                 backtest_laeuft=payload.get("running"), fortschritt=payload.get("progress"))
 
 

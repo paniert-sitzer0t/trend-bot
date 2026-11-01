@@ -297,6 +297,26 @@ function startBt(){
   if (!confirm('Backtest neu starten? Das dauert einige Minuten, das Ranking bleibt währenddessen sichtbar.')) return;
   api('/api/backtest/run', 'POST').then(function(){ if (CMP) { CMP.running = true; CMP.eta = null; CMP.progress = 'Startet ...'; render(); } setTimeout(loadCmp, 1500); });
 }
+function optCard(){
+  var o = CMP && CMP.backtest && CMP.backtest.optimierung;
+  if (!o) return '';
+  if (o.fehler) return '<div class="card"><div style="font-weight:700">Strategie-Suche</div><div class="mut">Fehler: '+esc(o.fehler)+'</div></div>';
+  var z = o.zusammenhang, zt = z === null || z === undefined ? '' : z >= 0.5 ? 'stark: gute Varianten blieben meist gut' : z >= 0.2 ? 'schwach: gute Varianten blieben nur teilweise gut' : 'kaum vorhanden: die Suche sagt wenig über die Zukunft';
+  var h = '<h2>Strategie-Suche mit Gegenprobe</h2><div class="card">';
+  h += '<div class="mut">'+f(o.getestet, 0)+' Varianten getestet. Ausgewählt nur nach dem Suchzeitraum ('+esc(o.suchzeitraum)+'). Die Gegenprobe ('+esc(o.gegenprobe)+') hat die Suche nie gesehen.</div>';
+  if (zt) h += '<div style="margin-top:8px"><b>Zusammenhang Suche und Gegenprobe:</b> '+f(z, 2)+', '+zt+'.</div>';
+  if (o.gegenprobe_schnitt !== null && o.gegenprobe_schnitt !== undefined) h += '<div style="margin-top:4px"><b>Top 10 in der Gegenprobe im Schnitt:</b> <span class="num '+cl(o.gegenprobe_schnitt)+'">'+sg(o.gegenprobe_schnitt, 0)+' % pro Jahr</span></div>';
+  h += '</div><div class="card flat"><ul class="rank">';
+  (o.beste || []).forEach(function(b, i){
+    h += '<li style="padding:12px 14px;border-bottom:1px solid var(--line)"><div style="display:flex;gap:10px"><span class="no num">'+(i + 1)+'</span><div style="flex:1;min-width:0"><div style="font-weight:600">'+esc(b.name)+'</div>';
+    h += '<div class="mut num" style="margin-top:4px">Suche: '+sg(b.suche.cagr, 0)+' % pro Jahr, Rückgang '+f(b.suche.maxdd, 0)+' %</div>';
+    h += '<div class="num" style="margin-top:2px">Gegenprobe: <span class="'+cl(b.gegenprobe.cagr)+'">'+sg(b.gegenprobe.cagr, 0)+' % pro Jahr</span> ('+sg(b.gegenprobe.total, 0)+' % gesamt, Rückgang '+f(b.gegenprobe.maxdd, 0)+' %)'+(b.liquidiert ? ' <span class="neg">liquidiert '+esc(b.liquidiert)+'</span>' : '')+'</div></div></div></li>';
+  });
+  h += '</ul></div>';
+  var r = o.rueckblick;
+  if (r) h += '<div class="card" style="border-color:var(--warn)"><div style="font-weight:700">Rückblickend beste Variante: '+sg(r.gesamt.total, 0)+' %</div><div class="mut" style="margin-top:4px">'+esc(r.name)+'. Diese Zahl kennt man erst hinterher. Wer so auswählt, passt die Strategie an die Vergangenheit an. Entscheidend ist die Gegenprobe oben.</div></div>';
+  return h;
+}
 function renderHome(){
   var h = '';
   if (!CMP) { $('v-home').innerHTML = '<div class="empty">Daten werden geladen</div>'; return; }
@@ -323,6 +343,7 @@ function renderHome(){
   });
   h += '</ul></div>';
   h += '<div class="sub">Tippe auf eine Strategie für Verlauf, Positionen und Jahreszahlen.</div>';
+  h += optCard();
   var bt = CMP.backtest;
   h += '<div class="card"><details><summary>So ist gerechnet</summary><p>'+(CMP.running ? 'Der Backtest läuft gerade. '+esc(CMP.progress || '') : bt && bt.error ? 'Backtest-Fehler: '+esc(bt.error) : bt ? esc(bt.coins+' Coins, '+bt.days+' Tage seit '+bt.start+'. '+bt.note) : 'Backtest noch nicht fertig.')+'</p>';
   h += '<p>Der Paper-Test läuft in Echtzeit mit Spielgeld. Der Backtest rechnet dieselben Regeln auf alten Kursen. Short-Positionen sind nur simuliert, weil Pionex sie per API nicht anbietet.</p></details></div>';

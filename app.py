@@ -19,9 +19,11 @@ def _frac(m):
     if m.startswith("Lade Meme"):
         return 0.2
     if m.startswith("Stundenkerzen"):
-        return 0.22 + 0.5 * p
+        return 0.22 + 0.38 * p
     if m.startswith("Rechne"):
-        return 0.72 + 0.28 * p
+        return 0.6 + 0.2 * p
+    if m.startswith("Suche"):
+        return 0.8 + 0.2 * p
     return 0.01
 
 

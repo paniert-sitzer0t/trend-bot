@@ -1025,7 +1025,15 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
         st.update(years=out, costs=acc.costs, rebalances=rebs, final=curve[-1] if curve else 100.0, curve=pts,
                   leverage=LEV.get(strat, 1), stops=acc.stops, liquidated=liq, best_year=peak_year)
         res[strat] = dict(name=NAMES[strat], **st)
-    return dict(ts=time.time(), days=n, coins=len(closes), universe=("mitwandernd: je Tag Top %d nach 30-Tage-Umsatz" % NUM) if members else "heutige Top %d" % NUM, start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
+    optim = None
+    if members is not None:
+        try:
+            import gc, opt
+            gc.collect()
+            optim = opt.search(closes, members, n, start, HI, LO, MHI, MLO, dfund, progress, first)
+        except Exception as e:
+            optim = dict(fehler=str(e)[:300])
+    return dict(ts=time.time(), days=n, coins=len(closes), optimierung=optim, universe=("mitwandernd: je Tag Top %d nach 30-Tage-Umsatz" % NUM) if members else "heutige Top %d" % NUM, start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
                 results=res,
                 hourly=bool(hourly), funding_real=bool(dfund), datenpruefung=check,
                 note=("Stundenkerzen: Korb-Strategien rotieren alle 6 h, Trailing-Stops und Liquidationen werden stundengenau geprüft. "

@@ -156,6 +156,7 @@ if __name__ == "__main__":
     threading.Thread(target=status.run, args=(lambda: compare(TOKEN),), daemon=True).start()
     def bt_scheduler():
         """Backtest automatisch zweimal täglich (ab 01:30 und 13:30 UTC) und beim Start, wenn er fehlt oder alt ist."""
+        time.sleep(600)                                   # nach dem Start erst 10 Minuten warten
         while True:
             try:
                 bt = load_bt()

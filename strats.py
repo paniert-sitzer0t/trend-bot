@@ -785,7 +785,28 @@ def stats(curve, days_per_year=365):
                 maxdd=mdd * 100, sharpe=mean / sd * math.sqrt(days_per_year))
 
 
-def pool(min_vol=3e5, cap=450):
+def mem_mb():
+    """Gesamter Arbeitsspeicher des Servers in MB (für sparsame Grenzen auf kleinen Servern)."""
+    try:
+        for line in open("/proc/meminfo"):
+            if line.startswith("MemTotal:"):
+                return int(line.split()[1]) // 1024
+    except Exception:
+        pass
+    return 4096
+
+
+def limits():
+    """(Coins im Tagesdaten-Pool, Coins mit Stundendaten) je nach Arbeitsspeicher."""
+    m = mem_mb()
+    if m < 1500:
+        return 150, 60
+    if m < 3500:
+        return 250, 100
+    return 400, 160
+
+
+def pool(min_vol=1e6, cap=None):
     """Alle USDT-Paare auf Binance (ohne Stablecoins, gehebelte und Sonderprodukte) mit Mindestumsatz heute."""
     out = []
     for x in api("/api/v3/ticker/24hr"):
@@ -799,7 +820,7 @@ def pool(min_vol=3e5, cap=450):
         if v >= min_vol:
             out.append((v, sy))
     out.sort(reverse=True)
-    syms = [sy for _, sy in out[:cap]]
+    syms = [sy for _, sy in out[:cap or limits()[0]]]
     if "BTCUSDT" not in syms:
         syms.append("BTCUSDT")
     return syms
@@ -852,7 +873,15 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
         hi = dict(ext["h"]); hi.update(mdata[3]["h"])
         lo = dict(ext["l"]); lo.update(mdata[3]["l"])
         data = (n0, closes0, start0, None, mdata[1], mdata[3]["v"], hi, lo)
-        hsyms = sorted(set().union(*members[31:]) & set(closes0)) if n0 > 31 else ["BTCUSDT"]
+        cnt = {}
+        for m in members[31:]:
+            for sy in m:
+                cnt[sy] = cnt.get(sy, 0) + 1
+        hsyms = sorted(sy for sy in sorted(cnt, key=cnt.get, reverse=True)[:limits()[1]] if sy in closes0) or ["BTCUSDT"]
+        if "BTCUSDT" not in hsyms:
+            hsyms.append("BTCUSDT")
+        import gc
+        gc.collect()
         try:
             import hbt
             hourly = hbt.load_all(hsyms, days, progress)

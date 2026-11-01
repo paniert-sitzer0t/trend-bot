@@ -36,6 +36,30 @@ def tunnel_url():
     return None
 
 
+def tunnel_ok(u):
+    """Prüft vom Server aus, ob die öffentliche Adresse erreichbar ist. 4xx zählt als erreichbar."""
+    import urllib.request, urllib.error
+    try:
+        urllib.request.urlopen(urllib.request.Request(u + "/", headers={"User-Agent": "trend-bot"}), timeout=15)
+        return True
+    except urllib.error.HTTPError as e:
+        return e.code < 500
+    except Exception:
+        return False
+
+
+def restart_tunnel():
+    import subprocess
+    try:
+        r = subprocess.run(["sudo", "-n", "systemctl", "restart", "pionex-tunnel"],
+                           capture_output=True, text=True, timeout=60)
+        _tun["neustarts"] += 1
+        _tun["letzter_neustart"] = time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime())
+        _tun["fehler"] = (r.stderr or "").strip()[:200] or None
+    except Exception as e:
+        _tun["fehler"] = str(e)[:200]
+
+
 def summary(payload):
     fw = []
     for x in payload["forward"]:
@@ -89,8 +113,21 @@ def set_token(t):
 
 def run(get_payload, every=1800):
     last = 0.0
+    lastcheck = 0.0
     time.sleep(60)
     while True:
+        # Tunnel-Selbstheilung: alle 3 Min prüfen, nach 2 Fehlschlägen Tunnel neu starten (neue Adresse)
+        if time.time() - lastcheck >= 180:
+            lastcheck = time.time()
+            u = tunnel_url()
+            ok = bool(u) and tunnel_ok(u)
+            _tun["ok"] = ok
+            _tun["bad"] = 0 if ok else _tun["bad"] + 1
+            if _tun["bad"] >= 2:
+                _tun["bad"] = 0
+                restart_tunnel()
+                time.sleep(20)
+                _link[0] = None
         if TOKEN:
             u = tunnel_url()
             if u and u != _link[0]:
@@ -109,3 +146,4 @@ def run(get_payload, every=1800):
 
 _force = [False]
 _link = [None]
+_tun = {"ok": None, "bad": 0, "neustarts": 0, "letzter_neustart": None, "fehler": None}

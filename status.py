@@ -12,15 +12,28 @@ H = {"Authorization": "Bearer " + TOKEN, "Accept": "application/vnd.github+json"
 
 
 def tunnel_url():
-    """Aktuelle Dashboard-Adresse (ohne Passwort) aus dem Tunnel-Protokoll. Ändert sich bei jedem Tunnel-Neustart."""
-    import re, subprocess
-    try:
-        out = subprocess.run(["sudo", "-n", "journalctl", "-u", "pionex-tunnel", "--no-pager", "-n", "300"],
-                             capture_output=True, text=True, timeout=20).stdout
-        urls = re.findall(r"https://[a-z0-9-]+\.trycloudflare\.com", out)
-        return urls[-1] if urls else None
-    except Exception:
-        return None
+    """Aktuelle Dashboard-Adresse (ohne Passwort). Ändert sich bei jedem Tunnel-Neustart."""
+    import re, subprocess, json as _j, urllib.request
+    # 1) cloudflared meldet die Quick-Tunnel-Adresse über seinen lokalen Metrics-Server
+    for port in range(20241, 20246):
+        try:
+            with urllib.request.urlopen(f"http://127.0.0.1:{port}/quicktunnel", timeout=2) as r:
+                h = _j.loads(r.read().decode()).get("hostname")
+                if h:
+                    return "https://" + h
+        except Exception:
+            pass
+    # 2) Tunnel-Protokoll seit dem letzten Systemstart
+    for cmd in (["sudo", "-n", "journalctl", "-b", "-u", "pionex-tunnel", "--no-pager"],
+                ["journalctl", "-b", "-u", "pionex-tunnel", "--no-pager"]):
+        try:
+            out = subprocess.run(cmd, capture_output=True, text=True, timeout=20).stdout
+            urls = re.findall(r"https://[a-z0-9-]+\.trycloudflare\.com", out)
+            if urls:
+                return urls[-1]
+        except Exception:
+            pass
+    return None
 
 
 def summary(payload):
@@ -81,8 +94,7 @@ def run(get_payload, every=1800):
         if TOKEN:
             u = tunnel_url()
             if u and u != _link[0]:
-                if _link[0] is not None:
-                    _force[0] = True          # Adresse hat sich geändert: sofort neu veröffentlichen
+                _force[0] = True              # Adresse neu oder geändert: sofort veröffentlichen
                 _link[0] = u
         if TOKEN and (time.time() - last >= every or _force[0]):
             _force[0] = False

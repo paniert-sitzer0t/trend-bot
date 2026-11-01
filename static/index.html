@@ -357,7 +357,7 @@ function renderStrat(){
       if (x.lev > 1) {
         var lq = r && r.liquidated, fq = x.liq;
         h += '<div class="card" style="border-color:'+(lq || fq ? 'var(--neg)' : 'var(--warn)')+'"><div style="font-weight:700">'+x.lev+'x Hebel: ca. '+f(100 / x.lev, 0)+' % Kursrückgang löschen das Konto</div><div class="mut" style="margin-top:4px">'
-          + (r ? (lq ? 'Im Backtest wäre das Konto am '+lq+' liquidiert worden.' : 'Im Backtest wäre das Konto nicht liquidiert worden (Tageshoch und Tagestief berücksichtigt).') : 'Backtest noch nicht fertig.')
+          + (r ? (lq ? 'Im Backtest wäre das Konto am '+lq+' liquidiert worden.' : 'Im Backtest wäre das Konto nicht liquidiert worden (stündlich geprüft).') : 'Backtest noch nicht fertig.')
           + (fq ? ' Im Paper-Test liquidiert am '+fmtT(fq)+'.' : '') + '</div></div>';
       }
       h += '<div class="tiles"><div class="tile"><div class="k">Paper-Konto</div><div class="v num">'+f(x.equity)+' USDT</div></div>';

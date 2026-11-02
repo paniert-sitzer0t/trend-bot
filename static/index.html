@@ -193,7 +193,22 @@ Object.keys(TRK).forEach(function(k, ni){
   INFO[k] = 'Wie die Basisstrategie, aber jede Position wird automatisch geschlossen, wenn der Kurs '+TRK[k][1]+' % vom besten Kurs seit Einstieg zurückfällt (Short: vom tiefsten Kurs hochsteigt). Danach bleibt das Geld bis zur nächsten Anpassung in bar.';
   COL[k] = 'hsl('+(30 + ni * 22)+',85%,'+(58 + (ni % 3) * 7)+'%)';
 });
-function isT(k){ return !!TRK[k]; }
+var TRKX = {};
+function isT(k){ return !!TRK[k] || !!TRKX[k]; }
+function registerAuto(c){
+  c.forward.forEach(function(x){
+    if (!x.trail) return;
+    var p = Math.round(x.trail * 100);
+    TRKX[x.key] = p;
+    if (LABEL[x.key]) return;
+    var bl = LABEL[x.base] || x.base;
+    LABEL[x.key] = bl + ', Trailing ' + p + ' %';
+    INFO[x.key] = (INFO[x.base] ? INFO[x.base] + ' ' : '') + 'Zusätzlich: jede Position wird automatisch verkauft (Short: zurückgekauft), wenn der Kurs ' + p + ' % vom besten Kurs seit Einstieg zurückfällt. Danach bleibt das Geld bis zur nächsten Anpassung in bar.';
+    var h = 0; for (var i = 0; i < x.key.length; i++) h = (h * 31 + x.key.charCodeAt(i)) % 360;
+    COL[x.key] = 'hsl(' + h + ',72%,64%)';
+    KEYS.splice(KEYS.length - 1, 0, x.key);
+  });
+}
 var RGL = {RG1:['Regime: K-Long, Bärenmarkt Short Coins','Aufwärtstrend (Bitcoin über 200-Tage-Linie): Strategie K, Long auf die 3 stärksten Coins. Bärenmarkt: Short auf die 3 schwächsten Coins unter ihrer 50-Tage-Linie.'],
   RG2:['Regime: Bitcoin long / short','Bitcoin long, solange er über der 200-Tage-Linie liegt, darunter Bitcoin short.'],
   RG3:['Regime: K-Long, Bärenmarkt Bitcoin short','Aufwärtstrend: Strategie K. Bärenmarkt: Bitcoin short.'],
@@ -485,10 +500,27 @@ function renderLog(){
       + '<div class="mut" style="margin:4px 0 10px">Der Server legt alle 30 Minuten eine Zusammenfassung im GitHub-Branch „status“ ab, damit Claude Ranking und Backtest lesen kann. Dafür hier den GitHub-Token einfügen (nur Schreibrecht für dieses Repo).</div>'
       + '<input id="ghi" type="password" autocomplete="off" placeholder="GitHub-Token einfügen" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--s1);color:inherit;font-size:16px">'
       + '<button class="chip" style="margin-top:10px" onclick="saveGh()">Speichern und prüfen</button><div id="ghm" class="mut" style="margin-top:8px"></div></div>'
+      + '<div class="card"><div style="font-weight:700;margin-bottom:6px">Server</div><div id="srvbody" class="mut">Wird geladen</div></div>'
       + '<div class="card"><div class="log" id="logbody"></div></div>';
     api('/api/status/token').then(function(r){ if (r && r.set) $('ghm').textContent = 'Zugang ist eingerichtet.'; });
   }
   $('logbody').innerHTML = S ? S.logs.map(esc).join('<br>') : 'Wird geladen';
+  $('srvbody').innerHTML = srvCard();
+}
+function srvCard(){
+  var s = CMP && CMP.server; if (!s) return 'Wird geladen';
+  var r = [], dot = function(ok){ return '<span style="display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;background:'+(ok ? 'var(--pos)' : 'var(--warn)')+'"></span>'; };
+  var row = function(k, v, ok){ r.push('<div style="display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--line)"><span>'+dot(ok)+k+'</span><span class="num" style="color:var(--tx)">'+v+'</span></div>'); };
+  if (s.ram_gesamt_mb) row('Arbeitsspeicher', f(s.ram_gesamt_mb - s.ram_frei_mb, 0)+' von '+f(s.ram_gesamt_mb, 0)+' MB belegt', s.ram_frei_mb > 150);
+  if (s.prozess_mb) row('Bot-Prozess', f(s.prozess_mb, 0)+' MB', true);
+  if (s.last && s.kerne) row('Auslastung (15 Min)', f(s.last[2], 2)+' bei '+s.kerne+' Kern'+(s.kerne > 1 ? 'en' : ''), s.last[2] < s.kerne * 1.5);
+  if (s.disk_gesamt_gb) row('Speicherplatz', f(s.disk_gesamt_gb - s.disk_frei_gb, 1)+' von '+f(s.disk_gesamt_gb, 0)+' GB belegt', s.disk_frei_gb > 5);
+  var fm = s.dateien_mb || {}, tot = 0; Object.keys(fm).forEach(function(k){ tot += fm[k]; });
+  if (tot) row('Datenbanken und Ergebnisse', f(tot, 0)+' MB', tot < 2000);
+  var bt = CMP.backtest; if (bt && bt.duration) row('Letzter Backtest', Math.round(bt.duration / 60)+' Min Dauer', bt.duration < 4500);
+  row('Strategien im Vergleich', String(CMP.forward.length), true);
+  var e = CMP.last_error; if (e) r.push('<div style="padding-top:8px;color:var(--neg)">Letzter Backtest-Fehler ('+dt(e.ts)+'): '+esc(e.error)+'. Die alten Ergebnisse bleiben erhalten.</div>');
+  return r.join('');
 }
 async function saveGh(){
   var t = $('ghi').value.trim(); if (!t) return;
@@ -502,9 +534,13 @@ async function saveGh(){
 }
 function render(){ renderHome(); renderStrat(); renderMain(); renderLog(); show(); }
 async function loadState(){ var s = await api('/api/state'); if (!s) return; S = s; $('stat').textContent = s.paused ? 'pausiert' : 'läuft'; $('dot').classList.toggle('off', !!s.paused); render(); }
-async function loadCmp(){ var c = await api('/api/compare'); if (!c) return; CMP = c; render(); }
+async function loadCmp(){ var c = await api('/api/compare'); if (!c) return; registerAuto(c); CMP = c; render(); }
 function loadAll(){ loadState(); loadCmp(); }
-loadAll(); setInterval(loadState, 5000); setInterval(loadCmp, 20000); setInterval(function(){ if (CMP && CMP.running) loadCmp(); }, 5000);
+loadAll();
+setInterval(function(){ if (!document.hidden) loadState(); }, 5000);
+setInterval(function(){ if (!document.hidden) loadCmp(); }, 20000);
+setInterval(function(){ if (!document.hidden && CMP && CMP.running) loadCmp(); }, 5000);
+document.addEventListener('visibilitychange', function(){ if (!document.hidden) loadAll(); });
 </script>
 </body>
 </html>

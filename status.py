@@ -85,8 +85,9 @@ def summary(payload):
                   for f in ("total", "cagr", "maxdd", "sharpe", "liquidated", "best_year", "stops", "rebalances", "years", "ausreisser") if f in v}
     return dict(erzeugt=time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()), dashboard_adresse=tunnel_url(), paper_ranking=fw,
                 backtest=dict(start=bt.get("start"), tage=bt.get("days"), stunden=bt.get("hourly"), funding_echt=bt.get("funding_real"),
-                              notiz=bt.get("note"), datenpruefung=bt.get("datenpruefung"), optimierung=_opt(bt.get("optimierung")), ergebnisse=res, fehler=bt.get("error")),
-                backtest_laeuft=payload.get("running"), fortschritt=payload.get("progress"))
+                              notiz=bt.get("note"), dauer_min=round((bt.get("duration") or 0) / 60), datenpruefung=bt.get("datenpruefung"), optimierung=_opt(bt.get("optimierung")), ergebnisse=res, fehler=bt.get("error")),
+                backtest_laeuft=payload.get("running"), fortschritt=payload.get("progress"),
+                server=payload.get("server"), letzter_fehler=payload.get("last_error"), tunnel=dict(_tun))
 
 
 def has_token():

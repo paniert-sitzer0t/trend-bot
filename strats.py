@@ -152,6 +152,24 @@ PERIOD.update({k: 1 for k in ("NL1", "NL2", "NL3", "NL4", "NL5", "NL2_3", "NL1_5
 PERIOD.update({"RG1": 3, "RG2": 1, "RG3": 3, "RG4": 3, "RG5": 1, "RG1_2": 3, "RG2_3": 1})
 for _k, (_b, _p, _l) in TRAIL.items():
     PERIOD[_k] = 1 if _b in ("TREND", "X") else PERIOD[_b]
+# Jede Strategie ohne Hebel bekommt automatisch eine Trailing-Variante (Körbe mit 6-h-Rotation 5 %, sonst 15 %).
+# Ausgenommen: Strategien, die schon eine haben, Hebel- und Mischungs-Strategien, Stunden- und Carry-Strategien
+# sowie Bitcoin halten (wird nie umgeschichtet, nach einem Stopp bliebe das Konto leer).
+TRAIL_AUTO = {}
+_has = {b for (b, p, l) in TRAIL.values() if l == 1}
+for _b in list(NAMES):
+    if (_b in BASEOF or _b in LEV or _b in MIX or _b in HOURK or _b in CARRY or _b in _has
+            or _b not in PERIOD or PERIOD[_b] >= 10 ** 9):
+        continue
+    _p = 0.05 if _b.startswith("R_") else 0.15
+    _k = f"{_b}_T{int(_p * 100)}"
+    if _k in NAMES:
+        continue
+    TRAIL[_k] = (_b, _p, 1)
+    TRAIL_AUTO[_k] = _b
+    BASEOF[_k] = _b
+    PERIOD[_k] = PERIOD[_b]
+    NAMES[_k] = f"{_k}: {NAMES[_b].split(': ', 1)[1]} mit Trailing-Stop {int(_p * 100)} %"
 BASE = 0.35                          # Grundeinsatz der Martingale-Varianten (Anteil am Kapital)
 MARTI = {"F": 1.0, "G": 1.1, "H": 1.4}
 DAY = 86400
@@ -706,12 +724,13 @@ def sized(strat, acc, px, closes, i, ctx=None):
     """Zielgewichte inklusive Martingale-Skalierung: Einsatz wächst nach jeder Verlustperiode um den Faktor,
     gedeckelt bei 95 % des Kapitals (1x Hebel), und springt nach einer Gewinnperiode auf den Grundeinsatz zurück."""
     w = weights(strat, closes, i, ctx)
-    if strat in MARTI:
+    mk = strat if strat in MARTI else (BASEOF.get(strat) if BASEOF.get(strat) in MARTI else None)
+    if mk:
         eq = acc.equity(px)
         if acc.last_eq is not None:
             acc.losses = acc.losses + 1 if eq < acc.last_eq else 0
         acc.last_eq = eq
-        exposure = min(INVEST, BASE * MARTI[strat] ** acc.losses)
+        exposure = min(INVEST, BASE * MARTI[mk] ** acc.losses)
         w = {s: v * exposure / INVEST for s, v in w.items()}
     return w
 
@@ -830,6 +849,54 @@ def stats(curve, days_per_year=365):
                 maxdd=mdd * 100, sharpe=mean / sd * math.sqrt(days_per_year))
 
 
+def mem_available_mb():
+    """Aktuell frei verfügbarer Arbeitsspeicher in MB (None, wenn nicht lesbar)."""
+    try:
+        for line in open("/proc/meminfo"):
+            if line.startswith("MemAvailable:"):
+                return int(line.split()[1]) // 1024
+    except Exception:
+        pass
+    return None
+
+
+def sysinfo():
+    """Kennzahlen des Servers für das Dashboard: Arbeitsspeicher, Auslastung, Speicherplatz, Datenbankgrößen."""
+    out = {}
+    try:
+        mem = {}
+        for line in open("/proc/meminfo"):
+            k, v = line.split(":", 1)
+            mem[k] = int(v.split()[0]) // 1024
+        out.update(ram_gesamt_mb=mem.get("MemTotal"), ram_frei_mb=mem.get("MemAvailable"), swap_mb=mem.get("SwapTotal"))
+    except Exception:
+        pass
+    try:
+        for line in open("/proc/self/status"):
+            if line.startswith("VmRSS:"):
+                out["prozess_mb"] = int(line.split()[1]) // 1024
+    except Exception:
+        pass
+    try:
+        out["last"] = [round(x, 2) for x in os.getloadavg()]
+        out["kerne"] = os.cpu_count()
+    except Exception:
+        pass
+    try:
+        st = os.statvfs(".")
+        out.update(disk_frei_gb=round(st.f_bavail * st.f_frsize / 1e9, 1), disk_gesamt_gb=round(st.f_blocks * st.f_frsize / 1e9, 1))
+    except Exception:
+        pass
+    sizes = {}
+    for f in ("fwd.db", "candles.db", "trend.db", "backtest.json"):
+        try:
+            sizes[f] = round(os.path.getsize(f) / 1e6, 1)
+        except Exception:
+            pass
+    out["dateien_mb"] = sizes
+    return out
+
+
 def mem_mb():
     """Gesamter Arbeitsspeicher des Servers in MB (für sparsame Grenzen auf kleinen Servern)."""
     try:
@@ -942,7 +1009,7 @@ def intervals(xs, flags, cap=120):
 
 def mix_pool():
     """Strategien, auf die die Misch-Strategien verteilen dürfen: ohne Hebel, ohne andere Mischungen."""
-    return [k for k in NAMES if k not in MIX and LEV.get(k, 1) == 1]
+    return [k for k in NAMES if k not in MIX and k not in TRAIL_AUTO and LEV.get(k, 1) == 1]
 
 
 def mix_pick(series, i, k, look):
@@ -1264,12 +1331,23 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
 
 
 def run_and_save(path="backtest.json", progress=None):
+    """Rechnet den Backtest. Bei einem Fehler bleiben die alten Ergebnisse erhalten, der Fehler wird separat gemerkt.
+    Geschrieben wird über eine Zwischendatei, damit ein Absturz mitten im Schreiben nichts zerstört."""
     try:
         r = run_backtest(progress=progress)
     except Exception as e:
         r = dict(ts=time.time(), error=str(e))
-    with open(path, "w") as f:
+        with open("backtest_error.json", "w") as f:
+            json.dump(r, f)
+        return r
+    tmp = path + ".tmp"
+    with open(tmp, "w") as f:
         json.dump(r, f)
+    os.replace(tmp, path)
+    try:
+        os.remove("backtest_error.json")
+    except OSError:
+        pass
     return r
 
 
@@ -1279,8 +1357,11 @@ class Forward:
 
     def __init__(self, path="fwd.db", start=77.0):
         self.db = sqlite3.connect(path, check_same_thread=False)
+        self.db.execute("PRAGMA journal_mode=WAL")
+        self.db.execute("PRAGMA synchronous=NORMAL")
         self.db.executescript("CREATE TABLE IF NOT EXISTS st(k TEXT PRIMARY KEY, v TEXT);"
-                              "CREATE TABLE IF NOT EXISTS eq(ts REAL, k TEXT, v REAL);")
+                              "CREATE TABLE IF NOT EXISTS eq(ts REAL, k TEXT, v REAL);"
+                              "CREATE INDEX IF NOT EXISTS eq_k ON eq(k, ts);")
         self.lock = threading.Lock()
         self.start = start
         self.px, self.msg, self.last_eq = {}, "", 0.0
@@ -1390,6 +1471,7 @@ class Forward:
                     s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs, losses=acc.losses, last_eq=acc.last_eq, peak=acc.peak)
                     self.put(k, s)
                 self.put("_day", today)
+                self.thin_eq()
             self.track_listings()
             slot = int(time.time() // SLOT)
             rk = [k for k in NAMES if base_of(k).startswith("R_")]
@@ -1454,6 +1536,17 @@ class Forward:
                         self.put(k, s)
                 self.db.commit()
 
+    def thin_eq(self, keep_days=7):
+        """Kontoverlauf ausdünnen: die letzten 7 Tage bleiben im 10-Minuten-Takt, älteres wird auf eine Messung pro Stunde reduziert.
+        Hält die Datenbank klein und das Dashboard schnell, auch nach Monaten und mit vielen Strategien."""
+        cut = time.time() - keep_days * DAY
+        try:
+            self.db.execute("DELETE FROM eq WHERE ts < ? AND rowid NOT IN "
+                            "(SELECT MIN(rowid) FROM eq WHERE ts < ? GROUP BY k, CAST(ts / 3600 AS INTEGER))", (cut, cut))
+            self.db.commit()
+        except Exception as e:
+            print("Ausdünnen fehlgeschlagen:", e, flush=True)
+
     def mix_step(self, now):
         """Misch-Strategien im Paper-Test: Wert folgt den Einzelstrategien nach Anteilen.
         Auswahl für MIX5/MIX10 kommt aus dem letzten Backtest (nur Vergangenheitsdaten), Wechsel höchstens alle 30 Tage."""
@@ -1510,7 +1603,8 @@ class Forward:
                 out.append(dict(key=k, name=NAMES[k], curve=cv, equity=eq, pnl=eq - self.start, pct=(eq / self.start - 1) * 100,
                                 positions=pos, rebalances=s["rebs"], costs=s["costs"], lev=LEV.get(k, 1),
                                 liq=s.get("liq_ts"), stops=s.get("stops", 0), since=s.get("created"),
-                                investiert=ev_intervals(s.get("ev") or [], time.time())))
+                                investiert=ev_intervals(s.get("ev") or [], time.time()),
+                                base=BASEOF.get(k), trail=TRAIL[k][1] if k in TRAIL else None))
             return out
 
     def run(self):

@@ -179,7 +179,7 @@ var RM = {TL:['Trend Long','Kauft die stärksten Coins der letzten 24 h.'], TS:[
   TB:['Trend Long+Short','Long auf die stärksten, Short auf die schwächsten Coins.'], CB:['Gegen Trend Long+Short','Short auf die stärksten, Long auf die schwächsten Coins.']};
 ['TL','TS','CS','CL','TB','CB'].forEach(function(m, mi){ [3,5,10,15].forEach(function(n, ni){
   var k = 'R_'+m+n; KEYS.splice(KEYS.length - 1, 0, k);
-  LABEL[k] = RM[m][0]+', '+n+' Coins'; INFO[k] = RM[m][1]+' Je Seite '+n+' Coins, Rotation alle 6 Stunden, gleich gewichtet.';
+  LABEL[k] = RM[m][0]+', '+n+' Coins'; INFO[k] = RM[m][1]+' Der Bot sortiert alle 6 Stunden die größten Coins neu und handelt je Seite '+n+' Coins zu gleichen Teilen. Was nicht mehr dazugehört, wird verkauft (Short: zurückgekauft).';
   COL[k] = 'hsl('+(mi * 60)+','+(55 + ni * 8)+'%,'+(78 - ni * 9)+'%)';
 }); });
 function isR(k){ return k.indexOf('R_') == 0; }
@@ -207,7 +207,9 @@ function registerAuto(c){
     var m = /^AD([23])_(\d+)_(\d+)$/.exec(x.key);
     var nm = (x.name || x.key).split(': ').slice(1).join(': ') || x.key;
     var g = /^MG_(.+)_(\d+)_(\d+)$/.exec(x.key), gb = {B: 'Momentum Long/Short', MOMF: 'Momentum Top 3 BTC-Filter', AD2_3_200: 'Adaptiv'};
-    if (g) { addKey(x.key, 'Martingale x' + (g[2] / 10).toString().replace('.', ',') + ', max Stufe ' + g[3] + ', ' + (gb[g[1]] || g[1]), nm + '.'); return; }
+    var gi = {B: 'Wöchentlich 3 Gewinner Long und 3 Verlierer Short nach dem Trend der letzten 7 und 30 Tage.', MOMF: 'Wöchentlich die 3 Coins mit dem stärksten 14-Tage-Momentum, nur wenn Bitcoin über seinem 100-Tage-Schnitt liegt.', AD2_3_200: 'Bitcoin über der 200-Tage-Linie: die 3 stärksten Coins Long, darunter die 3 schwächsten Short.'};
+    if (g) { var f = (g[2] / 10).toString().replace('.', ','); addKey(x.key, 'Martingale x' + f + ', max Stufe ' + g[3] + ', ' + (gb[g[1]] || g[1]), (gi[g[1]] || '') + ' Der Einsatz startet bei 35 % des Kapitals und wächst nach jeder Verlustperiode um den Faktor ' + f + ', höchstens bis Stufe ' + g[3] + ', und springt nach einem Gewinn zurück.'); return; }
+    if (m) { addKey(x.key, 'Adaptiv ' + (m[1] == 2 ? '2 Zustände' : '3 Zustände') + ', Top ' + m[2] + ', BTC ' + m[3], 'Der Bot prüft wöchentlich, ob Bitcoin über seinem ' + m[3] + '-Tage-Schnitt liegt. Dann kauft er die ' + m[2] + ' Coins mit dem stärksten 14-Tage-Momentum (Long), darunter shortet er die ' + m[2] + ' schwächsten.' + (m[1] == 3 ? ' Long nur, wenn Bitcoin auch über der 50-Tage-Linie liegt, Short nur darunter, dazwischen bar.' : '') + ' Shorts sind nur simuliert.'); return; }
     addKey(x.key, m ? 'Adaptiv ' + (m[1] == 2 ? '2 Zustände' : '3 Zustände') + ', Top ' + m[2] + ', BTC ' + m[3] : nm.slice(0, 48), nm + '.');
   });
   c.forward.forEach(function(x){
@@ -237,6 +239,70 @@ Object.keys(RGL).forEach(function(k, ni){
   KEYS.splice(KEYS.length - 1, 0, k); LABEL[k] = RGL[k][0]; INFO[k] = RGL[k][1]+' Shorts sind nur simuliert.';
   COL[k] = 'hsl('+(160 + ni * 24)+',70%,'+(60 + (ni % 2) * 10)+'%)';
 });
+
+var WIE = {
+ A:'Der Bot sucht täglich die 3 Coins mit der größten Kursbewegung der letzten 24 Stunden. Setzt sich die Bewegung fort, kauft er (Long), sonst shortet er, und hält je einen Tag.',
+ D:'Das Gegenstück zu A: Dieselben 3 Coins mit der größten 24-Stunden-Bewegung, aber der Bot setzt gegen die Bewegung (steigt ein Coin stark, shortet er ihn, fällt er stark, kauft er ihn). Wette auf Rückkehr zum Mittelwert.',
+ B:'Einmal pro Woche sortiert der Bot die Coins nach dem Kursverlauf der letzten 7 und 30 Tage. Er kauft die 3 stärksten (Long) und shortet die 3 schwächsten, jeweils zu gleichen Teilen.',
+ C:'Wöchentlich kauft der Bot die 3 stärksten Coins, aber nur, wenn Bitcoin über seiner 200-Tage-Linie liegt. Ist der Markt schwach, bleibt das Geld in bar.',
+ E:'Vergleichswert: Der Bot kauft einmal Bitcoin und hält ihn. Daran misst sich jede andere Strategie.',
+ F:'Wie B (3 Gewinner Long, 3 Verlierer Short, wöchentlich), aber nur mit 35 % des Kapitals im Einsatz. Dient als Kontrolle für die Martingale-Varianten G und H.',
+ G:'Wie F, aber nach jeder Verlustwoche wächst der Einsatz um 10 % (Martingale). Nach einer Gewinnwoche springt er auf 35 % zurück.',
+ H:'Wie F, aber nach jeder Verlustwoche wächst der Einsatz um 40 % (Martingale). Nach einer Gewinnwoche springt er auf 35 % zurück. Riskanter als G.',
+ K:'Nur Long und nur, wenn Bitcoin über seiner 200-Tage-Linie liegt. Der Bot wählt wöchentlich die 3 stärksten Coins (30 und 60 Tage, ohne den letzten Tag), die selbst über ihrer 50-Tage-Linie liegen, und setzt weniger ein, wenn Bitcoin stark schwankt.',
+ M:'Springt ein Meme-Coin an einem Tag um 20 % oder mehr bei mindestens dem 3-fachen Umsatz, kauft der Bot ihn am Folgetag und hält einen Tag. Setzt auf Fortsetzung des Hypes.',
+ N:'Gleiche Auslöser wie M (Sprung von 20 % mit hohem Umsatz), aber der Bot shortet den Coin am Folgetag. Setzt darauf, dass der Hype kippt.',
+ E2:'Bitcoin kaufen und halten, aber mit doppeltem Einsatz auf Kredit. Ein Kursrückgang von etwa 50 % löscht das Konto.',
+ E3:'Bitcoin kaufen und halten, mit dreifachem Einsatz auf Kredit. Ein Kursrückgang von etwa 33 % löscht das Konto.',
+ T3:'Der Bot prüft täglich, ob Bitcoin über seiner 200-Tage-Linie liegt. Dann ist er mit dreifachem Einsatz long, sonst in bar.',
+ T5:'Wie T3 (Bitcoin long, solange er über der 200-Tage-Linie liegt), aber mit fünffachem Einsatz. Ein Rückgang von etwa 20 % löscht das Konto.',
+ K2:'Die Strategie K (stärkste Coins im Aufwärtstrend) mit doppeltem Einsatz auf Kredit. Gewinne und Verluste verdoppeln sich.',
+ K3:'Die Strategie K (stärkste Coins im Aufwärtstrend) mit dreifachem Einsatz auf Kredit. Gewinne und Verluste verdreifachen sich.',
+ B2:'Die Strategie B (3 Gewinner Long, 3 Verlierer Short, wöchentlich) mit doppeltem Einsatz auf Kredit.',
+ X10:'Bitcoin mit 10-fachem Einsatz, nur solange er über seiner 50-Tage-Linie liegt und die letzte Woche im Plus war. Ein Rückgang von etwa 10 % löscht das Konto.',
+ X25:'Wie X10, aber mit 25-fachem Einsatz. Schon ein Rückgang von etwa 4 % löscht das Konto.',
+ ORIG:'Der echte Paper-Bot: Er rotiert alle 8 Stunden in die stärksten Coins nach dem Trend. Das ist die Strategie, die später live handeln würde.',
+ DON:'Donchian-Ausbruch (Turtle-Regel): Bitcoin wird gekauft, wenn er über sein 20-Tage-Hoch steigt, und verkauft, wenn er unter sein 10-Tage-Tief fällt. Sonst in bar.',
+ DONLS:'Donchian-Ausbruch Long und Short: Long über dem 20-Tage-Hoch, Short unter dem 20-Tage-Tief. Ausstieg bei 10-Tage-Gegenbewegung.',
+ GX:'Golden Cross: Bitcoin wird gehalten, solange seine 50-Tage-Linie über der 200-Tage-Linie liegt. Sonst in bar.',
+ GXLS:'Golden und Death Cross: Long, solange die 50-Tage-Linie über der 200-Tage-Linie liegt, sonst Short auf Bitcoin.',
+ RSI2:'Der Bot kauft Bitcoin nach einem kurzen starken Rücksetzer (RSI 2 unter 10), aber nur im Aufwärtstrend. Er verkauft, sobald der Kurs wieder über seine 5-Tage-Linie steigt.',
+ VT:'Bitcoin mit Volatilitätssteuerung: Je stärker Bitcoin zuletzt schwankt, desto weniger setzt der Bot ein (Ziel 50 % Schwankung pro Jahr, höchstens 1,9-facher Einsatz).',
+ HALV:'Halving-Zyklus: Der Bot hält Bitcoin von 12 Monaten vor bis 18 Monate nach jedem Halving und ist sonst in bar.',
+ TOM:'Monatswechsel-Effekt: Der Bot hält Bitcoin nur vom 28. eines Monats bis zum 3. des nächsten, sonst in bar.',
+ ETHBTC:'Der Bot vergleicht Ethereum zu Bitcoin mit dem 50-Tage-Schnitt dieses Verhältnisses. Liegt es darüber, hält er Ethereum, sonst Bitcoin.',
+ DM:'Dual Momentum: Der Bot hält täglich denjenigen von Bitcoin, Ethereum und BNB, der in den letzten 60 Tagen am stärksten gestiegen ist. Sind alle drei im Minus, bleibt er in bar.',
+ MOM28:'Einmal pro Woche kauft der Bot die 5 Coins, die in den letzten 28 Tagen am stärksten gestiegen sind (je 20 %). Reine Long-Strategie, ohne Marktfilter.',
+ MOM7:'Einmal pro Woche kauft der Bot die 5 Coins, die in den letzten 7 Tagen am stärksten gestiegen sind (je 20 %). Reine Long-Strategie, ohne Marktfilter.',
+ TSM:'Für jeden Coin einzeln: Stieg er in den letzten 28 Tagen, geht der Bot long, sonst short. Ruhige Coins bekommen mehr Gewicht als schwankende.',
+ LVOL:'Der Bot kauft wöchentlich die 5 Coins mit der geringsten Schwankung der letzten 30 Tage, auf der Annahme, dass ruhige Coins im Verhältnis zum Risiko besser abschneiden.',
+ MAXLS:'Lotterie-Effekt: Der Bot shortet die 5 Coins mit dem größten Tagessprung der letzten 30 Tage und kauft dafür die 5 ruhigsten. Wöchentlich neu.',
+ MAXM:'Der Bot kauft wöchentlich die 5 Coins mit dem größten Tagessprung der letzten 30 Tage und setzt auf Fortsetzung des Schwungs.',
+ H180:'Der Bot wählt wöchentlich die 5 Coins, die ihrem 180-Tage-Hoch am nächsten sind, und kauft sie, aber nur, wenn Bitcoin über seiner 200-Tage-Linie liegt.',
+ VBRK:'Springt ein Coin um mehr als 5 % bei mindestens dem 3-fachen Umsatz, kauft der Bot ihn und hält ihn 3 Tage. Setzt auf Ausbrüche mit Volumen.',
+ ALTS:'Altcoin-Schalter: Bei Bitcoin über der 200-Tage-Linie vergleicht der Bot die Altcoins mit Bitcoin der letzten 30 Tage. Laufen Altcoins besser, kauft er die 5 stärksten, sonst Bitcoin.',
+ FCON:'Funding-Kontra: Der Bot shortet die 5 Coins mit dem höchsten Funding (überhitzt, viele Longs) und kauft die 5 mit dem niedrigsten.',
+ FCAR:'Funding-Carry: Der Bot kauft Coins am Spot und shortet sie gleichzeitig am Future (marktneutral) und kassiert das Funding der 5 höchsten Coins.',
+ H22:'Tageszeit-Effekt: Der Bot hält Bitcoin nur von 22 bis 24 Uhr UTC und ist sonst in bar.',
+ OVN:'Über-Nacht-Effekt: Nach einem 10-Tage-Hoch von Bitcoin hält der Bot ihn über Nacht (21 bis 14 Uhr UTC), nur montags, dienstags und freitags.',
+ DON_3:'Die Strategie DON (Bitcoin-Ausbruch über das 20-Tage-Hoch) mit dreifachem Einsatz auf Kredit.',
+ GX_3:'Die Strategie GX (Bitcoin long bei Golden Cross) mit dreifachem Einsatz auf Kredit.',
+ H180_2:'Die Strategie H180 (5 Coins nahe dem 180-Tage-Hoch, nur bei Bitcoin über der 200-Tage-Linie) mit doppeltem Einsatz auf Kredit.',
+ MOM28_T20:'Wie MOM28 (5 stärkste Coins der letzten 28 Tage, wöchentlich), aber jede Position wird verkauft, wenn sie 20 % vom besten Kurs seit Einstieg zurückfällt.',
+ RG2:'Der Bot hält Bitcoin long, solange er über seiner 200-Tage-Linie liegt, und geht darunter Short auf Bitcoin. Shorts sind nur simuliert.',
+ RG1_2:'Die Strategie RG1 (Aufwärtstrend: stärkste Coins long, Bärenmarkt: Short auf die schwächsten) mit doppeltem Einsatz. Shorts sind nur simuliert.',
+ RG2_3:'Die Strategie RG2 (Bitcoin long über der 200-Tage-Linie, darunter short) mit dreifachem Einsatz. Shorts sind nur simuliert.',
+ NL2:'Der Bot kauft jeden neu auf Binance gelisteten Coin nach dem ersten Handelstag und hält ihn 14 Tage (je Coin höchstens 35 % des Kapitals).',
+ NL3:'Der Bot kauft jeden neu auf Binance gelisteten Coin nach dem ersten Handelstag und hält ihn 30 Tage (je Coin höchstens 35 % des Kapitals).',
+ NL5:'Der Bot kauft neu gelistete Coins nach dem ersten Handelstag und hält sie 7 Tage, mit bis zu 60 % des Kapitals je Coin (konzentrierter als NL1).',
+ NL2_3:'Die Strategie NL2 (neue Coins kaufen, 14 Tage halten) mit dreifachem Einsatz auf Kredit.',
+ NL1_5:'Die Strategie NL1 (neue Coins kaufen, 3 Tage halten) mit fünffachem Einsatz auf Kredit.',
+ NL1_T15:'Die Strategie NL1 (neue Coins kaufen, 3 Tage halten), aber jede Position wird verkauft, wenn sie 15 % vom besten Kurs seit Einstieg zurückfällt.',
+ NL2_T20:'Die Strategie NL2 (neue Coins kaufen, 14 Tage halten), aber jede Position wird verkauft, wenn sie 20 % vom besten Kurs zurückfällt.',
+ RG2_T10:'Die Strategie RG2 (Bitcoin long über der 200-Tage-Linie, darunter short) mit Stop bei 10 % Rückgang vom besten Kurs. Shorts sind nur simuliert.'
+};
+function applyWie(){ Object.keys(WIE).forEach(function(k){ INFO[k] = WIE[k]; }); }
+applyWie();
 function isG(k){ return k.indexOf('RG') == 0 || k.indexOf('NL') == 0; }
 var IDL = {"H180F": ["Suche: 180-Tage-Hoch, Top 5, BTC 100", "Aus der Strategie-Suche, beste Variante ohne Hebel: die 5 Coins nahe ihrem 180-Tage-Hoch, nur wenn Bitcoin über seinem 100-Tage-Schnitt liegt, alle 3 Tage neu gewählt."], "H365F": ["Suche: 365-Tage-Hoch, Top 3, BTC 100", "Aus der Strategie-Suche: die 3 Coins nahe ihrem 365-Tage-Hoch, nur wenn Bitcoin über seinem 100-Tage-Schnitt liegt, alle 3 Tage neu gewählt, 1x Hebel."], "H365F_2": ["Suche: 365-Tage-Hoch mit 2x Hebel", "Die rückblickend beste Variante der Suche: wie die 1x-Version, aber mit 2x Hebel. Nur Paper-Simulation."], "DON": ["Donchian-Ausbruch BTC", "Bitcoin Donchian-Ausbruch 20/10 (Turtle), nur Long."], "DONLS": ["Donchian BTC Long+Short", "Bitcoin Donchian-Ausbruch 20/10, Long und Short."], "GX": ["Golden Cross BTC", "Bitcoin Golden Cross (50 über 200 Tage), sonst bar."], "GXLS": ["Golden/Death Cross BTC", "Bitcoin Golden Cross Long, Death Cross Short."], "RSI2": ["RSI-2 Rücksetzer BTC", "Bitcoin Rücksetzer kaufen (RSI 2 unter 10 im Aufwärtstrend), Ausstieg über 5-Tage-Linie."], "VT": ["BTC Volatilitätsziel bis 1,9x", "Bitcoin mit Volatilitätssteuerung, Ziel 50 % Schwankung, bis 1,9x Hebel."], "HALV": ["Halving-Zyklus BTC", "Bitcoin-Halving-Zyklus, 12 Monate vor bis 18 Monate nach dem Halving long."], "TOM": ["Monatswechsel BTC", "Monatswechsel, Bitcoin nur vom 28. bis 3. halten."], "ETHBTC": ["ETH/BTC-Rotation", "Rotation Ethereum oder Bitcoin nach ETH/BTC-Trend."], "DM": ["Dual Momentum BTC/ETH/BNB", "Dual Momentum BTC/ETH/BNB, stärkster der letzten 60 Tage, sonst bar."], "MOM28": ["Momentum 28 Tage, Top 5", "Querschnitts-Momentum 28 Tage, Top 5 Long, wöchentlich."], "MOM7F": ["Momentum 7 Tage, Top 5, BTC-Filter", "Wie Momentum 7 Tage, Top 5, aber nur investiert, wenn Bitcoin über seinem 200-Tage-Schnitt liegt. Sonst bar."], "MOM7_T15": ["Momentum 7 Tage, Top 5, Trailing 15 %", "Wie Momentum 7 Tage, Top 5. Jede Position wird verkauft, wenn sie 15 % unter ihren besten Kurs seit Einstieg fällt."], "MOM7F_T15": ["Momentum 7 Tage, BTC-Filter + Trailing", "Momentum 7 Tage, Top 5, nur wenn Bitcoin über dem 200-Tage-Schnitt liegt, plus Trailing-Stop 15 %."], "MOMF2": ["Momentum 14 Tage, Top 3, BTC 200 Tage", "Wie die Strategie aus der Suche, aber nur investiert, wenn Bitcoin über seinem 200-Tage-Schnitt liegt (statt 100 Tage)."], "MOMF_T15": ["Momentum 14 Tage, Top 3, Trailing 15 %", "Strategie aus der Suche (Bitcoin-Filter 100 Tage) plus Trailing-Stop: jede Position wird verkauft, wenn sie 15 % unter ihren besten Kurs fällt."], "MOMF2_T15": ["Momentum 14 Tage, BTC 200 + Trailing", "Momentum 14 Tage, Top 3, Bitcoin-Filter 200 Tage plus Trailing-Stop 15 %."], "MOMF": ["Suche: Momentum 14 Tage, Top 3", "Aus der Strategie-Suche: Momentum 14 Tage, Top 3 Long, nur wenn Bitcoin über dem 100-Tage-Schnitt liegt, wöchentlich neu sortiert."], "MOM7": ["Momentum 7 Tage, Top 5", "Querschnitts-Momentum 7 Tage, Top 5 Long, wöchentlich."], "TSM": ["Zeitreihen-Momentum Long/Short", "Zeitreihen-Momentum je Coin (28 Tage), Long oder Short, nach Risiko gewichtet."], "LVOL": ["Ruhigste 5 Coins", "Niedrig-Volatilitäts-Anomalie, 5 ruhigste Coins Long, wöchentlich."], "MAXLS": ["Lotterie-Effekt Long/Short", "Lotterie-Effekt, Short auf Coins mit größtem Tagessprung, Long auf die ruhigsten."], "MAXM": ["MAX-Momentum Top 5", "MAX-Momentum, Long auf Coins mit größtem Tagessprung der letzten 30 Tage."], "H180": ["Nähe 180-Tage-Hoch, Top 5", "Nähe zum 180-Tage-Hoch, Top 5 Long im Aufwärtstrend."], "VBRK": ["Volumen-Ausbruch", "Volumen-Ausbruch (3x Umsatz und +5 %), 3 Tage halten."], "ALTS": ["Altcoin-Saison-Schalter", "Altcoin-Saison-Schalter, Altcoin-Momentum oder Bitcoin."], "FCON": ["Funding-Kontra Long/Short", "Funding-Kontra, Short auf überhitzte Longs, Long auf überhitzte Shorts."], "FCAR": ["Funding-Carry marktneutral", "Funding-Carry marktneutral (Spot long, Future short), Top 5 Funding."], "H22": ["BTC 22 bis 24 Uhr UTC", "Bitcoin nur 22 bis 24 Uhr UTC halten (Tageszeit-Effekt)."], "OVN": ["BTC über Nacht nach 10-Tage-Hoch", "Bitcoin über Nacht (21 bis 14 Uhr UTC) nach 10-Tage-Hoch, Mo/Di/Fr."], "DON_3": ["Donchian BTC 3x", "Donchian-Ausbruch mit 3x Hebel."], "GX_3": ["Golden Cross BTC 3x", "Golden Cross mit 3x Hebel."], "H180_2": ["180-Tage-Hoch 2x", "180-Tage-Hoch mit 2x Hebel."], "MOM28_T20": ["Momentum 28 Tage, Trailing 20 %", "Querschnitts-Momentum 28 Tage, Top 5 Long, wöchentlich mit Trailing-Stop 20 %."]};
 Object.keys(IDL).forEach(function(k, ni){
@@ -550,7 +616,7 @@ async function saveGh(){
 var CALC_OPEN = false;
 function render(){ renderHome(); renderStrat(); renderMain(); renderLog(); show(); }
 async function loadState(){ var s = await api('/api/state'); if (!s) return; S = s; $('stat').textContent = s.paused ? 'pausiert' : 'läuft'; $('dot').classList.toggle('off', !!s.paused); render(); }
-async function loadCmp(){ var c = await api('/api/compare'); if (!c) return; registerAuto(c); CMP = c; render(); }
+async function loadCmp(){ var c = await api('/api/compare'); if (!c) return; registerAuto(c); applyWie(); CMP = c; render(); }
 function loadAll(){ loadState(); loadCmp(); }
 loadAll();
 setInterval(function(){ if (!document.hidden) loadState(); }, 5000);

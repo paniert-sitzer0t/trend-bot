@@ -206,6 +206,8 @@ function registerAuto(c){
     if (LABEL[x.key] || x.trail || x.key == 'ORIG') return;
     var m = /^AD([23])_(\d+)_(\d+)$/.exec(x.key);
     var nm = (x.name || x.key).split(': ').slice(1).join(': ') || x.key;
+    var g = /^MG_(.+)_(\d+)_(\d+)$/.exec(x.key), gb = {B: 'Momentum Long/Short', MOMF: 'Momentum Top 3 BTC-Filter', AD2_3_200: 'Adaptiv'};
+    if (g) { addKey(x.key, 'Martingale x' + (g[2] / 10).toString().replace('.', ',') + ', max Stufe ' + g[3] + ', ' + (gb[g[1]] || g[1]), nm + '.'); return; }
     addKey(x.key, m ? 'Adaptiv ' + (m[1] == 2 ? '2 Zustände' : '3 Zustände') + ', Top ' + m[2] + ', BTC ' + m[3] : nm.slice(0, 48), nm + '.');
   });
   c.forward.forEach(function(x){

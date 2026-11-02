@@ -188,6 +188,20 @@ def weights_adapt(strat, closes, i):
     return {sy: -INVEST / k for sy in _top(sc, k, reverse=False)}
 
 
+# Martingale mit Faktor: Der Einsatz startet bei 35 % des Kapitals und wächst nach jeder Verlustperiode um den Faktor
+# (zum Beispiel x1,2 = 20 % mehr), höchstens bis zur Stufe "max". Nach einer Gewinnperiode springt er auf 35 % zurück.
+# Gedeckelt bei 100 % des Kapitals, nie Hebel. Grundregel dahinter: B (Long+Short), MOMF (Long mit BTC-Filter), AD2_3_200 (adaptiv).
+MG = {}
+_MGN = {"B": "Momentum Long+Short", "MOMF": "Momentum 14 Tage, Top 3 mit BTC-Filter", "AD2_3_200": "Adaptiv Long/Short"}
+for _b in ("B", "MOMF", "AD2_3_200"):
+    for _f in (1.2, 1.5):
+        for _mx in (3, 6):
+            MG[f"MG_{_b}_{int(round(_f * 10))}_{_mx}"] = (_b, _f, _mx)
+for _k, (_b, _f, _mx) in MG.items():
+    NAMES[_k] = f"{_k}: {_MGN[_b]} mit Martingale x{str(_f).replace('.', ',')} nach Verlustperiode, höchstens Stufe {_mx} (Einsatz 35 % bis {min(100, int(round(35 * _f ** _mx)))} %)"
+    PERIOD[_k] = PERIOD[_b]
+
+
 # Jede Strategie ohne Hebel bekommt automatisch eine Trailing-Variante (Körbe mit 6-h-Rotation 5 %, sonst 15 %).
 # Ausgenommen: Strategien, die schon eine haben, Hebel- und Mischungs-Strategien, Stunden- und Carry-Strategien
 # sowie Bitcoin halten (wird nie umgeschichtet, nach einem Stopp bliebe das Konto leer).
@@ -711,6 +725,8 @@ def weights(strat, closes, i, ctx=None):
     if strat in LEV or strat in TRAIL:
         base = weights(BASEOF[strat], closes, i, ctx)
         return {s: v * LEV.get(strat, 1) for s, v in base.items()}
+    if strat in MG:
+        return weights(MG[strat][0], closes, i, ctx)
     if strat in ADAPT:
         return weights_adapt(strat, closes, i)
     if strat in RG:
@@ -774,12 +790,16 @@ def sized(strat, acc, px, closes, i, ctx=None):
     gedeckelt bei 95 % des Kapitals (1x Hebel), und springt nach einer Gewinnperiode auf den Grundeinsatz zurück."""
     w = weights(strat, closes, i, ctx)
     mk = strat if strat in MARTI else (BASEOF.get(strat) if BASEOF.get(strat) in MARTI else None)
-    if mk:
+    gk = strat if strat in MG else (BASEOF.get(strat) if BASEOF.get(strat) in MG else None)
+    if mk or gk:
         eq = acc.equity(px)
         if acc.last_eq is not None:
             acc.losses = acc.losses + 1 if eq < acc.last_eq else 0
         acc.last_eq = eq
-        exposure = min(INVEST, BASE * MARTI[mk] ** acc.losses)
+        if gk:
+            exposure = min(INVEST, BASE * MG[gk][1] ** min(acc.losses, MG[gk][2]))
+        else:
+            exposure = min(INVEST, BASE * MARTI[mk] ** acc.losses)
         w = {s: v * exposure / INVEST for s, v in w.items()}
     return w
 
@@ -1058,7 +1078,7 @@ def intervals(xs, flags, cap=120):
 
 def mix_pool():
     """Strategien, auf die die Misch-Strategien verteilen dürfen: ohne Hebel, ohne andere Mischungen."""
-    return [k for k in NAMES if k not in MIX and k not in TRAIL_AUTO and LEV.get(k, 1) == 1]
+    return [k for k in NAMES if k not in MIX and k not in TRAIL_AUTO and k not in MG and BASEOF.get(k) not in MG and LEV.get(k, 1) == 1]
 
 
 def mix_pick(series, i, k, look):

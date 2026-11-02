@@ -396,7 +396,7 @@ function renderHome(){
   h += '<div class="sub">Tippe auf eine Strategie für Verlauf, Positionen und Jahreszahlen.</div>';
   h += optCard();
   var bt = CMP.backtest;
-  h += '<div class="card"><details><summary>So ist gerechnet</summary><p>'+(CMP.running ? 'Der Backtest läuft gerade. '+esc(CMP.progress || '') : bt && bt.error ? 'Backtest-Fehler: '+esc(bt.error) : bt ? esc(bt.coins+' Coins, '+bt.days+' Tage seit '+bt.start+'. '+bt.note) : 'Backtest noch nicht fertig.')+'</p>';
+  h += '<div class="card"><details'+(CALC_OPEN ? ' open' : '')+' ontoggle="CALC_OPEN=this.open"><summary>So ist gerechnet</summary><p>'+(CMP.running ? 'Der Backtest läuft gerade. '+esc(CMP.progress || '') : bt && bt.error ? 'Backtest-Fehler: '+esc(bt.error) : bt ? esc(bt.coins+' Coins, '+bt.days+' Tage seit '+bt.start+'. '+bt.note) : 'Backtest noch nicht fertig.')+'</p>';
   h += '<p>Der Paper-Test läuft in Echtzeit mit Spielgeld. Der Backtest rechnet dieselben Regeln auf alten Kursen. Short-Positionen sind nur simuliert, weil Pionex sie per API nicht anbietet.</p></details></div>';
   h += '<button class="btn" onclick="startBt()"'+(CMP.running ? ' disabled style="opacity:.6"' : '')+'>'+(CMP.running ? 'Backtest läuft, noch ca. '+((CMP.eta || {}).eta || '?')+' Min' : 'Backtest neu starten')+'</button>';
   $('v-home').innerHTML = h;
@@ -532,6 +532,7 @@ async function saveGh(){
     if (r.ok) $('ghi').value = '';
   } catch (e) { $('ghm').textContent = 'Fehler beim Senden'; }
 }
+var CALC_OPEN = false;
 function render(){ renderHome(); renderStrat(); renderMain(); renderLog(); show(); }
 async function loadState(){ var s = await api('/api/state'); if (!s) return; S = s; $('stat').textContent = s.paused ? 'pausiert' : 'läuft'; $('dot').classList.toggle('off', !!s.paused); render(); }
 async function loadCmp(){ var c = await api('/api/compare'); if (!c) return; registerAuto(c); CMP = c; render(); }

@@ -79,6 +79,9 @@ IDEAS = {
     "MOM7F": "MOM7F: Momentum 7 Tage, Top 5 Long, nur wenn Bitcoin über 200-Tage-Schnitt, wöchentlich",
     "MOM7_T15": "MOM7_T15: Momentum 7 Tage, Top 5 Long, wöchentlich mit Trailing-Stop 15 %",
     "MOM7F_T15": "MOM7F_T15: Momentum 7 Tage, Top 5 Long, Bitcoin-Filter 200 Tage und Trailing-Stop 15 %",
+    "MOMF2": "MOMF2: Momentum 14 Tage, Top 3 Long, nur wenn Bitcoin über 200-Tage-Schnitt, wöchentlich",
+    "MOMF_T15": "MOMF_T15: Momentum 14 Tage, Top 3, Bitcoin-Filter 100 Tage, Trailing-Stop 15 %",
+    "MOMF2_T15": "MOMF2_T15: Momentum 14 Tage, Top 3, Bitcoin-Filter 200 Tage, Trailing-Stop 15 %",
     "MOMF": "MOMF: Momentum 14 Tage, Top 3 Long, nur wenn Bitcoin über 100-Tage-Schnitt, wöchentlich (aus der Strategie-Suche)",
     "MOM7": "MOM7: Querschnitts-Momentum 7 Tage, Top 5 Long, wöchentlich",
     "TSM": "TSM: Zeitreihen-Momentum je Coin (28 Tage), Long oder Short, nach Risiko gewichtet",
@@ -112,6 +115,7 @@ MAJORS = {"BTCUSDT", "ETHUSDT"}
 SLIP_MAJOR = 0.0002         # Slippage für BTC/ETH (sehr liquide), sonst SLIP
 # Trailing-Stop-Varianten: Schluessel -> (Basisstrategie, Abstand zum Hoechst- bzw. Tiefstkurs, Hebel)
 TRAIL = {
+    "MOMF_T15": ("MOMF", 0.15, 1), "MOMF2_T15": ("MOMF2", 0.15, 1),
     "MOM7_T15": ("MOM7", 0.15, 1), "MOM7F_T15": ("MOM7F", 0.15, 1),
     "K_T8": ("K", 0.08, 1), "K_T15": ("K", 0.15, 1), "B_T8": ("B", 0.08, 1), "B_T15": ("B", 0.15, 1),
     "C_T10": ("C", 0.10, 1), "A_T5": ("A", 0.05, 1),
@@ -142,7 +146,7 @@ PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, 
           "E2": 10 ** 9, "E3": 10 ** 9, "T3": 1, "T5": 1, "K2": 7, "K3": 7, "B2": 7, "X10": 1, "X25": 1}
 PERIOD.update({k: 1 for k in RKEYS})
 PERIOD.update({"DON": 1, "DONLS": 1, "GX": 1, "GXLS": 1, "RSI2": 1, "VT": 1, "HALV": 1, "TOM": 1, "ETHBTC": 1, "DM": 7,
-               "MOM28": 7, "MOM7": 7, "MOM7F": 7, "MOMF": 7, "MIXALL": 30, "MIX5": 30, "MIX10": 30, "TSM": 7, "LVOL": 7, "MAXLS": 7, "MAXM": 7, "H180": 7, "VBRK": 1, "ALTS": 7, "FCON": 3,
+               "MOM28": 7, "MOM7": 7, "MOM7F": 7, "MOMF": 7, "MOMF2": 7, "MIXALL": 30, "MIX5": 30, "MIX10": 30, "TSM": 7, "LVOL": 7, "MAXLS": 7, "MAXM": 7, "H180": 7, "VBRK": 1, "ALTS": 7, "FCON": 3,
                "FCAR": 1, "H22": 1, "OVN": 1, "DON_3": 1, "GX_3": 1, "H180_2": 7})
 PERIOD.update({k: 1 for k in ("NL1", "NL2", "NL3", "NL4", "NL5", "NL2_3", "NL1_5")})
 PERIOD.update({"RG1": 3, "RG2": 1, "RG3": 3, "RG4": 3, "RG5": 1, "RG1_2": 3, "RG2_3": 1})
@@ -449,9 +453,9 @@ def weights_idea(strat, closes, i):
         if len(sc) < 10:
             return {}
         return {sy: INVEST / 5 for sy in _top(sc, 5)}
-    if strat == "MOMF":
+    if strat in ("MOMF", "MOMF2"):
         b = closes.get("BTCUSDT") or _POOL.get("closes", {}).get("BTCUSDT")
-        m = _sma(b, i, 100) if b else None
+        m = _sma(b, i, 100 if strat == "MOMF" else 200) if b else None
         if not (m and b[i] and b[i] > m):
             return {}
         sc = {sy: r for sy, c in closes.items() if (r := ret(c, i, 14)) is not None}

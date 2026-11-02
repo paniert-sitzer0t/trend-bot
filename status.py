@@ -66,6 +66,7 @@ def _opt(o):
     q = {k: v for k, v in o.items() if k not in ("beste", "rueckblick")}
     q["beste"] = [{k: v for k, v in b.items() if k != "kurve"} for b in o.get("beste", [])]
     q["rueckblick"] = o.get("rueckblick")
+    q["rueckblick_1x"] = o.get("rueckblick_1x")
     return q
 
 

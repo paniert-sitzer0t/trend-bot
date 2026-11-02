@@ -196,6 +196,7 @@ def sim_hourly(strat, b, closes, ctx, first=31, members=None):
 
     curve, dayidx, rebs, liq = [], [], 0, None
     jumps = []                                   # größte Tagesgewinne zur Kontrolle auf Datenfehler
+    inv = acc.inv = []
     last_d = -10 ** 9
     h = 24 * first + 23
 
@@ -230,7 +231,7 @@ def sim_hourly(strat, b, closes, ctx, first=31, members=None):
         for j in range(h + 1, h + step + 1):
             if acc.dead:
                 if j % 24 == 23:
-                    curve.append(0.0); dayidx.append(b["start"] + j // 24)
+                    curve.append(0.0); dayidx.append(b["start"] + j // 24); inv.append(False)
                 continue
             if acc.pos:
                 hi = {s: (hh[s][j] if hh[s][j] == hh[s][j] else price(s, j)) for s in acc.pos}
@@ -256,6 +257,7 @@ def sim_hourly(strat, b, closes, ctx, first=31, members=None):
                     jumps.append((round((eq_now / curve[-1] - 1) * 100, 1),
                                   time.strftime("%d.%m.%Y", time.gmtime((b["start"] * 24 + j) * 3600)), top))
                 curve.append(eq_now)
+                inv.append(bool(acc.pos) and not acc.dead)
                 dayidx.append(b["start"] + j // 24)
         h += step
     acc.jumps = sorted(jumps, reverse=True)[:5]
@@ -269,6 +271,7 @@ def sim_orig(b, closes, HI, LO, first=31, members=None, stop=0.08, max_pos=3, ca
     Universum: Coins mit Stundendaten unter den umsatzstärksten des Tages."""
     hc, hh, hl, fund, H = b["hc"], b["hh"], b["hl"], b["fund"], b["H"]
     acc = S.Account(100.0)
+    acc.inv = []
     entry, last = {}, {}
     curve, dayidx, rebs = [], [], 0
 
@@ -354,5 +357,6 @@ def sim_orig(b, closes, HI, LO, first=31, members=None, stop=0.08, max_pos=3, ca
                 acc.funding_real(pxf, rates, 1 / 3)
         if j % 24 == 23:
             curve.append(acc.equity({s: price(s, j) for s in acc.pos}) if acc.pos else acc.cash)
+            acc.inv.append(bool(acc.pos))
             dayidx.append(b["start"] + d)
     return curve, dayidx, acc, rebs

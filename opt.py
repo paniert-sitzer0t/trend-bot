@@ -256,9 +256,24 @@ def search(closes, members, n, start, HI, LO, MHI, MLO, dfund, progress=None, fi
         tr, te, full = _seg(curve, a, b), _seg(curve, b, len(curve)), _seg(curve, 0, len(curve))
         rows.append(dict(cb=cb, train=tr, test=te, full=full, liq=liq, rebs=rebs,
                          curve=array.array("f", curve[::7])))
-    ok = [r for r in rows if r["train"]["maxdd"] > -85 and r["train"]["total"] > -100]
+    # Auswahl nur ohne Hebel (der echte Bot handelt nur mit 1x); Hebel-Varianten zählen nur im Rückblick
+    ok = [r for r in rows if r["cb"][6] == 1 and r["train"]["maxdd"] > -85 and r["train"]["total"] > -100]
     best = sorted(ok, key=lambda r: -r["train"]["cagr"])[:10]
     hind = max(rows, key=lambda r: r["full"]["total"]) if rows else None
+    one = [r for r in rows if r["cb"][6] == 1]
+    hind1 = max(one, key=lambda r: r["full"]["total"]) if one else None
+    # Abgleich: dieselben Regeln wie zwei Strategien des normalen Backtests, um die Suchrechnung zu prüfen
+    ref = {"MOMF": (("mom", 14), 3, "long", "BTC über 100-Tage-Schnitt", 7, 0.0, 1),
+           "H180": (("hoch", 180), 5, "long", "BTC über 200-Tage-Schnitt", 7, 0.0, 1)}
+    abgl = {}
+    for key, cb in ref.items():
+        r = next((x for x in rows if x["cb"] == cb), None)
+        if r is None:
+            curve, _l, _r = simulate(cb, R, closes, members, n, first, start, HI, LO, MHI, MLO, dfund, sma)
+            tot = _seg(curve, 0, len(curve))["total"]
+        else:
+            tot = r["full"]["total"]
+        abgl[key] = dict(name=label(cb), suche=tot)
     rho = _spearman([r["train"]["cagr"] for r in rows], [r["test"]["cagr"] for r in rows])
 
     def pub(r, curve=False):
@@ -274,4 +289,6 @@ def search(closes, members, n, start, HI, LO, MHI, MLO, dfund, progress=None, fi
                 zusammenhang=rho,
                 beste=[pub(r, i < 3) for i, r in enumerate(best)],
                 rueckblick=pub(hind) if hind else None,
+                rueckblick_1x=pub(hind1) if hind1 else None,
+                abgleich=abgl,
                 gegenprobe_schnitt=round(sum(r["test"]["cagr"] for r in best) / len(best), 1) if best else None)

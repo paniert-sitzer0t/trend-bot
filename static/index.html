@@ -261,17 +261,39 @@ function setCh(k){ CH = k; render(); }
 function toggleLine(k){ HIDDEN[k] = !HIDDEN[k]; render(); }
 
 /* Liniendiagramm: Reihen mit Punkten [x, y], optionale Nulllinie */
-function chart(series, base, h){
-  var W = 600, H = h || 170, x0 = 1e18, x1 = -1e18, y0 = 1e18, y1 = -1e18;
+function chart(series, base, h, opt){
+  opt = opt || {};
+  var W = 600, PH = h || 170, H = PH + 28, x0 = 1e18, x1 = -1e18, y0 = 1e18, y1 = -1e18;
   series.forEach(function(s){ s.pts.forEach(function(p){ x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); }); });
   if (x0 > x1) return '<div class="empty">Noch keine Daten</div>';
   if (base !== null) { y0 = Math.min(y0, base); y1 = Math.max(y1, base); }
   var sx = (x1 - x0) || 1, sy = (y1 - y0) || 1, pad = 8, o = '';
-  if (base !== null) { var yb = H - pad - ((base - y0) / sy) * (H - 2 * pad); o += '<line x1="0" x2="'+W+'" y1="'+yb+'" y2="'+yb+'" stroke="#8c99ae" stroke-opacity=".45" stroke-dasharray="3 5"/>'; }
+  var X = function(x){ return ((x - x0) / sx) * W; };
+  (opt.bands || []).forEach(function(b){                                   // investierte Zeiträume
+    var a = Math.max(b[0], x0), e = Math.min(b[1], x1);
+    if (e <= a) return;
+    o += '<rect x="'+X(a).toFixed(1)+'" y="0" width="'+Math.max(1.5, X(e) - X(a)).toFixed(1)+'" height="'+PH+'" fill="var(--acc)" fill-opacity=".10"/>';
+  });
+  var ms = opt.days ? 86400000 : 1000, t0 = x0 * ms, t1 = x1 * ms, span = (t1 - t0) / 86400000, ticks = [];
+  var d = new Date(t0), mon = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+  if (span > 700) { for (var y = d.getUTCFullYear() + 1; Date.UTC(y, 0, 1) <= t1; y++) ticks.push([Date.UTC(y, 0, 1), String(y)]); }
+  else if (span > 75) { var m0 = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1)), stepM = span > 300 ? 3 : 1;
+    for (var t = m0; t.getTime() <= t1; t = new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth() + stepM, 1))) ticks.push([t.getTime(), mon[t.getUTCMonth()] + (t.getUTCMonth() == 0 || ticks.length == 0 ? ' ' + String(t.getUTCFullYear()).slice(2) : '')]); }
+  else if (span > 2) { var stepD = span > 30 ? 7 : span > 10 ? 2 : 1, dd = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1));
+    for (var t2 = dd; t2.getTime() <= t1; t2 = new Date(t2.getTime() + stepD * 86400000)) ticks.push([t2.getTime(), t2.getUTCDate() + '.' + (t2.getUTCMonth() + 1) + '.']); }
+  else { var hh = Math.ceil(t0 / 21600000) * 21600000;
+    for (var t3 = hh; t3 <= t1; t3 += 21600000) { var z = new Date(t3); ticks.push([t3, z.getHours() == 0 || ticks.length == 0 ? z.getDate() + '.' + (z.getMonth() + 1) + '. ' + z.getHours() + 'h' : z.getHours() + 'h']); } }
+  if (ticks.length > 9) { var k = Math.ceil(ticks.length / 8); ticks = ticks.filter(function(_, i){ return i % k == 0; }); }
+  ticks.forEach(function(t){
+    var tx = X(t[0] / ms);
+    o += '<line x1="'+tx.toFixed(1)+'" x2="'+tx.toFixed(1)+'" y1="0" y2="'+PH+'" stroke="#8c99ae" stroke-opacity=".14"/>';
+    o += '<text x="'+tx.toFixed(1)+'" y="'+(PH + 23)+'" fill="#8c99ae" font-size="19" text-anchor="'+(tx < 30 ? 'start' : tx > W - 30 ? 'end' : 'middle')+'">'+t[1]+'</text>';
+  });
+  if (base !== null) { var yb = PH - pad - ((base - y0) / sy) * (PH - 2 * pad); o += '<line x1="0" x2="'+W+'" y1="'+yb+'" y2="'+yb+'" stroke="#8c99ae" stroke-opacity=".45" stroke-dasharray="3 5"/>'; }
   series.forEach(function(s){
     if (s.pts.length < 2) return;
-    var p = s.pts.map(function(q){ return (((q[0] - x0) / sx) * W).toFixed(1) + ',' + (H - pad - ((q[1] - y0) / sy) * (H - 2 * pad)).toFixed(1); }).join(' ');
-    o += '<polyline stroke="'+s.color+'" stroke-width="'+(s.w || 2)+'" points="'+p+'"/>';
+    var p = s.pts.map(function(q){ return X(q[0]).toFixed(1) + ',' + (PH - pad - ((q[1] - y0) / sy) * (PH - 2 * pad)).toFixed(1); }).join(' ');
+    o += '<polyline fill="none" stroke="'+s.color+'" stroke-width="'+(s.w || 2)+'" points="'+p+'"/>';
   });
   return '<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img">'+o+'</svg>';
 }
@@ -318,8 +340,17 @@ function optCard(){
     h += '<div class="num" style="margin-top:2px">Gegenprobe: <span class="'+cl(b.gegenprobe.cagr)+'">'+sg(b.gegenprobe.cagr, 0)+' % pro Jahr</span> ('+sg(b.gegenprobe.total, 0)+' % gesamt, Rückgang '+f(b.gegenprobe.maxdd, 0)+' %)'+(b.liquidiert ? ' <span class="neg">liquidiert '+esc(b.liquidiert)+'</span>' : '')+'</div></div></div></li>';
   });
   h += '</ul></div>';
-  var r = o.rueckblick;
-  if (r) h += '<div class="card" style="border-color:var(--warn)"><div style="font-weight:700">Rückblickend beste Variante: '+sg(r.gesamt.total, 0)+' %</div><div class="mut" style="margin-top:4px">'+esc(r.name)+'. Diese Zahl kennt man erst hinterher. Wer so auswählt, passt die Strategie an die Vergangenheit an. Entscheidend ist die Gegenprobe oben.</div></div>';
+  var r = o.rueckblick, r1 = o.rueckblick_1x;
+  if (r) {
+    h += '<div class="card" style="border-color:var(--warn)"><div style="font-weight:700">Rückblickend beste Variante</div>';
+    if (r1) h += '<div style="margin-top:6px">Ohne Hebel: <b class="num">'+sg(r1.gesamt.total, 0)+' %</b> <span class="mut">('+esc(r1.name)+', größter Rückgang '+f(r1.gesamt.maxdd, 0)+' %)</span></div>';
+    h += '<div style="margin-top:6px">Mit Hebel: <b class="num">'+sg(r.gesamt.total, 0)+' %</b> <span class="mut">('+esc(r.name)+', größter Rückgang '+f(r.gesamt.maxdd, 0)+' %)</span></div>';
+    h += '<div class="mut" style="margin-top:8px">Diese Zahlen kennt man erst hinterher. Sie entstehen durch Zinseszins über viele Jahre, oft aus einer einzigen starken Marktphase, und mit Hebel. Wer so auswählt, passt die Strategie an die Vergangenheit an. Entscheidend ist die Gegenprobe oben.</div>';
+    var ab = o.abgleich || {};
+    var al = Object.keys(ab).filter(function(k){ return ab[k].backtest !== null && ab[k].backtest !== undefined; });
+    if (al.length) h += '<div class="mut" style="margin-top:8px">Rechenkontrolle, gleiche Regeln in Suche und normalem Backtest: '+al.map(function(k){ return esc(LABEL[k] || k)+' '+sg(ab[k].suche, 0)+' % zu '+sg(ab[k].backtest, 0)+' %'; }).join(', ')+'.</div>';
+    h += '</div>';
+  }
   return h;
 }
 function renderHome(){
@@ -373,7 +404,7 @@ function renderStrat(){
       if (CH == 'paper') ser.push({color: COL[x.key], pts: pctSeries(x.curve, c.start), w: x.key == 'ORIG' ? 2.6 : 1.8});
       else if (b && b[x.key]) ser.push({color: COL[x.key], pts: b[x.key].curve.map(function(q){ return [q[0], (q[1] / 100 - 1) * 100]; }), w: 1.8});
     });
-    h += '<div class="card" style="margin-top:12px">'+chart(ser, 0, 210)+'<div class="cap"><span>'+(CH == 'paper' ? 'Gewinn in % seit Start' : 'Gewinn in % im Backtest')+'</span><span>gestrichelt = 0 %</span></div>';
+    h += '<div class="card" style="margin-top:12px">'+chart(ser, 0, 210, {days: CH != 'paper'})+'<div class="cap"><span>'+(CH == 'paper' ? 'Gewinn in % seit Start' : 'Gewinn in % im Backtest')+'</span><span>gestrichelt = 0 %</span></div>';
     h += '<div class="legend">'+c.forward.map(function(x){ return '<button class="leg '+(HIDDEN[x.key] ? 'off' : '')+'" onclick="toggleLine(\''+x.key+'\')"><i style="background:'+COL[x.key]+'"></i><span>'+(x.key == 'ORIG' ? 'Hauptbot' : x.key+' '+LABEL[x.key])+'</span></button>'; }).join('')+'</div></div>';
   } else {
     var x = c.forward.filter(function(z){ return z.key == SEL; })[0];
@@ -393,8 +424,9 @@ function renderStrat(){
       if (x.since) h += '<div class="mut" style="margin:-4px 0 12px">Live im Paper-Test seit '+since(x.since)+'</div>';
       h += '<div class="seg" style="margin-top:0"><button class="'+(CH == 'paper' ? 'on' : '')+'" onclick="setCh(\'paper\')">Paper-Test</button><button class="'+(CH == 'bt' ? 'on' : '')+'" onclick="setCh(\'bt\')">Backtest</button></div>';
       h += '<div class="card" style="margin-top:12px">';
-      if (CH == 'paper') h += chart([{color: COL[x.key], pts: x.curve}], c.start, 190)+'<div class="cap"><span>Kontostand in USDT</span><span>Start '+f(c.start, 0)+'</span></div>';
-      else h += r ? chart([{color: COL[x.key], pts: r.curve}], 100, 190)+'<div class="cap"><span>Backtest, Start = 100</span><span>Ende '+f(r.final, 0)+'</span></div>' : '<div class="empty">Backtest noch nicht fertig</div>';
+      var band = '<span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--acc);opacity:.35;margin-right:5px;vertical-align:-1px"></span>';
+      if (CH == 'paper') h += chart([{color: COL[x.key], pts: x.curve}], c.start, 190, {bands: x.investiert})+'<div class="cap"><span>Kontostand in USDT</span><span>Start '+f(c.start, 0)+'</span></div>'+(x.investiert && x.investiert.length ? '<div class="cap"><span>'+band+'hinterlegt = investiert, sonst in bar</span></div>' : '');
+      else h += r ? chart([{color: COL[x.key], pts: r.curve}], 100, 190, {days: true, bands: r.investiert})+'<div class="cap"><span>Backtest, Start = 100</span><span>Ende '+f(r.final, 0)+'</span></div>'+(r.investiert ? '<div class="cap"><span>'+band+'hinterlegt = investiert, sonst in bar'+(r.investiert.length ? ' ('+r.investiert.length+' Einstiege)' : '')+'</span></div>' : '') : '<div class="empty">Backtest noch nicht fertig</div>';
       h += '</div>';
       if (r && CH == 'bt') {
         h += '<div class="tiles"><div class="tile"><div class="k">Gesamt</div><div class="v num '+cl(r.total)+'">'+sg(r.total, 0)+' %</div></div><div class="tile"><div class="k">Pro Jahr</div><div class="v num '+cl(r.cagr)+'">'+sg(r.cagr, 0)+' %</div></div>';

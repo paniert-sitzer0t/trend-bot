@@ -897,6 +897,49 @@ def rolling_members(closes, vol, n, top=NUM, window=30):
     return members
 
 
+def ev_intervals(ev, now):
+    """Aus Ein-/Ausstiegs-Ereignissen [[ts, investiert], ...] die investierten Zeiträume machen."""
+    out, a = [], None
+    for ts, f in ev:
+        if f and a is None:
+            a = ts
+        elif not f and a is not None:
+            out.append([a, ts])
+            a = None
+    if a is not None:
+        out.append([a, now])
+    return out
+
+
+def intervals(xs, flags, cap=120):
+    """Zeiträume, in denen eine Strategie investiert war, als [[von, bis], ...] (gleiche Einheit wie xs).
+    Kurze Lücken werden zusammengefasst, bis höchstens `cap` Zeiträume übrig sind."""
+    raw, a = [], None
+    for x, f in zip(xs, flags):
+        if f and a is None:
+            a = x
+        elif not f and a is not None:
+            raw.append([a, x])
+            a = None
+    if a is not None and xs:
+        raw.append([a, xs[-1]])
+    if not raw:
+        return []
+    step = (xs[-1] - xs[0]) / max(len(xs) - 1, 1) if len(xs) > 1 else 1
+    gap = step
+    out = raw
+    while True:
+        out = [list(raw[0])]
+        for b0, b1 in raw[1:]:
+            if b0 - out[-1][1] <= gap:
+                out[-1][1] = b1
+            else:
+                out.append([b0, b1])
+        if len(out) <= cap:
+            return out
+        gap *= 2
+
+
 def mix_pool():
     """Strategien, auf die die Misch-Strategien verteilen dürfen: ohne Hebel, ohne andere Mischungen."""
     return [k for k in NAMES if k not in MIX and LEV.get(k, 1) == 1]
@@ -1066,6 +1109,7 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
         if progress:
             progress(f"Rechne {sn + 1}/{len(keys)}: {strat}")
         acc, curve, dayidx, rebs = Account(100.0), [], [], 0
+        inv = []
         acc.lev = strat in LEV
         liq = None
         last_reb = -10 ** 9
@@ -1077,9 +1121,11 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
             import hbt
             use_h = True
             curve, dayidx, acc, rebs = hbt.sim_orig(hourly, closes, HI, LO, first, members)
+            inv = acc.inv
         elif use_h:
             import hbt
             curve, dayidx, acc, rebs, liq = hbt.sim_hourly(strat, hourly, closes, ctx, first, members)
+            inv = acc.inv
         for i in range(first, n - 1 if not use_h else first):
             if members is None:
                 px_i = {s: c[i] for s, c in allp.items() if c[i] is not None}
@@ -1107,6 +1153,7 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
                 acc.cash += sum(acc.cnot * dfund[sy][i + 1] for sy in acc.carry
                                 if dfund and sy in dfund and dfund[sy][i + 1] is not None)
                 curve.append(acc.cash)
+                inv.append(bool(acc.carry))
                 dayidx.append(start + i + 1)
                 continue
             if not acc.dead and i - last_reb >= PERIOD[strat]:
@@ -1137,6 +1184,7 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
                     acc.liquidate()
                     liq = time.strftime("%d.%m.%Y", time.gmtime((start + i + 1) * DAY))
             curve.append(0.0 if acc.dead else acc.equity(px_n))
+            inv.append(bool(acc.pos) and not acc.dead)
             dayidx.append(start + i + 1)
         st = stats([100.0] + curve)
         years = {}
@@ -1158,6 +1206,7 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
                 jumps.append([round((e / prev_e - 1) * 100, 1), time.strftime("%d.%m.%Y", time.gmtime(d * DAY))])
             prev_e = e
         st["ausreisser"] = sorted(jumps, reverse=True)[:5] + [list(x) for x in getattr(acc, "jumps", [])[:3]]
+        st["investiert"] = intervals(dayidx, inv) if len(inv) == len(dayidx) and strat not in HOURK else None
         st.update(years=out, costs=acc.costs, rebalances=rebs, final=curve[-1] if curve else 100.0, curve=pts,
                   leverage=LEV.get(strat, 1), stops=acc.stops, liquidated=liq, best_year=peak_year)
         res[strat] = dict(name=NAMES.get(strat, "Hauptbot: Top-Mover mit 8-h-Rotation"), **st)
@@ -1197,6 +1246,8 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
             import gc, opt
             gc.collect()
             optim = opt.search(closes, members, n, start, HI, LO, MHI, MLO, dfund, progress, first)
+            for key, a in (optim.get("abgleich") or {}).items():
+                a["backtest"] = round(res[key]["total"], 1) if key in res else None
         except Exception as e:
             optim = dict(fehler=str(e)[:300])
     return dict(ts=time.time(), days=n, coins=len(closes), optimierung=optim, mix_auswahl=mix_now, universe=("mitwandernd: je Tag Top %d nach 30-Tage-Umsatz" % NUM) if members else "heutige Top %d" % NUM, start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
@@ -1396,6 +1447,11 @@ class Forward:
                 for k in NAMES:
                     s = self.get(k)
                     self.db.execute("INSERT INTO eq VALUES(?,?,?)", (now, k, Account(s["cash"], s["pos"]).equity(self.px)))
+                    flag = bool(s["pos"] or s.get("carry") or s.get("w")) and not s.get("dead")
+                    if flag != s.get("inv_now", False):        # Ein- und Ausstiege für das Diagramm merken
+                        ev = (s.get("ev") or [])[-199:] + [[now, flag]]
+                        s.update(ev=ev, inv_now=flag)
+                        self.put(k, s)
                 self.db.commit()
 
     def mix_step(self, now):
@@ -1453,7 +1509,8 @@ class Forward:
                     "SELECT ts, v FROM (SELECT ts, v FROM eq WHERE k=? ORDER BY ts DESC LIMIT 500) ORDER BY ts", (k,))]
                 out.append(dict(key=k, name=NAMES[k], curve=cv, equity=eq, pnl=eq - self.start, pct=(eq / self.start - 1) * 100,
                                 positions=pos, rebalances=s["rebs"], costs=s["costs"], lev=LEV.get(k, 1),
-                                liq=s.get("liq_ts"), stops=s.get("stops", 0), since=s.get("created")))
+                                liq=s.get("liq_ts"), stops=s.get("stops", 0), since=s.get("created"),
+                                investiert=ev_intervals(s.get("ev") or [], time.time())))
             return out
 
     def run(self):

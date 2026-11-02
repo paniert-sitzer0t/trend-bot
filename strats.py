@@ -76,6 +76,7 @@ IDEAS = {
     "ETHBTC": "ETHBTC: Rotation Ethereum oder Bitcoin nach ETH/BTC-Trend",
     "DM": "DM: Dual Momentum BTC/ETH/BNB, stärkster der letzten 60 Tage, sonst bar",
     "MOM28": "MOM28: Querschnitts-Momentum 28 Tage, Top 5 Long, wöchentlich",
+    "MOMF": "MOMF: Momentum 14 Tage, Top 3 Long, nur wenn Bitcoin über 100-Tage-Schnitt, wöchentlich (aus der Strategie-Suche)",
     "MOM7": "MOM7: Querschnitts-Momentum 7 Tage, Top 5 Long, wöchentlich",
     "TSM": "TSM: Zeitreihen-Momentum je Coin (28 Tage), Long oder Short, nach Risiko gewichtet",
     "LVOL": "LVOL: Niedrig-Volatilitäts-Anomalie, 5 ruhigste Coins Long, wöchentlich",
@@ -129,7 +130,7 @@ PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, 
           "E2": 10 ** 9, "E3": 10 ** 9, "T3": 1, "T5": 1, "K2": 7, "K3": 7, "B2": 7, "X10": 1, "X25": 1}
 PERIOD.update({k: 1 for k in RKEYS})
 PERIOD.update({"DON": 1, "DONLS": 1, "GX": 1, "GXLS": 1, "RSI2": 1, "VT": 1, "HALV": 1, "TOM": 1, "ETHBTC": 1, "DM": 7,
-               "MOM28": 7, "MOM7": 7, "TSM": 7, "LVOL": 7, "MAXLS": 7, "MAXM": 7, "H180": 7, "VBRK": 1, "ALTS": 7, "FCON": 3,
+               "MOM28": 7, "MOM7": 7, "MOMF": 7, "TSM": 7, "LVOL": 7, "MAXLS": 7, "MAXM": 7, "H180": 7, "VBRK": 1, "ALTS": 7, "FCON": 3,
                "FCAR": 1, "H22": 1, "OVN": 1, "DON_3": 1, "GX_3": 1, "H180_2": 7})
 PERIOD.update({k: 1 for k in ("NL1", "NL2", "NL3", "NL4", "NL5", "NL2_3", "NL1_5")})
 PERIOD.update({"RG1": 3, "RG2": 1, "RG3": 3, "RG4": 3, "RG5": 1, "RG1_2": 3, "RG2_3": 1})
@@ -427,6 +428,15 @@ def weights_idea(strat, closes, i):
             return {}
         best = max(sc, key=sc.get)
         return {best: INVEST} if sc[best] > 0 else {}
+    if strat == "MOMF":
+        b = closes.get("BTCUSDT") or _POOL.get("closes", {}).get("BTCUSDT")
+        m = _sma(b, i, 100) if b else None
+        if not (m and b[i] and b[i] > m):
+            return {}
+        sc = {sy: r for sy, c in closes.items() if (r := ret(c, i, 14)) is not None}
+        if len(sc) < 10:
+            return {}
+        return {sy: INVEST / 3 for sy in _top(sc, 3)}
     if strat in ("MOM28", "MOM7"):
         n = 28 if strat == "MOM28" else 7
         sc = {sy: r for sy, c in closes.items() if (r := ret(c, i, n)) is not None}
@@ -931,9 +941,10 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
                 return c[j]
         return 0.0
 
-    for sn, strat in enumerate(NAMES):
+    keys = list(NAMES) + (["ORIG"] if hourly is not None else [])
+    for sn, strat in enumerate(keys):
         if progress:
-            progress(f"Rechne {sn + 1}/{len(NAMES)}: {strat}")
+            progress(f"Rechne {sn + 1}/{len(keys)}: {strat}")
         acc, curve, dayidx, rebs = Account(100.0), [], [], 0
         acc.lev = strat in LEV
         liq = None
@@ -941,7 +952,11 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
         nlish = is_nl(strat)
         acc.slip_extra = 0.01 if nlish else 0.0     # neue Coins: zusätzlich 1 % Slippage je Seite
         use_h = hourly is not None and not nlish and (strat in LEV or strat in TRAIL or strat in RKEYS or strat in HOURK)
-        if use_h:
+        if strat == "ORIG":
+            import hbt
+            use_h = True
+            curve, dayidx, acc, rebs = hbt.sim_orig(hourly, closes, HI, LO, first, members)
+        elif use_h:
             import hbt
             curve, dayidx, acc, rebs, liq = hbt.sim_hourly(strat, hourly, closes, ctx, first, members)
         for i in range(first, n - 1 if not use_h else first):
@@ -1024,7 +1039,7 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
         st["ausreisser"] = sorted(jumps, reverse=True)[:5] + [list(x) for x in getattr(acc, "jumps", [])[:3]]
         st.update(years=out, costs=acc.costs, rebalances=rebs, final=curve[-1] if curve else 100.0, curve=pts,
                   leverage=LEV.get(strat, 1), stops=acc.stops, liquidated=liq, best_year=peak_year)
-        res[strat] = dict(name=NAMES[strat], **st)
+        res[strat] = dict(name=NAMES.get(strat, "Hauptbot: Top-Mover mit 8-h-Rotation"), **st)
     optim = None
     if members is not None:
         try:

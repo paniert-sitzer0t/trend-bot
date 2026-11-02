@@ -260,3 +260,99 @@ def sim_hourly(strat, b, closes, ctx, first=31, members=None):
         h += step
     acc.jumps = sorted(jumps, reverse=True)[:5]
     return curve, dayidx, acc, rebs, liq
+
+
+def sim_orig(b, closes, HI, LO, first=31, members=None, stop=0.08, max_pos=3, cands=12, max_move=0.5):
+    """Hauptbot rückwärts gerechnet: alle 8 h die 12 stärksten 24-h-Beweger (|Bewegung| bis 50 %),
+    Richtung per Mehrheit aus 24 h, 7 Tage, 30 Tage, Auswahl der Top 3 (Gleichklang zählt 1,25-fach),
+    Gewichte nach inverser Tagesspanne, gleiche Richtung wird gehalten, 8 % Stop-Loss ab Einstieg.
+    Universum: Coins mit Stundendaten unter den umsatzstärksten des Tages."""
+    hc, hh, hl, fund, H = b["hc"], b["hh"], b["hl"], b["fund"], b["H"]
+    acc = S.Account(100.0)
+    entry, last = {}, {}
+    curve, dayidx, rebs = [], [], 0
+
+    def price(s, j):
+        v = hc[s][j]
+        if v == v:
+            last[s] = v
+            return v
+        return last.get(s, 0.0)
+
+    def rng(s, d):
+        h, l, c = (HI or {}).get(s), (LO or {}).get(s), closes.get(s)
+        if not (h and l and c):
+            return None
+        xs = [(h[k] - l[k]) / c[k] for k in range(max(0, d - 13), d + 1) if h[k] and l[k] and c[k]]
+        return max(sum(xs) / len(xs), 0.005) if len(xs) >= 7 else None
+
+    for j in range(24 * first, H):
+        d = j // 24
+        if j % 8 == 0 and j >= 720:
+            mem = members[d - 1] if members is not None else list(hc)
+            mv = []
+            for s in mem:
+                c = hc.get(s)
+                if c is None:
+                    continue
+                p, p24, p7, p30 = c[j], c[j - 24], c[j - 168], c[j - 720]
+                if not (p == p and p24 == p24 and p7 == p7 and p30 == p30) or min(p24, p7, p30) <= 0:
+                    continue
+                c24 = p / p24 - 1
+                if abs(c24) > max_move:
+                    continue
+                mv.append((abs(c24), s, c24, p / p7 - 1, p / p30 - 1))
+            mv.sort(reverse=True)
+            rank = []
+            for _, s, c24, c7, c30 in mv[:cands]:
+                ups = (c24 > 0) + (c7 > 0) + (c30 > 0)
+                v = rng(s, d - 1)
+                if v is None:
+                    continue
+                rank.append((abs(c24) * (1.25 if ups in (0, 3) else 1.0), s, 1 if ups >= 2 else -1, v))
+            rank.sort(reverse=True)
+            picks = rank[:max_pos]
+            if picks:
+                px = {s: price(s, j) for s in set(acc.pos) | {r[1] for r in picks}}
+                eq = acc.equity(px)
+                tw = sum(1 / r[3] for r in picks)
+                want = {r[1]: r for r in picks}
+                w = {}
+                for s, q in acc.pos.items():
+                    r = want.get(s)
+                    if r and (q > 0) == (r[2] > 0):
+                        w[s] = q * px[s] / eq if eq > 0 else 0       # gleiche Richtung: halten, nicht umschichten
+                free = S.INVEST - sum(abs(x) for x in w.values())
+                new = [r for r in picks if r[1] not in w]
+                nw = sum(1 / r[3] for r in new) or 1
+                for r in new:
+                    w[r[1]] = r[2] * min(S.INVEST * (1 / r[3]) / tw, max(free, 0) * (1 / r[3]) / nw)
+                for s in list(acc.pos):
+                    if s not in w:
+                        entry.pop(s, None)
+                acc.rebalance(px, w)
+                for s in w:
+                    if s not in entry and s in acc.pos:
+                        entry[s] = px[s]
+                rebs += 1
+        if acc.pos:
+            for s, q in list(acc.pos.items()):
+                e = entry.get(s)
+                hi = hh[s][j] if s in hh and hh[s][j] == hh[s][j] else price(s, j)
+                lo = hl[s][j] if s in hl and hl[s][j] == hl[s][j] else price(s, j)
+                if e and (lo <= e * (1 - stop) if q > 0 else hi >= e * (1 + stop)):
+                    sp = e * (1 - stop) if q > 0 else e * (1 + stop)
+                    cost = abs(q) * sp * (S.FEE + S.SLIP)
+                    acc.cash += q * sp - cost
+                    acc.costs += cost
+                    acc.pos.pop(s)
+                    entry.pop(s, None)
+                    acc.stops += 1
+            if acc.pos and j % 8 == 0:
+                pxf = {s: price(s, j) for s in acc.pos}
+                rates = {s: fund[s][j] for s in acc.pos if s in fund and j in fund[s]}
+                acc.funding_real(pxf, rates, 1 / 3)
+        if j % 24 == 23:
+            curve.append(acc.equity({s: price(s, j) for s in acc.pos}) if acc.pos else acc.cash)
+            dayidx.append(b["start"] + d)
+    return curve, dayidx, acc, rebs

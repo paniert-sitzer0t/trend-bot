@@ -95,6 +95,14 @@ IDEAS = {
     "MOM28_T20": "MOM28_T20: Momentum 28 Tage mit Trailing-Stop 20 %",
 }
 NAMES.update(IDEAS)
+# Misch-Strategien: verteilen das Kapital auf andere Strategien statt selbst Coins zu wählen
+MIX = {
+    "MIXALL": "MIXALL: Alle Strategien ohne Hebel zu gleichen Teilen, nie umgeschichtet",
+    "MIX5": "MIX5: Jeden Monat die 5 Strategien mit dem besten Rendite-Risiko-Verhältnis der letzten 180 Tage",
+    "MIX10": "MIX10: Jeden Monat die 10 Strategien mit dem besten Rendite-Risiko-Verhältnis der letzten 365 Tage",
+}
+MIXCFG = {"MIX5": (5, 180), "MIX10": (10, 365)}
+NAMES.update(MIX)
 HOURK = {"H22", "OVN"}      # stundengenaue Strategien
 CARRY = {"FCAR"}            # marktneutral, verdient nur Funding
 MAJORS = {"BTCUSDT", "ETHUSDT"}
@@ -130,7 +138,7 @@ PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, 
           "E2": 10 ** 9, "E3": 10 ** 9, "T3": 1, "T5": 1, "K2": 7, "K3": 7, "B2": 7, "X10": 1, "X25": 1}
 PERIOD.update({k: 1 for k in RKEYS})
 PERIOD.update({"DON": 1, "DONLS": 1, "GX": 1, "GXLS": 1, "RSI2": 1, "VT": 1, "HALV": 1, "TOM": 1, "ETHBTC": 1, "DM": 7,
-               "MOM28": 7, "MOM7": 7, "MOMF": 7, "TSM": 7, "LVOL": 7, "MAXLS": 7, "MAXM": 7, "H180": 7, "VBRK": 1, "ALTS": 7, "FCON": 3,
+               "MOM28": 7, "MOM7": 7, "MOMF": 7, "MIXALL": 30, "MIX5": 30, "MIX10": 30, "TSM": 7, "LVOL": 7, "MAXLS": 7, "MAXM": 7, "H180": 7, "VBRK": 1, "ALTS": 7, "FCON": 3,
                "FCAR": 1, "H22": 1, "OVN": 1, "DON_3": 1, "GX_3": 1, "H180_2": 7})
 PERIOD.update({k: 1 for k in ("NL1", "NL2", "NL3", "NL4", "NL5", "NL2_3", "NL1_5")})
 PERIOD.update({"RG1": 3, "RG2": 1, "RG3": 3, "RG4": 3, "RG5": 1, "RG1_2": 3, "RG2_3": 1})
@@ -872,6 +880,63 @@ def rolling_members(closes, vol, n, top=NUM, window=30):
     return members
 
 
+def mix_pool():
+    """Strategien, auf die die Misch-Strategien verteilen dürfen: ohne Hebel, ohne andere Mischungen."""
+    return [k for k in NAMES if k not in MIX and LEV.get(k, 1) == 1]
+
+
+def mix_pick(series, i, k, look):
+    """Die k Strategien mit dem besten Sharpe-Wert der letzten `look` Tage bis Tag i (nur Vergangenheit)."""
+    sc = {}
+    for key, c in series.items():
+        if i - look < 0 or not c[i] or c[i] <= 0:
+            continue
+        r = [c[j] / c[j - 1] - 1 for j in range(i - look + 1, i + 1) if c[j - 1] and c[j - 1] > 0 and c[j] is not None]
+        if len(r) < 0.8 * look:
+            continue
+        m = sum(r) / len(r)
+        sd = math.sqrt(sum((x - m) ** 2 for x in r) / len(r))
+        if sd < 1e-6:
+            continue
+        sc[key] = m / sd
+    return sorted(sc, key=sc.get, reverse=True)[:k]
+
+
+def mix_curve(key, series, L, period=30):
+    """Equity-Kurve einer Misch-Strategie aus den Tageskurven der Einzelstrategien.
+    Zwischen den Anpassungen laufen die Anteile mit (wie echtes Kapital), Umschichtungen kosten Gebühren."""
+    eq, w, curve, rebs, costs, last_reb = 100.0, {}, [], 0, 0.0, -10 ** 9
+    cost_rate = FEE + SLIP
+    for i in range(L):
+        if i > 0 and w:
+            r = {k: (series[k][i] / series[k][i - 1] - 1) if series[k][i - 1] and series[k][i - 1] > 0 and series[k][i] is not None else 0.0
+                 for k in w}
+            g = sum(w[k] * (1 + r[k]) for k in w)
+            eq *= g
+            w = {k: w[k] * (1 + r[k]) / g for k in w} if g > 0 else {}
+        if key == "MIXALL":
+            if not w and i > 0:
+                live = [k for k in series if series[k][i]]
+                w = {k: 1 / len(live) for k in live} if live else {}
+                costs += eq * cost_rate
+                eq -= eq * cost_rate
+                rebs += 1
+        elif i - last_reb >= period:
+            k, look = MIXCFG[key]
+            sel = mix_pick(series, i, k, look)
+            if sel:
+                nw = {x: 1 / len(sel) for x in sel}
+                turn = sum(abs(nw.get(x, 0) - w.get(x, 0)) for x in set(nw) | set(w))
+                c = eq * turn * cost_rate
+                eq -= c
+                costs += c
+                w = nw
+                rebs += 1
+                last_reb = i
+        curve.append(eq)
+    return curve, rebs, costs, w
+
+
 def run_backtest(days=2700, progress=None, data=None, hourly=None):
     dfund, note_extra, members, data_ext, ext = None, "", None, False, None
     check = None
@@ -941,7 +1006,10 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
                 return c[j]
         return 0.0
 
-    keys = list(NAMES) + (["ORIG"] if hourly is not None else [])
+    keys = [k for k in NAMES if k not in MIX] + (["ORIG"] if hourly is not None else [])
+    d0 = start + first + 1
+    L = n - 1 - first
+    series = {}
     for sn, strat in enumerate(keys):
         if progress:
             progress(f"Rechne {sn + 1}/{len(keys)}: {strat}")
@@ -1040,6 +1108,36 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
         st.update(years=out, costs=acc.costs, rebalances=rebs, final=curve[-1] if curve else 100.0, curve=pts,
                   leverage=LEV.get(strat, 1), stops=acc.stops, liquidated=liq, best_year=peak_year)
         res[strat] = dict(name=NAMES.get(strat, "Hauptbot: Top-Mover mit 8-h-Rotation"), **st)
+        if strat in mix_pool():
+            import array as _arr
+            a = _arr.array("f", [float("nan")]) * L
+            for d, e in zip(dayidx, curve):
+                if 0 <= d - d0 < L:
+                    a[d - d0] = e
+            series[strat] = a
+    ser = {k: [None if x != x else x for x in a] for k, a in series.items()}
+    series.clear()
+    mix_now = {}
+    for strat in MIX:
+        curve, rebs, costs, w = mix_curve(strat, ser, L)
+        dayidx = [d0 + j for j in range(L)]
+        mix_now[strat] = sorted(w, key=w.get, reverse=True)
+        st = stats([100.0] + curve)
+        years, prev = {}, 100.0
+        for d, e in zip(dayidx, curve):
+            y = time.gmtime(d * DAY).tm_year
+            years.setdefault(y, [e, e])
+            years[y][1] = e
+        out = {}
+        for y in sorted(years):
+            out[str(y)] = (years[y][1] / prev - 1) * 100 if prev > 0 else 0.0
+            prev = years[y][1]
+        pts = [[d, round(e, 2)] for k2, (d, e) in enumerate(zip(dayidx, curve)) if k2 % 7 == 0]
+        st.update(years=out, costs=costs, rebalances=rebs, final=curve[-1] if curve else 100.0, curve=pts, leverage=1,
+                  stops=0, liquidated=None, best_year=max(out.values()) if out else 0.0, ausreisser=[],
+                  auswahl=[[k, round(w[k] * 100, 1)] for k in mix_now[strat]][:12])
+        res[strat] = dict(name=NAMES[strat], **st)
+    del ser
     optim = None
     if members is not None:
         try:
@@ -1048,7 +1146,7 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
             optim = opt.search(closes, members, n, start, HI, LO, MHI, MLO, dfund, progress, first)
         except Exception as e:
             optim = dict(fehler=str(e)[:300])
-    return dict(ts=time.time(), days=n, coins=len(closes), optimierung=optim, universe=("mitwandernd: je Tag Top %d nach 30-Tage-Umsatz" % NUM) if members else "heutige Top %d" % NUM, start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
+    return dict(ts=time.time(), days=n, coins=len(closes), optimierung=optim, mix_auswahl=mix_now, universe=("mitwandernd: je Tag Top %d nach 30-Tage-Umsatz" % NUM) if members else "heutige Top %d" % NUM, start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
                 results=res,
                 hourly=bool(hourly), funding_real=bool(dfund), datenpruefung=check,
                 note=("Stundenkerzen: Korb-Strategien rotieren alle 6 h, Trailing-Stops und Liquidationen werden stundengenau geprüft. "
@@ -1082,8 +1180,13 @@ class Forward:
         self.start = start
         self.px, self.msg, self.last_eq = {}, "", 0.0
         for k in NAMES:
-            if self.get(k) is None:
-                self.put(k, dict(cash=start, pos={}, last_reb=0, rebs=0, costs=0.0))
+            s = self.get(k)
+            if s is None:
+                self.put(k, dict(cash=start, pos={}, last_reb=0, rebs=0, costs=0.0, created=time.time()))
+            elif not s.get("created"):            # ältere Konten: Start = erster gespeicherter Kontostand
+                r = self.db.execute("SELECT MIN(ts) FROM eq WHERE k=?", (k,)).fetchone()
+                s["created"] = (r[0] if r and r[0] else time.time())
+                self.put(k, s)
 
     def get(self, k):
         r = self.db.execute("SELECT v FROM st WHERE k=?", (k,)).fetchone()
@@ -1153,7 +1256,7 @@ class Forward:
                 ctx = (memes, mext["v"])
                 i = days - 1
                 for k in NAMES:
-                    if base_of(k).startswith("R_") or k in HOURK:
+                    if base_of(k).startswith("R_") or k in HOURK or k in MIX:
                         continue
                     s = self.get(k)
                     if k in CARRY:
@@ -1235,10 +1338,50 @@ class Forward:
             now = time.time()
             if now - self.last_eq > 600:
                 self.last_eq = now
+                self.mix_step(now)
                 for k in NAMES:
                     s = self.get(k)
                     self.db.execute("INSERT INTO eq VALUES(?,?,?)", (now, k, Account(s["cash"], s["pos"]).equity(self.px)))
                 self.db.commit()
+
+    def mix_step(self, now):
+        """Misch-Strategien im Paper-Test: Wert folgt den Einzelstrategien nach Anteilen.
+        Auswahl für MIX5/MIX10 kommt aus dem letzten Backtest (nur Vergangenheitsdaten), Wechsel höchstens alle 30 Tage."""
+        cur = {}
+        for k in mix_pool():
+            st = self.get(k)
+            if st:
+                cur[k] = Account(st["cash"], st["pos"]).equity(self.px)
+        try:
+            sel = json.load(open("backtest.json")).get("mix_auswahl") or {}
+        except Exception:
+            sel = {}
+        for m in MIX:
+            s = self.get(m)
+            w, last = s.get("w") or {}, s.get("last") or {}
+            if w:
+                r = {k: (cur[k] / last[k] - 1) if last.get(k) and k in cur else 0.0 for k in w}
+                g = sum(w[k] * (1 + r[k]) for k in w)
+                s["cash"] = s["cash"] * g
+                w = {k: w[k] * (1 + r[k]) / g for k in w} if g > 0 else {}
+            want = None
+            if m == "MIXALL":
+                if not w:
+                    want = [k for k in cur if cur[k] > 0]
+            elif sel.get(m) and (not w or now - (s.get("mix_ts") or 0) >= 30 * DAY):
+                want = sel[m]
+            if want:
+                nw = {k: 1 / len(want) for k in want if k in cur}
+                if nw and set(nw) != set(w):
+                    turn = sum(abs(nw.get(k, 0) - w.get(k, 0)) for k in set(nw) | set(w))
+                    c = s["cash"] * turn * (FEE + SLIP)
+                    s["cash"] -= c
+                    s["costs"] = s.get("costs", 0) + c
+                    s["rebs"] = s.get("rebs", 0) + 1
+                    w = nw
+                s["mix_ts"] = now
+            s["w"], s["last"] = w, {k: cur[k] for k in w if k in cur}
+            self.put(m, s)
 
     def snapshot(self):
         with self.lock:
@@ -1250,11 +1393,13 @@ class Forward:
                 pos = [dict(symbol=a, side="long" if q > 0 else "short", value=abs(q * self.px.get(a, 0)))
                        for a, q in s["pos"].items()]
                 pos += [dict(symbol=a, side="carry", value=s.get("cnot", 0)) for a in s.get("carry") or []]
+                if k in MIX:
+                    pos = [dict(symbol=a, side="mix", value=eq * x) for a, x in sorted((s.get("w") or {}).items(), key=lambda t: -t[1])]
                 cv = [[r[0], r[1]] for r in self.db.execute(
                     "SELECT ts, v FROM (SELECT ts, v FROM eq WHERE k=? ORDER BY ts DESC LIMIT 500) ORDER BY ts", (k,))]
                 out.append(dict(key=k, name=NAMES[k], curve=cv, equity=eq, pnl=eq - self.start, pct=(eq / self.start - 1) * 100,
                                 positions=pos, rebalances=s["rebs"], costs=s["costs"], lev=LEV.get(k, 1),
-                                liq=s.get("liq_ts"), stops=s.get("stops", 0)))
+                                liq=s.get("liq_ts"), stops=s.get("stops", 0), since=s.get("created")))
             return out
 
     def run(self):

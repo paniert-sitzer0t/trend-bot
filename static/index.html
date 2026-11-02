@@ -218,7 +218,12 @@ Object.keys(IDL).forEach(function(k, ni){
   KEYS.splice(KEYS.length - 1, 0, k); LABEL[k] = IDL[k][0]; INFO[k] = IDL[k][1];
   COL[k] = 'hsl('+((ni * 137) % 360)+',75%,'+(58 + (ni % 3) * 8)+'%)';
 });
+var MXL = {"MIXALL": ["Mischung: alle Strategien", "Verteilt das Kapital zu gleichen Teilen auf alle Strategien ohne Hebel und schichtet nie um. Gewinner wachsen von selbst, Verlierer schrumpfen."], "MIX5": ["Mischung: Top 5 der letzten 180 Tage", "Setzt jeden Monat auf die 5 Strategien mit dem besten Rendite-Risiko-Verhältnis der letzten 180 Tage, zu gleichen Teilen. Wählt nur mit Vergangenheitsdaten."], "MIX10": ["Mischung: Top 10 der letzten 365 Tage", "Setzt jeden Monat auf die 10 Strategien mit dem besten Rendite-Risiko-Verhältnis der letzten 365 Tage, zu gleichen Teilen. Wählt nur mit Vergangenheitsdaten."]};
+Object.keys(MXL).forEach(function(k){ KEYS.splice(KEYS.length - 1, 0, k); LABEL[k] = MXL[k][0]; INFO[k] = MXL[k][1]; COL[k] = '#ffe08a'; });
 function isI(k){ return !!IDL[k]; }
+function isM(k){ return !!MXL[k]; }
+function dt(ts){ var d = new Date(ts * 1000); return ('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+'.'+d.getFullYear(); }
+function since(ts){ if (!ts) return ''; var n = Math.floor((Date.now() / 1000 - ts) / 86400); return dt(ts)+' ('+(n < 1 ? 'heute' : n == 1 ? '1 Tag' : n+' Tage')+')'; }
 
 function $(id){return document.getElementById(id)}
 function f(x,d){d=d===undefined?2:d;return Number(x).toLocaleString('de-AT',{minimumFractionDigits:d,maximumFractionDigits:d})}
@@ -227,7 +232,7 @@ function cl(x){return x>=0?'pos':'neg'}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function sym(s){return s.replace('_USDT','').replace('USDT','')}
 function fmtT(ts){return new Date(ts*1000).toLocaleString('de-AT',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}
-function sideTag(s){return '<span class="tag '+(s=='carry'?'long':s)+'">'+(s=='long'?'Long':s=='carry'?'Carry':'Short')+'</span>'}
+function sideTag(s){return '<span class="tag '+(s=='carry'||s=='mix'?'long':s)+'">'+(s=='long'?'Long':s=='carry'?'Carry':s=='mix'?'Anteil':'Short')+'</span>'}
 
 async function api(path, method){
   try {
@@ -277,11 +282,11 @@ function rows(){
   var c = CMP, b = c.backtest && !c.backtest.error ? c.backtest.results : null;
   return c.forward.map(function(x){
     var r = b && b[x.key] ? b[x.key] : null;
-    return {k: x.key, eq: x.equity, pct: x.pct, bt: r ? r.total : null, dd: r ? r.maxdd : null, sh: r ? r.sharpe : null, cagr: r ? r.cagr : null, lev: x.lev || 1, liqBt: r ? r.liquidated : null, liqFw: x.liq || null, best: r ? r.best_year : null};
+    return {k: x.key, eq: x.equity, pct: x.pct, bt: r ? r.total : null, dd: r ? r.maxdd : null, sh: r ? r.sharpe : null, cagr: r ? r.cagr : null, lev: x.lev || 1, liqBt: r ? r.liquidated : null, liqFw: x.liq || null, best: r ? r.best_year : null, since: x.since || null};
   });
 }
 function sorted(){
-  var rs = rows().filter(function(r){ return LEVF == 'all' || (LEVF == 'rot' ? isR(r.k) && !isT(r.k) : LEVF == 'trail' ? isT(r.k) : LEVF == 'reg' ? isG(r.k) : LEVF == 'idea' ? isI(r.k) : LEVF == 'lev' ? r.lev > 1 : (r.lev == 1 && !isR(r.k) && !isT(r.k) && !isG(r.k) && !isI(r.k))); });
+  var rs = rows().filter(function(r){ return LEVF == 'all' || (LEVF == 'rot' ? isR(r.k) && !isT(r.k) : LEVF == 'trail' ? isT(r.k) : LEVF == 'reg' ? isG(r.k) : LEVF == 'idea' ? isI(r.k) : LEVF == 'mix' ? isM(r.k) : LEVF == 'lev' ? r.lev > 1 : (r.lev == 1 && !isR(r.k) && !isT(r.k) && !isG(r.k) && !isI(r.k) && !isM(r.k))); });
   rs.sort(function(a, z){ var u = SORT == 'bt' ? a.bt : a.pct, v = SORT == 'bt' ? z.bt : z.pct; return (v === null ? -1e18 : v) - (u === null ? -1e18 : u); });
   return rs;
 }
@@ -331,13 +336,13 @@ function renderHome(){
   h += '<div class="big num '+(val === null ? 'mut' : cl(val))+'">'+(val === null ? '–' : sg(val, SORT == 'bt' ? 0 : 2)+' %')+'</div>';
   h += '<div class="meta">'+(SORT == 'bt' ? 'Rechnung mit Gebühren, ohne Zukunftswissen' : 'Seit Start mit '+f(CMP.start, 0)+' USDT je Strategie')+'</div>';
   h += '<div class="seg"><button class="'+(SORT == 'pct' ? 'on' : '')+'" onclick="setSort(\'pct\')">Paper-Test</button><button class="'+(SORT == 'bt' ? 'on' : '')+'" onclick="setSort(\'bt\')">Backtest</button></div></div>';
-  h += '<div class="seg seg4" style="margin-top:0"><button class="'+(LEVF == 'all' ? 'on' : '')+'" onclick="setLev(\'all\')">Alle</button><button class="'+(LEVF == 'spot' ? 'on' : '')+'" onclick="setLev(\'spot\')">Basis</button><button class="'+(LEVF == 'rot' ? 'on' : '')+'" onclick="setLev(\'rot\')">Körbe</button><button class="'+(LEVF == 'lev' ? 'on' : '')+'" onclick="setLev(\'lev\')">Hebel</button><button class="'+(LEVF == 'trail' ? 'on' : '')+'" onclick="setLev(\'trail\')">Trailing</button><button class="'+(LEVF == 'reg' ? 'on' : '')+'" onclick="setLev(\'reg\')">Spezial</button><button class="'+(LEVF == 'idea' ? 'on' : '')+'" onclick="setLev(\'idea\')">Ideen</button></div>';
+  h += '<div class="seg seg4" style="margin-top:0"><button class="'+(LEVF == 'all' ? 'on' : '')+'" onclick="setLev(\'all\')">Alle</button><button class="'+(LEVF == 'spot' ? 'on' : '')+'" onclick="setLev(\'spot\')">Basis</button><button class="'+(LEVF == 'rot' ? 'on' : '')+'" onclick="setLev(\'rot\')">Körbe</button><button class="'+(LEVF == 'lev' ? 'on' : '')+'" onclick="setLev(\'lev\')">Hebel</button><button class="'+(LEVF == 'trail' ? 'on' : '')+'" onclick="setLev(\'trail\')">Trailing</button><button class="'+(LEVF == 'reg' ? 'on' : '')+'" onclick="setLev(\'reg\')">Spezial</button><button class="'+(LEVF == 'idea' ? 'on' : '')+'" onclick="setLev(\'idea\')">Ideen</button><button class="'+(LEVF == 'mix' ? 'on' : '')+'" onclick="setLev(\'mix\')">Mischung</button></div>';
   h += '<div class="card flat" style="margin-top:12px"><ul class="rank">';
   rs.forEach(function(r, i){
     var v = SORT == 'bt' ? r.bt : r.pct, o = SORT == 'bt' ? r.pct : r.bt;
     var w = v === null ? 0 : Math.min(50, Math.abs(v) / mx * 50);
     var bar = v === null ? '' : '<i style="background:'+(v >= 0 ? 'var(--pos)' : 'var(--neg)')+';width:'+w+'%;'+(v >= 0 ? 'left:50%' : 'left:'+(50 - w)+'%')+'"></i>';
-    h += '<li><button class="row" onclick="pick(\''+r.k+'\')"><span class="no num">'+(i + 1)+'</span><span class="t">'+LABEL[r.k]+levBadges(r)+'</span>';
+    h += '<li><button class="row" onclick="pick(\''+r.k+'\')"><span class="no num">'+(i + 1)+'</span><span class="t">'+LABEL[r.k]+levBadges(r)+(SORT == 'pct' && r.since ? '<small class="mut" style="display:block;font-weight:400;font-size:12px">live seit '+dt(r.since)+'</small>' : '')+'</span>';
     h += '<span class="v num '+(v === null ? 'mut' : cl(v))+'">'+(v === null ? '–' : sg(v, SORT == 'bt' ? 0 : 2)+' %')+'</span>';
     h += '<span class="bar"><b></b>'+bar+'</span></button></li>';
   });
@@ -385,6 +390,7 @@ function renderStrat(){
       h += '<div class="tile"><div class="k">Ergebnis</div><div class="v num '+cl(x.pct)+'">'+sg(x.pct)+' %</div></div>';
       h += '<div class="tile"><div class="k">Anpassungen</div><div class="v num">'+x.rebalances+'</div></div>';
       h += '<div class="tile"><div class="k">Gebühren bisher</div><div class="v num">'+f(x.costs)+' USDT</div></div></div>';
+      if (x.since) h += '<div class="mut" style="margin:-4px 0 12px">Live im Paper-Test seit '+since(x.since)+'</div>';
       h += '<div class="seg" style="margin-top:0"><button class="'+(CH == 'paper' ? 'on' : '')+'" onclick="setCh(\'paper\')">Paper-Test</button><button class="'+(CH == 'bt' ? 'on' : '')+'" onclick="setCh(\'bt\')">Backtest</button></div>';
       h += '<div class="card" style="margin-top:12px">';
       if (CH == 'paper') h += chart([{color: COL[x.key], pts: x.curve}], c.start, 190)+'<div class="cap"><span>Kontostand in USDT</span><span>Start '+f(c.start, 0)+'</span></div>';
@@ -397,7 +403,7 @@ function renderStrat(){
         h += '<h2>Ergebnis pro Jahr</h2><div class="years">'+Object.keys(r.years).map(function(y){ return '<div><span>'+y+'</span><b class="num '+cl(r.years[y])+'">'+sg(r.years[y], 0)+' %</b></div>'; }).join('')+'</div>';
       }
       h += '<h2>Offene Positionen</h2><div class="card flat"><ul class="list">';
-      h += x.positions.length ? x.positions.map(function(p){ return '<li><div class="l"><b>'+sym(p.symbol)+sideTag(p.side)+'</b></div><div class="r num">'+f(p.value)+' USDT</div></li>'; }).join('') : '<li class="empty" style="display:block">Aktuell keine Position, das Geld liegt in bar.</li>';
+      h += x.positions.length ? x.positions.map(function(p){ return '<li><div class="l"><b>'+(p.side == 'mix' ? esc(LABEL[p.symbol] || p.symbol) : sym(p.symbol))+sideTag(p.side)+'</b></div><div class="r num">'+f(p.value)+' USDT</div></li>'; }).join('') : '<li class="empty" style="display:block">Aktuell keine Position, das Geld liegt in bar.</li>';
       h += '</ul></div>';
     }
   }

@@ -119,7 +119,11 @@ def rotate(x_token: str = Header("")):
 def compare(x_token: str = Header("")):
     auth(x_token)
     o = engine.snapshot()
-    orig = dict(key="ORIG", name="Original: Top-Mover mit 8-h-Rotation (Hauptbot)", curve=o["curve"], equity=o["equity"],
+    try:
+        since = engine.db.execute("SELECT MIN(ts) FROM equity").fetchone()[0]
+    except Exception:
+        since = None
+    orig = dict(key="ORIG", since=since, name="Original: Top-Mover mit 8-h-Rotation (Hauptbot)", curve=o["curve"], equity=o["equity"],
                 pnl=o["total_pnl"], pct=o["total_pnl"] / o["start"] * 100, rebalances=o["trades"], costs=0,
                 positions=[dict(symbol=p["symbol"], side=p["side"], value=p["notional"]) for p in o["open"]])
     return {"forward": fwd.snapshot() + [orig], "backtest": load_bt(), "running": BT["running"], "progress": BT["progress"], "eta": bt_eta(),

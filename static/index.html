@@ -196,19 +196,27 @@ Object.keys(TRK).forEach(function(k, ni){
 var TRKX = {};
 function isT(k){ return !!TRK[k] || !!TRKX[k]; }
 function registerAuto(c){
+  var addKey = function(k, lab, info){
+    LABEL[k] = lab; INFO[k] = info;
+    var h = 0; for (var i = 0; i < k.length; i++) h = (h * 31 + k.charCodeAt(i)) % 360;
+    COL[k] = 'hsl(' + h + ',72%,64%)';
+    KEYS.splice(KEYS.length - 1, 0, k);
+  };
+  c.forward.forEach(function(x){
+    if (LABEL[x.key] || x.trail || x.key == 'ORIG') return;
+    var m = /^AD([23])_(\d+)_(\d+)$/.exec(x.key);
+    var nm = (x.name || x.key).split(': ').slice(1).join(': ') || x.key;
+    addKey(x.key, m ? 'Adaptiv ' + (m[1] == 2 ? '2 Zustände' : '3 Zustände') + ', Top ' + m[2] + ', BTC ' + m[3] : nm.slice(0, 48), nm + '.');
+  });
   c.forward.forEach(function(x){
     if (!x.trail) return;
     var p = Math.round(x.trail * 100);
     TRKX[x.key] = p;
     if (LABEL[x.key]) return;
-    var bl = LABEL[x.base] || x.base;
-    LABEL[x.key] = bl + ', Trailing ' + p + ' %';
-    INFO[x.key] = (INFO[x.base] ? INFO[x.base] + ' ' : '') + 'Zusätzlich: jede Position wird automatisch verkauft (Short: zurückgekauft), wenn der Kurs ' + p + ' % vom besten Kurs seit Einstieg zurückfällt. Danach bleibt das Geld bis zur nächsten Anpassung in bar.';
-    var h = 0; for (var i = 0; i < x.key.length; i++) h = (h * 31 + x.key.charCodeAt(i)) % 360;
-    COL[x.key] = 'hsl(' + h + ',72%,64%)';
-    KEYS.splice(KEYS.length - 1, 0, x.key);
+    addKey(x.key, (LABEL[x.base] || x.base) + ', Trailing ' + p + ' %', (INFO[x.base] ? INFO[x.base] + ' ' : '') + 'Zusätzlich: jede Position wird automatisch verkauft (Short: zurückgekauft), wenn der Kurs ' + p + ' % vom besten Kurs seit Einstieg zurückfällt. Danach bleibt das Geld bis zur nächsten Anpassung in bar.');
   });
 }
+
 var RGL = {RG1:['Regime: K-Long, Bärenmarkt Short Coins','Aufwärtstrend (Bitcoin über 200-Tage-Linie): Strategie K, Long auf die 3 stärksten Coins. Bärenmarkt: Short auf die 3 schwächsten Coins unter ihrer 50-Tage-Linie.'],
   RG2:['Regime: Bitcoin long / short','Bitcoin long, solange er über der 200-Tage-Linie liegt, darunter Bitcoin short.'],
   RG3:['Regime: K-Long, Bärenmarkt Bitcoin short','Aufwärtstrend: Strategie K. Bärenmarkt: Bitcoin short.'],

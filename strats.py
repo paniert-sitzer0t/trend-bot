@@ -154,6 +154,40 @@ PERIOD.update({k: 1 for k in ("NL1", "NL2", "NL3", "NL4", "NL5", "NL2_3", "NL1_5
 PERIOD.update({"RG1": 3, "RG2": 1, "RG3": 3, "RG4": 3, "RG5": 1, "RG1_2": 3, "RG2_3": 1})
 for _k, (_b, _p, _l) in TRAIL.items():
     PERIOD[_k] = 1 if _b in ("TREND", "X") else PERIOD[_b]
+# Adaptive Strategien: Der Bot erkennt anhand von Bitcoin den Markt-Zustand und wechselt selbst zwischen Long, Short und bar.
+#   AD2 (zwei Zustände): Bitcoin über dem Schnitt = Long auf die stärksten k Coins, darunter = Short auf die schwächsten k.
+#   AD3 (drei Zustände): Long nur, wenn Bitcoin über Schnitt UND 50-Tage-Linie liegt, Short nur, wenn er unter beiden liegt, dazwischen bar.
+# Rangfolge nach Momentum der letzten 14 Tage, wöchentlich neu. Varianten: Coin-Anzahl k (3, 10), Bitcoin-Schnitt (100, 200 Tage).
+ADAPT = {}
+for _t in (2, 3):
+    for _n in (3, 10):
+        for _m in (100, 200):
+            ADAPT[f"AD{_t}_{_n}_{_m}"] = (_t, _n, _m)
+for _k, (_t, _n, _m) in ADAPT.items():
+    _z = "zwei Zustände" if _t == 2 else "drei Zustände, dazwischen bar"
+    NAMES[_k] = f"{_k}: Adaptiv ({_z}): Long auf die Top {_n} im Aufwärtstrend, Short auf die schwächsten {_n} im Abwärtstrend, Bitcoin-Schnitt {_m} Tage, Momentum 14 Tage, wöchentlich"
+    PERIOD[_k] = 7
+
+
+def weights_adapt(strat, closes, i):
+    t, k, m = ADAPT[strat]
+    b = closes.get("BTCUSDT") or _POOL.get("closes", {}).get("BTCUSDT")
+    sm = _sma(b, i, m) if b else None
+    if not (sm and b[i]):
+        return {}
+    state = 1 if b[i] > sm else -1
+    if t == 3:
+        s50 = _sma(b, i, 50)
+        if not s50 or (state == 1) != (b[i] > s50):
+            return {}
+    sc = {sy: r for sy, c in closes.items() if (r := ret(c, i, 14)) is not None}
+    if len(sc) < 10:
+        return {}
+    if state == 1:
+        return {sy: INVEST / k for sy in _top(sc, k)}
+    return {sy: -INVEST / k for sy in _top(sc, k, reverse=False)}
+
+
 # Jede Strategie ohne Hebel bekommt automatisch eine Trailing-Variante (Körbe mit 6-h-Rotation 5 %, sonst 15 %).
 # Ausgenommen: Strategien, die schon eine haben, Hebel- und Mischungs-Strategien, Stunden- und Carry-Strategien
 # sowie Bitcoin halten (wird nie umgeschichtet, nach einem Stopp bliebe das Konto leer).
@@ -677,6 +711,8 @@ def weights(strat, closes, i, ctx=None):
     if strat in LEV or strat in TRAIL:
         base = weights(BASEOF[strat], closes, i, ctx)
         return {s: v * LEV.get(strat, 1) for s, v in base.items()}
+    if strat in ADAPT:
+        return weights_adapt(strat, closes, i)
     if strat in RG:
         return weights_rg(strat, closes, i)
     if strat in NL:

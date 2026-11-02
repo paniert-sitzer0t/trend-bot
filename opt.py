@@ -265,6 +265,7 @@ def search(closes, members, n, start, HI, LO, MHI, MLO, dfund, progress=None, fi
     # Abgleich: dieselben Regeln wie zwei Strategien des normalen Backtests, um die Suchrechnung zu prüfen
     ref = {"MOMF": (("mom", 14), 3, "long", "BTC über 100-Tage-Schnitt", 7, 0.0, 1),
            "H180": (("hoch", 180), 5, "long", "BTC über 200-Tage-Schnitt", 7, 0.0, 1),
+           "H180F": (("hoch", 180), 5, "long", "BTC über 100-Tage-Schnitt", 3, 0.0, 1),
            "H365F": (("hoch", 365), 3, "long", "BTC über 100-Tage-Schnitt", 3, 0.0, 1),
            "H365F_2": (("hoch", 365), 3, "long", "BTC über 100-Tage-Schnitt", 3, 0.0, 2)}
     abgl = {}

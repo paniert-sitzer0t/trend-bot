@@ -1,411 +1,268 @@
 {
- "erzeugt": "2026-11-02 01:32:05 UTC",
+ "erzeugt": "2026-11-02 02:02:17 UTC",
  "dashboard_adresse": "https://eddie-countries-charleston-experiment.trycloudflare.com",
  "paper_ranking": [
   {
-   "key": "D",
-   "name": "D: Gegenbewegung zu A",
-   "pct": 5.87,
-   "equity": 81.52,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.48,
-   "positionen": [
-    "long LSKUSDT 25.9",
-    "short 牛来USDT 26.3",
-    "long XPLUSDT 26.1"
-   ]
-  },
-  {
-   "key": "T5",
-   "name": "T5: BTC 5x Hebel mit Trendfilter",
-   "pct": 5.4,
-   "equity": 81.16,
-   "lev": 5,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.26,
-   "positionen": [
-    "long BTCUSDT 381.6"
-   ]
-  },
-  {
    "key": "R_CS3",
    "name": "R_CS3: Gegen den Trend: Short auf die stärksten (3 Coins je Seite, 6 h)",
-   "pct": 5.02,
-   "equity": 80.86,
+   "pct": 6.44,
+   "equity": 81.96,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 8,
    "kosten": 0.63,
    "positionen": [
-    "short 牛来USDT 25.9",
-    "short GUSDT 25.8",
-    "short TRUMPUSDT 26.4"
+    "short 牛来USDT 25.5",
+    "short GUSDT 25.3",
+    "short TRUMPUSDT 26.2"
    ]
   },
   {
-   "key": "K3",
-   "name": "K3: Strategie K mit 3x Hebel",
-   "pct": 4.97,
-   "equity": 80.83,
-   "lev": 3,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.29,
-   "positionen": [
-    "long BEAMXUSDT 79.3",
-    "long QNTUSDT 73.3",
-    "long ZROUSDT 71.1"
-   ]
-  },
-  {
-   "key": "R_TS3",
-   "name": "R_TS3: Trend: Short auf die schwächsten (3 Coins je Seite, 6 h)",
-   "pct": 4.89,
-   "equity": 80.77,
+   "key": "D",
+   "name": "D: Gegenbewegung zu A",
+   "pct": 6.02,
+   "equity": 81.64,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 8,
-   "kosten": 0.56,
+   "anpassungen": 3,
+   "kosten": 0.48,
    "positionen": [
-    "short XPLUSDT 25.6",
-    "short LSKUSDT 25.9",
-    "short NEARUSDT 25.9"
+    "long LSKUSDT 25.7",
+    "short 牛来USDT 25.9",
+    "long XPLUSDT 26.0"
    ]
   },
   {
    "key": "R_CS5",
    "name": "R_CS5: Gegen den Trend: Short auf die stärksten (5 Coins je Seite, 6 h)",
-   "pct": 4.38,
-   "equity": 80.37,
+   "pct": 5.59,
+   "equity": 81.31,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 8,
    "kosten": 0.72,
    "positionen": [
-    "short MARSCOINUSDT 15.4",
-    "short 牛来USDT 15.4",
-    "short GUSDT 15.3",
-    "short TRUMPUSDT 15.7",
-    "short BEAMXUSDT 15.2"
-   ]
-  },
-  {
-   "key": "K2",
-   "name": "K2: Strategie K mit 2x Hebel",
-   "pct": 3.32,
-   "equity": 79.55,
-   "lev": 2,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.19,
-   "positionen": [
-    "long BEAMXUSDT 52.8",
-    "long QNTUSDT 48.9",
-    "long ZROUSDT 47.4"
-   ]
-  },
-  {
-   "key": "RG1_2",
-   "name": "RG1_2: RG1 mit 2x Hebel",
-   "pct": 3.32,
-   "equity": 79.55,
-   "lev": 2,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.19,
-   "positionen": [
-    "long BEAMXUSDT 52.8",
-    "long QNTUSDT 48.9",
-    "long ZROUSDT 47.4"
-   ]
-  },
-  {
-   "key": "T3",
-   "name": "T3: BTC 3x Hebel mit Trendfilter",
-   "pct": 3.23,
-   "equity": 79.49,
-   "lev": 3,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.16,
-   "positionen": [
-    "long BTCUSDT 225.4"
-   ]
-  },
-  {
-   "key": "RG2_3",
-   "name": "RG2_3: RG2 mit 3x Hebel",
-   "pct": 3.23,
-   "equity": 79.49,
-   "lev": 3,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.16,
-   "positionen": [
-    "long BTCUSDT 225.4"
-   ]
-  },
-  {
-   "key": "GX_3",
-   "name": "GX_3: Golden Cross mit 3x Hebel",
-   "pct": 3.23,
-   "equity": 79.49,
-   "lev": 3,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.16,
-   "positionen": [
-    "long BTCUSDT 225.4"
-   ]
-  },
-  {
-   "key": "T3_T5",
-   "name": "T3_T5: BTC über 200-Tage-Linie mit Trailing-Stop 5 % und 3x Hebel",
-   "pct": 3.23,
-   "equity": 79.49,
-   "lev": 3,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.16,
-   "positionen": [
-    "long BTCUSDT 225.4"
-   ]
-  },
-  {
-   "key": "E3",
-   "name": "E3: BTC halten mit 3x Hebel",
-   "pct": 3.22,
-   "equity": 79.48,
-   "lev": 3,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.15,
-   "positionen": [
-    "long BTCUSDT 222.2"
-   ]
-  },
-  {
-   "key": "C",
-   "name": "C: Momentum nur Long mit BTC-Filter (wöchentlich)",
-   "pct": 3.17,
-   "equity": 79.44,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BEAMXUSDT 26.5",
-    "long PEPEUSDT 24.9",
-    "long HYPEUSDT 24.3"
-   ]
-  },
-  {
-   "key": "H180_2",
-   "name": "H180_2: 180-Tage-Hoch mit 2x Hebel",
-   "pct": 3.14,
-   "equity": 79.42,
-   "lev": 2,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.17,
-   "positionen": [
-    "long PEPEUSDT 29.1",
-    "long BTCUSDT 29.6",
-    "long BEAMXUSDT 31.7",
-    "long UUSDT 29.2",
-    "long RLUSDUSDT 29.3"
-   ]
-  },
-  {
-   "key": "R_CS5_T5",
-   "name": "R_CS5_T5: Gegen den Trend: Short auf die stärksten (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": 2.87,
-   "equity": 79.21,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 6,
-   "anpassungen": 6,
-   "kosten": 0.58,
-   "positionen": [
-    "short GUSDT 15.1",
-    "short MARSCOINUSDT 15.2",
-    "short 牛来USDT 15.2",
+    "short MARSCOINUSDT 15.3",
+    "short 牛来USDT 15.1",
+    "short GUSDT 15.0",
+    "short TRUMPUSDT 15.6",
     "short BEAMXUSDT 15.1"
    ]
   },
   {
-   "key": "K_T8",
-   "name": "K_T8: Long-Momentum mit Trendfilter und Risikosteuerung (wöchentlich) mit Trailing-Stop 8 %",
-   "pct": 2.35,
-   "equity": 78.81,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 1,
-   "anpassungen": 1,
-   "kosten": 0.13,
-   "positionen": [
-    "long QNTUSDT 24.4",
-    "long ZROUSDT 23.7"
-   ]
-  },
-  {
-   "key": "R_CS10",
-   "name": "R_CS10: Gegen den Trend: Short auf die stärksten (10 Coins je Seite, 6 h)",
-   "pct": 2.34,
-   "equity": 78.8,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 8,
-   "kosten": 0.64,
-   "positionen": [
-    "short MARSCOINUSDT 7.6",
-    "short 牛来USDT 7.6",
-    "short AVAXUSDT 7.5",
-    "short GUSDT 7.5",
-    "short TRUMPUSDT 7.7",
-    "short TRXUSDT 7.5",
-    "short SNDKBUSDT 7.6",
-    "short BEAMXUSDT 7.5",
-    "short UNIUSDT 7.5",
-    "short INITUSDT 7.6"
-   ]
-  },
-  {
-   "key": "E2",
-   "name": "E2: BTC halten mit 2x Hebel",
-   "pct": 2.15,
-   "equity": 78.65,
-   "lev": 2,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BTCUSDT 148.1"
-   ]
-  },
-  {
-   "key": "VT",
-   "name": "VT: Bitcoin mit Volatilitätssteuerung, Ziel 50 % Schwankung, bis 1,9x Hebel",
-   "pct": 2.06,
-   "equity": 78.58,
-   "lev": 2,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.1,
-   "positionen": [
-    "long BTCUSDT 141.2"
-   ]
-  },
-  {
-   "key": "R_TS5",
-   "name": "R_TS5: Trend: Short auf die schwächsten (5 Coins je Seite, 6 h)",
-   "pct": 1.99,
-   "equity": 78.53,
+   "key": "R_TS3",
+   "name": "R_TS3: Trend: Short auf die schwächsten (3 Coins je Seite, 6 h)",
+   "pct": 5.5,
+   "equity": 81.24,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 8,
    "kosten": 0.56,
    "positionen": [
-    "short XPLUSDT 15.0",
-    "short LSKUSDT 15.1",
+    "short XPLUSDT 25.5",
+    "short LSKUSDT 25.7",
+    "short NEARUSDT 25.8"
+   ]
+  },
+  {
+   "key": "T5",
+   "name": "T5: BTC 5x Hebel mit Trendfilter",
+   "pct": 4.63,
+   "equity": 80.57,
+   "lev": 5,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.26,
+   "positionen": [
+    "long BTCUSDT 381.0"
+   ]
+  },
+  {
+   "key": "R_CS5_T5",
+   "name": "R_CS5_T5: Gegen den Trend: Short auf die stärksten (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": 3.94,
+   "equity": 80.03,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 6,
+   "anpassungen": 6,
+   "kosten": 0.58,
+   "positionen": [
+    "short GUSDT 14.9",
+    "short MARSCOINUSDT 15.1",
+    "short 牛来USDT 14.9",
+    "short BEAMXUSDT 14.9"
+   ]
+  },
+  {
+   "key": "K3",
+   "name": "K3: Strategie K mit 3x Hebel",
+   "pct": 3.43,
+   "equity": 79.64,
+   "lev": 3,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.29,
+   "positionen": [
+    "long BEAMXUSDT 78.5",
+    "long QNTUSDT 73.1",
+    "long ZROUSDT 70.9"
+   ]
+  },
+  {
+   "key": "R_CS10",
+   "name": "R_CS10: Gegen den Trend: Short auf die stärksten (10 Coins je Seite, 6 h)",
+   "pct": 3.04,
+   "equity": 79.34,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 8,
+   "kosten": 0.64,
+   "positionen": [
+    "short MARSCOINUSDT 7.5",
+    "short 牛来USDT 7.4",
+    "short AVAXUSDT 7.5",
+    "short GUSDT 7.4",
+    "short TRUMPUSDT 7.6",
+    "short TRXUSDT 7.5",
+    "short SNDKBUSDT 7.5",
+    "short BEAMXUSDT 7.4",
+    "short UNIUSDT 7.6",
+    "short INITUSDT 7.7"
+   ]
+  },
+  {
+   "key": "E3",
+   "name": "E3: BTC halten mit 3x Hebel",
+   "pct": 2.78,
+   "equity": 79.14,
+   "lev": 3,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.15,
+   "positionen": [
+    "long BTCUSDT 221.9"
+   ]
+  },
+  {
+   "key": "T3",
+   "name": "T3: BTC 3x Hebel mit Trendfilter",
+   "pct": 2.78,
+   "equity": 79.14,
+   "lev": 3,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.16,
+   "positionen": [
+    "long BTCUSDT 225.1"
+   ]
+  },
+  {
+   "key": "RG2_3",
+   "name": "RG2_3: RG2 mit 3x Hebel",
+   "pct": 2.78,
+   "equity": 79.14,
+   "lev": 3,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.16,
+   "positionen": [
+    "long BTCUSDT 225.1"
+   ]
+  },
+  {
+   "key": "GX_3",
+   "name": "GX_3: Golden Cross mit 3x Hebel",
+   "pct": 2.78,
+   "equity": 79.14,
+   "lev": 3,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.16,
+   "positionen": [
+    "long BTCUSDT 225.1"
+   ]
+  },
+  {
+   "key": "T3_T5",
+   "name": "T3_T5: BTC über 200-Tage-Linie mit Trailing-Stop 5 % und 3x Hebel",
+   "pct": 2.78,
+   "equity": 79.14,
+   "lev": 3,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.16,
+   "positionen": [
+    "long BTCUSDT 225.1"
+   ]
+  },
+  {
+   "key": "R_TS5",
+   "name": "R_TS5: Trend: Short auf die schwächsten (5 Coins je Seite, 6 h)",
+   "pct": 2.57,
+   "equity": 78.98,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 8,
+   "kosten": 0.56,
+   "positionen": [
+    "short XPLUSDT 14.9",
+    "short LSKUSDT 15.0",
     "short NEARUSDT 15.1",
-    "short ENAUSDT 15.2",
+    "short ENAUSDT 15.1",
     "short LINKUSDT 15.0"
    ]
   },
   {
-   "key": "K",
-   "name": "K: Long-Momentum mit Trendfilter und Risikosteuerung (wöchentlich)",
-   "pct": 1.72,
-   "equity": 78.32,
-   "lev": 1,
+   "key": "K2",
+   "name": "K2: Strategie K mit 2x Hebel",
+   "pct": 2.29,
+   "equity": 78.76,
+   "lev": 2,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 1,
-   "kosten": 0.1,
+   "kosten": 0.19,
    "positionen": [
-    "long BEAMXUSDT 26.4",
-    "long QNTUSDT 24.4",
-    "long ZROUSDT 23.7"
+    "long BEAMXUSDT 52.3",
+    "long QNTUSDT 48.8",
+    "long ZROUSDT 47.2"
    ]
   },
   {
-   "key": "RG1",
-   "name": "RG1: Aufwärtstrend K-Long, Bärenmarkt Short auf die 3 schwächsten Coins",
-   "pct": 1.72,
-   "equity": 78.32,
-   "lev": 1,
+   "key": "RG1_2",
+   "name": "RG1_2: RG1 mit 2x Hebel",
+   "pct": 2.29,
+   "equity": 78.76,
+   "lev": 2,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 1,
-   "kosten": 0.1,
+   "kosten": 0.19,
    "positionen": [
-    "long BEAMXUSDT 26.4",
-    "long QNTUSDT 24.4",
-    "long ZROUSDT 23.7"
+    "long BEAMXUSDT 52.3",
+    "long QNTUSDT 48.8",
+    "long ZROUSDT 47.2"
    ]
   },
   {
-   "key": "RG3",
-   "name": "RG3: K-Long im Aufwärtstrend, Bitcoin short im Bärenmarkt",
-   "pct": 1.72,
-   "equity": 78.32,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BEAMXUSDT 26.4",
-    "long QNTUSDT 24.4",
-    "long ZROUSDT 23.7"
-   ]
-  },
-  {
-   "key": "H180",
-   "name": "H180: Nähe zum 180-Tage-Hoch, Top 5 Long im Aufwärtstrend",
-   "pct": 1.63,
-   "equity": 78.25,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.09,
-   "positionen": [
-    "long PEPEUSDT 14.6",
-    "long BTCUSDT 14.8",
-    "long BEAMXUSDT 15.9",
-    "long UUSDT 14.6",
-    "long RLUSDUSDT 14.6"
-   ]
-  },
-  {
-   "key": "RG1_T10",
-   "name": "RG1_T10: Aufwärtstrend K-Long, Bärenmarkt Short auf die 3 schwächsten Coins mit Trailing-Stop 10 %",
-   "pct": 1.59,
-   "equity": 78.22,
+   "key": "K_T8",
+   "name": "K_T8: Long-Momentum mit Trendfilter und Risikosteuerung (wöchentlich) mit Trailing-Stop 8 %",
+   "pct": 2.16,
+   "equity": 78.66,
    "lev": 1,
    "liquidiert": null,
    "stops": 1,
@@ -413,200 +270,76 @@
    "kosten": 0.13,
    "positionen": [
     "long QNTUSDT 24.4",
-    "long ZROUSDT 23.7"
+    "long ZROUSDT 23.6"
    ]
   },
   {
-   "key": "E",
-   "name": "E: BTC halten",
-   "pct": 1.55,
-   "equity": 78.2,
+   "key": "C",
+   "name": "C: Momentum nur Long mit BTC-Filter (wöchentlich)",
+   "pct": 2.03,
+   "equity": 78.56,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 1,
    "kosten": 0.1,
    "positionen": [
-    "long BTCUSDT 74.4"
+    "long BEAMXUSDT 26.2",
+    "long PEPEUSDT 24.5",
+    "long HYPEUSDT 24.1"
    ]
   },
   {
-   "key": "MOM28",
-   "name": "MOM28: Querschnitts-Momentum 28 Tage, Top 5 Long, wöchentlich",
-   "pct": 1.41,
-   "equity": 78.08,
-   "lev": 1,
+   "key": "H180_2",
+   "name": "H180_2: 180-Tage-Hoch mit 2x Hebel",
+   "pct": 2.01,
+   "equity": 78.55,
+   "lev": 2,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.17,
+   "positionen": [
+    "long PEPEUSDT 28.6",
+    "long BTCUSDT 29.6",
+    "long BEAMXUSDT 31.4",
+    "long UUSDT 29.3",
+    "long RLUSDUSDT 29.3"
+   ]
+  },
+  {
+   "key": "E2",
+   "name": "E2: BTC halten mit 2x Hebel",
+   "pct": 1.85,
+   "equity": 78.42,
+   "lev": 2,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 1,
    "kosten": 0.1,
    "positionen": [
-    "long PEPEUSDT 14.6",
-    "long BEAMXUSDT 15.9",
-    "long HYPEUSDT 14.7",
-    "long UUSDT 14.6",
-    "long RLUSDUSDT 14.6"
+    "long BTCUSDT 147.9"
    ]
   },
   {
-   "key": "DM",
-   "name": "DM: Dual Momentum BTC/ETH/BNB, stärkster der letzten 60 Tage, sonst bar",
-   "pct": 1.34,
-   "equity": 78.03,
-   "lev": 1,
+   "key": "VT",
+   "name": "VT: Bitcoin mit Volatilitätssteuerung, Ziel 50 % Schwankung, bis 1,9x Hebel",
+   "pct": 1.77,
+   "equity": 78.37,
+   "lev": 2,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 1,
+   "anpassungen": 2,
    "kosten": 0.1,
    "positionen": [
-    "long BNBUSDT 74.3"
-   ]
-  },
-  {
-   "key": "RG2",
-   "name": "RG2: Bitcoin long im Aufwärtstrend, Bitcoin short im Bärenmarkt",
-   "pct": 1.13,
-   "equity": 77.87,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 74.0"
-   ]
-  },
-  {
-   "key": "GX",
-   "name": "GX: Bitcoin Golden Cross (50 über 200 Tage), sonst bar",
-   "pct": 1.13,
-   "equity": 77.87,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 74.0"
-   ]
-  },
-  {
-   "key": "GXLS",
-   "name": "GXLS: Bitcoin Golden Cross Long, Death Cross Short",
-   "pct": 1.13,
-   "equity": 77.87,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 74.0"
-   ]
-  },
-  {
-   "key": "RSI2",
-   "name": "RSI2: Bitcoin Rücksetzer kaufen (RSI 2 unter 10 im Aufwärtstrend), Ausstieg über 5-Tage-Linie",
-   "pct": 1.13,
-   "equity": 77.87,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 74.0"
-   ]
-  },
-  {
-   "key": "TOM",
-   "name": "TOM: Monatswechsel, Bitcoin nur vom 28. bis 3. halten",
-   "pct": 1.13,
-   "equity": 77.87,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 74.0"
-   ]
-  },
-  {
-   "key": "ETHBTC",
-   "name": "ETHBTC: Rotation Ethereum oder Bitcoin nach ETH/BTC-Trend",
-   "pct": 1.13,
-   "equity": 77.87,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 74.0"
-   ]
-  },
-  {
-   "key": "ALTS",
-   "name": "ALTS: Altcoin-Saison-Schalter, Altcoin-Momentum oder Bitcoin",
-   "pct": 1.13,
-   "equity": 77.87,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 74.1"
-   ]
-  },
-  {
-   "key": "BTC_T10",
-   "name": "BTC_T10: BTC über 200-Tage-Linie mit Trailing-Stop 10 %",
-   "pct": 1.13,
-   "equity": 77.87,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 74.0"
-   ]
-  },
-  {
-   "key": "BTC_T20",
-   "name": "BTC_T20: BTC über 200-Tage-Linie mit Trailing-Stop 20 %",
-   "pct": 1.13,
-   "equity": 77.87,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 74.0"
-   ]
-  },
-  {
-   "key": "RG2_T10",
-   "name": "RG2_T10: Bitcoin long im Aufwärtstrend, Bitcoin short im Bärenmarkt mit Trailing-Stop 10 %",
-   "pct": 1.13,
-   "equity": 77.87,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 74.0"
+    "long BTCUSDT 141.0"
    ]
   },
   {
    "key": "R_TS10",
    "name": "R_TS10: Trend: Short auf die schwächsten (10 Coins je Seite, 6 h)",
-   "pct": 1.04,
-   "equity": 77.8,
+   "pct": 1.64,
+   "equity": 78.26,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -615,21 +348,270 @@
    "positionen": [
     "short ZECUSDT 7.5",
     "short XPLUSDT 7.4",
-    "short PEPEUSDT 7.6",
+    "short PEPEUSDT 7.4",
     "short ENAUSDT 7.5",
-    "short LSKUSDT 7.5",
+    "short LSKUSDT 7.4",
     "short LINKUSDT 7.4",
     "short NEARUSDT 7.5",
     "short TAOUSDT 7.4",
-    "short WLDUSDT 7.4",
-    "short ZROUSDT 7.4"
+    "short WLDUSDT 7.3",
+    "short ZROUSDT 7.3"
+   ]
+  },
+  {
+   "key": "E",
+   "name": "E: BTC halten",
+   "pct": 1.4,
+   "equity": 78.08,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BTCUSDT 74.3"
+   ]
+  },
+  {
+   "key": "RG1_T10",
+   "name": "RG1_T10: Aufwärtstrend K-Long, Bärenmarkt Short auf die 3 schwächsten Coins mit Trailing-Stop 10 %",
+   "pct": 1.4,
+   "equity": 78.08,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 1,
+   "anpassungen": 1,
+   "kosten": 0.13,
+   "positionen": [
+    "long QNTUSDT 24.4",
+    "long ZROUSDT 23.6"
+   ]
+  },
+  {
+   "key": "DM",
+   "name": "DM: Dual Momentum BTC/ETH/BNB, stärkster der letzten 60 Tage, sonst bar",
+   "pct": 1.28,
+   "equity": 77.99,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BNBUSDT 74.2"
+   ]
+  },
+  {
+   "key": "K",
+   "name": "K: Long-Momentum mit Trendfilter und Risikosteuerung (wöchentlich)",
+   "pct": 1.2,
+   "equity": 77.93,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BEAMXUSDT 26.2",
+    "long QNTUSDT 24.4",
+    "long ZROUSDT 23.6"
+   ]
+  },
+  {
+   "key": "RG1",
+   "name": "RG1: Aufwärtstrend K-Long, Bärenmarkt Short auf die 3 schwächsten Coins",
+   "pct": 1.2,
+   "equity": 77.93,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BEAMXUSDT 26.2",
+    "long QNTUSDT 24.4",
+    "long ZROUSDT 23.6"
+   ]
+  },
+  {
+   "key": "RG3",
+   "name": "RG3: K-Long im Aufwärtstrend, Bitcoin short im Bärenmarkt",
+   "pct": 1.2,
+   "equity": 77.93,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BEAMXUSDT 26.2",
+    "long QNTUSDT 24.4",
+    "long ZROUSDT 23.6"
+   ]
+  },
+  {
+   "key": "H180",
+   "name": "H180: Nähe zum 180-Tage-Hoch, Top 5 Long im Aufwärtstrend",
+   "pct": 1.06,
+   "equity": 77.82,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.09,
+   "positionen": [
+    "long PEPEUSDT 14.3",
+    "long BTCUSDT 14.8",
+    "long BEAMXUSDT 15.7",
+    "long UUSDT 14.6",
+    "long RLUSDUSDT 14.6"
+   ]
+  },
+  {
+   "key": "RG2",
+   "name": "RG2: Bitcoin long im Aufwärtstrend, Bitcoin short im Bärenmarkt",
+   "pct": 0.98,
+   "equity": 77.76,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 73.9"
+   ]
+  },
+  {
+   "key": "GX",
+   "name": "GX: Bitcoin Golden Cross (50 über 200 Tage), sonst bar",
+   "pct": 0.98,
+   "equity": 77.76,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 73.9"
+   ]
+  },
+  {
+   "key": "GXLS",
+   "name": "GXLS: Bitcoin Golden Cross Long, Death Cross Short",
+   "pct": 0.98,
+   "equity": 77.76,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 73.9"
+   ]
+  },
+  {
+   "key": "RSI2",
+   "name": "RSI2: Bitcoin Rücksetzer kaufen (RSI 2 unter 10 im Aufwärtstrend), Ausstieg über 5-Tage-Linie",
+   "pct": 0.98,
+   "equity": 77.76,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 73.9"
+   ]
+  },
+  {
+   "key": "TOM",
+   "name": "TOM: Monatswechsel, Bitcoin nur vom 28. bis 3. halten",
+   "pct": 0.98,
+   "equity": 77.76,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 73.9"
+   ]
+  },
+  {
+   "key": "ETHBTC",
+   "name": "ETHBTC: Rotation Ethereum oder Bitcoin nach ETH/BTC-Trend",
+   "pct": 0.98,
+   "equity": 77.76,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 73.9"
+   ]
+  },
+  {
+   "key": "ALTS",
+   "name": "ALTS: Altcoin-Saison-Schalter, Altcoin-Momentum oder Bitcoin",
+   "pct": 0.98,
+   "equity": 77.76,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 74.0"
+   ]
+  },
+  {
+   "key": "BTC_T10",
+   "name": "BTC_T10: BTC über 200-Tage-Linie mit Trailing-Stop 10 %",
+   "pct": 0.98,
+   "equity": 77.76,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 73.9"
+   ]
+  },
+  {
+   "key": "BTC_T20",
+   "name": "BTC_T20: BTC über 200-Tage-Linie mit Trailing-Stop 20 %",
+   "pct": 0.98,
+   "equity": 77.76,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 73.9"
+   ]
+  },
+  {
+   "key": "RG2_T10",
+   "name": "RG2_T10: Bitcoin long im Aufwärtstrend, Bitcoin short im Bärenmarkt mit Trailing-Stop 10 %",
+   "pct": 0.98,
+   "equity": 77.76,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 73.9"
    ]
   },
   {
    "key": "MAXLS",
    "name": "MAXLS: Lotterie-Effekt, Short auf Coins mit größtem Tagessprung, Long auf die ruhigsten",
-   "pct": 0.93,
-   "equity": 77.72,
+   "pct": 0.89,
+   "equity": 77.69,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -637,40 +619,22 @@
    "kosten": 0.09,
    "positionen": [
     "long BTCUSDT 7.4",
-    "short SOPHUSDT 8.0",
-    "short RSRUSDT 7.1",
+    "short SOPHUSDT 8.2",
+    "short RSRUSDT 7.0",
     "long ETHUSDT 7.4",
     "short BEAMXUSDT 7.9",
     "long RLUSDUSDT 7.3",
     "short NILUSDT 6.9",
-    "short LSKUSDT 6.0",
+    "short LSKUSDT 5.9",
     "long SOLUSDT 7.3",
     "long UUSDT 7.3"
    ]
   },
   {
-   "key": "LVOL",
-   "name": "LVOL: Niedrig-Volatilitäts-Anomalie, 5 ruhigste Coins Long, wöchentlich",
-   "pct": 0.71,
-   "equity": 77.55,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.08,
-   "positionen": [
-    "long BTCUSDT 14.8",
-    "long BNBUSDT 14.9",
-    "long ETHUSDT 14.9",
-    "long RLUSDUSDT 14.6",
-    "long UUSDT 14.6"
-   ]
-  },
-  {
    "key": "R_CB5",
    "name": "R_CB5: Gegen den Trend: Short stärkste, Long schwächste (5 Coins je Seite, 6 h)",
-   "pct": 0.45,
-   "equity": 77.35,
+   "pct": 0.75,
+   "equity": 77.58,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -678,31 +642,79 @@
    "kosten": 0.64,
    "positionen": [
     "long XPLUSDT 7.3",
-    "short MARSCOINUSDT 7.4",
-    "short 牛来USDT 7.4",
+    "short MARSCOINUSDT 7.3",
+    "short 牛来USDT 7.2",
     "long LSKUSDT 7.4",
-    "short GUSDT 7.3",
+    "short GUSDT 7.2",
     "short TRUMPUSDT 7.5",
     "long NEARUSDT 7.4",
     "long ENAUSDT 7.4",
-    "short BEAMXUSDT 7.3",
+    "short BEAMXUSDT 7.2",
     "long LINKUSDT 7.3"
    ]
   },
   {
-   "key": "B_T8",
-   "name": "B_T8: Momentum 7d/30d Long+Short (wöchentlich) mit Trailing-Stop 8 %",
-   "pct": 0.19,
-   "equity": 77.14,
+   "key": "MOM28",
+   "name": "MOM28: Querschnitts-Momentum 28 Tage, Top 5 Long, wöchentlich",
+   "pct": 0.74,
+   "equity": 77.57,
    "lev": 1,
    "liquidiert": null,
-   "stops": 3,
+   "stops": 0,
    "anpassungen": 1,
-   "kosten": 0.14,
+   "kosten": 0.1,
    "positionen": [
-    "long PEPEUSDT 12.1",
-    "short WLDUSDT 11.9",
-    "short FETUSDT 12.4"
+    "long PEPEUSDT 14.3",
+    "long BEAMXUSDT 15.7",
+    "long HYPEUSDT 14.5",
+    "long UUSDT 14.6",
+    "long RLUSDUSDT 14.6"
+   ]
+  },
+  {
+   "key": "LVOL",
+   "name": "LVOL: Niedrig-Volatilitäts-Anomalie, 5 ruhigste Coins Long, wöchentlich",
+   "pct": 0.67,
+   "equity": 77.52,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.08,
+   "positionen": [
+    "long BTCUSDT 14.8",
+    "long BNBUSDT 14.8",
+    "long ETHUSDT 14.9",
+    "long RLUSDUSDT 14.6",
+    "long UUSDT 14.6"
+   ]
+  },
+  {
+   "key": "R_TS15",
+   "name": "R_TS15: Trend: Short auf die schwächsten (15 Coins je Seite, 6 h)",
+   "pct": 0.31,
+   "equity": 77.24,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 8,
+   "kosten": 0.57,
+   "positionen": [
+    "short SOLUSDT 4.9",
+    "short TAOUSDT 4.9",
+    "short ZECUSDT 4.9",
+    "short ENAUSDT 4.9",
+    "short XPLUSDT 4.9",
+    "short PEPEUSDT 4.9",
+    "short LSKUSDT 4.9",
+    "short WLDUSDT 4.8",
+    "short XLMUSDT 4.9",
+    "short LINKUSDT 4.9",
+    "short NEARUSDT 4.9",
+    "short HYPEUSDT 4.9",
+    "short LTCUSDT 4.9",
+    "short PROMUSDT 4.9",
+    "short ZROUSDT 4.8"
    ]
   },
   {
@@ -716,6 +728,50 @@
    "anpassungen": 4,
    "kosten": 0.2,
    "positionen": []
+  },
+  {
+   "key": "R_CS15",
+   "name": "R_CS15: Gegen den Trend: Short auf die stärksten (15 Coins je Seite, 6 h)",
+   "pct": 0.11,
+   "equity": 77.08,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 8,
+   "kosten": 0.47,
+   "positionen": [
+    "short BEAMXUSDT 4.8",
+    "short UNIUSDT 4.9",
+    "short MARSCOINUSDT 4.9",
+    "short 牛来USDT 4.8",
+    "short AVAXUSDT 4.9",
+    "short GUSDT 4.8",
+    "short BTCUSDT 4.9",
+    "short TRUMPUSDT 5.0",
+    "short TONUSDT 4.9",
+    "short ETHUSDT 4.9",
+    "short BNBUSDT 4.9",
+    "short TRXUSDT 4.9",
+    "short SNDKBUSDT 4.9",
+    "short AAVEUSDT 4.9",
+    "short INITUSDT 5.0"
+   ]
+  },
+  {
+   "key": "B_T8",
+   "name": "B_T8: Momentum 7d/30d Long+Short (wöchentlich) mit Trailing-Stop 8 %",
+   "pct": 0.03,
+   "equity": 77.02,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 3,
+   "anpassungen": 1,
+   "kosten": 0.14,
+   "positionen": [
+    "long PEPEUSDT 11.9",
+    "short WLDUSDT 11.8",
+    "short FETUSDT 12.4"
+   ]
   },
   {
    "key": "M",
@@ -958,26 +1014,43 @@
    "positionen": []
   },
   {
-   "key": "A_T5",
-   "name": "A_T5: Top-Mover 24h (täglich) mit Trailing-Stop 5 %",
-   "pct": -0.1,
-   "equity": 76.93,
+   "key": "R_CB10",
+   "name": "R_CB10: Gegen den Trend: Short stärkste, Long schwächste (10 Coins je Seite, 6 h)",
+   "pct": -0.08,
+   "equity": 76.94,
    "lev": 1,
    "liquidiert": null,
-   "stops": 2,
-   "anpassungen": 2,
-   "kosten": 0.28,
+   "stops": 0,
+   "anpassungen": 8,
+   "kosten": 0.6,
    "positionen": [
-    "short LSKUSDT 24.2",
-    "long 牛来USDT 24.6",
-    "short XPLUSDT 24.4"
+    "short TRXUSDT 3.7",
+    "long ZECUSDT 3.7",
+    "long ZROUSDT 3.6",
+    "long XPLUSDT 3.6",
+    "long PEPEUSDT 3.7",
+    "short MARSCOINUSDT 3.6",
+    "short 牛来USDT 3.6",
+    "short AVAXUSDT 3.6",
+    "long ENAUSDT 3.7",
+    "long LSKUSDT 3.7",
+    "short GUSDT 3.6",
+    "short TRUMPUSDT 3.7",
+    "long LINKUSDT 3.6",
+    "long NEARUSDT 3.7",
+    "short SNDKBUSDT 3.6",
+    "long TAOUSDT 3.6",
+    "short INITUSDT 3.7",
+    "long WLDUSDT 3.6",
+    "short BEAMXUSDT 3.6",
+    "short UNIUSDT 3.7"
    ]
   },
   {
    "key": "TSM",
    "name": "TSM: Zeitreihen-Momentum je Coin (28 Tage), Long oder Short, nach Risiko gewichtet",
-   "pct": -0.11,
-   "equity": 76.92,
+   "pct": -0.09,
+   "equity": 76.93,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -1020,69 +1093,43 @@
     "short TRXUSDT 0.4",
     "short PROMUSDT 0.1",
     "short AAVEUSDT 0.2",
-    "short INJUSDT 0.2",
+    "short INJUSDT 0.1",
     "short HYPEUSDT 0.3"
    ]
   },
   {
-   "key": "R_CB10",
-   "name": "R_CB10: Gegen den Trend: Short stärkste, Long schwächste (10 Coins je Seite, 6 h)",
-   "pct": -0.12,
-   "equity": 76.91,
+   "key": "R_CB3",
+   "name": "R_CB3: Gegen den Trend: Short stärkste, Long schwächste (3 Coins je Seite, 6 h)",
+   "pct": -0.2,
+   "equity": 76.85,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 8,
-   "kosten": 0.6,
+   "kosten": 0.58,
    "positionen": [
-    "short TRXUSDT 3.7",
-    "long ZECUSDT 3.7",
-    "long ZROUSDT 3.6",
-    "long XPLUSDT 3.6",
-    "long PEPEUSDT 3.7",
-    "short MARSCOINUSDT 3.7",
-    "short 牛来USDT 3.7",
-    "short AVAXUSDT 3.7",
-    "long ENAUSDT 3.7",
-    "long LSKUSDT 3.7",
-    "short GUSDT 3.7",
-    "short TRUMPUSDT 3.7",
-    "long LINKUSDT 3.7",
-    "long NEARUSDT 3.7",
-    "short SNDKBUSDT 3.7",
-    "long TAOUSDT 3.7",
-    "short INITUSDT 3.7",
-    "long WLDUSDT 3.6",
-    "short BEAMXUSDT 3.6",
-    "short UNIUSDT 3.7"
+    "long XPLUSDT 12.1",
+    "short 牛来USDT 12.0",
+    "long LSKUSDT 12.1",
+    "short GUSDT 11.9",
+    "short TRUMPUSDT 12.3",
+    "long NEARUSDT 12.2"
    ]
   },
   {
-   "key": "R_TS15",
-   "name": "R_TS15: Trend: Short auf die schwächsten (15 Coins je Seite, 6 h)",
-   "pct": -0.16,
-   "equity": 76.88,
+   "key": "A_T5",
+   "name": "A_T5: Top-Mover 24h (täglich) mit Trailing-Stop 5 %",
+   "pct": -0.24,
+   "equity": 76.82,
    "lev": 1,
    "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 8,
-   "kosten": 0.57,
+   "stops": 2,
+   "anpassungen": 2,
+   "kosten": 0.28,
    "positionen": [
-    "short SOLUSDT 4.9",
-    "short TAOUSDT 4.9",
-    "short ZECUSDT 5.0",
-    "short ENAUSDT 5.0",
-    "short XPLUSDT 4.9",
-    "short PEPEUSDT 5.0",
-    "short LSKUSDT 4.9",
-    "short WLDUSDT 4.9",
-    "short XLMUSDT 4.9",
-    "short LINKUSDT 4.9",
-    "short NEARUSDT 4.9",
-    "short HYPEUSDT 4.9",
-    "short LTCUSDT 4.9",
-    "short PROMUSDT 4.9",
-    "short ZROUSDT 4.8"
+    "short LSKUSDT 24.0",
+    "long 牛来USDT 24.2",
+    "short XPLUSDT 24.3"
    ]
   },
   {
@@ -1106,8 +1153,8 @@
   {
    "key": "K_T15",
    "name": "K_T15: Long-Momentum mit Trendfilter und Risikosteuerung (wöchentlich) mit Trailing-Stop 15 %",
-   "pct": -0.31,
-   "equity": 76.76,
+   "pct": -0.5,
+   "equity": 76.61,
    "lev": 1,
    "liquidiert": null,
    "stops": 1,
@@ -1115,68 +1162,26 @@
    "kosten": 0.13,
    "positionen": [
     "long QNTUSDT 24.4",
-    "long ZROUSDT 23.7"
-   ]
-  },
-  {
-   "key": "C_T10",
-   "name": "C_T10: Momentum nur Long mit BTC-Filter (wöchentlich) mit Trailing-Stop 10 %",
-   "pct": -0.31,
-   "equity": 76.76,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 2,
-   "anpassungen": 1,
-   "kosten": 0.16,
-   "positionen": [
-    "long PEPEUSDT 24.3"
-   ]
-  },
-  {
-   "key": "R_CS15",
-   "name": "R_CS15: Gegen den Trend: Short auf die stärksten (15 Coins je Seite, 6 h)",
-   "pct": -0.39,
-   "equity": 76.7,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 8,
-   "kosten": 0.47,
-   "positionen": [
-    "short BEAMXUSDT 4.9",
-    "short UNIUSDT 4.9",
-    "short MARSCOINUSDT 4.9",
-    "short 牛来USDT 4.9",
-    "short AVAXUSDT 4.9",
-    "short GUSDT 4.9",
-    "short BTCUSDT 4.9",
-    "short TRUMPUSDT 5.0",
-    "short TONUSDT 4.9",
-    "short ETHUSDT 4.9",
-    "short BNBUSDT 4.9",
-    "short TRXUSDT 4.9",
-    "short SNDKBUSDT 4.9",
-    "short AAVEUSDT 4.9",
-    "short INITUSDT 5.0"
+    "long ZROUSDT 23.6"
    ]
   },
   {
    "key": "R_TB15",
    "name": "R_TB15: Trend: Long stärkste, Short schwächste (15 Coins je Seite, 6 h)",
-   "pct": -0.53,
-   "equity": 76.59,
+   "pct": -0.55,
+   "equity": 76.58,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 8,
    "kosten": 0.52,
    "positionen": [
-    "short ENAUSDT 2.5",
+    "short ENAUSDT 2.4",
     "long TRXUSDT 2.4",
     "short ZROUSDT 2.4",
     "short ZECUSDT 2.5",
     "long BEAMXUSDT 2.4",
-    "short PEPEUSDT 2.5",
+    "short PEPEUSDT 2.4",
     "short TAOUSDT 2.4",
     "short SOLUSDT 2.4",
     "long UNIUSDT 2.4",
@@ -1200,62 +1205,68 @@
     "short HYPEUSDT 2.4",
     "long INITUSDT 2.5",
     "short LTCUSDT 2.4",
-    "long AAVEUSDT 2.5"
+    "long AAVEUSDT 2.4"
    ]
   },
   {
-   "key": "R_CB3",
-   "name": "R_CB3: Gegen den Trend: Short stärkste, Long schwächste (3 Coins je Seite, 6 h)",
-   "pct": -0.58,
-   "equity": 76.55,
+   "key": "FCON",
+   "name": "FCON: Funding-Kontra, Short auf überhitzte Longs, Long auf überhitzte Shorts",
+   "pct": -0.76,
+   "equity": 76.41,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 8,
-   "kosten": 0.58,
+   "anpassungen": 1,
+   "kosten": 0.09,
    "positionen": [
-    "long XPLUSDT 12.1",
-    "short 牛来USDT 12.2",
-    "long LSKUSDT 12.2",
-    "short GUSDT 12.1",
-    "short TRUMPUSDT 12.4",
-    "long NEARUSDT 12.2"
+    "short BTCUSDT 7.4",
+    "short WLDUSDT 7.1",
+    "short QNTUSDT 7.3",
+    "long SOPHUSDT 8.2",
+    "long STXUSDT 7.4",
+    "long TRXUSDT 7.5",
+    "long NILUSDT 6.9",
+    "short XRPUSDT 7.3",
+    "long LSKUSDT 5.9",
+    "short SOLUSDT 7.3"
    ]
   },
   {
-   "key": "VBRK",
-   "name": "VBRK: Volumen-Ausbruch (3x Umsatz und +5 %), 3 Tage halten",
-   "pct": -0.72,
-   "equity": 76.44,
+   "key": "B",
+   "name": "B: Momentum 7d/30d Long+Short (wöchentlich)",
+   "pct": -0.8,
+   "equity": 76.38,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.19,
+   "anpassungen": 1,
+   "kosten": 0.1,
    "positionen": [
-    "long PEPEUSDT 18.5",
-    "long LSKUSDT 18.1",
-    "long BEAMXUSDT 17.9",
-    "long GUSDT 18.2"
+    "short INTCBUSDT 12.4",
+    "long BEAMXUSDT 13.1",
+    "long PEPEUSDT 12.2",
+    "short SOXLBUSDT 12.7",
+    "long HYPEUSDT 12.1",
+    "short INTWBUSDT 12.8"
    ]
   },
   {
    "key": "R_CB15",
    "name": "R_CB15: Gegen den Trend: Short stärkste, Long schwächste (15 Coins je Seite, 6 h)",
-   "pct": -0.87,
-   "equity": 76.33,
+   "pct": -0.86,
+   "equity": 76.34,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 8,
    "kosten": 0.52,
    "positionen": [
-    "long ENAUSDT 2.5",
+    "long ENAUSDT 2.4",
     "short TRXUSDT 2.4",
     "long ZROUSDT 2.4",
-    "long ZECUSDT 2.5",
+    "long ZECUSDT 2.4",
     "short BEAMXUSDT 2.4",
-    "long PEPEUSDT 2.5",
+    "long PEPEUSDT 2.4",
     "long TAOUSDT 2.4",
     "long SOLUSDT 2.4",
     "short UNIUSDT 2.4",
@@ -1283,22 +1294,70 @@
    ]
   },
   {
+   "key": "C_T10",
+   "name": "C_T10: Momentum nur Long mit BTC-Filter (wöchentlich) mit Trailing-Stop 10 %",
+   "pct": -0.88,
+   "equity": 76.32,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 2,
+   "anpassungen": 1,
+   "kosten": 0.16,
+   "positionen": [
+    "long PEPEUSDT 23.8"
+   ]
+  },
+  {
+   "key": "DONLS",
+   "name": "DONLS: Bitcoin Donchian-Ausbruch 20/10, Long und Short",
+   "pct": -1.17,
+   "equity": 76.1,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.05,
+   "positionen": [
+    "short BTCUSDT 72.5"
+   ]
+  },
+  {
+   "key": "R_TB5_T5",
+   "name": "R_TB5_T5: Trend: Long stärkste, Short schwächste (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": -1.4,
+   "equity": 75.92,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 10,
+   "anpassungen": 6,
+   "kosten": 0.52,
+   "positionen": [
+    "short XPLUSDT 7.2",
+    "long 牛来USDT 7.2",
+    "long TRUMPUSDT 7.4",
+    "short NEARUSDT 7.3",
+    "long MARSCOINUSDT 7.2",
+    "short ENAUSDT 7.3",
+    "short LINKUSDT 7.3"
+   ]
+  },
+  {
    "key": "R_TL15",
    "name": "R_TL15: Trend: Long auf die stärksten (15 Coins je Seite, 6 h)",
-   "pct": -0.94,
-   "equity": 76.27,
+   "pct": -1.43,
+   "equity": 75.9,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 8,
    "kosten": 0.46,
    "positionen": [
-    "long BEAMXUSDT 4.8",
+    "long BEAMXUSDT 4.7",
     "long UNIUSDT 4.8",
     "long MARSCOINUSDT 4.8",
-    "long 牛来USDT 4.8",
+    "long 牛来USDT 4.7",
     "long AVAXUSDT 4.8",
-    "long GUSDT 4.8",
+    "long GUSDT 4.7",
     "long BTCUSDT 4.8",
     "long TRUMPUSDT 4.9",
     "long TONUSDT 4.8",
@@ -1306,23 +1365,23 @@
     "long BNBUSDT 4.8",
     "long TRXUSDT 4.8",
     "long SNDKBUSDT 4.8",
-    "long AAVEUSDT 4.9",
+    "long AAVEUSDT 4.8",
     "long INITUSDT 4.9"
    ]
   },
   {
    "key": "MOM28_T20",
    "name": "MOM28_T20: Querschnitts-Momentum 28 Tage, Top 5 Long, wöchentlich mit Trailing-Stop 20 %",
-   "pct": -0.95,
-   "equity": 76.27,
+   "pct": -1.43,
+   "equity": 75.9,
    "lev": 1,
    "liquidiert": null,
    "stops": 1,
    "anpassungen": 1,
    "kosten": 0.11,
    "positionen": [
-    "long PEPEUSDT 14.6",
-    "long HYPEUSDT 14.7",
+    "long PEPEUSDT 14.3",
+    "long HYPEUSDT 14.5",
     "long UUSDT 14.6",
     "long RLUSDUSDT 14.6"
    ]
@@ -1330,8 +1389,8 @@
   {
    "key": "R_TB3",
    "name": "R_TB3: Trend: Long stärkste, Short schwächste (3 Coins je Seite, 6 h)",
-   "pct": -1.09,
-   "equity": 76.16,
+   "pct": -1.47,
+   "equity": 75.87,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -1339,179 +1398,75 @@
    "kosten": 0.58,
    "positionen": [
     "short XPLUSDT 12.0",
-    "long 牛来USDT 12.1",
-    "short LSKUSDT 12.1",
-    "long GUSDT 12.0",
-    "long TRUMPUSDT 12.3",
+    "long 牛来USDT 11.9",
+    "short LSKUSDT 12.0",
+    "long GUSDT 11.8",
+    "long TRUMPUSDT 12.2",
     "short NEARUSDT 12.1"
-   ]
-  },
-  {
-   "key": "FCON",
-   "name": "FCON: Funding-Kontra, Short auf überhitzte Longs, Long auf überhitzte Shorts",
-   "pct": -1.09,
-   "equity": 76.16,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.09,
-   "positionen": [
-    "short BTCUSDT 7.4",
-    "short WLDUSDT 7.1",
-    "short QNTUSDT 7.3",
-    "long SOPHUSDT 8.0",
-    "long STXUSDT 7.4",
-    "long TRXUSDT 7.5",
-    "long NILUSDT 6.9",
-    "short XRPUSDT 7.4",
-    "long LSKUSDT 6.0",
-    "short SOLUSDT 7.3"
-   ]
-  },
-  {
-   "key": "B",
-   "name": "B: Momentum 7d/30d Long+Short (wöchentlich)",
-   "pct": -1.11,
-   "equity": 76.15,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "short INTCBUSDT 12.6",
-    "long BEAMXUSDT 13.2",
-    "long PEPEUSDT 12.5",
-    "short SOXLBUSDT 13.0",
-    "long HYPEUSDT 12.1",
-    "short INTWBUSDT 13.0"
    ]
   },
   {
    "key": "F",
    "name": "F: wie B, fest 35 % Einsatz (Kontrolle)",
-   "pct": -1.2,
-   "equity": 76.08,
+   "pct": -1.51,
+   "equity": 75.84,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 1,
    "kosten": 0.04,
    "positionen": [
-    "long PEPEUSDT 4.5",
+    "long PEPEUSDT 4.4",
     "short WLDUSDT 4.4",
-    "long LSKUSDT 3.7",
-    "short SOPHUSDT 4.9",
+    "long LSKUSDT 3.6",
+    "short SOPHUSDT 5.0",
     "short FETUSDT 4.6",
-    "long BEAMXUSDT 4.9"
+    "long BEAMXUSDT 4.8"
    ]
   },
   {
    "key": "G",
    "name": "G: wie B, Martingale x1,1 nach Verlustwoche",
-   "pct": -1.2,
-   "equity": 76.08,
+   "pct": -1.51,
+   "equity": 75.84,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 1,
    "kosten": 0.04,
    "positionen": [
-    "long PEPEUSDT 4.5",
+    "long PEPEUSDT 4.4",
     "short WLDUSDT 4.4",
-    "long LSKUSDT 3.7",
-    "short SOPHUSDT 4.9",
+    "long LSKUSDT 3.6",
+    "short SOPHUSDT 5.0",
     "short FETUSDT 4.6",
-    "long BEAMXUSDT 4.9"
+    "long BEAMXUSDT 4.8"
    ]
   },
   {
    "key": "H",
    "name": "H: wie B, Martingale x1,4 nach Verlustwoche",
-   "pct": -1.2,
-   "equity": 76.08,
+   "pct": -1.51,
+   "equity": 75.84,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 1,
    "kosten": 0.04,
    "positionen": [
-    "long PEPEUSDT 4.5",
+    "long PEPEUSDT 4.4",
     "short WLDUSDT 4.4",
-    "long LSKUSDT 3.7",
-    "short SOPHUSDT 4.9",
+    "long LSKUSDT 3.6",
+    "short SOPHUSDT 5.0",
     "short FETUSDT 4.6",
-    "long BEAMXUSDT 4.9"
-   ]
-  },
-  {
-   "key": "R_TB5_T5",
-   "name": "R_TB5_T5: Trend: Long stärkste, Short schwächste (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -1.3,
-   "equity": 76.0,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 10,
-   "anpassungen": 6,
-   "kosten": 0.52,
-   "positionen": [
-    "short XPLUSDT 7.3",
-    "long 牛来USDT 7.3",
-    "long TRUMPUSDT 7.4",
-    "short NEARUSDT 7.3",
-    "long MARSCOINUSDT 7.3",
-    "short ENAUSDT 7.4",
-    "short LINKUSDT 7.3"
-   ]
-  },
-  {
-   "key": "DONLS",
-   "name": "DONLS: Bitcoin Donchian-Ausbruch 20/10, Long und Short",
-   "pct": -1.32,
-   "equity": 75.99,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.05,
-   "positionen": [
-    "short BTCUSDT 72.7"
-   ]
-  },
-  {
-   "key": "R_CL15",
-   "name": "R_CL15: Gegen den Trend: Long auf die schwächsten (15 Coins je Seite, 6 h)",
-   "pct": -1.39,
-   "equity": 75.93,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 8,
-   "kosten": 0.57,
-   "positionen": [
-    "long SOLUSDT 4.8",
-    "long TAOUSDT 4.8",
-    "long ZECUSDT 4.9",
-    "long ENAUSDT 4.9",
-    "long XPLUSDT 4.8",
-    "long PEPEUSDT 4.9",
-    "long LSKUSDT 4.8",
-    "long WLDUSDT 4.8",
-    "long XLMUSDT 4.8",
-    "long LINKUSDT 4.8",
-    "long NEARUSDT 4.8",
-    "long HYPEUSDT 4.8",
-    "long LTCUSDT 4.8",
-    "long PROMUSDT 4.8",
-    "long ZROUSDT 4.8"
+    "long BEAMXUSDT 4.8"
    ]
   },
   {
    "key": "R_TB10",
    "name": "R_TB10: Trend: Long stärkste, Short schwächste (10 Coins je Seite, 6 h)",
-   "pct": -1.51,
-   "equity": 75.84,
+   "pct": -1.55,
+   "equity": 75.8,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -1519,16 +1474,16 @@
    "kosten": 0.6,
    "positionen": [
     "long TRXUSDT 3.6",
-    "short ZECUSDT 3.7",
+    "short ZECUSDT 3.6",
     "short ZROUSDT 3.6",
     "short XPLUSDT 3.6",
-    "short PEPEUSDT 3.7",
+    "short PEPEUSDT 3.6",
     "long MARSCOINUSDT 3.6",
     "long 牛来USDT 3.6",
     "long AVAXUSDT 3.6",
-    "short ENAUSDT 3.7",
+    "short ENAUSDT 3.6",
     "short LSKUSDT 3.6",
-    "long GUSDT 3.6",
+    "long GUSDT 3.5",
     "long TRUMPUSDT 3.7",
     "short LINKUSDT 3.6",
     "short NEARUSDT 3.6",
@@ -1536,7 +1491,7 @@
     "short TAOUSDT 3.6",
     "long INITUSDT 3.7",
     "short WLDUSDT 3.6",
-    "long BEAMXUSDT 3.6",
+    "long BEAMXUSDT 3.5",
     "long UNIUSDT 3.6"
    ]
   },
@@ -1551,54 +1506,81 @@
    "anpassungen": 1,
    "kosten": 0.1,
    "positionen": [
-    "long LSKUSDT 12.0",
-    "long SOPHUSDT 16.0",
+    "long LSKUSDT 11.9",
+    "long SOPHUSDT 16.4",
     "long RSRUSDT 14.1",
-    "long BEAMXUSDT 15.9",
-    "long NILUSDT 13.9"
+    "long BEAMXUSDT 15.7",
+    "long NILUSDT 13.8"
+   ]
+  },
+  {
+   "key": "R_CL15",
+   "name": "R_CL15: Gegen den Trend: Long auf die schwächsten (15 Coins je Seite, 6 h)",
+   "pct": -1.85,
+   "equity": 75.58,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 8,
+   "kosten": 0.57,
+   "positionen": [
+    "long SOLUSDT 4.8",
+    "long TAOUSDT 4.8",
+    "long ZECUSDT 4.9",
+    "long ENAUSDT 4.8",
+    "long XPLUSDT 4.8",
+    "long PEPEUSDT 4.8",
+    "long LSKUSDT 4.8",
+    "long WLDUSDT 4.7",
+    "long XLMUSDT 4.8",
+    "long LINKUSDT 4.8",
+    "long NEARUSDT 4.8",
+    "long HYPEUSDT 4.8",
+    "long LTCUSDT 4.8",
+    "long PROMUSDT 4.8",
+    "long ZROUSDT 4.7"
+   ]
+  },
+  {
+   "key": "VBRK",
+   "name": "VBRK: Volumen-Ausbruch (3x Umsatz und +5 %), 3 Tage halten",
+   "pct": -2.01,
+   "equity": 75.45,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.19,
+   "positionen": [
+    "long PEPEUSDT 18.2",
+    "long LSKUSDT 18.0",
+    "long BEAMXUSDT 17.7",
+    "long GUSDT 17.9"
    ]
   },
   {
    "key": "R_CL5_T5",
    "name": "R_CL5_T5: Gegen den Trend: Long auf die schwächsten (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -1.9,
-   "equity": 75.54,
+   "pct": -2.45,
+   "equity": 75.11,
    "lev": 1,
    "liquidiert": null,
    "stops": 3,
    "anpassungen": 6,
    "kosten": 0.51,
    "positionen": [
-    "long LSKUSDT 14.4",
-    "long NEARUSDT 14.4",
-    "long ENAUSDT 14.5",
-    "long XPLUSDT 14.3",
+    "long LSKUSDT 14.3",
+    "long NEARUSDT 14.3",
+    "long ENAUSDT 14.3",
+    "long XPLUSDT 14.2",
     "long LINKUSDT 14.3"
-   ]
-  },
-  {
-   "key": "MOM7",
-   "name": "MOM7: Querschnitts-Momentum 7 Tage, Top 5 Long, wöchentlich",
-   "pct": -2.01,
-   "equity": 75.45,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long PEPEUSDT 14.6",
-    "long LSKUSDT 12.0",
-    "long QNTUSDT 14.7",
-    "long BEAMXUSDT 15.9",
-    "long HYPEUSDT 14.7"
    ]
   },
   {
    "key": "R_TB5",
    "name": "R_TB5: Trend: Long stärkste, Short schwächste (5 Coins je Seite, 6 h)",
-   "pct": -2.17,
-   "equity": 75.33,
+   "pct": -2.46,
+   "equity": 75.11,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -1606,22 +1588,40 @@
    "kosten": 0.63,
    "positionen": [
     "short XPLUSDT 7.1",
-    "long MARSCOINUSDT 7.2",
-    "long 牛来USDT 7.2",
+    "long MARSCOINUSDT 7.1",
+    "long 牛来USDT 7.1",
     "short LSKUSDT 7.2",
-    "long GUSDT 7.2",
+    "long GUSDT 7.0",
     "long TRUMPUSDT 7.3",
     "short NEARUSDT 7.2",
-    "short ENAUSDT 7.3",
+    "short ENAUSDT 7.2",
     "long BEAMXUSDT 7.1",
-    "short LINKUSDT 7.2"
+    "short LINKUSDT 7.1"
+   ]
+  },
+  {
+   "key": "MOM7",
+   "name": "MOM7: Querschnitts-Momentum 7 Tage, Top 5 Long, wöchentlich",
+   "pct": -2.85,
+   "equity": 74.81,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long PEPEUSDT 14.3",
+    "long LSKUSDT 11.9",
+    "long QNTUSDT 14.6",
+    "long BEAMXUSDT 15.7",
+    "long HYPEUSDT 14.5"
    ]
   },
   {
    "key": "R_CL10",
    "name": "R_CL10: Gegen den Trend: Long auf die schwächsten (10 Coins je Seite, 6 h)",
-   "pct": -2.59,
-   "equity": 75.01,
+   "pct": -3.16,
+   "equity": 74.57,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -1629,54 +1629,54 @@
    "kosten": 0.57,
    "positionen": [
     "long ZECUSDT 7.2",
-    "long XPLUSDT 7.1",
-    "long PEPEUSDT 7.2",
-    "long ENAUSDT 7.2",
-    "long LSKUSDT 7.2",
+    "long XPLUSDT 7.0",
+    "long PEPEUSDT 7.1",
+    "long ENAUSDT 7.1",
+    "long LSKUSDT 7.1",
     "long LINKUSDT 7.1",
-    "long NEARUSDT 7.2",
+    "long NEARUSDT 7.1",
     "long TAOUSDT 7.1",
-    "long WLDUSDT 7.1",
+    "long WLDUSDT 7.0",
     "long ZROUSDT 7.0"
    ]
   },
   {
    "key": "R_TL5_T5",
    "name": "R_TL5_T5: Trend: Long auf die stärksten (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -2.81,
-   "equity": 74.84,
+   "pct": -3.41,
+   "equity": 74.38,
    "lev": 1,
    "liquidiert": null,
    "stops": 9,
    "anpassungen": 6,
    "kosten": 0.58,
    "positionen": [
-    "long MARSCOINUSDT 14.3",
-    "long 牛来USDT 14.3",
-    "long TRUMPUSDT 14.6"
+    "long MARSCOINUSDT 14.2",
+    "long 牛来USDT 14.1",
+    "long TRUMPUSDT 14.5"
    ]
   },
   {
    "key": "B_T15",
    "name": "B_T15: Momentum 7d/30d Long+Short (wöchentlich) mit Trailing-Stop 15 %",
-   "pct": -3.33,
-   "equity": 74.44,
+   "pct": -3.48,
+   "equity": 74.32,
    "lev": 1,
    "liquidiert": null,
    "stops": 3,
    "anpassungen": 1,
    "kosten": 0.14,
    "positionen": [
-    "long PEPEUSDT 12.1",
-    "short WLDUSDT 11.9",
+    "long PEPEUSDT 11.9",
+    "short WLDUSDT 11.8",
     "short FETUSDT 12.4"
    ]
   },
   {
    "key": "R_CL5",
    "name": "R_CL5: Gegen den Trend: Long auf die schwächsten (5 Coins je Seite, 6 h)",
-   "pct": -3.46,
-   "equity": 74.33,
+   "pct": -4.0,
+   "equity": 73.92,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -1684,17 +1684,17 @@
    "kosten": 0.55,
    "positionen": [
     "long XPLUSDT 14.0",
-    "long LSKUSDT 14.2",
-    "long NEARUSDT 14.2",
-    "long ENAUSDT 14.2",
-    "long LINKUSDT 14.1"
+    "long LSKUSDT 14.1",
+    "long NEARUSDT 14.1",
+    "long ENAUSDT 14.1",
+    "long LINKUSDT 14.0"
    ]
   },
   {
    "key": "R_TL10_T8",
    "name": "R_TL10_T8: Trend: Long auf die stärksten (10 Coins je Seite, 6 h) mit Trailing-Stop 8 %",
-   "pct": -4.05,
-   "equity": 73.88,
+   "pct": -4.69,
+   "equity": 73.39,
    "lev": 1,
    "liquidiert": null,
    "stops": 6,
@@ -1702,11 +1702,11 @@
    "kosten": 0.49,
    "positionen": [
     "long AVAXUSDT 7.0",
-    "long 牛来USDT 7.0",
+    "long 牛来USDT 6.9",
     "long TRXUSDT 7.0",
     "long SNDKBUSDT 7.0",
     "long TRUMPUSDT 7.1",
-    "long GUSDT 7.0",
+    "long GUSDT 6.9",
     "long MARSCOINUSDT 7.0",
     "long BEAMXUSDT 6.9",
     "long UNIUSDT 7.0",
@@ -1716,8 +1716,8 @@
   {
    "key": "R_TL10",
    "name": "R_TL10: Trend: Long auf die stärksten (10 Coins je Seite, 6 h)",
-   "pct": -4.06,
-   "equity": 73.87,
+   "pct": -4.71,
+   "equity": 73.38,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -1725,9 +1725,9 @@
    "kosten": 0.63,
    "positionen": [
     "long MARSCOINUSDT 7.0",
-    "long 牛来USDT 7.0",
+    "long 牛来USDT 6.9",
     "long AVAXUSDT 7.0",
-    "long GUSDT 7.0",
+    "long GUSDT 6.9",
     "long TRUMPUSDT 7.1",
     "long TRXUSDT 7.0",
     "long SNDKBUSDT 7.0",
@@ -1739,93 +1739,58 @@
   {
    "key": "R_CL3",
    "name": "R_CL3: Gegen den Trend: Long auf die schwächsten (3 Coins je Seite, 6 h)",
-   "pct": -6.17,
-   "equity": 72.25,
+   "pct": -6.71,
+   "equity": 71.84,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 8,
    "kosten": 0.54,
    "positionen": [
-    "long XPLUSDT 22.7",
-    "long LSKUSDT 23.0",
-    "long NEARUSDT 23.0"
-   ]
-  },
-  {
-   "key": "R_TL5",
-   "name": "R_TL5: Trend: Long auf die stärksten (5 Coins je Seite, 6 h)",
-   "pct": -6.29,
-   "equity": 72.16,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 8,
-   "kosten": 0.7,
-   "positionen": [
-    "long MARSCOINUSDT 13.7",
-    "long 牛来USDT 13.7",
-    "long GUSDT 13.7",
-    "long TRUMPUSDT 13.9",
-    "long BEAMXUSDT 13.6"
-   ]
-  },
-  {
-   "key": "B2",
-   "name": "B2: Strategie B mit 2x Hebel",
-   "pct": -6.55,
-   "equity": 71.96,
-   "lev": 2,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.19,
-   "positionen": [
-    "long PEPEUSDT 24.3",
-    "short WLDUSDT 23.8",
-    "long LSKUSDT 19.9",
-    "short SOPHUSDT 26.7",
-    "short FETUSDT 24.8",
-    "long BEAMXUSDT 26.4"
-   ]
-  },
-  {
-   "key": "R_TL3",
-   "name": "R_TL3: Trend: Long auf die stärksten (3 Coins je Seite, 6 h)",
-   "pct": -7.01,
-   "equity": 71.6,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 8,
-   "kosten": 0.59,
-   "positionen": [
-    "long 牛来USDT 22.6",
-    "long GUSDT 22.5",
-    "long TRUMPUSDT 23.0"
+    "long XPLUSDT 22.6",
+    "long LSKUSDT 22.8",
+    "long NEARUSDT 22.8"
    ]
   },
   {
    "key": "A",
    "name": "A: Top-Mover 24h (täglich)",
-   "pct": -7.22,
-   "equity": 71.44,
+   "pct": -7.36,
+   "equity": 71.34,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 3,
    "kosten": 0.46,
    "positionen": [
-    "short LSKUSDT 22.5",
-    "long 牛来USDT 22.9",
-    "short XPLUSDT 22.7"
+    "short LSKUSDT 22.3",
+    "long 牛来USDT 22.5",
+    "short XPLUSDT 22.6"
+   ]
+  },
+  {
+   "key": "R_TL5",
+   "name": "R_TL5: Trend: Long auf die stärksten (5 Coins je Seite, 6 h)",
+   "pct": -7.37,
+   "equity": 71.32,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 8,
+   "kosten": 0.7,
+   "positionen": [
+    "long MARSCOINUSDT 13.6",
+    "long 牛来USDT 13.5",
+    "long GUSDT 13.4",
+    "long TRUMPUSDT 13.9",
+    "long BEAMXUSDT 13.4"
    ]
   },
   {
    "key": "ORIG",
    "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -7.69,
-   "equity": 71.08,
+   "pct": -7.94,
+   "equity": 70.88,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -1836,10 +1801,45 @@
     "long BEAMX_USDT 18.3",
     "long POWR_USDT 31.1"
    ]
+  },
+  {
+   "key": "R_TL3",
+   "name": "R_TL3: Trend: Long auf die stärksten (3 Coins je Seite, 6 h)",
+   "pct": -8.25,
+   "equity": 70.65,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 8,
+   "kosten": 0.59,
+   "positionen": [
+    "long 牛来USDT 22.2",
+    "long GUSDT 22.1",
+    "long TRUMPUSDT 22.8"
+   ]
+  },
+  {
+   "key": "B2",
+   "name": "B2: Strategie B mit 2x Hebel",
+   "pct": -8.26,
+   "equity": 70.64,
+   "lev": 2,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.19,
+   "positionen": [
+    "long PEPEUSDT 23.8",
+    "short WLDUSDT 23.7",
+    "long LSKUSDT 19.8",
+    "short SOPHUSDT 27.4",
+    "short FETUSDT 24.8",
+    "long BEAMXUSDT 26.2"
+   ]
   }
  ],
  "backtest": {
-  "start": "11.06.2019",
+  "start": "12.06.2019",
   "tage": 2700,
   "stunden": true,
   "funding_echt": true,
@@ -1849,194 +1849,460 @@
    "entfernt": [],
    "details": {}
   },
-  "optimierung": null,
+  "optimierung": {
+   "getestet": 2376,
+   "varianten": 2376,
+   "sekunden": 490,
+   "suchzeitraum": "13.07.2019 bis 31.12.2023",
+   "gegenprobe": "01.01.2024 bis 01.11.2026",
+   "zusammenhang": 0.6,
+   "gegenprobe_schnitt": -15.9,
+   "beste": [
+    {
+     "name": "Momentum 28 Tage, 10 Coins, nur Long, Filter BTC über 100-Tage-Schnitt, alle 7 Tage, Trailing 20 %, 2x Hebel",
+     "suche": {
+      "total": 1793631.4,
+      "cagr": 792.9,
+      "maxdd": -82.9
+     },
+     "gegenprobe": {
+      "total": -93.2,
+      "cagr": -61.3,
+      "maxdd": -95.9
+     },
+     "gesamt": {
+      "total": 121120.9,
+      "cagr": 164.1,
+      "maxdd": -96.0
+     },
+     "liquidiert": null,
+     "anpassungen": 382,
+     "hebel": 2
+    },
+    {
+     "name": "Momentum 14 Tage, 3 Coins, nur Long, Filter BTC über 100-Tage-Schnitt, alle 7 Tage",
+     "suche": {
+      "total": 1132977.1,
+      "cagr": 705.7,
+      "maxdd": -79.8
+     },
+     "gegenprobe": {
+      "total": 150.6,
+      "cagr": 38.2,
+      "maxdd": -71.3
+     },
+     "gesamt": {
+      "total": 2839732.0,
+      "cagr": 306.5,
+      "maxdd": -79.8
+     },
+     "liquidiert": null,
+     "anpassungen": 382,
+     "hebel": 1
+    },
+    {
+     "name": "Momentum 14 Tage, 5 Coins, nur Long, Filter BTC über 100-Tage-Schnitt, alle 7 Tage",
+     "suche": {
+      "total": 1096057.1,
+      "cagr": 699.8,
+      "maxdd": -70.8
+     },
+     "gegenprobe": {
+      "total": 56.8,
+      "cagr": 17.2,
+      "maxdd": -72.3
+     },
+     "gesamt": {
+      "total": 1718575.0,
+      "cagr": 279.5,
+      "maxdd": -72.3
+     },
+     "liquidiert": null,
+     "anpassungen": 382,
+     "hebel": 1
+    },
+    {
+     "name": "Momentum 14 Tage, 10 Coins, nur Long, Filter BTC über 100-Tage-Schnitt, alle 7 Tage, Trailing 20 %, 2x Hebel",
+     "suche": {
+      "total": 1001698.6,
+      "cagr": 683.9,
+      "maxdd": -78.0
+     },
+     "gegenprobe": {
+      "total": -89.9,
+      "cagr": -55.4,
+      "maxdd": -96.1
+     },
+     "gesamt": {
+      "total": 101230.6,
+      "cagr": 157.7,
+      "maxdd": -96.1
+     },
+     "liquidiert": null,
+     "anpassungen": 382,
+     "hebel": 2
+    },
+    {
+     "name": "Momentum 28 Tage, 10 Coins, nur Long, Filter BTC über 100-Tage-Schnitt, alle 7 Tage",
+     "suche": {
+      "total": 908029.6,
+      "cagr": 666.8,
+      "maxdd": -64.8
+     },
+     "gegenprobe": {
+      "total": -33.7,
+      "cagr": -13.5,
+      "maxdd": -64.6
+     },
+     "gesamt": {
+      "total": 602309.4,
+      "cagr": 228.8,
+      "maxdd": -64.8
+     },
+     "liquidiert": null,
+     "anpassungen": 382,
+     "hebel": 1
+    },
+    {
+     "name": "Momentum 14 Tage, 3 Coins, nur Long, Filter BTC über 200-Tage-Schnitt, alle 7 Tage",
+     "suche": {
+      "total": 826938.3,
+      "cagr": 651.0,
+      "maxdd": -73.3
+     },
+     "gegenprobe": {
+      "total": 14.5,
+      "cagr": 4.9,
+      "maxdd": -76.9
+     },
+     "gesamt": {
+      "total": 947134.3,
+      "cagr": 249.8,
+      "maxdd": -76.9
+     },
+     "liquidiert": null,
+     "anpassungen": 382,
+     "hebel": 1
+    },
+    {
+     "name": "Momentum 28 Tage, 10 Coins, nur Long, Filter BTC über 200-Tage-Schnitt, alle 7 Tage, Trailing 20 %, 2x Hebel",
+     "suche": {
+      "total": 771066.8,
+      "cagr": 639.3,
+      "maxdd": -82.1
+     },
+     "gegenprobe": {
+      "total": -98.0,
+      "cagr": -74.8,
+      "maxdd": -98.8
+     },
+     "gesamt": {
+      "total": 15308.6,
+      "cagr": 99.2,
+      "maxdd": -98.8
+     },
+     "liquidiert": null,
+     "anpassungen": 382,
+     "hebel": 2
+    },
+    {
+     "name": "Momentum 14 Tage, 5 Coins, nur Long, Filter BTC über 200-Tage-Schnitt, alle 7 Tage",
+     "suche": {
+      "total": 757525.5,
+      "cagr": 636.4,
+      "maxdd": -69.8
+     },
+     "gegenprobe": {
+      "total": -10.1,
+      "cagr": -3.7,
+      "maxdd": -75.7
+     },
+     "gesamt": {
+      "total": 680817.8,
+      "cagr": 234.3,
+      "maxdd": -75.7
+     },
+     "liquidiert": null,
+     "anpassungen": 382,
+     "hebel": 1
+    },
+    {
+     "name": "Momentum 14 Tage, 10 Coins, nur Long, Filter BTC über 100-Tage-Schnitt, alle 7 Tage",
+     "suche": {
+      "total": 756962.2,
+      "cagr": 636.3,
+      "maxdd": -64.1
+     },
+     "gegenprobe": {
+      "total": 12.9,
+      "cagr": 4.4,
+      "maxdd": -69.9
+     },
+     "gesamt": {
+      "total": 854588.8,
+      "cagr": 244.9,
+      "maxdd": -69.9
+     },
+     "liquidiert": null,
+     "anpassungen": 382,
+     "hebel": 1
+    },
+    {
+     "name": "Momentum 7 Tage, 5 Coins, nur Long, Filter BTC über 100-Tage-Schnitt, alle 7 Tage",
+     "suche": {
+      "total": 683619.7,
+      "cagr": 619.7,
+      "maxdd": -72.0
+     },
+     "gegenprobe": {
+      "total": -36.1,
+      "cagr": -14.6,
+      "maxdd": -72.3
+     },
+     "gesamt": {
+      "total": 436624.7,
+      "cagr": 214.6,
+      "maxdd": -72.3
+     },
+     "liquidiert": null,
+     "anpassungen": 382,
+     "hebel": 1
+    }
+   ],
+   "rueckblick": {
+    "name": "Momentum 14 Tage, 3 Coins, nur Long, Filter BTC über 100-Tage-Schnitt, alle 7 Tage",
+    "suche": {
+     "total": 1132977.1,
+     "cagr": 705.7,
+     "maxdd": -79.8
+    },
+    "gegenprobe": {
+     "total": 150.6,
+     "cagr": 38.2,
+     "maxdd": -71.3
+    },
+    "gesamt": {
+     "total": 2839732.0,
+     "cagr": 306.5,
+     "maxdd": -79.8
+    },
+    "liquidiert": null,
+    "anpassungen": 382,
+    "hebel": 1
+   }
+  },
   "ergebnisse": {
    "A": {
-    "total": -98.9,
-    "cagr": -45.9,
+    "total": -98.5,
+    "cagr": -43.7,
     "maxdd": -99.6,
-    "sharpe": -0.0,
+    "sharpe": 0.0,
     "liquidated": null,
-    "best_year": 84.9,
+    "best_year": 68.6,
     "stops": 0,
     "rebalances": 2668,
     "years": {
-     "2019": 22.873836552937867,
-     "2020": -75.14378190693598,
-     "2021": -50.39731838699437,
-     "2022": -71.50603981287288,
-     "2023": -30.898440296662333,
-     "2024": -32.15285809643147,
-     "2025": 84.8884411948756,
-     "2026": -70.17734200603275
+     "2019": 24.715838080030128,
+     "2020": -75.14378190693589,
+     "2021": -53.20385424005876,
+     "2022": -71.2147956717364,
+     "2023": -26.338108489254587,
+     "2024": -23.411527030234126,
+     "2025": 68.58611239438346,
+     "2026": -62.06072638327251
     },
     "ausreisser": []
    },
    "D": {
     "total": -100.0,
-    "cagr": -88.0,
+    "cagr": -88.6,
     "maxdd": -100.0,
-    "sharpe": -1.4,
+    "sharpe": -1.5,
     "liquidated": null,
-    "best_year": -61.9,
+    "best_year": -71.0,
     "stops": 0,
     "rebalances": 2668,
     "years": {
-     "2019": -70.64976013057918,
-     "2020": -80.79622821521349,
-     "2021": -93.98668105402292,
-     "2022": -81.97394754111141,
-     "2023": -86.2310558624378,
-     "2024": -85.872641542596,
-     "2025": -95.96561497587847,
-     "2026": -61.876416065395325
+     "2019": -70.97321006940601,
+     "2020": -80.79622821521357,
+     "2021": -93.68867675398067,
+     "2022": -82.25783237954043,
+     "2023": -87.0347000914822,
+     "2024": -87.54165174605151,
+     "2025": -95.59201695086679,
+     "2026": -72.11907246873425
     },
     "ausreisser": []
    },
    "B": {
-    "total": 68.0,
-    "cagr": 7.4,
-    "maxdd": -61.0,
+    "total": 25157.0,
+    "cagr": 113.1,
+    "maxdd": -64.8,
     "sharpe": 0.4,
     "liquidated": null,
-    "best_year": 48.6,
+    "best_year": 22152.2,
     "stops": 0,
     "rebalances": 382,
     "years": {
-     "2019": 24.05875714510861,
-     "2020": 32.59773567109825,
-     "2021": 2.326316491450542,
-     "2022": 9.423771059768193,
-     "2023": 1.3294443763193664,
-     "2024": 28.651980530284415,
-     "2025": 48.562983605922774,
-     "2026": -52.906921084015046
+     "2019": -26.806835203791067,
+     "2020": 23.197180302103227,
+     "2021": 22152.233723517846,
+     "2022": -18.46181441523035,
+     "2023": 21.65084578175376,
+     "2024": 60.56576287181807,
+     "2025": 62.613878999357595,
+     "2026": -51.39838505839735
     },
-    "ausreisser": []
+    "ausreisser": [
+     [
+      24395.2,
+      "23.01.2021"
+     ]
+    ]
    },
    "C": {
-    "total": 655.8,
-    "cagr": 31.9,
-    "maxdd": -85.5,
-    "sharpe": 0.8,
+    "total": 738835.0,
+    "cagr": 238.1,
+    "maxdd": -77.9,
+    "sharpe": 0.4,
     "liquidated": null,
-    "best_year": 500.2,
+    "best_year": 342370.3,
     "stops": 0,
     "rebalances": 382,
     "years": {
      "2019": 0.0,
-     "2020": 7.364748441116742,
-     "2021": 500.24080968068427,
-     "2022": -0.12324531940981487,
-     "2023": 125.7297674991234,
-     "2024": 33.63503066755349,
-     "2025": -23.153367582632743,
-     "2026": -49.34655206721833
+     "2020": -23.065444955158032,
+     "2021": 342370.2857143752,
+     "2022": 3.7572860793297025,
+     "2023": 169.22720866816445,
+     "2024": 102.1722148424009,
+     "2025": -8.46752461294794,
+     "2026": -45.74651504813868
     },
-    "ausreisser": []
+    "ausreisser": [
+     [
+      48387.2,
+      "23.01.2021"
+     ]
+    ]
    },
    "E": {
-    "total": 531.8,
-    "cagr": 28.7,
-    "maxdd": -75.9,
+    "total": 560.4,
+    "cagr": 29.5,
+    "maxdd": -76.0,
     "sharpe": 0.7,
     "liquidated": null,
-    "best_year": 278.4,
+    "best_year": 279.1,
     "stops": 0,
     "rebalances": 1,
     "years": {
-     "2019": -36.928024237872556,
-     "2020": 278.3622078478451,
-     "2021": 58.55347162024549,
-     "2022": -63.369877459117795,
-     "2023": 150.06834677242534,
-     "2024": 119.57905403381534,
-     "2025": -6.293657298646238,
-     "2026": -11.405322785529727
+     "2019": -34.87265564259901,
+     "2020": 279.10767431100305,
+     "2021": 58.59483422796943,
+     "2022": -63.398103443172445,
+     "2023": 150.2509682000063,
+     "2024": 119.63720299791109,
+     "2025": -6.295050725113526,
+     "2026": -10.533133175736708
     },
     "ausreisser": []
    },
    "F": {
-    "total": 50.0,
-    "cagr": 5.7,
-    "maxdd": -28.1,
+    "total": 11634.6,
+    "cagr": 91.9,
+    "maxdd": -30.1,
     "sharpe": 0.4,
     "liquidated": null,
-    "best_year": 18.5,
+    "best_year": 9559.6,
     "stops": 0,
     "rebalances": 382,
     "years": {
-     "2019": 9.817408198901067,
-     "2020": 15.345943215582448,
-     "2021": 7.063751868966794,
-     "2022": 5.400148967790708,
-     "2023": 2.4957250669393805,
-     "2024": 12.257539502859437,
-     "2025": 18.506874898296168,
-     "2026": -23.028917794594662
+     "2019": -9.830714465959511,
+     "2020": 10.9648814106027,
+     "2021": 9559.640574695683,
+     "2022": -5.426197426167379,
+     "2023": 9.332168773398063,
+     "2024": 21.977259447004236,
+     "2025": 22.823973187482594,
+     "2026": -21.62397226590642
     },
-    "ausreisser": []
+    "ausreisser": [
+     [
+      9267.5,
+      "23.01.2021"
+     ]
+    ]
    },
    "G": {
-    "total": 70.7,
-    "cagr": 7.6,
-    "maxdd": -28.4,
-    "sharpe": 0.5,
+    "total": 12869.3,
+    "cagr": 94.5,
+    "maxdd": -31.7,
+    "sharpe": 0.4,
     "liquidated": null,
-    "best_year": 18.9,
+    "best_year": 9771.3,
     "stops": 0,
     "rebalances": 382,
     "years": {
-     "2019": 11.47786820233312,
-     "2020": 18.9135739684019,
-     "2021": 12.085296819231427,
-     "2022": 6.19249542238669,
-     "2023": 4.095052555631162,
-     "2024": 14.43272556662194,
-     "2025": 18.303251793939523,
-     "2026": -23.21986444909383
+     "2019": -7.498915172784459,
+     "2020": 14.175308716926116,
+     "2021": 9771.303551421288,
+     "2022": -7.065806523307527,
+     "2023": 11.060262788225138,
+     "2024": 22.64303424943266,
+     "2025": 23.53991624765468,
+     "2026": -20.450320280678135
     },
-    "ausreisser": []
+    "ausreisser": [
+     [
+      9268.1,
+      "23.01.2021"
+     ]
+    ]
    },
    "H": {
-    "total": 130.9,
-    "cagr": 12.1,
-    "maxdd": -28.5,
-    "sharpe": 0.6,
+    "total": 15955.0,
+    "cagr": 100.3,
+    "maxdd": -38.8,
+    "sharpe": 0.4,
     "liquidated": null,
-    "best_year": 31.2,
+    "best_year": 10495.7,
     "stops": 0,
     "rebalances": 382,
     "years": {
-     "2019": 17.007085856892278,
-     "2020": 28.079336695912627,
-     "2021": 31.224173484146633,
-     "2022": 5.65914612039935,
-     "2023": 8.97115153960737,
-     "2024": 18.879408734431657,
-     "2025": 11.19552073511576,
-     "2026": -22.84460299407459
+     "2019": -1.1839471211363528,
+     "2020": 28.172528769617777,
+     "2021": 10495.680077514782,
+     "2022": -15.429867228083815,
+     "2023": 17.985123064796092,
+     "2024": 22.42025780173449,
+     "2025": 23.496232211756208,
+     "2026": -20.69348398884163
     },
-    "ausreisser": []
+    "ausreisser": [
+     [
+      9271.1,
+      "23.01.2021"
+     ]
+    ]
    },
    "K": {
-    "total": 196.2,
-    "cagr": 16.0,
-    "maxdd": -79.8,
+    "total": 227.7,
+    "cagr": 17.6,
+    "maxdd": -76.5,
     "sharpe": 0.6,
     "liquidated": null,
-    "best_year": 184.6,
+    "best_year": 172.4,
     "stops": 0,
     "rebalances": 382,
     "years": {
      "2019": 0.0,
-     "2020": 11.83853724973758,
-     "2021": 184.6286350292066,
-     "2022": -0.08305192639006531,
-     "2023": 176.52760805360091,
-     "2024": -0.5332566172210784,
-     "2025": -32.96436920728566,
-     "2026": -49.49247455922112
+     "2020": -4.028024045473277,
+     "2021": 172.44505914112378,
+     "2022": 2.2544711256533345,
+     "2023": 110.65023341160165,
+     "2024": 56.40526604222706,
+     "2025": -32.543297911808935,
+     "2026": -44.851462696208564
     },
     "ausreisser": []
    },
@@ -2055,8 +2321,8 @@
      "2021": 23.93273823016373,
      "2022": -7.11129491963497,
      "2023": 3.05373348583724,
-     "2024": 34.1905652462754,
-     "2025": -22.804000884966737,
+     "2024": 34.19056524627537,
+     "2025": -22.804000884966758,
      "2026": 15.622656835460536
     },
     "ausreisser": []
@@ -2076,9 +2342,9 @@
      "2021": -27.462745090477625,
      "2022": 6.956979941716579,
      "2023": -4.104296997936108,
-     "2024": -30.409882231412546,
-     "2025": 22.523856003776377,
-     "2026": -30.18775135862356
+     "2024": -30.40988223141252,
+     "2025": 22.52385600377633,
+     "2026": -30.187751358623583
     },
     "ausreisser": []
    },
@@ -2086,13 +2352,13 @@
     "total": -100.0,
     "cagr": -100,
     "maxdd": -100.0,
-    "sharpe": -0.1,
+    "sharpe": -0.2,
     "liquidated": "12.03.2020",
     "best_year": 0.0,
     "stops": 0,
     "rebalances": 1,
     "years": {
-     "2019": -80.22468905976253,
+     "2019": -76.28130279386392,
      "2020": -100.0,
      "2021": 0.0,
      "2022": 0.0,
@@ -2103,20 +2369,20 @@
     },
     "ausreisser": [
      [
-      100.2,
+      77.4,
       "18.12.2019"
      ],
      [
-      79.6,
+      70.8,
       "25.10.2019"
      ],
      [
-      100.2,
+      77.4,
       "18.12.2019",
       "BTCUSDT"
      ],
      [
-      79.6,
+      70.8,
       "25.10.2019",
       "BTCUSDT"
      ]
@@ -2126,8 +2392,8 @@
     "total": -100.0,
     "cagr": -100,
     "maxdd": -100.0,
-    "sharpe": -0.4,
-    "liquidated": "30.09.2019",
+    "sharpe": -0.1,
+    "liquidated": "23.10.2019",
     "best_year": 0.0,
     "stops": 0,
     "rebalances": 1,
@@ -2143,19 +2409,41 @@
     },
     "ausreisser": [
      [
-      59.3,
-      "27.09.2019"
+      140.9,
+      "07.10.2019"
      ],
      [
-      59.3,
-      "27.09.2019",
+      88.2,
+      "20.10.2019"
+     ],
+     [
+      70.0,
+      "09.10.2019"
+     ],
+     [
+      57.1,
+      "30.09.2019"
+     ],
+     [
+      140.9,
+      "07.10.2019",
+      "BTCUSDT"
+     ],
+     [
+      88.2,
+      "20.10.2019",
+      "BTCUSDT"
+     ],
+     [
+      70.0,
+      "09.10.2019",
       "BTCUSDT"
      ]
     ]
    },
    "T3": {
-    "total": 25.0,
-    "cagr": 3.1,
+    "total": 28.4,
+    "cagr": 3.5,
     "maxdd": -98.4,
     "sharpe": 0.6,
     "liquidated": null,
@@ -2170,7 +2458,7 @@
      "2023": 244.40775535897353,
      "2024": 119.90860559304393,
      "2025": -61.18344944547942,
-     "2026": 22.83862002409918
+     "2026": 26.21550184111816
     },
     "ausreisser": [
      [
@@ -2186,7 +2474,7 @@
    },
    "T5": {
     "total": -99.7,
-    "cagr": -55.5,
+    "cagr": -55.2,
     "maxdd": -100.0,
     "sharpe": 0.6,
     "liquidated": null,
@@ -2201,7 +2489,7 @@
      "2023": 269.2413603575989,
      "2024": 32.42541498150633,
      "2025": -88.32778746145476,
-     "2026": 23.710034671036805
+     "2026": 29.376238843740143
     },
     "ausreisser": [
      [
@@ -2228,8 +2516,8 @@
     "total": -100.0,
     "cagr": -100,
     "maxdd": -100.0,
-    "sharpe": -0.6,
-    "liquidated": "12.03.2020",
+    "sharpe": -0.7,
+    "liquidated": "13.03.2020",
     "best_year": 0.0,
     "stops": 0,
     "rebalances": 35,
@@ -2249,7 +2537,7 @@
     "total": -100.0,
     "cagr": -100,
     "maxdd": -100.0,
-    "sharpe": -0.7,
+    "sharpe": -0.6,
     "liquidated": "12.03.2020",
     "best_year": 0.0,
     "stops": 0,
@@ -2267,33 +2555,33 @@
     "ausreisser": []
    },
    "B2": {
-    "total": -31.1,
-    "cagr": -5.0,
-    "maxdd": -91.7,
-    "sharpe": 0.5,
+    "total": 11514.3,
+    "cagr": 91.6,
+    "maxdd": -91.0,
+    "sharpe": 0.4,
     "liquidated": null,
-    "best_year": 101.9,
+    "best_year": 21160.5,
     "stops": 0,
     "rebalances": 382,
     "years": {
-     "2019": 29.727237660387516,
-     "2020": 15.680551795217635,
-     "2021": -61.85774252154652,
-     "2022": 13.406228153303413,
-     "2023": 16.4785927666685,
-     "2024": 101.93053109696422,
-     "2025": 30.36436858330591,
-     "2026": -65.39875729324152
+     "2019": -53.98469391864522,
+     "2020": 9.664651275426927,
+     "2021": 21160.484724950773,
+     "2022": -37.31913539004697,
+     "2023": 49.922019118062025,
+     "2024": 132.07061810992067,
+     "2025": 74.50603319906386,
+     "2026": -71.55397245306871
     },
     "ausreisser": [
      [
-      80.1,
-      "08.01.2021"
+      46371.5,
+      "23.01.2021"
      ],
      [
-      80.1,
-      "08.01.2021",
-      "XLMUSDT"
+      46371.5,
+      "23.01.2021",
+      "COCOSUSDT"
      ]
     ]
    },
@@ -2305,7 +2593,7 @@
     "liquidated": "10.05.2020",
     "best_year": 0.0,
     "stops": 0,
-    "rebalances": 303,
+    "rebalances": 302,
     "years": {
      "2019": -80.04569404672009,
      "2020": -100.0,
@@ -2358,7 +2646,7 @@
     "liquidated": "06.08.2019",
     "best_year": 0.0,
     "stops": 0,
-    "rebalances": 25,
+    "rebalances": 24,
     "years": {
      "2019": -100.0,
      "2020": 0.0,
@@ -2382,23 +2670,23 @@
     ]
    },
    "R_TL3": {
-    "total": -94.1,
-    "cagr": -32.1,
+    "total": -94.4,
+    "cagr": -32.6,
     "maxdd": -99.9,
     "sharpe": 0.3,
     "liquidated": null,
-    "best_year": 729.8,
+    "best_year": 677.5,
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -64.48593989648853,
-     "2020": 107.60092994964663,
-     "2021": 729.8055974485992,
-     "2022": -95.24247423713183,
-     "2023": 94.67500281195878,
-     "2024": -18.903557184137497,
-     "2025": -76.47256391848244,
-     "2026": -45.55280575183558
+     "2019": -65.00224107362855,
+     "2020": 107.60092994964685,
+     "2021": 677.4595158109188,
+     "2022": -95.36710839914748,
+     "2023": 88.89754930702092,
+     "2024": -22.032074508157528,
+     "2025": -76.05987589631498,
+     "2026": -39.43651127515354
     },
     "ausreisser": [
      [
@@ -2418,81 +2706,81 @@
     "maxdd": -99.9,
     "sharpe": -0.0,
     "liquidated": null,
-    "best_year": 810.0,
+    "best_year": 795.7,
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -66.37965862307809,
-     "2020": 28.02484571466113,
-     "2021": 810.006878982079,
-     "2022": -95.52106464535754,
-     "2023": 105.42439491667648,
-     "2024": -7.050096408933005,
-     "2025": -85.66644636015657,
-     "2026": -58.03477722815167
+     "2019": -66.31486191212217,
+     "2020": 28.02484571466133,
+     "2021": 795.7296558488702,
+     "2022": -95.61204771403395,
+     "2023": 108.7720461758324,
+     "2024": -6.476346556260171,
+     "2025": -86.12851179119633,
+     "2026": -56.300572781154415
     },
     "ausreisser": []
    },
    "R_TL10": {
-    "total": -98.4,
-    "cagr": -43.0,
+    "total": -98.5,
+    "cagr": -43.6,
     "maxdd": -99.8,
     "sharpe": -0.2,
     "liquidated": null,
-    "best_year": 504.5,
+    "best_year": 495.2,
     "stops": 0,
     "rebalances": 10672,
     "years": {
      "2019": -34.42509432394332,
-     "2020": -29.486144276141523,
-     "2021": 504.538331023465,
-     "2022": -93.10803419310386,
-     "2023": 84.84296027953728,
-     "2024": -30.061227217572284,
-     "2025": -82.4368080393409,
-     "2026": -62.508917932389366
+     "2020": -29.486144276141736,
+     "2021": 495.2047629680166,
+     "2022": -93.17348181584858,
+     "2023": 84.67630879251284,
+     "2024": -34.078082702172516,
+     "2025": -82.3043350187942,
+     "2026": -62.49149786378523
     },
     "ausreisser": []
    },
    "R_TL15": {
-    "total": -90.8,
-    "cagr": -27.9,
-    "maxdd": -99.3,
+    "total": -92.2,
+    "cagr": -29.4,
+    "maxdd": -99.4,
     "sharpe": -0.1,
     "liquidated": null,
-    "best_year": 439.8,
+    "best_year": 424.9,
     "stops": 0,
     "rebalances": 10672,
     "years": {
      "2019": 0.0,
-     "2020": -4.1709281441142725,
-     "2021": 439.7688075717931,
-     "2022": -90.63878399463366,
-     "2023": 47.589429770371375,
-     "2024": -19.271838517070307,
-     "2025": -74.26151594816403,
-     "2026": -38.14316266308012
+     "2020": -4.170928144114161,
+     "2021": 424.85197689401133,
+     "2022": -90.72461915296547,
+     "2023": 48.94829274237242,
+     "2024": -21.071882364029026,
+     "2025": -76.92217812209256,
+     "2026": -38.183748552057125
     },
     "ausreisser": []
    },
    "R_TS3": {
     "total": -100.0,
-    "cagr": -93.1,
+    "cagr": -93.2,
     "maxdd": -100.0,
     "sharpe": -2.0,
     "liquidated": null,
-    "best_year": 101.4,
+    "best_year": 48.7,
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -60.479409648379935,
+     "2019": -61.218395969312255,
      "2020": -99.56134018662503,
-     "2021": -99.48043220056664,
-     "2022": -80.87849063664439,
-     "2023": -95.90290308183442,
-     "2024": -95.33450979692233,
-     "2025": 101.39344533752225,
-     "2026": -53.21656611247614
+     "2021": -99.48119028825592,
+     "2022": -80.94626628169952,
+     "2023": -95.93404124455664,
+     "2024": -93.78600176988104,
+     "2025": 48.659982807126,
+     "2026": -54.12014743620611
     },
     "ausreisser": [
      [
@@ -2517,22 +2805,22 @@
    },
    "R_TS5": {
     "total": -100.0,
-    "cagr": -92.8,
+    "cagr": -92.7,
     "maxdd": -100.0,
     "sharpe": -2.3,
     "liquidated": null,
-    "best_year": -39.2,
+    "best_year": -40.8,
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -39.810382014057424,
-     "2020": -99.28194741212035,
-     "2021": -99.38537220323651,
-     "2022": -80.00997649038656,
-     "2023": -95.03197065822688,
-     "2024": -94.61100828634667,
-     "2025": -39.15773228511162,
-     "2026": -47.28671540691886
+     "2019": -40.81589480900445,
+     "2020": -99.28194741212039,
+     "2021": -99.39359145291348,
+     "2022": -79.89237236298342,
+     "2023": -95.00814312116763,
+     "2024": -94.69673130490335,
+     "2025": -40.99988875339663,
+     "2026": -41.07917840715176
     },
     "ausreisser": [
      [
@@ -2548,7 +2836,7 @@
    },
    "R_TS10": {
     "total": -100.0,
-    "cagr": -89.2,
+    "cagr": -89.3,
     "maxdd": -100.0,
     "sharpe": -2.2,
     "liquidated": null,
@@ -2556,14 +2844,14 @@
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -10.730213226870278,
-     "2020": -97.405134437946,
-     "2021": -98.84255663013633,
-     "2022": -71.66300105822074,
-     "2023": -90.89503261649791,
-     "2024": -89.88730098135434,
-     "2025": -69.42469957195492,
-     "2026": -60.411841691705526
+     "2019": -10.730213226869923,
+     "2020": -97.40595831607116,
+     "2021": -98.85299656943462,
+     "2022": -71.55872493142333,
+     "2023": -90.79129194736053,
+     "2024": -90.03452077929181,
+     "2025": -70.24965686518247,
+     "2026": -61.18538167541318
     },
     "ausreisser": [
      [
@@ -2579,7 +2867,7 @@
    },
    "R_TS15": {
     "total": -100.0,
-    "cagr": -75.6,
+    "cagr": -75.5,
     "maxdd": -100.0,
     "sharpe": -1.6,
     "liquidated": null,
@@ -2588,13 +2876,13 @@
     "rebalances": 10672,
     "years": {
      "2019": 0.0,
-     "2020": -55.59258871476658,
-     "2021": -98.02523016307781,
-     "2022": -53.898491893817244,
-     "2023": -87.2730189508401,
-     "2024": -86.78897907198703,
-     "2025": -55.95861344456735,
-     "2026": 11.477818199439849
+     "2020": -55.592588714767,
+     "2021": -98.04493932237087,
+     "2022": -53.94364895609165,
+     "2023": -87.30182795411079,
+     "2024": -86.61107854067257,
+     "2025": -55.20593004063854,
+     "2026": 11.477818199438449
     },
     "ausreisser": []
    },
@@ -2604,18 +2892,18 @@
     "maxdd": -100.0,
     "sharpe": -1.1,
     "liquidated": null,
-    "best_year": 393.2,
+    "best_year": 287.0,
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -52.775722659874866,
+     "2019": -51.78363320790906,
      "2020": -99.64762437189549,
-     "2021": -99.96696196004274,
-     "2022": -77.73073150089036,
-     "2023": -99.22075342239928,
-     "2024": 393.21991220589354,
-     "2025": -23.653960688233166,
-     "2026": -13.339232948113168
+     "2021": -99.96490173638635,
+     "2022": -77.1848101496711,
+     "2023": -99.19881482669079,
+     "2024": 286.9860358484464,
+     "2025": -2.5124572942473056,
+     "2026": -21.970571426527595
     },
     "ausreisser": [
      [
@@ -2623,16 +2911,20 @@
       "09.12.2024"
      ],
      [
+      81.6,
+      "21.11.2024"
+     ],
+     [
       78.3,
       "20.11.2024"
      ],
      [
-      71.5,
-      "26.10.2024"
+      75.8,
+      "15.05.2025"
      ],
      [
-      53.1,
-      "19.05.2021"
+      71.5,
+      "26.10.2024"
      ],
      [
       82.6,
@@ -2640,14 +2932,14 @@
       "PEPEUSDT"
      ],
      [
+      81.6,
+      "21.11.2024",
+      "ENAUSDT"
+     ],
+     [
       78.3,
       "20.11.2024",
       "XLMUSDT"
-     ],
-     [
-      71.5,
-      "26.10.2024",
-      "SOLUSDT"
      ]
     ]
    },
@@ -2655,20 +2947,20 @@
     "total": -100.0,
     "cagr": -92.5,
     "maxdd": -100.0,
-    "sharpe": -1.9,
+    "sharpe": -1.8,
     "liquidated": null,
-    "best_year": -5.7,
+    "best_year": -9.2,
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -34.9735174125722,
-     "2020": -98.63026365071562,
-     "2021": -99.8852105416611,
-     "2022": -60.12341210224066,
-     "2023": -98.5766774462318,
-     "2024": -87.08051800690161,
-     "2025": -17.73810411964011,
-     "2026": -5.652080383950764
+     "2019": -34.66401839052787,
+     "2020": -98.63026365071568,
+     "2021": -99.88341698014393,
+     "2022": -59.37673134543753,
+     "2023": -98.59857623414935,
+     "2024": -87.1141026879679,
+     "2025": -16.548562573906235,
+     "2026": -9.196189102195707
     },
     "ausreisser": [
      [
@@ -2684,7 +2976,7 @@
    },
    "R_CS10": {
     "total": -100.0,
-    "cagr": -91.1,
+    "cagr": -91.0,
     "maxdd": -100.0,
     "sharpe": -2.4,
     "liquidated": null,
@@ -2692,14 +2984,14 @@
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -8.444565077022514,
-     "2020": -94.15677969895165,
-     "2021": -99.55933675488203,
-     "2022": -50.802905144412115,
-     "2023": -96.92718453409891,
-     "2024": -92.03183919283734,
-     "2025": -73.64452587387342,
-     "2026": -72.81647567529085
+     "2019": -8.444565077022858,
+     "2020": -94.15677969895164,
+     "2021": -99.55465517130236,
+     "2022": -50.21140067324833,
+     "2023": -96.925600155435,
+     "2024": -91.58042866692348,
+     "2025": -73.96253870306842,
+     "2026": -72.90911385614582
     },
     "ausreisser": [
      [
@@ -2715,7 +3007,7 @@
    },
    "R_CS15": {
     "total": -100.0,
-    "cagr": -81.4,
+    "cagr": -81.2,
     "maxdd": -100.0,
     "sharpe": -1.9,
     "liquidated": null,
@@ -2724,13 +3016,13 @@
     "rebalances": 10672,
     "years": {
      "2019": 0.0,
-     "2020": -54.68805951696003,
-     "2021": -99.19509494274193,
-     "2022": -41.12126951308305,
-     "2023": -93.89127399291695,
-     "2024": -89.12135062574433,
-     "2025": -63.66614859637284,
-     "2026": -12.03421212499678
+     "2020": -54.68805951696023,
+     "2021": -99.17725632593537,
+     "2022": -40.6140992285727,
+     "2023": -93.94735163574124,
+     "2024": -88.97043711617223,
+     "2025": -61.919182976511486,
+     "2026": -12.033312146913321
     },
     "ausreisser": [
      [
@@ -2746,7 +3038,7 @@
    },
    "R_CL3": {
     "total": -100.0,
-    "cagr": -82.9,
+    "cagr": -82.8,
     "maxdd": -100.0,
     "sharpe": -1.3,
     "liquidated": null,
@@ -2754,20 +3046,20 @@
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -65.58350279863103,
-     "2020": -6.429501804492999,
-     "2021": -37.21252239240959,
-     "2022": -96.57063195867231,
-     "2023": -69.00648309367034,
-     "2024": -73.39807228132166,
-     "2025": -96.47558710150597,
-     "2026": -87.93928973550494
+     "2019": -64.529118026977,
+     "2020": -6.429501804492621,
+     "2021": -37.11257867844059,
+     "2022": -96.57501542099001,
+     "2023": -68.76153299105255,
+     "2024": -73.70086886572847,
+     "2025": -96.38243014711004,
+     "2026": -87.65854517089527
     },
     "ausreisser": []
    },
    "R_CL5": {
     "total": -100.0,
-    "cagr": -76.5,
+    "cagr": -76.2,
     "maxdd": -100.0,
     "sharpe": -1.1,
     "liquidated": null,
@@ -2775,104 +3067,104 @@
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -69.1447286217639,
-     "2020": 22.345629475500694,
-     "2021": 0.546795527450028,
-     "2022": -94.47373504841396,
-     "2023": -58.75589396009726,
-     "2024": -69.1787269360718,
-     "2025": -93.99970178636737,
-     "2026": -84.14114239917274
+     "2019": -68.32087824750616,
+     "2020": 22.345629475500584,
+     "2021": 1.6061474937917541,
+     "2022": -94.51819792899478,
+     "2023": -59.069592024984495,
+     "2024": -68.92566605673767,
+     "2025": -93.86137199413236,
+     "2026": -83.5579902001926
     },
     "ausreisser": []
    },
    "R_CL10": {
     "total": -99.9,
-    "cagr": -63.9,
+    "cagr": -63.8,
     "maxdd": -100.0,
     "sharpe": -0.8,
     "liquidated": null,
-    "best_year": 44.0,
+    "best_year": 44.7,
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -34.36528629369286,
-     "2020": 13.206704506495992,
-     "2021": 44.01672020053511,
-     "2022": -91.17215588894784,
-     "2023": -50.348151269223386,
-     "2024": -61.438944383174324,
-     "2025": -87.166716535273,
-     "2026": -75.0411014517793
+     "2019": -34.36528629369291,
+     "2020": 13.24359407052178,
+     "2021": 44.66000791849136,
+     "2022": -91.2074510980516,
+     "2023": -50.878140350115395,
+     "2024": -61.09635605793873,
+     "2025": -86.98547119038169,
+     "2026": -74.71159737774083
     },
     "ausreisser": []
    },
    "R_CL15": {
     "total": -99.4,
-    "cagr": -50.1,
+    "cagr": -50.7,
     "maxdd": -99.9,
     "sharpe": -0.6,
     "liquidated": null,
-    "best_year": 75.4,
+    "best_year": 76.8,
     "stops": 0,
     "rebalances": 10672,
     "years": {
      "2019": 0.0,
-     "2020": -6.18789711471992,
-     "2021": 75.42422660028679,
-     "2022": -89.7406696454728,
-     "2023": -34.02851919791638,
-     "2024": -42.94879387978021,
-     "2025": -79.84213180874922,
+     "2020": -6.187897114719965,
+     "2021": 76.7731541335013,
+     "2022": -89.76415896514544,
+     "2023": -33.94433170310219,
+     "2024": -43.98342194347499,
+     "2025": -81.32205989881214,
      "2026": -51.36935546091692
     },
     "ausreisser": []
    },
    "R_TB3": {
     "total": -100.0,
-    "cagr": -71.4,
+    "cagr": -71.7,
     "maxdd": -100.0,
-    "sharpe": -2.0,
+    "sharpe": -2.1,
     "liquidated": null,
-    "best_year": -51.0,
+    "best_year": -51.3,
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -56.970876526673806,
-     "2020": -81.76416986289222,
-     "2021": -50.98303795680638,
-     "2022": -84.46422128247664,
-     "2023": -60.55179351063853,
-     "2024": -75.30425339954269,
-     "2025": -61.45020076146442,
-     "2026": -53.278112971030446
+     "2019": -57.71384175571863,
+     "2020": -81.76416986289233,
+     "2021": -52.57051055498225,
+     "2022": -84.69925810326029,
+     "2023": -61.30095654782088,
+     "2024": -75.66062142400472,
+     "2025": -61.95204284930402,
+     "2026": -51.30151567068604
     },
     "ausreisser": []
    },
    "R_TB5": {
     "total": -100.0,
-    "cagr": -71.8,
+    "cagr": -72.1,
     "maxdd": -100.0,
-    "sharpe": -3.0,
+    "sharpe": -3.1,
     "liquidated": null,
-    "best_year": -49.6,
+    "best_year": -50.0,
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -49.62788788657262,
-     "2020": -83.67805976214792,
-     "2021": -50.71079312472764,
-     "2022": -85.44988780467393,
-     "2023": -58.59571941085233,
-     "2024": -68.69880236013732,
-     "2025": -71.18143593131975,
-     "2026": -57.15478108722893
+     "2019": -50.02306074998775,
+     "2020": -83.67805976214785,
+     "2021": -51.424090531341385,
+     "2022": -85.55835753757458,
+     "2023": -58.151142727886416,
+     "2024": -68.85465686190584,
+     "2025": -72.00731083473002,
+     "2026": -57.39625222756901
     },
     "ausreisser": []
    },
    "R_TB10": {
     "total": -100.0,
-    "cagr": -65.3,
+    "cagr": -65.6,
     "maxdd": -100.0,
     "sharpe": -4.1,
     "liquidated": null,
@@ -2880,83 +3172,83 @@
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -20.629809676802545,
-     "2020": -79.39334527610909,
-     "2021": -49.11713498137755,
-     "2022": -79.44548948113766,
-     "2023": -49.58631506397367,
-     "2024": -64.13045669853078,
-     "2025": -68.61128288951927,
-     "2026": -55.35453377562376
+     "2019": -20.629809676802992,
+     "2020": -79.396661564447,
+     "2021": -49.74096171483973,
+     "2022": -79.50801864046436,
+     "2023": -49.31370141513004,
+     "2024": -65.43609449068038,
+     "2025": -68.90712889558995,
+     "2026": -55.80471749571827
     },
     "ausreisser": []
    },
    "R_TB15": {
-    "total": -98.8,
-    "cagr": -45.6,
-    "maxdd": -98.9,
-    "sharpe": -3.4,
+    "total": -98.9,
+    "cagr": -46.1,
+    "maxdd": -99.0,
+    "sharpe": -3.5,
     "liquidated": null,
     "best_year": 0.0,
     "stops": 0,
     "rebalances": 10672,
     "years": {
      "2019": 0.0,
-     "2020": -27.750089240251054,
-     "2021": -39.23409316168054,
-     "2022": -69.90767151444544,
-     "2023": -47.80833434866521,
-     "2024": -56.437230688002224,
-     "2025": -55.622676618234536,
-     "2026": -12.647745172238922
+     "2020": -27.750089240251185,
+     "2021": -40.377254547092356,
+     "2022": -70.05800660182575,
+     "2023": -47.63048913751838,
+     "2024": -56.621083596300515,
+     "2025": -57.368113225016714,
+     "2026": -12.676365772193442
     },
     "ausreisser": []
    },
    "R_CB3": {
     "total": -100.0,
-    "cagr": -91.5,
+    "cagr": -91.4,
     "maxdd": -100.0,
-    "sharpe": -4.5,
+    "sharpe": -4.4,
     "liquidated": null,
-    "best_year": -53.7,
+    "best_year": -52.5,
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -53.70468831661432,
-     "2020": -88.88591901427034,
-     "2021": -96.40569416101327,
-     "2022": -85.68889965531976,
-     "2023": -93.08281460900616,
-     "2024": -89.48362264940417,
-     "2025": -93.09173403947867,
-     "2026": -88.68382326762347
+     "2019": -52.54291081858911,
+     "2020": -88.88591901427026,
+     "2021": -96.29142406089906,
+     "2022": -85.52695659194758,
+     "2023": -92.95610999006246,
+     "2024": -89.35635586598224,
+     "2025": -93.08132132925668,
+     "2026": -89.14010791315663
     },
     "ausreisser": []
    },
    "R_CB5": {
     "total": -100.0,
-    "cagr": -85.9,
+    "cagr": -85.8,
     "maxdd": -100.0,
     "sharpe": -5.0,
     "liquidated": null,
-    "best_year": -49.9,
+    "best_year": -49.1,
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -49.86935766884108,
-     "2020": -77.89514195719897,
-     "2021": -92.82870126535747,
-     "2022": -77.2247667178302,
-     "2023": -90.04370202664926,
-     "2024": -86.05320655194186,
-     "2025": -85.96749660641892,
-     "2026": -82.58937379042945
+     "2019": -49.10562297930202,
+     "2020": -77.8951419571987,
+     "2021": -92.73519021567382,
+     "2022": -77.10761585003092,
+     "2023": -90.15551516031728,
+     "2024": -86.04863008636208,
+     "2025": -85.67337103127724,
+     "2026": -82.65066113593602
     },
     "ausreisser": []
    },
    "R_CB10": {
     "total": -100.0,
-    "cagr": -75.0,
+    "cagr": -74.8,
     "maxdd": -100.0,
     "sharpe": -5.6,
     "liquidated": null,
@@ -2964,14 +3256,14 @@
     "stops": 0,
     "rebalances": 10672,
     "years": {
-     "2019": -19.602303777291908,
-     "2020": -60.75265213707086,
-     "2021": -84.69836926248313,
-     "2022": -69.44841714812564,
-     "2023": -84.82868674916399,
-     "2024": -76.36783548104518,
-     "2025": -75.05872362490001,
-     "2026": -69.8526895491089
+     "2019": -19.602303777291898,
+     "2020": -60.74634326070487,
+     "2021": -84.58331685077252,
+     "2022": -69.33089000854208,
+     "2023": -84.90364746095676,
+     "2024": -75.60501889684855,
+     "2025": -75.01980588949714,
+     "2026": -69.71962970385232
     },
     "ausreisser": []
    },
@@ -2986,40 +3278,40 @@
     "rebalances": 10672,
     "years": {
      "2019": 0.0,
-     "2020": -27.814710780578622,
-     "2021": -77.94189951105463,
-     "2022": -64.48720506891557,
-     "2023": -75.82670412377936,
-     "2024": -66.80033506988407,
-     "2025": -64.33382021651069,
-     "2026": -31.151996465737785
+     "2020": -27.81471078057859,
+     "2021": -77.61228220088776,
+     "2022": -64.37198202532124,
+     "2023": -75.92325245191273,
+     "2024": -66.86501522026813,
+     "2025": -64.63694773045063,
+     "2026": -31.15149869814179
     },
     "ausreisser": []
    },
    "RG1": {
-    "total": -79.3,
-    "cagr": -19.4,
-    "maxdd": -96.5,
-    "sharpe": 0.2,
+    "total": 85.5,
+    "cagr": 8.8,
+    "maxdd": -90.4,
+    "sharpe": 0.5,
     "liquidated": null,
-    "best_year": 77.2,
+    "best_year": 112.3,
     "stops": 0,
     "rebalances": 890,
     "years": {
-     "2019": 6.728221011516733,
-     "2020": 53.03411743348625,
-     "2021": -9.725456263861332,
-     "2022": 77.23824976064755,
-     "2023": -20.166970255611016,
-     "2024": -36.201358511096416,
-     "2025": -74.10845534331986,
-     "2026": -39.954983583965095
+     "2019": 0.0,
+     "2020": 73.11518777813126,
+     "2021": 61.99383965759458,
+     "2022": 112.34031181743288,
+     "2023": 42.04959287841572,
+     "2024": -5.802705895857729,
+     "2025": -58.85617916185031,
+     "2026": -43.41148359362638
     },
     "ausreisser": []
    },
    "RG2": {
-    "total": 57.0,
-    "cagr": 6.4,
+    "total": 60.0,
+    "cagr": 6.6,
     "maxdd": -85.4,
     "sharpe": 0.4,
     "liquidated": null,
@@ -3027,62 +3319,62 @@
     "stops": 0,
     "rebalances": 2668,
     "years": {
-     "2019": 1.4150967147226412,
-     "2020": 32.71919977826765,
-     "2021": -65.12111701867465,
-     "2022": 86.89782293077005,
-     "2023": 43.03510329432416,
-     "2024": 40.270799685390976,
-     "2025": -27.967735980810648,
-     "2026": 23.790751395995535
+     "2019": 2.3985928603447393,
+     "2020": 32.71919974271413,
+     "2021": -65.12111701867471,
+     "2022": 86.89782293076962,
+     "2023": 43.03510329432403,
+     "2024": 40.27079968539107,
+     "2025": -27.967735980810616,
+     "2026": 24.960931103659224
     },
     "ausreisser": []
    },
    "RG3": {
-    "total": -63.2,
-    "cagr": -12.8,
-    "maxdd": -90.0,
-    "sharpe": 0.2,
+    "total": 115.5,
+    "cagr": 11.1,
+    "maxdd": -85.2,
+    "sharpe": 0.5,
     "liquidated": null,
-    "best_year": 88.4,
+    "best_year": 109.6,
     "stops": 0,
     "rebalances": 890,
     "years": {
-     "2019": 0.5882648232521825,
-     "2020": -13.736058679468233,
-     "2021": 6.754315919222265,
-     "2022": 88.36191861568847,
-     "2023": -4.90673508225743,
-     "2024": -5.108628782340441,
-     "2025": -61.114895989795016,
-     "2026": -39.87581530203321
+     "2019": 0.0,
+     "2020": 1.3883817012844801,
+     "2021": 109.57150614970396,
+     "2022": 85.09533691227172,
+     "2023": 62.89998678440607,
+     "2024": 9.406242836137801,
+     "2025": -48.651887863082,
+     "2026": -40.12653911120243
     },
     "ausreisser": []
    },
    "RG4": {
-    "total": -88.7,
-    "cagr": -25.8,
-    "maxdd": -94.9,
-    "sharpe": -0.3,
+    "total": -77.1,
+    "cagr": -18.3,
+    "maxdd": -86.4,
+    "sharpe": -0.2,
     "liquidated": null,
-    "best_year": 77.2,
+    "best_year": 112.3,
     "stops": 0,
     "rebalances": 890,
     "years": {
-     "2019": 6.728221011516733,
-     "2020": -1.992471848580868,
-     "2021": -60.131850421892466,
-     "2022": 77.23820283291789,
-     "2023": -40.354505494099044,
-     "2024": -58.472792299940714,
-     "2025": -43.00840272103002,
-     "2026": 8.028887783915373
+     "2019": 0.0,
+     "2020": -11.411247300694317,
+     "2021": -56.41679071200407,
+     "2022": 112.34970252563001,
+     "2023": -38.38959598501974,
+     "2024": -35.745996472891996,
+     "2025": -30.129371091038358,
+     "2026": 0.7620563360211108
     },
     "ausreisser": []
    },
    "RG5": {
-    "total": -76.6,
-    "cagr": -18.0,
+    "total": -76.4,
+    "cagr": -17.9,
     "maxdd": -83.2,
     "sharpe": -0.3,
     "liquidated": null,
@@ -3090,52 +3382,52 @@
     "stops": 0,
     "rebalances": 2668,
     "years": {
-     "2019": 1.4150967147226412,
-     "2020": -49.40746489888773,
-     "2021": -57.07593395355342,
-     "2022": 86.89782293080582,
-     "2023": -24.27832410715847,
-     "2024": -21.092240230387382,
-     "2025": -14.627437816039546,
-     "2026": 11.246226984295538
+     "2019": 2.3985928603447393,
+     "2020": -49.40746491244068,
+     "2021": -57.07593395355324,
+     "2022": 86.8978229308053,
+     "2023": -24.278324107158433,
+     "2024": -21.09224023038737,
+     "2025": -14.62743781603979,
+     "2026": 11.246226984295781
     },
     "ausreisser": []
    },
    "RG1_2": {
-    "total": -99.6,
-    "cagr": -53.7,
-    "maxdd": -100.0,
-    "sharpe": 0.3,
+    "total": -94.2,
+    "cagr": -32.2,
+    "maxdd": -99.5,
+    "sharpe": 0.5,
     "liquidated": null,
-    "best_year": 39.0,
+    "best_year": 57.2,
     "stops": 0,
     "rebalances": 890,
     "years": {
-     "2019": 13.452530310574806,
-     "2020": 14.526299090566376,
-     "2021": -53.62951965320861,
-     "2022": 39.024954984815594,
-     "2023": -41.40046406079958,
-     "2024": -63.52989504534619,
-     "2025": -92.01037072720759,
-     "2026": -74.97339699233794
+     "2019": 0.0,
+     "2020": -13.185957778588243,
+     "2021": 33.35417421192051,
+     "2022": 57.226952638797954,
+     "2023": 37.00334627537201,
+     "2024": -42.73074823041855,
+     "2025": -83.1601922970181,
+     "2026": -75.76216031004058
     },
     "ausreisser": [
      [
-      74.5,
+      67.5,
       "12.03.2020"
      ],
      [
-      63.7,
+      61.1,
       "09.11.2020"
      ],
      [
-      74.5,
+      67.5,
       "12.03.2020",
-      "COCOSUSDT"
+      "ATOMUSDT"
      ],
      [
-      63.7,
+      61.1,
       "09.11.2020",
       "CVCUSDT"
      ]
@@ -3143,7 +3435,7 @@
    },
    "RG2_3": {
     "total": -99.9,
-    "cagr": -64.4,
+    "cagr": -64.2,
     "maxdd": -100.0,
     "sharpe": 0.2,
     "liquidated": null,
@@ -3151,14 +3443,14 @@
     "stops": 0,
     "rebalances": 2668,
     "years": {
-     "2019": 4.150564220534014,
-     "2020": -68.45038835964019,
-     "2021": -99.73808977965733,
-     "2022": 108.27295110881194,
-     "2023": 39.036991810548784,
-     "2024": -10.027280155828876,
-     "2025": -79.8545795038009,
-     "2026": 15.244438444654595
+     "2019": 7.255696209170481,
+     "2020": -68.45038856350587,
+     "2021": -99.73808977965734,
+     "2022": 108.27295110881047,
+     "2023": 39.03699181054863,
+     "2024": -10.027280155827977,
+     "2025": -79.85457950380093,
+     "2026": 18.412553233148188
     },
     "ausreisser": [
      [
@@ -3182,44 +3474,44 @@
     ]
    },
    "NL1": {
-    "total": -98.2,
-    "cagr": -42.4,
-    "maxdd": -98.6,
-    "sharpe": -1.4,
+    "total": -97.0,
+    "cagr": -38.2,
+    "maxdd": -97.6,
+    "sharpe": -1.2,
     "liquidated": null,
-    "best_year": -19.5,
+    "best_year": -11.3,
     "stops": 0,
     "rebalances": 2668,
     "years": {
      "2019": -24.838813271521165,
-     "2020": -34.01686520949544,
-     "2021": -32.48395022938316,
-     "2022": -37.398687537924836,
-     "2023": -43.01071312662521,
-     "2024": -19.530741869857426,
-     "2025": -75.78559523461055,
-     "2026": -24.366773376509798
+     "2020": -30.549580302709543,
+     "2021": -24.85008406675906,
+     "2022": -37.39868753792486,
+     "2023": -37.863917569604745,
+     "2024": -11.348614041785943,
+     "2025": -69.37338049051962,
+     "2026": -28.408218300850642
     },
     "ausreisser": []
    },
    "NL2": {
     "total": -100.0,
-    "cagr": -68.1,
+    "cagr": -66.1,
     "maxdd": -100.0,
-    "sharpe": -1.6,
+    "sharpe": -1.5,
     "liquidated": null,
-    "best_year": -34.8,
+    "best_year": -29.6,
     "stops": 0,
     "rebalances": 2668,
     "years": {
-     "2019": -42.91965971606334,
-     "2020": -60.59313444808731,
-     "2021": -74.38773790458507,
-     "2022": -66.60978397200097,
-     "2023": -34.832901365930354,
-     "2024": -49.660302382459584,
-     "2025": -92.33333414009478,
-     "2026": -51.68069219453459
+     "2019": -42.87140921421616,
+     "2020": -57.02717858126141,
+     "2021": -70.75606025615791,
+     "2022": -66.60978397200098,
+     "2023": -29.601941881379613,
+     "2024": -52.52657221852872,
+     "2025": -91.05479335854798,
+     "2026": -48.614397802260356
     },
     "ausreisser": [
      [
@@ -3230,64 +3522,69 @@
    },
    "NL3": {
     "total": -100.0,
-    "cagr": -70.3,
+    "cagr": -70.2,
     "maxdd": -100.0,
     "sharpe": -1.2,
     "liquidated": null,
-    "best_year": 15.4,
+    "best_year": -25.2,
     "stops": 0,
     "rebalances": 2668,
     "years": {
-     "2019": -58.487230085053014,
-     "2020": -30.751360544780127,
-     "2021": -71.32915242717314,
-     "2022": -78.58311911862754,
-     "2023": -38.15009502798487,
-     "2024": 15.433018743194227,
-     "2025": -96.73109424632892,
-     "2026": -65.82489782905816
+     "2019": -58.452138984132816,
+     "2020": -25.191821619772192,
+     "2021": -67.33233613803462,
+     "2022": -78.58311911862755,
+     "2023": -31.518540640060678,
+     "2024": -37.1667840691654,
+     "2025": -95.50726459886756,
+     "2026": -65.7936761063997
     },
-    "ausreisser": []
+    "ausreisser": [
+     [
+      56.8,
+      "05.11.2025"
+     ]
+    ]
    },
    "NL4": {
-    "total": 585.5,
-    "cagr": 30.1,
-    "maxdd": -52.0,
-    "sharpe": 0.8,
+    "total": 448.5,
+    "cagr": 26.2,
+    "maxdd": -56.8,
+    "sharpe": 0.7,
     "liquidated": null,
-    "best_year": 222.7,
+    "best_year": 189.4,
     "stops": 0,
     "rebalances": 2668,
     "years": {
-     "2019": 24.948177090719305,
-     "2020": -20.88067211624802,
-     "2021": -12.081362185484135,
-     "2022": 30.506981544620547,
-     "2023": 22.424965316860135,
-     "2024": -0.9306010301247558,
-     "2025": 222.74320848256042,
-     "2026": 54.38954843763777
+     "2019": 24.859348305157482,
+     "2020": -23.015190113762596,
+     "2021": -18.604778386441524,
+     "2022": 30.506981544620594,
+     "2023": 21.059663186212283,
+     "2024": 10.343343183935971,
+     "2025": 189.42401947101786,
+     "2026": 38.93810761260228
     },
     "ausreisser": []
    },
    "NL5": {
     "total": -100.0,
-    "cagr": -78.9,
+    "cagr": -76.1,
     "maxdd": -100.0,
-    "sharpe": -1.8,
+    "sharpe": -1.7,
     "liquidated": null,
-    "best_year": -49.6,
+    "best_year": -47.6,
     "stops": 0,
     "rebalances": 2668,
     "years": {
-     "2019": -49.635508956840525,
-     "2020": -51.81274364862607,
-     "2021": -74.07842598511036,
+     "2019": -49.63550895684051,
+     "2020": -47.628632567078476,
+     "2021": -65.65101052510528,
      "2022": -77.1953581611212,
-     "2023": -65.10923250758667,
-     "2024": -63.08256384841386,
-     "2025": -97.87461985222966,
-     "2026": -70.85768718502563
+     "2023": -61.019327905659296,
+     "2024": -59.28949270534001,
+     "2025": -97.1165771848016,
+     "2026": -69.45295884671545
     },
     "ausreisser": [
      [
@@ -3298,22 +3595,22 @@
    },
    "NL2_3": {
     "total": -100.0,
-    "cagr": -97.4,
+    "cagr": -100,
     "maxdd": -100.0,
-    "sharpe": -1.2,
-    "liquidated": null,
-    "best_year": -37.8,
+    "sharpe": -1.7,
+    "liquidated": "06.02.2026",
+    "best_year": -78.7,
     "stops": 0,
-    "rebalances": 2668,
+    "rebalances": 2400,
     "years": {
-     "2019": -86.6326055139336,
-     "2020": -98.42353951838813,
-     "2021": -99.47461161312023,
+     "2019": -86.60841501272775,
+     "2020": -97.92224946132309,
+     "2021": -99.18539486816861,
      "2022": -98.69109646667178,
-     "2023": -83.80790609914004,
-     "2024": -93.53193285859466,
-     "2025": -99.73991629464989,
-     "2026": -37.76421920167863
+     "2023": -78.74645540226831,
+     "2024": -94.2195693576822,
+     "2025": -99.98520198754613,
+     "2026": -100.0
     },
     "ausreisser": [
      [
@@ -3321,20 +3618,20 @@
       "18.09.2020"
      ],
      [
-      79.4,
-      "16.04.2025"
-     ],
-     [
       66.2,
       "20.11.2021"
      ],
      [
-      62.0,
-      "04.08.2025"
-     ],
-     [
       61.2,
       "01.03.2021"
+     ],
+     [
+      51.6,
+      "24.09.2020"
+     ],
+     [
+      50.7,
+      "13.05.2022"
      ]
     ]
    },
@@ -3346,9 +3643,9 @@
     "liquidated": "16.10.2020",
     "best_year": 0.0,
     "stops": 0,
-    "rebalances": 462,
+    "rebalances": 461,
     "years": {
-     "2019": -85.43604649049828,
+     "2019": -85.4360464904983,
      "2020": -100.0,
      "2021": 0.0,
      "2022": 0.0,
@@ -3390,8 +3687,8 @@
     "ausreisser": []
    },
    "DONLS": {
-    "total": 62.9,
-    "cagr": 6.9,
+    "total": 61.4,
+    "cagr": 6.8,
     "maxdd": -63.8,
     "sharpe": 0.4,
     "liquidated": null,
@@ -3406,13 +3703,13 @@
      "2023": 28.299912317054577,
      "2024": 46.74936895088619,
      "2025": -33.15822007540815,
-     "2026": 15.797753574688578
+     "2026": 14.736057301047211
     },
     "ausreisser": []
    },
    "GX": {
-    "total": 308.2,
-    "cagr": 21.2,
+    "total": 312.1,
+    "cagr": 21.4,
     "maxdd": -54.6,
     "sharpe": 0.7,
     "liquidated": null,
@@ -3427,13 +3724,13 @@
      "2023": 34.464108048122725,
      "2024": 87.27971940329505,
      "2025": -27.32807642373274,
-     "2026": -1.0866893409537948
+     "2026": -0.15167321377331788
     },
     "ausreisser": []
    },
    "GXLS": {
-    "total": -18.6,
-    "cagr": -2.8,
+    "total": -17.1,
+    "cagr": -2.5,
     "maxdd": -70.6,
     "sharpe": 0.2,
     "liquidated": null,
@@ -3441,20 +3738,20 @@
     "stops": 0,
     "rebalances": 2668,
     "years": {
-     "2019": 0.5891450356183991,
-     "2020": 2.449454739114909,
-     "2021": -19.781695747239226,
-     "2022": 64.00727011085152,
-     "2023": -28.125013533757638,
-     "2024": 59.12514107261746,
-     "2025": -45.8629042789648,
-     "2026": -3.0210428652885812
+     "2019": 1.4150967147226412,
+     "2020": 2.449454739096124,
+     "2021": -19.781695747238935,
+     "2022": 64.0072701108519,
+     "2023": -28.125013533757592,
+     "2024": 59.125141072618035,
+     "2025": -45.86290427896474,
+     "2026": -2.104311959064886
     },
     "ausreisser": []
    },
    "RSI2": {
-    "total": 157.0,
-    "cagr": 13.8,
+    "total": 159.4,
+    "cagr": 13.9,
     "maxdd": -39.4,
     "sharpe": 0.7,
     "liquidated": null,
@@ -3469,13 +3766,13 @@
      "2023": 15.591283392437848,
      "2024": 24.945395844629935,
      "2025": 0.6007142663819076,
-     "2026": 4.268655863854343
+     "2026": 5.2542494439375975
     },
     "ausreisser": []
    },
    "VT": {
-    "total": 169.2,
-    "cagr": 14.5,
+    "total": 178.5,
+    "cagr": 15.0,
     "maxdd": -75.3,
     "sharpe": 0.5,
     "liquidated": null,
@@ -3483,20 +3780,20 @@
     "stops": 0,
     "rebalances": 2668,
     "years": {
-     "2019": -31.765042371785245,
-     "2020": 194.25878424493413,
-     "2021": 10.149741635741162,
-     "2022": -64.83696856301432,
-     "2023": 177.6068494878037,
-     "2024": 122.89123796123853,
-     "2025": -20.697502571568304,
-     "2026": -29.444515889950996
+     "2019": -30.631342416876915,
+     "2020": 194.25878424493428,
+     "2021": 10.149741635741382,
+     "2022": -64.83696856301435,
+     "2023": 177.6068494878034,
+     "2024": 122.89123796123845,
+     "2025": -20.69750257156834,
+     "2026": -28.205358770209386
     },
     "ausreisser": []
    },
    "HALV": {
-    "total": 1920.5,
-    "cagr": 50.8,
+    "total": 1988.1,
+    "cagr": 51.5,
     "maxdd": -57.6,
     "sharpe": 1.1,
     "liquidated": null,
@@ -3504,20 +3801,20 @@
     "stops": 0,
     "rebalances": 2668,
     "years": {
-     "2019": -37.02163129321854,
+     "2019": -34.91343132348146,
      "2020": 281.1369363968239,
      "2021": 111.90288673769145,
      "2022": 0.0,
-     "2023": 51.98482143237189,
-     "2024": 114.04505139300296,
+     "2023": 51.98482143237191,
+     "2024": 114.045051393003,
      "2025": 22.10650870283406,
      "2026": 0.0
     },
     "ausreisser": []
    },
    "TOM": {
-    "total": 125.5,
-    "cagr": 11.8,
+    "total": 127.6,
+    "cagr": 11.9,
     "maxdd": -42.1,
     "sharpe": 0.6,
     "liquidated": null,
@@ -3532,13 +3829,13 @@
      "2023": 9.038465815174511,
      "2024": -16.99415463528956,
      "2025": 2.668666535182762,
-     "2026": -18.87460910408517
+     "2026": -18.10774013259795
     },
     "ausreisser": []
    },
    "ETHBTC": {
-    "total": 1581.4,
-    "cagr": 47.1,
+    "total": 1654.1,
+    "cagr": 48.0,
     "maxdd": -72.1,
     "sharpe": 0.9,
     "liquidated": null,
@@ -3546,260 +3843,274 @@
     "stops": 0,
     "rebalances": 2668,
     "years": {
-     "2019": -36.8697166161144,
-     "2020": 420.34955917268377,
-     "2021": 205.74427517889197,
-     "2022": -59.1875962019311,
-     "2023": 72.88869055885219,
-     "2024": 68.25395225352864,
-     "2025": 44.619198942058816,
-     "2026": -2.496826176511502
+     "2019": -34.756431304787014,
+     "2020": 420.34955917268366,
+     "2021": 205.74427517889168,
+     "2022": -59.18759620193108,
+     "2023": 72.88869055885195,
+     "2024": 68.2539522535288,
+     "2025": 44.619198942058745,
+     "2026": -1.575139910337553
     },
     "ausreisser": []
    },
    "DM": {
-    "total": 235.6,
-    "cagr": 18.0,
-    "maxdd": -85.3,
-    "sharpe": 0.6,
+    "total": 431.8,
+    "cagr": 25.7,
+    "maxdd": -81.0,
+    "sharpe": 0.7,
     "liquidated": null,
-    "best_year": 226.6,
+    "best_year": 288.1,
     "stops": 0,
     "rebalances": 382,
     "years": {
-     "2019": -40.601975881341815,
-     "2020": 119.98315626656128,
-     "2021": 226.5724407734079,
-     "2022": -54.98571149968426,
-     "2023": 51.201858443304005,
-     "2024": 35.10935647550437,
-     "2025": 33.87641926748781,
-     "2026": -36.12346567070549
+     "2019": -23.419066265394207,
+     "2020": 130.58092993953508,
+     "2021": 288.14643300194024,
+     "2022": -51.85838063390338,
+     "2023": 41.69808759189071,
+     "2024": 39.421449956725056,
+     "2025": 15.34945719640115,
+     "2026": -29.275941556755903
     },
     "ausreisser": [
      [
-      67.9,
+      68.0,
       "19.02.2021"
      ]
     ]
    },
    "MOM28": {
-    "total": 1408.5,
-    "cagr": 44.9,
-    "maxdd": -91.5,
-    "sharpe": 0.9,
+    "total": 802.7,
+    "cagr": 35.1,
+    "maxdd": -87.4,
+    "sharpe": 0.8,
     "liquidated": null,
-    "best_year": 1866.0,
+    "best_year": 604.3,
     "stops": 0,
     "rebalances": 382,
     "years": {
-     "2019": -42.4358041164681,
-     "2020": 377.4750784729021,
-     "2021": 1865.994545568569,
-     "2022": -73.2658564033731,
-     "2023": 265.6816760385118,
-     "2024": 117.84782568708687,
-     "2025": -59.52279685371291,
-     "2026": -67.61537884468636
+     "2019": -42.569644868348334,
+     "2020": 274.98873306354,
+     "2021": 604.3220270138418,
+     "2022": -72.92289445787135,
+     "2023": 319.4845129286791,
+     "2024": 194.18791305171374,
+     "2025": -56.31603056949175,
+     "2026": -59.22880019203956
     },
     "ausreisser": []
    },
    "MOM7": {
-    "total": 27.9,
-    "cagr": 3.4,
-    "maxdd": -89.9,
-    "sharpe": 0.5,
+    "total": 42971.1,
+    "cagr": 129.2,
+    "maxdd": -93.5,
+    "sharpe": 0.4,
     "liquidated": null,
-    "best_year": 260.8,
+    "best_year": 159788.7,
     "stops": 0,
     "rebalances": 382,
     "years": {
-     "2019": -44.73431488996192,
-     "2020": 86.33610644728695,
-     "2021": 260.827610963701,
-     "2022": -72.9303380024786,
-     "2023": 202.74904898459175,
-     "2024": 67.88152351075858,
-     "2025": -57.00536501789273,
-     "2026": -41.79208275304427
+     "2019": -50.81353992447835,
+     "2020": 137.56698228284483,
+     "2021": 159788.72391061694,
+     "2022": -70.20902498408823,
+     "2023": 182.61445004602646,
+     "2024": 33.34442388719925,
+     "2025": -59.882574066986514,
+     "2026": -48.81425076903123
     },
-    "ausreisser": []
+    "ausreisser": [
+     [
+      25849.4,
+      "23.01.2021"
+     ]
+    ]
    },
    "TSM": {
-    "total": 4237.2,
-    "cagr": 67.5,
-    "maxdd": -46.1,
-    "sharpe": 1.3,
+    "total": 22911.3,
+    "cagr": 110.4,
+    "maxdd": -59.2,
+    "sharpe": 0.5,
     "liquidated": null,
-    "best_year": 827.8,
+    "best_year": 7459.3,
     "stops": 0,
     "rebalances": 382,
     "years": {
-     "2019": -2.4755448858089113,
-     "2020": 129.90733094211078,
-     "2021": 827.8315937122278,
-     "2022": 25.398213355163634,
-     "2023": 43.065618709139116,
-     "2024": 8.106580610727288,
-     "2025": 5.2948608515993145,
-     "2026": 2.0907320480085145
+     "2019": 22.506222066354177,
+     "2020": 68.9033198389573,
+     "2021": 7459.297098167137,
+     "2022": -4.750112148217989,
+     "2023": 32.76545790950036,
+     "2024": 9.036213555901075,
+     "2025": 15.179688244172196,
+     "2026": -7.366689376546843
     },
-    "ausreisser": []
+    "ausreisser": [
+     [
+      1605.2,
+      "23.01.2021"
+     ]
+    ]
    },
    "LVOL": {
-    "total": 716.6,
-    "cagr": 33.3,
-    "maxdd": -76.9,
+    "total": 652.6,
+    "cagr": 31.8,
+    "maxdd": -75.5,
     "sharpe": 0.8,
     "liquidated": null,
-    "best_year": 337.2,
+    "best_year": 225.2,
     "stops": 0,
     "rebalances": 382,
     "years": {
-     "2019": -24.89186636170929,
-     "2020": 133.24093656442474,
-     "2021": 337.23388902498084,
-     "2022": -57.32703430557977,
-     "2023": 117.13017074413084,
-     "2024": 51.12196437836414,
-     "2025": -15.324147792010844,
-     "2026": -10.079242336132232
+     "2019": -25.342500455305217,
+     "2020": 160.50476823183243,
+     "2021": 225.16350278207588,
+     "2022": -56.62530508607377,
+     "2023": 127.85127028851262,
+     "2024": 56.197144647721366,
+     "2025": -12.644025740246612,
+     "2026": -11.748072427349687
     },
     "ausreisser": []
    },
    "MAXLS": {
-    "total": -10.3,
-    "cagr": -1.5,
-    "maxdd": -79.6,
-    "sharpe": 0.2,
-    "liquidated": null,
-    "best_year": 64.8,
+    "total": -100.0,
+    "cagr": -100,
+    "maxdd": -100.0,
+    "sharpe": -0.2,
+    "liquidated": "23.01.2021",
+    "best_year": 14.1,
     "stops": 0,
-    "rebalances": 382,
+    "rebalances": 80,
     "years": {
-     "2019": 31.696444385182197,
-     "2020": 10.059780395803353,
-     "2021": -39.5741396227954,
-     "2022": -0.9406443007737963,
-     "2023": -41.31577306149386,
-     "2024": -20.30732954053932,
-     "2025": 64.76744938592876,
-     "2026": 34.22248480740635
+     "2019": 14.060968514129947,
+     "2020": -5.116335317059917,
+     "2021": -100.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0,
+     "2025": 0.0,
+     "2026": 0.0
     },
     "ausreisser": []
    },
    "MAXM": {
-    "total": -82.3,
-    "cagr": -21.1,
-    "maxdd": -97.0,
-    "sharpe": 0.3,
+    "total": 4519.0,
+    "cagr": 68.9,
+    "maxdd": -96.5,
+    "sharpe": 0.4,
     "liquidated": null,
-    "best_year": 559.9,
+    "best_year": 117541.2,
     "stops": 0,
     "rebalances": 382,
     "years": {
-     "2019": -64.09089062654309,
-     "2020": 18.70897023124909,
-     "2021": 559.9191692110842,
-     "2022": -77.25067976214571,
-     "2023": 307.06106196069175,
-     "2024": 58.49978743945563,
-     "2025": -84.6109031115744,
-     "2026": -72.14089630392695
+     "2019": -61.28095455815132,
+     "2020": 45.19842733509329,
+     "2021": 117541.16863038504,
+     "2022": -81.72608900146393,
+     "2023": 311.6253872588209,
+     "2024": 73.46506652074356,
+     "2025": -82.13587595072023,
+     "2026": -70.03762639789473
     },
     "ausreisser": [
      [
-      79.7,
+      27229.0,
+      "23.01.2021"
+     ],
+     [
+      87.6,
       "28.01.2021"
      ]
     ]
    },
    "H180": {
-    "total": 6954.7,
-    "cagr": 79.0,
-    "maxdd": -66.3,
+    "total": 7002.8,
+    "cagr": 79.1,
+    "maxdd": -64.0,
     "sharpe": 1.3,
     "liquidated": null,
-    "best_year": 1004.4,
+    "best_year": 668.8,
     "stops": 0,
     "rebalances": 382,
     "years": {
      "2019": 0.0,
-     "2020": 103.2748288509357,
-     "2021": 1004.3532569154526,
-     "2022": -0.11290228769634814,
-     "2023": 129.30364811476966,
-     "2024": 29.995241137257246,
-     "2025": 0.3191809302732773,
-     "2026": 5.209798726132497
+     "2020": 68.52309443031626,
+     "2021": 668.8168394033585,
+     "2022": 5.321561574572731,
+     "2023": 170.94013215406073,
+     "2024": 110.09385579682109,
+     "2025": -10.453634235932707,
+     "2026": 2.116119492508872
     },
     "ausreisser": []
    },
    "VBRK": {
-    "total": 839.0,
-    "cagr": 35.8,
-    "maxdd": -91.0,
+    "total": 849.2,
+    "cagr": 36.0,
+    "maxdd": -90.7,
     "sharpe": 0.8,
     "liquidated": null,
-    "best_year": 501.3,
+    "best_year": 490.5,
     "stops": 0,
     "rebalances": 2668,
     "years": {
-     "2019": 47.74820139602374,
-     "2020": 226.6004578891462,
-     "2021": 501.27938022121754,
-     "2022": -82.39693513927462,
-     "2023": 51.27011008621698,
-     "2024": 191.59354576412744,
-     "2025": 2.1557564765305237,
-     "2026": -59.20064128588689
+     "2019": 47.748201396023696,
+     "2020": 226.6004578891463,
+     "2021": 490.52976306534646,
+     "2022": -81.42565148282948,
+     "2023": 53.94851709206634,
+     "2024": 186.00710983704695,
+     "2025": 1.6494260384335435,
+     "2026": -59.932303684319535
     },
     "ausreisser": []
    },
    "ALTS": {
-    "total": 1750.1,
-    "cagr": 49.0,
-    "maxdd": -73.9,
-    "sharpe": 0.9,
+    "total": 783.7,
+    "cagr": 34.7,
+    "maxdd": -66.7,
+    "sharpe": 0.8,
     "liquidated": null,
-    "best_year": 531.6,
+    "best_year": 389.6,
     "stops": 0,
     "rebalances": 382,
     "years": {
      "2019": 0.0,
-     "2020": 219.64059958709788,
-     "2021": 531.5962976417621,
-     "2022": -0.06621866202963789,
-     "2023": 100.73806243508336,
-     "2024": 8.852919477087283,
-     "2025": -19.72035453436781,
-     "2026": -47.72412258456345
+     "2020": 88.32341657405746,
+     "2021": 389.5553230157237,
+     "2022": 3.0149203177205486,
+     "2023": 67.69920256757464,
+     "2024": 32.16833031083544,
+     "2025": -24.663155106876744,
+     "2026": -44.2765111643921
     },
     "ausreisser": []
    },
    "FCON": {
-    "total": 336.1,
-    "cagr": 22.3,
-    "maxdd": -57.3,
+    "total": 375.8,
+    "cagr": 23.8,
+    "maxdd": -51.9,
     "sharpe": 0.9,
     "liquidated": null,
-    "best_year": 391.2,
+    "best_year": 308.3,
     "stops": 0,
     "rebalances": 890,
     "years": {
      "2019": 0.0,
-     "2020": 23.25942959495908,
-     "2021": 391.1573145269786,
-     "2022": -21.44697473246954,
-     "2023": -4.144626483138736,
-     "2024": 38.06159756228642,
-     "2025": 6.62177294791102,
-     "2026": -35.01585909734557
+     "2020": 34.90096848355868,
+     "2021": 308.31337109571535,
+     "2022": -6.861234375076386,
+     "2023": -16.694398736991857,
+     "2024": 12.047156282180316,
+     "2025": 9.864804909374737,
+     "2026": -9.567710200844592
     },
     "ausreisser": []
    },
    "FCAR": {
-    "total": -56.6,
+    "total": -56.7,
     "cagr": -10.8,
     "maxdd": -59.4,
     "sharpe": -7.7,
@@ -3815,28 +4126,28 @@
      "2023": -15.170984632540574,
      "2024": -13.37525732761704,
      "2025": -10.910087553075599,
-     "2026": -9.242938939072399
+     "2026": -9.342091028281452
     },
     "ausreisser": []
    },
    "H22": {
     "total": -97.4,
-    "cagr": -39.2,
+    "cagr": -39.3,
     "maxdd": -97.4,
-    "sharpe": -2.8,
+    "sharpe": -2.9,
     "liquidated": null,
     "best_year": -21.3,
     "stops": 0,
     "rebalances": 64032,
     "years": {
-     "2019": -27.742880178124917,
-     "2020": -49.57131667504298,
-     "2021": -38.16135349150939,
-     "2022": -42.06681924943189,
-     "2023": -21.319269009445264,
-     "2024": -31.68299740880628,
-     "2025": -36.331820530296625,
-     "2026": -40.888758296683136
+     "2019": -29.434082503431526,
+     "2020": -49.5713166750429,
+     "2021": -38.161353491509416,
+     "2022": -42.066819249431916,
+     "2023": -21.319269009445087,
+     "2024": -31.68299740880609,
+     "2025": -36.33182053029633,
+     "2026": -40.63304944963937
     },
     "ausreisser": []
    },
@@ -3900,7 +4211,7 @@
     "liquidated": "12.03.2020",
     "best_year": 0.0,
     "stops": 0,
-    "rebalances": 244,
+    "rebalances": 243,
     "years": {
      "2019": 0.0,
      "2020": -100.0,
@@ -3935,155 +4246,155 @@
     "ausreisser": []
    },
    "MOM28_T20": {
-    "total": -1.2,
-    "cagr": -0.2,
-    "maxdd": -87.3,
-    "sharpe": 0.3,
+    "total": -31.9,
+    "cagr": -5.1,
+    "maxdd": -89.1,
+    "sharpe": 0.2,
     "liquidated": null,
-    "best_year": 175.5,
-    "stops": 766,
+    "best_year": 238.3,
+    "stops": 759,
     "rebalances": 382,
     "years": {
-     "2019": -30.330407844556717,
-     "2020": 131.42171542842553,
-     "2021": 113.08563398905687,
-     "2022": -68.21063645302713,
-     "2023": 175.4661466586799,
-     "2024": -42.14753565216915,
-     "2025": -21.102775029319787,
-     "2026": -28.05284210279515
+     "2019": -43.83635139139631,
+     "2020": 143.2448720973302,
+     "2021": 0.5971904180473775,
+     "2022": -64.46450271586438,
+     "2023": 238.28207404484672,
+     "2024": -3.1899995294882633,
+     "2025": -37.090514721000275,
+     "2026": -32.3275488258242
     },
     "ausreisser": []
    },
    "K_T8": {
-    "total": -34.6,
-    "cagr": -5.6,
-    "maxdd": -65.7,
-    "sharpe": -0.1,
+    "total": -24.8,
+    "cagr": -3.8,
+    "maxdd": -50.6,
+    "sharpe": -0.0,
     "liquidated": null,
-    "best_year": 9.6,
+    "best_year": 23.1,
     "stops": 517,
     "rebalances": 382,
     "years": {
      "2019": 0.0,
-     "2020": 4.666667818290393,
-     "2021": 9.601499646756452,
+     "2020": -27.962132514665615,
+     "2021": 0.008046775003633932,
      "2022": 0.0,
-     "2023": -8.620817886767663,
-     "2024": -20.583150940789764,
-     "2025": -20.38084612243958,
-     "2026": -1.312350413008423
+     "2023": 21.65763831959233,
+     "2024": 23.132073328819057,
+     "2025": -21.627603001273986,
+     "2026": -11.076310483038633
     },
     "ausreisser": []
    },
    "K_T15": {
-    "total": -92.6,
-    "cagr": -30.0,
-    "maxdd": -94.2,
-    "sharpe": -0.7,
+    "total": -86.8,
+    "cagr": -24.2,
+    "maxdd": -89.3,
+    "sharpe": -0.5,
     "liquidated": null,
     "best_year": 0.0,
-    "stops": 420,
+    "stops": 411,
     "rebalances": 382,
     "years": {
      "2019": 0.0,
-     "2020": -33.003588989059566,
-     "2021": -29.566568492835565,
+     "2020": -32.99664659248705,
+     "2021": -30.98813253598597,
      "2022": 0.0,
-     "2023": -7.67698533548995,
-     "2024": -65.05350171330062,
-     "2025": -42.57641919258701,
-     "2026": -15.317354000066496
+     "2023": -9.462087512136208,
+     "2024": -39.54482256617862,
+     "2025": -36.99040772950825,
+     "2026": -17.515450731202776
     },
     "ausreisser": []
    },
    "B_T8": {
-    "total": -55.0,
-    "cagr": -10.3,
-    "maxdd": -68.0,
-    "sharpe": -0.4,
+    "total": -60.3,
+    "cagr": -11.9,
+    "maxdd": -67.9,
+    "sharpe": -0.5,
     "liquidated": null,
-    "best_year": 24.9,
-    "stops": 1839,
+    "best_year": 35.5,
+    "stops": 1838,
     "rebalances": 382,
     "years": {
-     "2019": 10.788081320695886,
-     "2020": -38.65121753462183,
-     "2021": -13.348088602628462,
-     "2022": -16.541875799332008,
-     "2023": 24.852676457628455,
-     "2024": -13.171825966465335,
-     "2025": -3.0932467071766223,
-     "2026": -12.765917486414835
+     "2019": -3.9456452085755434,
+     "2020": -21.48145540323494,
+     "2021": -12.987457494034626,
+     "2022": -29.49545271864793,
+     "2023": 35.52104715004756,
+     "2024": -7.8070877298079155,
+     "2025": -23.083221356411197,
+     "2026": -10.6151305901093
     },
     "ausreisser": []
    },
    "B_T15": {
-    "total": -88.0,
-    "cagr": -25.2,
-    "maxdd": -93.8,
-    "sharpe": -0.7,
+    "total": -79.9,
+    "cagr": -19.7,
+    "maxdd": -86.8,
+    "sharpe": -0.5,
     "liquidated": null,
-    "best_year": 6.5,
-    "stops": 1357,
+    "best_year": 8.7,
+    "stops": 1345,
     "rebalances": 382,
     "years": {
-     "2019": 6.456769954815078,
-     "2020": -6.110257787184159,
-     "2021": -40.574764503268355,
-     "2022": -42.83402383746078,
-     "2023": -20.275131502175526,
-     "2024": -23.72466480129639,
-     "2025": -19.665285503575703,
-     "2026": -27.894988884010253
+     "2019": -5.201931559594453,
+     "2020": -7.163255856315698,
+     "2021": -17.01902428487765,
+     "2022": -49.60220650455989,
+     "2023": -19.076429377799208,
+     "2024": -19.94378466809208,
+     "2025": 8.729145998258714,
+     "2026": -22.574115801118
     },
     "ausreisser": []
    },
    "C_T10": {
-    "total": -77.5,
-    "cagr": -18.4,
-    "maxdd": -81.8,
-    "sharpe": -0.5,
+    "total": -61.6,
+    "cagr": -12.3,
+    "maxdd": -69.3,
+    "sharpe": -0.2,
     "liquidated": null,
-    "best_year": 9.9,
-    "stops": 515,
+    "best_year": 52.8,
+    "stops": 516,
     "rebalances": 382,
     "years": {
      "2019": 0.0,
-     "2020": -46.47367336090067,
-     "2021": 9.889521391762845,
+     "2020": -53.802904134718396,
+     "2021": -2.0359876117789,
      "2022": 0.0,
-     "2023": -13.763256122624634,
-     "2024": -34.947291633466705,
-     "2025": -23.99648788975467,
-     "2026": -10.091486481454737
+     "2023": 52.809423787198064,
+     "2024": -29.30558780580206,
+     "2025": -17.14929229412344,
+     "2026": -5.14262599047095
     },
     "ausreisser": []
    },
    "A_T5": {
-    "total": -94.4,
-    "cagr": -32.5,
-    "maxdd": -98.0,
+    "total": -94.1,
+    "cagr": -32.1,
+    "maxdd": -97.9,
     "sharpe": -0.5,
     "liquidated": null,
-    "best_year": 65.2,
-    "stops": 5575,
+    "best_year": 62.5,
+    "stops": 5594,
     "rebalances": 2668,
     "years": {
-     "2019": -42.80598858538382,
-     "2020": -36.166123165532426,
-     "2021": -76.76014523565618,
-     "2022": -46.010291329940245,
-     "2023": 2.8789902825156144,
-     "2024": -32.98164860931575,
-     "2025": 7.661832349912334,
-     "2026": 65.22265489570327
+     "2019": -42.58043552111609,
+     "2020": -36.16612316553185,
+     "2021": -76.71154659582143,
+     "2022": -46.931444224300435,
+     "2023": 2.7344306163785026,
+     "2024": -30.909131079622497,
+     "2025": 12.896664233014077,
+     "2026": 62.526045048337984
     },
     "ausreisser": []
    },
    "BTC_T10": {
-    "total": 200.7,
-    "cagr": 16.2,
+    "total": 203.5,
+    "cagr": 16.4,
     "maxdd": -55.9,
     "sharpe": 0.6,
     "liquidated": null,
@@ -4098,13 +4409,13 @@
      "2023": 71.37332324872628,
      "2024": 36.48633149947131,
      "2025": -30.53196861578006,
-     "2026": 12.021296734221876
+     "2026": 13.080216387654886
     },
     "ausreisser": []
    },
    "BTC_T20": {
-    "total": 404.0,
-    "cagr": 24.8,
+    "total": 408.8,
+    "cagr": 24.9,
     "maxdd": -65.9,
     "sharpe": 0.8,
     "liquidated": null,
@@ -4119,28 +4430,28 @@
      "2023": 73.81016338060601,
      "2024": 77.69104296775124,
      "2025": -16.649147690071565,
-     "2026": 11.27237305393869
+     "2026": 12.324213243373382
     },
     "ausreisser": []
    },
    "R_TL5_T5": {
     "total": -100.0,
-    "cagr": -89.1,
+    "cagr": -89.0,
     "maxdd": -100.0,
     "sharpe": -2.5,
     "liquidated": null,
-    "best_year": -20.6,
-    "stops": 17651,
+    "best_year": -18.8,
+    "stops": 17631,
     "rebalances": 10672,
     "years": {
-     "2019": -81.50651105947627,
-     "2020": -55.12714419162366,
-     "2021": -96.68284029116593,
-     "2022": -94.60498493218074,
-     "2023": -20.64368777776362,
-     "2024": -93.92622855106318,
-     "2025": -94.67814133062473,
-     "2026": -75.54115302686466
+     "2019": -81.26390294969875,
+     "2020": -55.12714419162368,
+     "2021": -96.66940783047382,
+     "2022": -94.57689873303168,
+     "2023": -18.840697093343508,
+     "2024": -93.87654058433763,
+     "2025": -94.78447386818264,
+     "2026": -74.3551789270804
     },
     "ausreisser": []
    },
@@ -4150,39 +4461,39 @@
     "maxdd": -100.0,
     "sharpe": -5.9,
     "liquidated": null,
-    "best_year": -66.1,
-    "stops": 30551,
+    "best_year": -66.0,
+    "stops": 30521,
     "rebalances": 10672,
     "years": {
-     "2019": -66.10431715748797,
-     "2020": -92.07529226217763,
-     "2021": -97.18866560950157,
-     "2022": -88.25845923543653,
-     "2023": -71.16382605563271,
-     "2024": -87.43032913983441,
-     "2025": -84.42705170660584,
-     "2026": -69.50143259357351
+     "2019": -66.04072967469085,
+     "2020": -92.07529226217767,
+     "2021": -97.19196621358843,
+     "2022": -88.24742658408685,
+     "2023": -70.79394978027949,
+     "2024": -87.47174363382469,
+     "2025": -84.60875382661564,
+     "2026": -69.32562521483713
     },
     "ausreisser": []
    },
    "R_CL5_T5": {
     "total": -100.0,
-    "cagr": -94.2,
+    "cagr": -93.6,
     "maxdd": -100.0,
-    "sharpe": -3.3,
+    "sharpe": -3.2,
     "liquidated": null,
     "best_year": 4.2,
-    "stops": 12257,
+    "stops": 12241,
     "rebalances": 10672,
     "years": {
-     "2019": -79.90414795489744,
-     "2020": 4.236905330096574,
-     "2021": -95.49727217895636,
-     "2022": -97.45391668787704,
-     "2023": -86.04274029187484,
-     "2024": -95.61652510323356,
-     "2025": -97.06803812588868,
-     "2026": -97.89034146939434
+     "2019": -79.08543747074388,
+     "2020": 4.236905330096485,
+     "2021": -95.46895127836265,
+     "2022": -97.44884798385115,
+     "2023": -86.177944030998,
+     "2024": -95.52709745412258,
+     "2025": -97.07787136381893,
+     "2026": -95.92811076267623
     },
     "ausreisser": []
    },
@@ -4192,45 +4503,45 @@
     "maxdd": -100.0,
     "sharpe": -2.7,
     "liquidated": null,
-    "best_year": 5.4,
-    "stops": 17626,
+    "best_year": 8.5,
+    "stops": 17619,
     "rebalances": 10672,
     "years": {
-     "2019": -32.428997858598905,
+     "2019": -30.979427750863962,
      "2020": -98.44783260870629,
-     "2021": -98.94230642221642,
-     "2022": -92.076467302933,
-     "2023": -98.9056372722367,
-     "2024": -92.82070208254277,
-     "2025": 5.42563474789286,
-     "2026": -18.583243900975212
+     "2021": -98.95584912957791,
+     "2022": -92.12628421230515,
+     "2023": -98.92046596907223,
+     "2024": -92.75056488177808,
+     "2025": 8.468077602749213,
+     "2026": -22.6516953877034
     },
     "ausreisser": []
    },
    "R_TL10_T8": {
     "total": -100.0,
-    "cagr": -74.9,
+    "cagr": -75.1,
     "maxdd": -100.0,
     "sharpe": -1.5,
     "liquidated": null,
-    "best_year": 0.5,
-    "stops": 11515,
+    "best_year": 0.6,
+    "stops": 11509,
     "rebalances": 10672,
     "years": {
      "2019": -43.707017965432414,
      "2020": -62.29565073857293,
-     "2021": -69.35083177182804,
-     "2022": -93.26722231245641,
-     "2023": 0.4832642092034156,
-     "2024": -76.31286388591809,
-     "2025": -87.37116420177614,
-     "2026": -69.39627182507435
+     "2021": -69.20579854006837,
+     "2022": -93.25005954397983,
+     "2023": 0.5620702813171841,
+     "2024": -77.72382196131137,
+     "2025": -87.2750031937592,
+     "2026": -69.43156874503875
     },
     "ausreisser": []
    },
    "T3_T5": {
-    "total": -93.2,
-    "cagr": -30.7,
+    "total": -93.0,
+    "cagr": -30.5,
     "maxdd": -99.0,
     "sharpe": 0.2,
     "liquidated": null,
@@ -4245,70 +4556,70 @@
      "2023": 160.00884995132205,
      "2024": 9.122618579146513,
      "2025": -89.40784937784908,
-     "2026": 1.7819868015395812
+     "2026": 4.580408554085347
     },
     "ausreisser": []
    },
    "RG1_T10": {
-    "total": -96.4,
-    "cagr": -36.6,
-    "maxdd": -97.6,
-    "sharpe": -0.7,
+    "total": -87.4,
+    "cagr": -24.7,
+    "maxdd": -90.6,
+    "sharpe": -0.3,
     "liquidated": null,
-    "best_year": 33.1,
-    "stops": 1397,
+    "best_year": 83.8,
+    "stops": 1416,
     "rebalances": 890,
     "years": {
-     "2019": 1.490416827209451,
-     "2020": -39.95327981027542,
-     "2021": -30.686992297617856,
-     "2022": 33.05839271394706,
-     "2023": -46.912932486186385,
-     "2024": -60.18012470697942,
-     "2025": -71.17853317309552,
-     "2026": 3.8743682481778174
+     "2019": 0.0,
+     "2020": -46.27556789397019,
+     "2021": 12.116564372524262,
+     "2022": 83.83070987632111,
+     "2023": -19.098760767020128,
+     "2024": -53.77185968936058,
+     "2025": -55.82757298917625,
+     "2026": -30.989513328673667
     },
     "ausreisser": []
    },
    "NL1_T15": {
-    "total": -93.9,
-    "cagr": -31.8,
-    "maxdd": -95.0,
-    "sharpe": -1.0,
+    "total": -90.3,
+    "cagr": -27.3,
+    "maxdd": -92.2,
+    "sharpe": -0.8,
     "liquidated": null,
-    "best_year": -4.2,
-    "stops": 131,
+    "best_year": -2.5,
+    "stops": 124,
     "rebalances": 2668,
     "years": {
      "2019": -21.226367675645573,
-     "2020": -4.174692603111185,
-     "2021": -10.43320332809159,
-     "2022": -40.76815980285113,
-     "2023": -27.40031525602885,
-     "2024": -23.37547893095281,
-     "2025": -70.16788169008252,
-     "2026": -8.020799045638348
+     "2020": -2.471430173782263,
+     "2021": -9.814183579241377,
+     "2022": -40.76815980285112,
+     "2023": -19.775078172751513,
+     "2024": -17.450994828113775,
+     "2025": -61.05207929121952,
+     "2026": -8.073240089027578
     },
     "ausreisser": []
    },
    "NL2_T20": {
     "total": -100.0,
-    "cagr": -73.9,
+    "cagr": -72.2,
     "maxdd": -100.0,
-    "sharpe": -2.0,
+    "sharpe": -1.9,
     "liquidated": null,
     "best_year": -44.1,
-    "stops": 337,
+    "stops": 335,
     "rebalances": 2668,
     "years": {
-     "2019": -44.11604628700281,
-     "2020": -57.733402325802,
-     "2021": -74.2632586085401,
+     "2019": -44.06880710099866,
+     "2020": -54.49869953137085,
+     "2021": -72.74445768873437,
      "2022": -73.15871717607749,
-     "2023": -52.09453087327761,
-     "2024": -62.99843544092406,
-     "2025": -95.15498242857016,
-     "2026": -61.009490107897115
+     "2023": -45.47925701950453,
+     "2024": -64.23344967294211,
+     "2025": -94.02830898882482,
+     "2026": -60.49736100805505
     },
     "ausreisser": [
      [
@@ -4318,8 +4629,8 @@
     ]
    },
    "RG2_T10": {
-    "total": 6.7,
-    "cagr": 0.9,
+    "total": 8.8,
+    "cagr": 1.2,
     "maxdd": -74.9,
     "sharpe": 0.3,
     "liquidated": null,
@@ -4327,14 +4638,14 @@
     "stops": 198,
     "rebalances": 2668,
     "years": {
-     "2019": 1.4148507535788113,
-     "2020": 61.45182361076631,
-     "2021": -60.06114983110806,
-     "2022": 52.7922588218283,
-     "2023": 27.621640813684746,
-     "2024": 8.062523281928025,
-     "2025": -42.160730292249774,
-     "2026": 33.907274006491406
+     "2019": 2.39815960731391,
+     "2020": 61.45182356751566,
+     "2021": -60.061149831107954,
+     "2022": 52.792258821828675,
+     "2023": 27.621640813684635,
+     "2024": 8.062523281928001,
+     "2025": -42.160730292249795,
+     "2026": 35.173078351888144
     },
     "ausreisser": []
    },
@@ -4398,6 +4709,6 @@
   },
   "fehler": null
  },
- "backtest_laeuft": true,
- "fortschritt": "Tageskerzen 50/140"
+ "backtest_laeuft": false,
+ "fortschritt": ""
 }

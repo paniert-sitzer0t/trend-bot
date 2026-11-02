@@ -339,6 +339,11 @@ function startBt(){
   if (!confirm('Backtest neu starten? Das dauert einige Minuten, das Ranking bleibt währenddessen sichtbar.')) return;
   api('/api/backtest/run', 'POST').then(function(){ if (CMP) { CMP.running = true; CMP.eta = null; CMP.progress = 'Startet ...'; render(); } setTimeout(loadCmp, 1500); });
 }
+function stabLine(n){
+  if (!n) return '';
+  var g = n.gegenprobe_positiv, c = g >= 70 ? 'pos' : g >= 40 ? '' : 'neg';
+  return '<div class="mut" style="margin-top:4px">Stabilität: von '+n.anzahl+' ähnlichen Varianten (anderes Zeitfenster, Coin-Anzahl, Filter oder Rhythmus) sind '+n.suche_positiv+' % in der Suche und <b class="'+c+'">'+g+' % in der Gegenprobe im Plus</b>, mittlere Gegenprobe '+sg(n.gegenprobe_median, 0)+' % pro Jahr. '+(g >= 70 ? 'Das spricht für eine robuste Regel.' : g >= 40 ? 'Gemischt, mit Vorsicht lesen.' : 'Die Nachbarn fallen durch: eher Zufallstreffer.')+'</div>';
+}
 function optCard(){
   var o = CMP && CMP.backtest && CMP.backtest.optimierung;
   if (!o) return '';
@@ -352,14 +357,14 @@ function optCard(){
   (o.beste || []).forEach(function(b, i){
     h += '<li style="padding:12px 14px;border-bottom:1px solid var(--line)"><div style="display:flex;gap:10px"><span class="no num">'+(i + 1)+'</span><div style="flex:1;min-width:0"><div style="font-weight:600">'+esc(b.name)+'</div>';
     h += '<div class="mut num" style="margin-top:4px">Suche: '+sg(b.suche.cagr, 0)+' % pro Jahr, Rückgang '+f(b.suche.maxdd, 0)+' %</div>';
-    h += '<div class="num" style="margin-top:2px">Gegenprobe: <span class="'+cl(b.gegenprobe.cagr)+'">'+sg(b.gegenprobe.cagr, 0)+' % pro Jahr</span> ('+sg(b.gegenprobe.total, 0)+' % gesamt, Rückgang '+f(b.gegenprobe.maxdd, 0)+' %)'+(b.liquidiert ? ' <span class="neg">liquidiert '+esc(b.liquidiert)+'</span>' : '')+'</div></div></div></li>';
+    h += '<div class="num" style="margin-top:2px">Gegenprobe: <span class="'+cl(b.gegenprobe.cagr)+'">'+sg(b.gegenprobe.cagr, 0)+' % pro Jahr</span> ('+sg(b.gegenprobe.total, 0)+' % gesamt, Rückgang '+f(b.gegenprobe.maxdd, 0)+' %)'+(b.liquidiert ? ' <span class="neg">liquidiert '+esc(b.liquidiert)+'</span>' : '')+'</div>'+stabLine(b.nachbarn)+'</div></div></li>';
   });
   h += '</ul></div>';
   var r = o.rueckblick, r1 = o.rueckblick_1x;
   if (r) {
     h += '<div class="card" style="border-color:var(--warn)"><div style="font-weight:700">Rückblickend beste Variante</div>';
-    if (r1) h += '<div style="margin-top:6px">Ohne Hebel: <b class="num">'+sg(r1.gesamt.total, 0)+' %</b> <span class="mut">('+esc(r1.name)+', größter Rückgang '+f(r1.gesamt.maxdd, 0)+' %)</span></div>';
-    h += '<div style="margin-top:6px">Mit Hebel: <b class="num">'+sg(r.gesamt.total, 0)+' %</b> <span class="mut">('+esc(r.name)+', größter Rückgang '+f(r.gesamt.maxdd, 0)+' %)</span></div>';
+    if (r1) h += '<div style="margin-top:6px">Ohne Hebel: <b class="num">'+sg(r1.gesamt.total, 0)+' %</b> <span class="mut">('+esc(r1.name)+', größter Rückgang '+f(r1.gesamt.maxdd, 0)+' %)</span>'+stabLine(r1.nachbarn)+'</div>';
+    h += '<div style="margin-top:6px">Mit Hebel: <b class="num">'+sg(r.gesamt.total, 0)+' %</b> <span class="mut">('+esc(r.name)+', größter Rückgang '+f(r.gesamt.maxdd, 0)+' %)</span>'+stabLine(r.nachbarn)+'</div>';
     h += '<div class="mut" style="margin-top:8px">Diese Zahlen kennt man erst hinterher. Sie entstehen durch Zinseszins über viele Jahre, oft aus einer einzigen starken Marktphase, und mit Hebel. Wer so auswählt, passt die Strategie an die Vergangenheit an. Entscheidend ist die Gegenprobe oben.</div>';
     var ab = o.abgleich || {};
     var al = Object.keys(ab).filter(function(k){ return ab[k].backtest !== null && ab[k].backtest !== undefined; });

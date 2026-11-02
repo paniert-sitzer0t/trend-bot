@@ -278,8 +278,26 @@ def search(closes, members, n, start, HI, LO, MHI, MLO, dfund, progress=None, fi
         abgl[key] = dict(name=label(cb), suche=tot)
     rho = _spearman([r["train"]["cagr"] for r in rows], [r["test"]["cagr"] for r in rows])
 
+    byc = {r["cb"]: r for r in rows}
+    sigs = sorted(set(c[0] for c in cbs))
+
+    def nachbarn(cb):
+        """Stabilität: Varianten, die sich in genau einem Punkt unterscheiden (anderes Zeitfenster, Coin-Anzahl, Filter oder Rhythmus)."""
+        sig, k, mode, flt, per, tr, lev = cb
+        alt = [(x, k, mode, flt, per, tr, lev) for x in sigs if x[0] == sig[0] and x != sig]
+        alt += [(sig, x, mode, flt, per, tr, lev) for x in (3, 5, 10) if x != k]
+        alt += [(sig, k, mode, x, per, tr, lev) for x in FILTERS if x != flt and not (mode == "ls") and not (mode == "flip" and x == "keiner")]
+        alt += [(sig, k, mode, flt, x, tr, lev) for x in (3, 7, 14) if x != per]
+        got = [byc[c] for c in alt if c in byc]
+        if len(got) < 3:
+            return None
+        te = sorted(g["test"]["cagr"] for g in got)
+        return dict(anzahl=len(got), suche_positiv=round(100 * sum(g["train"]["cagr"] > 0 for g in got) / len(got)),
+                    gegenprobe_positiv=round(100 * sum(g["test"]["cagr"] > 0 for g in got) / len(got)),
+                    gegenprobe_median=round(te[len(te) // 2], 1))
+
     def pub(r, curve=False):
-        o = dict(name=label(r["cb"]), suche=r["train"], gegenprobe=r["test"], gesamt=r["full"],
+        o = dict(nachbarn=nachbarn(r["cb"]), name=label(r["cb"]), suche=r["train"], gegenprobe=r["test"], gesamt=r["full"],
                  liquidiert=r["liq"], anpassungen=r["rebs"], hebel=r["cb"][6])
         if curve:
             o["kurve"] = [round(x, 2) for x in r["curve"]]

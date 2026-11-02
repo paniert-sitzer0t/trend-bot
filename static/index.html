@@ -79,7 +79,11 @@ h2:first-child{margin-top:18px}
 .tile .v{font:700 22px/1.2 var(--head);letter-spacing:-.02em;margin-top:2px;overflow-wrap:anywhere}
 
 /* Diagramm */
-.chart{display:block;width:100%;height:auto}
+.chart{display:block;width:100%;height:auto;touch-action:pan-y;cursor:crosshair;-webkit-user-select:none;user-select:none}
+#chtip{position:fixed;z-index:60;pointer-events:none;background:var(--s2);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:12.5px;line-height:1.45;max-width:260px;box-shadow:0 6px 22px rgba(0,0,0,.45);display:none}
+#chtip b{font-weight:700}
+#chtip .r{display:flex;gap:6px;align-items:center;justify-content:space-between;white-space:nowrap}
+#chtip .r i{width:8px;height:8px;border-radius:50%;flex:none}
 .chart polyline{vector-effect:non-scaling-stroke;fill:none;stroke-linejoin:round;stroke-linecap:round}
 .cap{display:flex;justify-content:space-between;color:var(--mut);font-size:12.5px;margin-top:6px}
 .chips{display:flex;gap:8px;overflow-x:auto;padding:2px var(--gut) 10px;margin:0 calc(-1 * var(--gut));scrollbar-width:none}
@@ -396,8 +400,66 @@ function chart(series, base, h, opt){
     var p = s.pts.map(function(q){ return X(q[0]).toFixed(1) + ',' + (PH - pad - ((q[1] - y0) / sy) * (PH - 2 * pad)).toFixed(1); }).join(' ');
     o += '<polyline fill="none" stroke="'+s.color+'" stroke-width="'+(s.w || 2)+'" points="'+p+'"/>';
   });
-  return '<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img">'+o+'</svg>';
+  var cid = 'c' + (++CHN);
+  CHD[cid] = {s: series, x0: x0, sx: sx, y0: y0, sy: sy, pad: pad, PH: PH, W: W, ms: ms, tip: opt.tip || null, days: !!opt.days};
+  return '<svg class="chart" data-cid="'+cid+'" viewBox="0 0 '+W+' '+H+'" role="img">'+o+'<g class="xh"></g></svg>';
 }
+var CHN = 0, CHD = {}, CHT = false, CHSVG = null;
+function chTip(){ var t = document.getElementById('chtip'); if (!t) { t = document.createElement('div'); t.id = 'chtip'; document.body.appendChild(t); } return t; }
+function chHide(){ var t = document.getElementById('chtip'); if (t) t.style.display = 'none'; document.querySelectorAll('svg.chart .xh').forEach(function(g){ g.innerHTML = ''; }); }
+function chNear(pts, x){
+  var lo = 0, hi = pts.length - 1;
+  while (hi - lo > 1) { var m = (lo + hi) >> 1; if (pts[m][0] <= x) lo = m; else hi = m; }
+  return Math.abs(pts[lo][0] - x) <= Math.abs(pts[hi][0] - x) ? pts[lo] : pts[hi];
+}
+function chMove(e, svg){
+  var D = CHD[svg.dataset.cid]; if (!D) return;
+  var r = svg.getBoundingClientRect(), fx = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)), xv = D.x0 + fx * D.sx;
+  var rows = [], tol = D.sx * 0.06;
+  D.s.forEach(function(s){
+    if (!s.pts.length) return;
+    if (xv < s.pts[0][0] - tol || xv > s.pts[s.pts.length - 1][0] + tol) return;
+    var q = chNear(s.pts, xv); rows.push({s: s, q: q});
+  });
+  var g = svg.querySelector('.xh');
+  if (!rows.length) { g.innerHTML = ''; chTip().style.display = 'none'; return; }
+  var qx = rows[0].q[0], px = ((qx - D.x0) / D.sx) * D.W, o = '<line x1="'+px.toFixed(1)+'" x2="'+px.toFixed(1)+'" y1="0" y2="'+D.PH+'" stroke="#eef2f8" stroke-opacity=".75" stroke-width="1.5" vector-effect="non-scaling-stroke"/>';
+  rows.forEach(function(w){
+    var cy = D.PH - D.pad - ((w.q[1] - D.y0) / D.sy) * (D.PH - 2 * D.pad), cx = ((w.q[0] - D.x0) / D.sx) * D.W;
+    o += '<circle cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="'+(rows.length > 12 ? 4 : 6)+'" fill="'+w.s.color+'" stroke="#0c111b" stroke-width="2"/>';
+  });
+  g.innerHTML = o;
+  var d = new Date(qx * D.ms), p2 = function(n){ return ('0' + n).slice(-2); };
+  var ds = D.days ? p2(d.getUTCDate()) + '.' + p2(d.getUTCMonth() + 1) + '.' + d.getUTCFullYear() : p2(d.getDate()) + '.' + p2(d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + p2(d.getHours()) + ':' + p2(d.getMinutes());
+  rows.sort(function(a, z){ return z.q[1] - a.q[1]; });
+  var shown = rows.slice(0, 9), h = '<div class="mut" style="margin-bottom:3px">'+ds+'</div>';
+  shown.forEach(function(w){
+    var v = D.tip ? D.tip(w.q[1]) : sg(w.q[1], 1) + ' %';
+    h += '<div class="r"><span>'+(rows.length > 1 ? '<i style="display:inline-block;background:'+w.s.color+'"></i> '+esc(w.s.name || '') : '')+'</span><b class="num">'+v+'</b></div>';
+  });
+  if (rows.length > shown.length) h += '<div class="mut">und '+(rows.length - shown.length)+' weitere (nur die besten 9 gezeigt)</div>';
+  var t = chTip(); t.innerHTML = h; t.style.display = 'block';
+  var tw = t.offsetWidth, th = t.offsetHeight;
+  var left = (e.clientX > r.left + r.width / 2) ? r.left + 8 : r.right - tw - 8;
+  left = Math.max(6, Math.min(window.innerWidth - tw - 6, left));
+  var top = Math.max(6, Math.min(window.innerHeight - th - 6, r.top + 6));
+  t.style.left = left + 'px'; t.style.top = top + 'px';
+}
+document.addEventListener('pointerdown', function(e){
+  var svg = e.target.closest && e.target.closest('svg.chart');
+  if (!svg || !svg.dataset.cid) { chHide(); return; }
+  CHT = true; CHSVG = svg; try { svg.setPointerCapture(e.pointerId); } catch (x) {}
+  chMove(e, svg);
+});
+document.addEventListener('pointermove', function(e){
+  if (CHT && CHSVG) { chMove(e, CHSVG); return; }
+  if (e.pointerType == 'mouse') {
+    var svg = e.target.closest && e.target.closest('svg.chart');
+    if (svg && svg.dataset.cid) chMove(e, svg); else chHide();
+  }
+});
+document.addEventListener('pointerup', function(){ CHT = false; });
+document.addEventListener('pointercancel', function(){ CHT = false; chHide(); });
 function pctSeries(cv, st){ return cv.map(function(q){ return [q[0], (q[1] / st - 1) * 100]; }); }
 
 /* ---------------------------------------------------------------- Ranking */
@@ -507,8 +569,8 @@ function renderStrat(){
     var ser = [];
     c.forward.forEach(function(x){
       if (HIDDEN[x.key]) return;
-      if (CH == 'paper') ser.push({color: COL[x.key], pts: pctSeries(x.curve, c.start), w: x.key == 'ORIG' ? 2.6 : 1.8});
-      else if (b && b[x.key]) ser.push({color: COL[x.key], pts: b[x.key].curve.map(function(q){ return [q[0], (q[1] / 100 - 1) * 100]; }), w: 1.8});
+      if (CH == 'paper') ser.push({name: x.key == 'ORIG' ? 'Hauptbot' : x.key, color: COL[x.key], pts: pctSeries(x.curve, c.start), w: x.key == 'ORIG' ? 2.6 : 1.8});
+      else if (b && b[x.key]) ser.push({name: x.key, color: COL[x.key], pts: b[x.key].curve.map(function(q){ return [q[0], (q[1] / 100 - 1) * 100]; }), w: 1.8});
     });
     h += '<div class="card" style="margin-top:12px">'+chart(ser, 0, 210, {days: CH != 'paper'})+'<div class="cap"><span>'+(CH == 'paper' ? 'Gewinn in % seit Start' : 'Gewinn in % im Backtest')+'</span><span>gestrichelt = 0 %</span></div>';
     h += '<div class="legend">'+c.forward.map(function(x){ return '<button class="leg '+(HIDDEN[x.key] ? 'off' : '')+'" onclick="toggleLine(\''+x.key+'\')"><i style="background:'+COL[x.key]+'"></i><span>'+(x.key == 'ORIG' ? 'Hauptbot' : x.key+' '+LABEL[x.key])+'</span></button>'; }).join('')+'</div></div>';
@@ -531,8 +593,8 @@ function renderStrat(){
       h += '<div class="seg" style="margin-top:0"><button class="'+(CH == 'paper' ? 'on' : '')+'" onclick="setCh(\'paper\')">Paper-Test</button><button class="'+(CH == 'bt' ? 'on' : '')+'" onclick="setCh(\'bt\')">Backtest</button></div>';
       h += '<div class="card" style="margin-top:12px">';
       var band = '<span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--acc);opacity:.35;margin-right:5px;vertical-align:-1px"></span>';
-      if (CH == 'paper') h += chart([{color: COL[x.key], pts: x.curve}], c.start, 190, {bands: x.investiert})+'<div class="cap"><span>Kontostand in USDT</span><span>Start '+f(c.start, 0)+'</span></div>'+(x.investiert && x.investiert.length ? '<div class="cap"><span>'+band+'hinterlegt = investiert, sonst in bar</span></div>' : '');
-      else h += r ? chart([{color: COL[x.key], pts: r.curve}], 100, 190, {days: true, bands: r.investiert})+'<div class="cap"><span>Backtest, Start = 100</span><span>Ende '+f(r.final, 0)+'</span></div>'+(r.investiert ? '<div class="cap"><span>'+band+'hinterlegt = investiert, sonst in bar'+(r.investiert.length ? ' ('+r.investiert.length+' Einstiege)' : '')+'</span></div>' : '') : '<div class="empty">Backtest noch nicht fertig</div>';
+      if (CH == 'paper') h += chart([{color: COL[x.key], pts: x.curve}], c.start, 190, {bands: x.investiert, tip: function(v){ return f(v, 2)+' USDT ('+sg((v / c.start - 1) * 100, 1)+' %)'; }})+'<div class="cap"><span>Kontostand in USDT</span><span>Start '+f(c.start, 0)+'</span></div>'+(x.investiert && x.investiert.length ? '<div class="cap"><span>'+band+'hinterlegt = investiert, sonst in bar</span></div>' : '');
+      else h += r ? chart([{color: COL[x.key], pts: r.curve}], 100, 190, {days: true, bands: r.investiert, tip: function(v){ return sg(v - 100, 1)+' % (Wert '+f(v, 0)+')'; }})+'<div class="cap"><span>Backtest, Start = 100</span><span>Ende '+f(r.final, 0)+'</span></div>'+(r.investiert ? '<div class="cap"><span>'+band+'hinterlegt = investiert, sonst in bar'+(r.investiert.length ? ' ('+r.investiert.length+' Einstiege)' : '')+'</span></div>' : '') : '<div class="empty">Backtest noch nicht fertig</div>';
       h += '</div>';
       if (r && CH == 'bt') {
         h += '<div class="tiles"><div class="tile"><div class="k">Gesamt</div><div class="v num '+cl(r.total)+'">'+sg(r.total, 0)+' %</div></div><div class="tile"><div class="k">Pro Jahr</div><div class="v num '+cl(r.cagr)+'">'+sg(r.cagr, 0)+' %</div></div>';
@@ -559,7 +621,7 @@ function renderMain(){
   h += '<div class="tile"><div class="k">Ergebnis</div><div class="v num '+cl(s.total_pnl)+'">'+sg(s.total_pnl / s.start * 100)+' %</div></div>';
   h += '<div class="tile"><div class="k">Freies Geld</div><div class="v num">'+f(s.cash)+' USDT</div></div>';
   h += '<div class="tile"><div class="k">Nächste Rotation</div><div class="v num">'+hh+' h '+mm+' min</div></div></div>';
-  h += '<div class="card">'+chart([{color: '#3ddc97', pts: s.curve}], s.start, 170)+'<div class="cap"><span>Kontostand in USDT</span><span>'+s.trades+' Trades, '+f(s.winrate, 0)+' % im Plus</span></div></div>';
+  h += '<div class="card">'+chart([{color: '#3ddc97', pts: s.curve}], s.start, 170, {tip: function(v){ return f(v, 2)+' USDT ('+sg((v / s.start - 1) * 100, 1)+' %)'; }})+'<div class="cap"><span>Kontostand in USDT</span><span>'+s.trades+' Trades, '+f(s.winrate, 0)+' % im Plus</span></div></div>';
   h += '<div class="actions"><button class="btn" onclick="togglePause()">'+(s.paused ? 'Fortsetzen' : 'Pausieren')+'</button><button class="btn" onclick="act(\'/api/rotate\',\'Rotation jetzt ausführen?\')">Rotation jetzt</button>';
   h += '<button class="btn danger wide" onclick="act(\'/api/close_all\',\'Wirklich alle Positionen schließen?\')">Alle Positionen schließen</button></div>';
   h += '<h2>Offene Positionen</h2><div class="card flat"><ul class="list">';
@@ -624,7 +686,7 @@ async function saveGh(){
   } catch (e) { $('ghm').textContent = 'Fehler beim Senden'; }
 }
 var CALC_OPEN = false;
-function render(){ renderHome(); renderStrat(); renderMain(); renderLog(); show(); }
+function render(){ if (CHT) return; CHD = {}; chHide(); renderHome(); renderStrat(); renderMain(); renderLog(); show(); }
 async function loadState(){ var s = await api('/api/state'); if (!s) return; S = s; $('stat').textContent = s.paused ? 'pausiert' : 'läuft'; $('dot').classList.toggle('off', !!s.paused); render(); }
 async function loadCmp(){ var c = await api('/api/compare'); if (!c) return; registerAuto(c); applyWie(); CMP = c; render(); }
 function loadAll(){ loadState(); loadCmp(); }

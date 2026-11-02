@@ -83,6 +83,8 @@ IDEAS = {
     "MOMF_T15": "MOMF_T15: Momentum 14 Tage, Top 3, Bitcoin-Filter 100 Tage, Trailing-Stop 15 %",
     "MOMF2_T15": "MOMF2_T15: Momentum 14 Tage, Top 3, Bitcoin-Filter 200 Tage, Trailing-Stop 15 %",
     "MOMF": "MOMF: Momentum 14 Tage, Top 3 Long, nur wenn Bitcoin über 100-Tage-Schnitt, wöchentlich (aus der Strategie-Suche)",
+    "H365F": "H365F: Nähe 365-Tage-Hoch, Top 3 Long, nur wenn Bitcoin über 100-Tage-Schnitt, alle 3 Tage (aus der Strategie-Suche)",
+    "H365F_2": "H365F_2: wie H365F mit 2x Hebel (die rückblickend beste Variante der Suche)",
     "MOM7": "MOM7: Querschnitts-Momentum 7 Tage, Top 5 Long, wöchentlich",
     "TSM": "TSM: Zeitreihen-Momentum je Coin (28 Tage), Long oder Short, nach Risiko gewichtet",
     "LVOL": "LVOL: Niedrig-Volatilitäts-Anomalie, 5 ruhigste Coins Long, wöchentlich",
@@ -133,8 +135,8 @@ for _k, (_b, _p, _l) in TRAIL.items():
     BASEOF[_k] = _b
     if _l > 1:
         LEV[_k] = _l
-LEV.update({"RG1_2": 2, "RG2_3": 3, "NL2_3": 3, "NL1_5": 5, "DON_3": 3, "GX_3": 3, "H180_2": 2, "VT": 2})
-BASEOF.update({"RG1_2": "RG1", "RG2_3": "RG2", "NL2_3": "NL2", "NL1_5": "NL1", "DON_3": "DON", "GX_3": "GX", "H180_2": "H180", "VT": "VTB"})
+LEV.update({"RG1_2": 2, "RG2_3": 3, "NL2_3": 3, "NL1_5": 5, "DON_3": 3, "GX_3": 3, "H180_2": 2, "VT": 2, "H365F_2": 2})
+BASEOF.update({"RG1_2": "RG1", "RG2_3": "RG2", "NL2_3": "NL2", "NL1_5": "NL1", "DON_3": "DON", "GX_3": "GX", "H180_2": "H180", "H365F_2": "H365F", "VT": "VTB"})
 EXCLUDE = {"SOXLBUSDT", "XAUTUSDT"}   # Tokenisierte Börsen- und Rohstoffprodukte, keine normalen Coins
 MM = 0.005              # Erhaltungsmarge 0,5 % des Positionswerts: darunter wird liquidiert
 LEV_FUND = 0.0003       # Funding und Zinsen auf den gesamten Positionswert bei Hebel, pro Tag
@@ -146,7 +148,7 @@ PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, 
           "E2": 10 ** 9, "E3": 10 ** 9, "T3": 1, "T5": 1, "K2": 7, "K3": 7, "B2": 7, "X10": 1, "X25": 1}
 PERIOD.update({k: 1 for k in RKEYS})
 PERIOD.update({"DON": 1, "DONLS": 1, "GX": 1, "GXLS": 1, "RSI2": 1, "VT": 1, "HALV": 1, "TOM": 1, "ETHBTC": 1, "DM": 7,
-               "MOM28": 7, "MOM7": 7, "MOM7F": 7, "MOMF": 7, "MOMF2": 7, "MIXALL": 30, "MIX5": 30, "MIX10": 30, "TSM": 7, "LVOL": 7, "MAXLS": 7, "MAXM": 7, "H180": 7, "VBRK": 1, "ALTS": 7, "FCON": 3,
+               "MOM28": 7, "MOM7": 7, "MOM7F": 7, "MOMF": 7, "MOMF2": 7, "MIXALL": 30, "MIX5": 30, "MIX10": 30, "TSM": 7, "LVOL": 7, "MAXLS": 7, "MAXM": 7, "H180": 7, "H365F": 3, "H365F_2": 3, "VBRK": 1, "ALTS": 7, "FCON": 3,
                "FCAR": 1, "H22": 1, "OVN": 1, "DON_3": 1, "GX_3": 1, "H180_2": 7})
 PERIOD.update({k: 1 for k in ("NL1", "NL2", "NL3", "NL4", "NL5", "NL2_3", "NL1_5")})
 PERIOD.update({"RG1": 3, "RG2": 1, "RG3": 3, "RG4": 3, "RG5": 1, "RG1_2": 3, "RG2_3": 1})
@@ -471,6 +473,17 @@ def weights_idea(strat, closes, i):
         if len(sc) < 10:
             return {}
         return {sy: INVEST / 5 for sy in _top(sc, 5)}
+    if strat == "H365F":
+        b = closes.get("BTCUSDT") or _POOL.get("closes", {}).get("BTCUSDT")
+        m = _sma(b, i, 100) if b else None
+        if not (m and b[i] and b[i] > m):
+            return {}
+        sc = {}
+        for sy, c in closes.items():
+            win = [x for x in c[max(0, i - 364):i + 1] if x is not None]
+            if c[i] is not None and len(win) >= 292:
+                sc[sy] = c[i] / max(win)
+        return {sy: INVEST / 3 for sy in _top(sc, 3)} if len(sc) >= 10 else {}
     if strat in ("MOMF", "MOMF2"):
         b = closes.get("BTCUSDT") or _POOL.get("closes", {}).get("BTCUSDT")
         m = _sma(b, i, 100 if strat == "MOMF" else 200) if b else None

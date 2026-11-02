@@ -76,6 +76,9 @@ IDEAS = {
     "ETHBTC": "ETHBTC: Rotation Ethereum oder Bitcoin nach ETH/BTC-Trend",
     "DM": "DM: Dual Momentum BTC/ETH/BNB, stärkster der letzten 60 Tage, sonst bar",
     "MOM28": "MOM28: Querschnitts-Momentum 28 Tage, Top 5 Long, wöchentlich",
+    "MOM7F": "MOM7F: Momentum 7 Tage, Top 5 Long, nur wenn Bitcoin über 200-Tage-Schnitt, wöchentlich",
+    "MOM7_T15": "MOM7_T15: Momentum 7 Tage, Top 5 Long, wöchentlich mit Trailing-Stop 15 %",
+    "MOM7F_T15": "MOM7F_T15: Momentum 7 Tage, Top 5 Long, Bitcoin-Filter 200 Tage und Trailing-Stop 15 %",
     "MOMF": "MOMF: Momentum 14 Tage, Top 3 Long, nur wenn Bitcoin über 100-Tage-Schnitt, wöchentlich (aus der Strategie-Suche)",
     "MOM7": "MOM7: Querschnitts-Momentum 7 Tage, Top 5 Long, wöchentlich",
     "TSM": "TSM: Zeitreihen-Momentum je Coin (28 Tage), Long oder Short, nach Risiko gewichtet",
@@ -109,6 +112,7 @@ MAJORS = {"BTCUSDT", "ETHUSDT"}
 SLIP_MAJOR = 0.0002         # Slippage für BTC/ETH (sehr liquide), sonst SLIP
 # Trailing-Stop-Varianten: Schluessel -> (Basisstrategie, Abstand zum Hoechst- bzw. Tiefstkurs, Hebel)
 TRAIL = {
+    "MOM7_T15": ("MOM7", 0.15, 1), "MOM7F_T15": ("MOM7F", 0.15, 1),
     "K_T8": ("K", 0.08, 1), "K_T15": ("K", 0.15, 1), "B_T8": ("B", 0.08, 1), "B_T15": ("B", 0.15, 1),
     "C_T10": ("C", 0.10, 1), "A_T5": ("A", 0.05, 1),
     "BTC_T10": ("TREND", 0.10, 1), "BTC_T20": ("TREND", 0.20, 1),
@@ -138,7 +142,7 @@ PERIOD = {"A": 1, "D": 1, "B": 7, "C": 7, "E": 10 ** 9, "F": 7, "G": 7, "H": 7, 
           "E2": 10 ** 9, "E3": 10 ** 9, "T3": 1, "T5": 1, "K2": 7, "K3": 7, "B2": 7, "X10": 1, "X25": 1}
 PERIOD.update({k: 1 for k in RKEYS})
 PERIOD.update({"DON": 1, "DONLS": 1, "GX": 1, "GXLS": 1, "RSI2": 1, "VT": 1, "HALV": 1, "TOM": 1, "ETHBTC": 1, "DM": 7,
-               "MOM28": 7, "MOM7": 7, "MOMF": 7, "MIXALL": 30, "MIX5": 30, "MIX10": 30, "TSM": 7, "LVOL": 7, "MAXLS": 7, "MAXM": 7, "H180": 7, "VBRK": 1, "ALTS": 7, "FCON": 3,
+               "MOM28": 7, "MOM7": 7, "MOM7F": 7, "MOMF": 7, "MIXALL": 30, "MIX5": 30, "MIX10": 30, "TSM": 7, "LVOL": 7, "MAXLS": 7, "MAXM": 7, "H180": 7, "VBRK": 1, "ALTS": 7, "FCON": 3,
                "FCAR": 1, "H22": 1, "OVN": 1, "DON_3": 1, "GX_3": 1, "H180_2": 7})
 PERIOD.update({k: 1 for k in ("NL1", "NL2", "NL3", "NL4", "NL5", "NL2_3", "NL1_5")})
 PERIOD.update({"RG1": 3, "RG2": 1, "RG3": 3, "RG4": 3, "RG5": 1, "RG1_2": 3, "RG2_3": 1})
@@ -436,6 +440,15 @@ def weights_idea(strat, closes, i):
             return {}
         best = max(sc, key=sc.get)
         return {best: INVEST} if sc[best] > 0 else {}
+    if strat == "MOM7F":
+        b = closes.get("BTCUSDT") or _POOL.get("closes", {}).get("BTCUSDT")
+        m = _sma(b, i, 200) if b else None
+        if not (m and b[i] and b[i] > m):
+            return {}
+        sc = {sy: r for sy, c in closes.items() if (r := ret(c, i, 7)) is not None}
+        if len(sc) < 10:
+            return {}
+        return {sy: INVEST / 5 for sy in _top(sc, 5)}
     if strat == "MOMF":
         b = closes.get("BTCUSDT") or _POOL.get("closes", {}).get("BTCUSDT")
         m = _sma(b, i, 100) if b else None
@@ -937,9 +950,42 @@ def mix_curve(key, series, L, period=30):
     return curve, rebs, costs, w
 
 
+def clean_daily(closes, ext=None, up=10.0, spike=4.0):
+    """Prüft Tageskerzen auf Datenfehler.
+    1) Ausreißer-Tag: Kurs springt um Faktor 4 oder mehr und ist am nächsten Tag wieder zurück: Tag verwerfen.
+    2) Dauerhafter Sprung um Faktor 10 oder mehr an einem Tag: typisch für Umstellung oder neu vergebenes Kürzel.
+       Die Kurse davor gehören zu einem anderen Wert und werden verworfen (der Coin gilt ab da als neu).
+    Starke Abstürze bleiben unangetastet, damit Verluste nicht verschwinden. Gibt die betroffenen Coins zurück."""
+    rep = {}
+    for sy, c in closes.items():
+        n = len(c)
+        for i in range(1, n - 1):
+            a, x, z = c[i - 1], c[i], c[i + 1]
+            if a and x and z and (x / a >= spike or a / x >= spike) and 0.67 < z / a < 1.5:
+                c[i] = None
+                rep.setdefault(sy, []).append("Ausreißer " + time.strftime("%d.%m.%Y", time.gmtime((int(time.time() // DAY) - n + i) * DAY)))
+        prev = None
+        for i in range(n):
+            x = c[i]
+            if x is None:
+                continue
+            if prev and x / prev >= up:
+                for j in range(i):
+                    c[j] = None
+                    if ext:
+                        for key in ("v", "h", "l"):
+                            arr = ext.get(key, {}).get(sy)
+                            if arr is not None and j < len(arr):
+                                arr[j] = None
+                rep.setdefault(sy, []).append("Sprung x%.0f am %s, Daten davor verworfen" % (x / prev, time.strftime("%d.%m.%Y", time.gmtime((int(time.time() // DAY) - n + i) * DAY))))
+            prev = x
+    return rep
+
+
 def run_backtest(days=2700, progress=None, data=None, hourly=None):
     dfund, note_extra, members, data_ext, ext = None, "", None, False, None
     check = None
+    daily_check = {}
     import hbt
     if data is None:
         syms = pool()
@@ -952,10 +998,12 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
             for key in ("v", "h", "l"):
                 ext[key].update(ex[key])
         data_ext = True
+        daily_check = clean_daily(closes0, ext)
         members = rolling_members(closes0, ext["v"], n0)
         if progress:
             progress("Lade Meme-Coins ...")
         mdata = load_history(MEMES, days)
+        daily_check.update(clean_daily(mdata[1], mdata[3]))
         hi = dict(ext["h"]); hi.update(mdata[3]["h"])
         lo = dict(ext["l"]); lo.update(mdata[3]["l"])
         data = (n0, closes0, start0, None, mdata[1], mdata[3]["v"], hi, lo)
@@ -1019,7 +1067,8 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
         last_reb = -10 ** 9
         nlish = is_nl(strat)
         acc.slip_extra = 0.01 if nlish else 0.0     # neue Coins: zusätzlich 1 % Slippage je Seite
-        use_h = hourly is not None and not nlish and (strat in LEV or strat in TRAIL or strat in RKEYS or strat in HOURK)
+        use_h = hourly is not None and not nlish and (strat in LEV or strat in RKEYS or strat in HOURK
+                                                     or (strat in TRAIL and base_of(strat).startswith("R_")))
         if strat == "ORIG":
             import hbt
             use_h = True
@@ -1148,13 +1197,14 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
             optim = dict(fehler=str(e)[:300])
     return dict(ts=time.time(), days=n, coins=len(closes), optimierung=optim, mix_auswahl=mix_now, universe=("mitwandernd: je Tag Top %d nach 30-Tage-Umsatz" % NUM) if members else "heutige Top %d" % NUM, start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
                 results=res,
-                hourly=bool(hourly), funding_real=bool(dfund), datenpruefung=check,
+                hourly=bool(hourly), funding_real=bool(dfund), datenpruefung=dict(check or {}, tagesdaten=daily_check),
                 note=("Stundenkerzen: Korb-Strategien rotieren alle 6 h, Trailing-Stops und Liquidationen werden stundengenau geprüft. "
                       if hourly is not None else "Nur Tagesdaten: Korb-Strategien werden täglich statt alle 6 h gerechnet. ")
                      + ("Funding mit echten Binance-Raten (wo vorhanden, sonst 0,03 % pro Tag). " if dfund else "Funding pauschal 0,03 % pro Tag. ")
                      + ("Universum: je Tag die 40 umsatzstärksten Coins der letzten 30 Tage aus allen heute noch gelisteten Binance-USDT-Paaren (Delistete fehlen, Rest-Survivorship-Bias). " if members else "Universum = heutige Top-Coins nach Umsatz (Survivorship-Bias begünstigt Long-Strategien). ")
                      + "Keine Parameter wurden angepasst. Kosten 0,13 % pro Seite."
                      + (f" Datenprüfung: Stundendaten von {check['korrigiert']} Coins bereinigt, {len(check['entfernt'])} Coins wegen fehlerhafter Stundendaten entfernt." if check else "")
+                     + (f" Tagesdaten von {len(daily_check)} Coins korrigiert ({', '.join(sorted(daily_check)[:8])})." if daily_check else "")
                      + note_extra)
 
 

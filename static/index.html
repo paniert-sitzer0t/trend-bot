@@ -241,6 +241,16 @@ Object.keys(RGL).forEach(function(k, ni){
 });
 
 var WIE = {
+ H365F:'Alle 3 Tage sortiert der Bot die 40 größten Coins danach, wie nah sie ihrem 365-Tage-Hoch sind, und kauft die 3 nächsten (je 33 %). Er kauft nur, wenn Bitcoin über seinem 100-Tage-Schnitt liegt, sonst bleibt er in bar.',
+ H365F_2:'Dieselben Regeln wie H365F (3 Coins nahe dem 365-Tage-Hoch, nur bei Bitcoin über dem 100-Tage-Schnitt, alle 3 Tage), aber mit doppeltem Einsatz auf Kredit. Gewinne und Verluste verdoppeln sich, ein Kursrückgang von etwa 50 % löscht das Konto. Nur Paper-Simulation.',
+ H180F:'Alle 3 Tage sortiert der Bot die 40 größten Coins danach, wie nah sie ihrem 180-Tage-Hoch sind, und kauft die 5 nächsten (je 20 %). Er kauft nur, wenn Bitcoin über seinem 100-Tage-Schnitt liegt, sonst bleibt er in bar.',
+ MOMF:'Wöchentlich kauft der Bot die 3 Coins mit dem stärksten Kursplus der letzten 14 Tage (je 33 %), aber nur, wenn Bitcoin über seinem 100-Tage-Schnitt liegt. Sonst bleibt er in bar.',
+ MOMF2:'Wie MOMF (3 stärkste Coins der letzten 14 Tage, wöchentlich), aber mit strengerem Marktfilter: Bitcoin muss über seinem 200-Tage-Schnitt liegen, sonst bleibt der Bot in bar.',
+ MOMF_T15:'Wie MOMF (3 stärkste Coins der letzten 14 Tage, Bitcoin über 100-Tage-Schnitt), aber jede Position wird verkauft, wenn sie 15 % vom besten Kurs seit Einstieg zurückfällt.',
+ MOMF2_T15:'Wie MOMF2 (3 stärkste Coins der letzten 14 Tage, Bitcoin über 200-Tage-Schnitt), aber jede Position wird verkauft, wenn sie 15 % vom besten Kurs zurückfällt.',
+ MOM7F:'Wie MOM7 (wöchentlich die 5 Coins mit dem stärksten Plus der letzten 7 Tage), aber nur, wenn Bitcoin über seinem 200-Tage-Schnitt liegt. Sonst bleibt der Bot in bar.',
+ MOM7_T15:'Wie MOM7 (wöchentlich die 5 stärksten Coins der letzten 7 Tage), aber jede Position wird verkauft, wenn sie 15 % vom besten Kurs seit Einstieg zurückfällt.',
+ MOM7F_T15:'Wie MOM7F (5 stärkste Coins der letzten 7 Tage, nur bei Bitcoin über dem 200-Tage-Schnitt), aber jede Position wird verkauft, wenn sie 15 % vom besten Kurs zurückfällt.',
  A:'Der Bot sucht täglich die 3 Coins mit der größten Kursbewegung der letzten 24 Stunden. Setzt sich die Bewegung fort, kauft er (Long), sonst shortet er, und hält je einen Tag.',
  D:'Das Gegenstück zu A: Dieselben 3 Coins mit der größten 24-Stunden-Bewegung, aber der Bot setzt gegen die Bewegung (steigt ein Coin stark, shortet er ihn, fällt er stark, kauft er ihn). Wette auf Rückkehr zum Mittelwert.',
  B:'Einmal pro Woche sortiert der Bot die Coins nach dem Kursverlauf der letzten 7 und 30 Tage. Er kauft die 3 stärksten (Long) und shortet die 3 schwächsten, jeweils zu gleichen Teilen.',

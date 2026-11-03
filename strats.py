@@ -1497,7 +1497,7 @@ class Forward:
             today = int(time.time() // DAY)
             done = int((self.get("_day") or 0))
             if today > done and time.time() % DAY > 600:
-                days, closes, day0, _x = load_history(universe(), 260)
+                days, closes, day0, _x = load_history(universe(), 400)
                 try:
                     fr = {x["symbol"]: float(x["lastFundingRate"]) * 3 for x in requests.get(
                         "https://fapi.binance.com/fapi/v1/premiumIndex", timeout=20).json()}
@@ -1533,6 +1533,8 @@ class Forward:
                     acc.slip_extra = 0.01 if is_nl(k) else 0.0
                     if s.get("dead"):
                         continue
+                    if k.startswith("H365F") and not self.get("_fix365"):     # früher fehlten Kursdaten für das 365-Tage-Fenster: einmal sofort neu anpassen
+                        s["last_reb"] = 0
                     if s["last_reb"] == 0 or today - s["last_reb"] >= PERIOD[k]:
                         if not (PERIOD[k] >= 10 ** 9 and s["rebs"]):
                             acc.rebalance(self.px, sized(k, acc, self.px, closes, i, ctx))
@@ -1542,6 +1544,7 @@ class Forward:
                     s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs, losses=acc.losses, last_eq=acc.last_eq, peak=acc.peak)
                     self.put(k, s)
                 self.put("_day", today)
+                self.put("_fix365", 1)
                 self.thin_eq()
             self.track_listings()
             slot = int(time.time() // SLOT)

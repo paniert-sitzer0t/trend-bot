@@ -364,7 +364,7 @@ window.addEventListener('popstate', function(e){
 var NAV = [];
 function navPush(v, sel){ if (v != VIEW || sel != SEL) { NAV.push({v: VIEW, sel: SEL}); if (NAV.length > 40) NAV.shift(); } }
 function goBack(){
-  var st = NAV.pop(); if (!st) return;
+  var st = NAV.pop() || {v: 'home', sel: SEL}; if (VIEW == 'home' && !NAV.length && st.v == 'home') return;
   VIEW = st.v; SEL = st.sel || 'ALL'; chHide();
   try { localStorage.setItem('view', VIEW); localStorage.setItem('sel', SEL); } catch (e) {}
   hist(false); show(); render(); window.scrollTo(0, 0);
@@ -373,7 +373,7 @@ function go(v){ navPush(v, SEL); VIEW = v; try { localStorage.setItem('view', v)
 function show(){
   ['home','strat','main','log'].forEach(function(v){ $('v-'+v).classList.toggle('on', v == VIEW); });
   document.querySelectorAll('#nav button').forEach(function(b){ b.classList.toggle('on', b.dataset.v == VIEW); });
-  var bk = $('back'); if (bk) bk.style.display = NAV.length ? '' : 'none';
+  var bk = $('back'); if (bk) bk.style.display = (NAV.length || VIEW != 'home') ? '' : 'none';
 }
 document.querySelectorAll('#nav button').forEach(function(b){ b.onclick = function(){ go(b.dataset.v); }; });
 hist(false);

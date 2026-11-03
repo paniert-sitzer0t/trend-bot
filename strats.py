@@ -1546,6 +1546,24 @@ class Forward:
                 self.put("_day", today)
                 self.put("_fix365", 1)
                 self.thin_eq()
+            if not self.get("_fix365") and int(self.get("_day") or 0) >= today and time.time() - getattr(self, "_fix_try", 0) > 600:
+                self._fix_try = time.time()                 # einmalige Korrektur: 365-Tage-Strategien konnten wegen zu kurzer Kurshistorie nicht handeln
+                try:
+                    days, closes, _d0, _x = load_history(universe(), 400)
+                    for k in [k for k in NAMES if k.startswith("H365F")]:
+                        s = self.get(k)
+                        if not s or s.get("dead"):
+                            continue
+                        acc = Account(s["cash"], s["pos"], s.get("losses", 0), s.get("last_eq"))
+                        acc.costs, acc.lev = s["costs"], k in LEV
+                        acc.peak = dict(s.get("peak", {}))
+                        acc.rebalance(self.px, sized(k, acc, self.px, closes, days - 1, None))
+                        s.update(cash=acc.cash, pos=acc.pos, costs=acc.costs, losses=acc.losses, last_eq=acc.last_eq, peak=acc.peak,
+                                 rebs=s["rebs"] + 1, last_reb=today)
+                        self.put(k, s)
+                    self.put("_fix365", 1)
+                except Exception as e:
+                    self.msg(f"Korrektur 365-Tage-Strategien fehlgeschlagen: {e}")
             self.track_listings()
             slot = int(time.time() // SLOT)
             rk = [k for k in NAMES if base_of(k).startswith("R_")]

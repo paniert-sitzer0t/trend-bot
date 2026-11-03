@@ -30,6 +30,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   padding:calc(env(safe-area-inset-top) + 10px) var(--gut) 10px;background:rgba(12,17,27,.88);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .brand{font:700 18px var(--head);letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.back{font:600 14px var(--body);color:var(--acc);background:var(--s2);border:1px solid var(--line);border-radius:99px;padding:6px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .pill{font:600 12px var(--body);padding:3px 9px;border-radius:99px;background:rgba(245,196,81,.14);color:var(--warn)}
 .state{display:flex;align-items:center;gap:7px;color:var(--mut);font-size:13px}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--pos);box-shadow:0 0 0 3px rgba(61,220,151,.18)}
@@ -137,7 +138,7 @@ nav button.on{color:var(--acc)}
 </head>
 <body>
 <header class="top">
-  <div class="brand">Trend-Bot <span class="pill">Paper</span></div>
+  <div class="brand"><button id="back" class="back" onclick="goBack()" style="display:none" aria-label="Zurück">‹ Zurück</button><span id="brandname">Trend-Bot</span> <span class="pill">Paper</span></div>
   <div class="state"><i class="dot" id="dot"></i><span id="stat">lädt</span></div>
 </header>
 <main>
@@ -356,14 +357,23 @@ function hist(push){
 }
 window.addEventListener('popstate', function(e){
   var st = e.state; if (!st || !st.v) return;
-  VIEW = st.v; SEL = st.sel || 'ALL'; chHide();
+  NAV.pop(); VIEW = st.v; SEL = st.sel || 'ALL'; chHide();
   try { localStorage.setItem('view', VIEW); localStorage.setItem('sel', SEL); } catch (x) {}
   show(); render(); window.scrollTo(0, 0);
 });
-function go(v){ VIEW = v; try { localStorage.setItem('view', v) } catch (e) {} hist(true); show(); window.scrollTo(0, 0); }
+var NAV = [];
+function navPush(v, sel){ if (v != VIEW || sel != SEL) { NAV.push({v: VIEW, sel: SEL}); if (NAV.length > 40) NAV.shift(); } }
+function goBack(){
+  var st = NAV.pop(); if (!st) return;
+  VIEW = st.v; SEL = st.sel || 'ALL'; chHide();
+  try { localStorage.setItem('view', VIEW); localStorage.setItem('sel', SEL); } catch (e) {}
+  hist(false); show(); render(); window.scrollTo(0, 0);
+}
+function go(v){ navPush(v, SEL); VIEW = v; try { localStorage.setItem('view', v) } catch (e) {} hist(true); show(); window.scrollTo(0, 0); }
 function show(){
   ['home','strat','main','log'].forEach(function(v){ $('v-'+v).classList.toggle('on', v == VIEW); });
   document.querySelectorAll('#nav button').forEach(function(b){ b.classList.toggle('on', b.dataset.v == VIEW); });
+  var bk = $('back'); if (bk) bk.style.display = NAV.length ? '' : 'none';
 }
 document.querySelectorAll('#nav button').forEach(function(b){ b.onclick = function(){ go(b.dataset.v); }; });
 hist(false);
@@ -375,7 +385,7 @@ function levBadges(r){
   return o;
 }
 function setSort(k){ SORT = k; try { localStorage.setItem('sort', k) } catch (e) {} render(); }
-function pick(k){ SEL = k; try { localStorage.setItem('sel', k) } catch (e) {} VIEW = 'strat'; try { localStorage.setItem('view', 'strat') } catch (e) {} hist(true); show(); render(); window.scrollTo(0, 0); }
+function pick(k){ navPush('strat', k); SEL = k; try { localStorage.setItem('sel', k) } catch (e) {} VIEW = 'strat'; try { localStorage.setItem('view', 'strat') } catch (e) {} hist(true); show(); render(); window.scrollTo(0, 0); }
 function setCh(k){ CH = k; render(); }
 function toggleLine(k){ HIDDEN[k] = !HIDDEN[k]; render(); }
 

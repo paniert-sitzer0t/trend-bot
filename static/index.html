@@ -376,7 +376,7 @@ function show(){
   var bk = $('back'); if (bk) bk.style.display = (NAV.length || VIEW != 'home') ? '' : 'none';
 }
 document.querySelectorAll('#nav button').forEach(function(b){ b.onclick = function(){ go(b.dataset.v); }; });
-hist(false);
+hist(false); show();
 function setLev(k){ LEVF = k; render(); }
 function levBadges(r){
   var o = '';

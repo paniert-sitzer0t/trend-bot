@@ -347,12 +347,26 @@ async function api(path, method){
   } catch (e) { return null; }
 }
 async function act(p, q){ if (q && !confirm(q)) return; await api(p, 'POST'); loadAll(); }
-function go(v){ VIEW = v; try { localStorage.setItem('view', v) } catch (e) {} show(); window.scrollTo(0, 0); }
+function hist(push){
+  try {
+    var st = {v: VIEW, sel: SEL}, cur = history.state;
+    if (push && !(cur && cur.v == st.v && cur.sel == st.sel)) history.pushState(st, '');
+    else history.replaceState(st, '');
+  } catch (e) {}
+}
+window.addEventListener('popstate', function(e){
+  var st = e.state; if (!st || !st.v) return;
+  VIEW = st.v; SEL = st.sel || 'ALL'; chHide();
+  try { localStorage.setItem('view', VIEW); localStorage.setItem('sel', SEL); } catch (x) {}
+  show(); render(); window.scrollTo(0, 0);
+});
+function go(v){ VIEW = v; try { localStorage.setItem('view', v) } catch (e) {} hist(true); show(); window.scrollTo(0, 0); }
 function show(){
   ['home','strat','main','log'].forEach(function(v){ $('v-'+v).classList.toggle('on', v == VIEW); });
   document.querySelectorAll('#nav button').forEach(function(b){ b.classList.toggle('on', b.dataset.v == VIEW); });
 }
 document.querySelectorAll('#nav button').forEach(function(b){ b.onclick = function(){ go(b.dataset.v); }; });
+hist(false);
 function setLev(k){ LEVF = k; render(); }
 function levBadges(r){
   var o = '';
@@ -361,7 +375,7 @@ function levBadges(r){
   return o;
 }
 function setSort(k){ SORT = k; try { localStorage.setItem('sort', k) } catch (e) {} render(); }
-function pick(k){ SEL = k; try { localStorage.setItem('sel', k) } catch (e) {} VIEW = 'strat'; try { localStorage.setItem('view', 'strat') } catch (e) {} show(); render(); window.scrollTo(0, 0); }
+function pick(k){ SEL = k; try { localStorage.setItem('sel', k) } catch (e) {} VIEW = 'strat'; try { localStorage.setItem('view', 'strat') } catch (e) {} hist(true); show(); render(); window.scrollTo(0, 0); }
 function setCh(k){ CH = k; render(); }
 function toggleLine(k){ HIDDEN[k] = !HIDDEN[k]; render(); }
 

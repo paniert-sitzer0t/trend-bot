@@ -113,7 +113,8 @@ MIX = {
 MIXCFG = {"MIX5": (5, 180), "MIX10": (10, 365)}
 NAMES.update(MIX)
 HOURK = {"H22", "OVN"}      # stundengenaue Strategien
-CARRY = {"FCAR"}            # marktneutral, verdient nur Funding
+CARRYCFG = {"FCAR": (5, 0.0003), "FCAR3": (3, 0.0006), "FCAR10": (10, 0.0002)}   # (Anzahl Coins, Mindest-Funding je Tag)
+CARRY = set(CARRYCFG)       # marktneutral, verdient nur Funding
 MAJORS = {"BTCUSDT", "ETHUSDT"}
 SLIP_MAJOR = 0.0002         # Slippage für BTC/ETH (sehr liquide), sonst SLIP
 # Trailing-Stop-Varianten: Schluessel -> (Basisstrategie, Abstand zum Hoechst- bzw. Tiefstkurs, Hebel)
@@ -201,6 +202,143 @@ for _b in ("B", "MOMF", "AD2_3_200"):
 for _k, (_b, _f, _mx) in MG.items():
     NAMES[_k] = f"{_k}: {_MGN[_b]} mit Martingale x{str(_f).replace('.', ',')} nach Verlustperiode, höchstens Stufe {_mx} (Einsatz 35 % bis {min(100, int(round(35 * _f ** _mx)))} %)"
     PERIOD[_k] = PERIOD[_b]
+
+
+# Gleichmäßig wachsende Strategien: viele kleine Wetten, Einsatz nach Schwankung, Marktschutz.
+CALM = {}
+for _n in (10, 15):
+    CALM[f"RPK{_n}"] = (f"Risikoparität-Korb: die {_n} größten Coins, gewichtet nach 1/Schwankung, nur wenn Bitcoin über der 200-Tage-Linie", 7)
+for _k in (3, 5, 10):
+    CALM[f"MZR{_k}"] = (f"Momentum mit Zielrisiko: Top {_k} nach 14-Tage-Momentum, Einsatz sinkt bei hoher Schwankung (Ziel 40 % pro Jahr), nur wenn Bitcoin über der 100-Tage-Linie", 7)
+CALM["TDMB"] = ("Trend-Dimmer Bitcoin: Einsatz 0 bis 100 % in Fünftel-Stufen nach fünf Trendsignalen von Bitcoin", 3)
+CALM["TDMK"] = ("Trend-Dimmer Korb: wie TDMB, aber verteilt auf die Top 5 nach 14-Tage-Momentum", 3)
+for _k in (5, 10):
+    CALM[f"MNL{_k}"] = (f"Marktneutral: Top {_k} Long und schwächste {_k} Short nach 14-Tage-Momentum, gleich viel (Short nur simuliert)", 7)
+for _n in (10, 20):
+    CALM[f"TJC{_n}"] = (f"Trendfolger je Coin: die {_n} größten Coins einzeln long, solange sie über ihrer eigenen 100-Tage-Linie liegen, nach 1/Schwankung gewichtet", 7)
+for _t in (10, 15):
+    CALM[f"RSB{_t}"] = (f"Rücksetzer im Aufwärtstrend: Coin fällt in 3 Tagen um über {_t} %, liegt aber über seiner 50-Tage-Linie und Bitcoin über der 100-Tage-Linie, 3 Tage halten", 1)
+for _n in (10, 20):
+    CALM[f"RBP{_n}"] = (f"Rebalancing-Prämie: die {_n} größten Coins zu gleichen Teilen, täglich auf Gleichstand zurück, nur wenn Bitcoin über der 100-Tage-Linie", 1)
+CALM["KS1"] = ("Kern und Satelliten: 50 % Bitcoin-Trend, 30 % H180F, 20 % Risikoparität-Korb, wöchentlich auf diese Anteile zurück", 3)
+CALM["KS2"] = ("Kern und Satelliten: 40 % Bitcoin-Trend, 40 % MOMF, 20 % Risikoparität-Korb, wöchentlich auf diese Anteile zurück", 3)
+KSMIX = {"KS1": (("TREND", 0.5), ("H180F", 0.3), ("RPK10", 0.2)), "KS2": (("TREND", 0.4), ("MOMF", 0.4), ("RPK10", 0.2))}
+BRAKE = {"BRK_H180F": ("H180F", 0.15, 0.5), "BRK_MOMF": ("MOMF", 0.15, 0.5)}     # (Basis, Rückgang vom Höchststand, Einsatzfaktor)
+for _k, (_t, _p) in CALM.items():
+    NAMES[_k] = f"{_k}: {_t}"
+    PERIOD[_k] = _p
+for _k, (_b, _d, _f) in BRAKE.items():
+    NAMES[_k] = f"{_k}: {NAMES[_b].split(': ', 1)[1].split(' (')[0]} mit Verlust-Bremse: fällt das Konto {int(_d * 100)} % vom Höchststand, halbiert sich der Einsatz bis zur Erholung"
+    PERIOD[_k] = PERIOD[_b]
+for _k in ("FCAR3", "FCAR10"):
+    NAMES[_k] = f"{_k}: Funding-Carry marktneutral, " + ("Top 3 mit Funding über 0,06 % pro Tag" if _k == "FCAR3" else "Top 10 mit Funding über 0,02 % pro Tag")
+    PERIOD[_k] = 1
+
+
+def _bign(closes, i, n):
+    """Die n größten Coins nach durchschnittlichem Umsatz der letzten 30 Tage (nur Daten bis Tag i)."""
+    vol = _EXT.get("v") or {}
+    sc = {}
+    for sy, c in closes.items():
+        if c[i] is None:
+            continue
+        v = vol.get(sy)
+        w = [x for x in (v[max(0, i - 29):i + 1] if v else []) if x]
+        sc[sy] = sum(w) / len(w) if w else 0.0
+    return _top(sc, n)
+
+
+def _bull(closes, i, n):
+    b = closes.get("BTCUSDT") or _POOL.get("closes", {}).get("BTCUSDT")
+    m = _sma(b, i, n) if b else None
+    return bool(m and b[i] and b[i] > m)
+
+
+def _invvol(closes, i, syms, total):
+    iv = {}
+    for sy in syms:
+        v = _vol(closes[sy], i, 30)
+        if v:
+            iv[sy] = 1.0 / max(v, 0.005)
+    t = sum(iv.values())
+    return {sy: total * x / t for sy, x in iv.items()} if t else {}
+
+
+def weights_calm(strat, closes, i, ctx=None):
+    if strat in KSMIX:
+        out = {}
+        for base, share in KSMIX[strat]:
+            for sy, v in weights(base, closes, i, ctx).items():
+                out[sy] = out.get(sy, 0.0) + v * share
+        return out
+    kind = strat.rstrip("0123456789")
+    num = int(strat[len(kind):] or 0)
+    if kind == "RPK":
+        if not _bull(closes, i, 200):
+            return {}
+        return _invvol(closes, i, _bign(closes, i, num), INVEST)
+    if kind in ("MZR", "MNL", "TDMK"):
+        sc = {sy: r for sy, c in closes.items() if (r := ret(c, i, 14)) is not None}
+        if len(sc) < 12:
+            return {}
+    if kind == "MZR":
+        if not _bull(closes, i, 100):
+            return {}
+        picks = _top(sc, num)
+        vs = [v for sy in picks if (v := _vol(closes[sy], i, 30))]
+        if not vs:
+            return {}
+        expo = min(INVEST, 0.40 / (0.8 * (sum(vs) / len(vs)) * math.sqrt(365)))
+        return {sy: expo / num for sy in picks}
+    if kind == "MNL":
+        w = {sy: INVEST / (2 * num) for sy in _top(sc, num)}
+        w.update({sy: -INVEST / (2 * num) for sy in _top(sc, num, reverse=False)})
+        return w
+    if kind in ("TDMB", "TDMK"):
+        b = closes.get("BTCUSDT") or _POOL.get("closes", {}).get("BTCUSDT")
+        if not b or b[i] is None:
+            return {}
+        s50, s100, s200 = _sma(b, i, 50), _sma(b, i, 100), _sma(b, i, 200)
+        r30 = ret(b, i, 30)
+        pts = sum([bool(s50 and b[i] > s50), bool(s100 and b[i] > s100), bool(s200 and b[i] > s200),
+                   bool(s50 and s200 and s50 > s200), bool(r30 is not None and r30 > 0)])
+        if not pts:
+            return {}
+        f = pts / 5
+        if kind == "TDMB":
+            return {"BTCUSDT": INVEST * f}
+        return {sy: INVEST * f / 5 for sy in _top(sc, 5)}
+    if kind == "TJC":
+        coins = _bign(closes, i, num)
+        w = _invvol(closes, i, coins, INVEST)
+        out = {}
+        for sy, x in w.items():
+            m = _sma(closes[sy], i, 100)
+            if m and closes[sy][i] > m:
+                out[sy] = x
+        return out
+    if kind == "RSB":
+        if not _bull(closes, i, 100):
+            return {}
+        thr, picks = num / 100, {}
+        for sy, c in closes.items():
+            m = _sma(c, i, 50)
+            for j in (i, i - 1, i - 2):
+                r = ret(c, j, 3) if j >= 3 else None
+                if r is not None and r < -thr and m and c[i] is not None and c[i] > m:
+                    picks[sy] = r
+                    break
+        if not picks:
+            return {}
+        sel = _top(picks, 5, reverse=False)
+        each = min(INVEST / len(sel), 0.2)
+        return {sy: each for sy in sel}
+    if kind == "RBP":
+        if not _bull(closes, i, 100):
+            return {}
+        coins = _bign(closes, i, num)
+        return {sy: INVEST / len(coins) for sy in coins} if len(coins) >= 5 else {}
+    return {}
 
 
 # Jede Strategie ohne Hebel bekommt automatisch eine Trailing-Variante (Körbe mit 6-h-Rotation 5 %, sonst 15 %).
@@ -729,6 +867,10 @@ def weights(strat, closes, i, ctx=None):
         return {s: v * LEV.get(strat, 1) for s, v in base.items()}
     if strat in MG:
         return weights(MG[strat][0], closes, i, ctx)
+    if strat in CALM:
+        return weights_calm(strat, closes, i, ctx)
+    if strat in BRAKE:
+        return weights(BRAKE[strat][0], closes, i, ctx)
     if strat in ADAPT:
         return weights_adapt(strat, closes, i)
     if strat in RG:
@@ -791,6 +933,19 @@ def sized(strat, acc, px, closes, i, ctx=None):
     """Zielgewichte inklusive Martingale-Skalierung: Einsatz wächst nach jeder Verlustperiode um den Faktor,
     gedeckelt bei 95 % des Kapitals (1x Hebel), und springt nach einer Gewinnperiode auf den Grundeinsatz zurück."""
     w = weights(strat, closes, i, ctx)
+    bk = strat if strat in BRAKE else (BASEOF.get(strat) if BASEOF.get(strat) in BRAKE else None)
+    if bk:
+        eq = acc.equity(px)
+        pk = max(acc.peak.get("_eq", eq), eq)
+        acc.peak["_eq"] = pk
+        on = acc.peak.get("_br", 0)
+        if not on and eq < pk * (1 - BRAKE[bk][1]):
+            on = 1
+        elif on and eq >= pk * (1 - BRAKE[bk][1] / 2):
+            on = 0
+        acc.peak["_br"] = on
+        if on:
+            w = {s: v * BRAKE[bk][2] for s, v in w.items()}
     mk = strat if strat in MARTI else (BASEOF.get(strat) if BASEOF.get(strat) in MARTI else None)
     gk = strat if strat in MG else (BASEOF.get(strat) if BASEOF.get(strat) in MG else None)
     if mk or gk:
@@ -916,8 +1071,25 @@ def stats(curve, days_per_year=365):
         peak = max(peak, x)
         mdd = min(mdd, x / peak - 1)
     yrs = len(c) / days_per_year
+    # Gleichmäßigkeit: wie gerade die Kurve (logarithmisch) wächst, R² der Regression, 0 bis 100. Längste Flaute: Monate unter dem früheren Höchststand.
+    smooth = 0.0
+    if min(c) > 0 and c[-1] > c[0]:
+        ys = [math.log(x) for x in c]
+        n = len(ys)
+        mx_, my_ = (n - 1) / 2, sum(ys) / n
+        sxx = sum((k - mx_) ** 2 for k in range(n))
+        sxy = sum((k - mx_) * (y - my_) for k, y in enumerate(ys))
+        syy = sum((y - my_) ** 2 for y in ys)
+        smooth = max(0.0, (sxy * sxy) / (sxx * syy) * 100) if sxx and syy else 0.0
+    pk, run, longest = c[0], 0, 0
+    for x in c:
+        if x >= pk:
+            pk, run = x, 0
+        else:
+            run += 1
+            longest = max(longest, run)
     return dict(total=(c[-1] / c[0] - 1) * 100, cagr=((c[-1] / c[0]) ** (1 / yrs) - 1) * 100 if c[-1] > 0 else -100,
-                maxdd=mdd * 100, sharpe=mean / sd * math.sqrt(days_per_year))
+                maxdd=mdd * 100, sharpe=mean / sd * math.sqrt(days_per_year), smooth=round(smooth, 1), flaute=round(longest / 30.4, 1))
 
 
 def mem_available_mb():
@@ -1279,7 +1451,7 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
                         px_i[s] = lastp(s, i)
             if strat in CARRY:
                 if i - last_reb >= PERIOD[strat]:
-                    picks = set(carry_picks(i))
+                    picks = set(carry_picks(i, *CARRYCFG[strat]))
                     eq = acc.cash
                     note = eq * INVEST / 2 / max(len(picks), 1)
                     cost = len(picks ^ acc.carry) * note * 2 * (FEE + SLIP)
@@ -1519,7 +1691,7 @@ class Forward:
                     if k in CARRY:
                         if s.get("carry") and s.get("cday") and s["cday"] < today:
                             s["cash"] += sum(s["cnot"] * fr.get(sy, 0.0) * (today - s["cday"]) for sy in s["carry"])
-                        picks = set(carry_picks(days - 1))
+                        picks = set(carry_picks(days - 1, *CARRYCFG[k]))
                         note = s["cash"] * INVEST / 2 / max(len(picks), 1)
                         cost = len(picks ^ set(s.get("carry") or [])) * note * 2 * (FEE + SLIP)
                         s.update(cash=s["cash"] - cost, costs=s["costs"] + cost, carry=sorted(picks), cnot=note, cday=today,

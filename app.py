@@ -51,7 +51,7 @@ def run_bt():
         try:
             r = strats.run_and_save("backtest.json", progress=prog)
             if "error" in r:
-                BT["last_error"] = dict(ts=time.time(), error=r["error"])
+                BT["last_error"] = dict(ts=time.time(), error=r["error"], ort=r.get("ort"))
             else:
                 r["duration"] = time.time() - t0
                 tmp = "backtest.json.tmp"

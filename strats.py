@@ -1579,7 +1579,8 @@ def run_and_save(path="backtest.json", progress=None):
     try:
         r = run_backtest(progress=progress)
     except Exception as e:
-        r = dict(ts=time.time(), error=str(e))
+        import traceback
+        r = dict(ts=time.time(), error=str(e), ort=traceback.format_exc().strip().splitlines()[-3:])
         with open("backtest_error.json", "w") as f:
             json.dump(r, f)
         return r

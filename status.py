@@ -14,6 +14,13 @@ H = {"Authorization": "Bearer " + TOKEN, "Accept": "application/vnd.github+json"
 def tunnel_url():
     """Aktuelle Dashboard-Adresse (ohne Passwort). Ändert sich bei jedem Tunnel-Neustart."""
     import re, subprocess, json as _j, urllib.request
+    try:
+        import bot
+        fest = bot.env("DASH_URL", "").strip().rstrip("/")      # feste Adresse (z. B. Tailscale Funnel), ändert sich nie
+        if fest.startswith("https://"):
+            return fest
+    except Exception:
+        pass
     # 1) cloudflared meldet die Quick-Tunnel-Adresse über seinen lokalen Metrics-Server
     for port in range(20241, 20246):
         try:

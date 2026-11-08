@@ -1573,11 +1573,11 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
                      + note_extra)
 
 
-def run_and_save(path="backtest.json", progress=None):
+def run_and_save(path="backtest.json", progress=None, days=2700):
     """Rechnet den Backtest. Bei einem Fehler bleiben die alten Ergebnisse erhalten, der Fehler wird separat gemerkt.
     Geschrieben wird über eine Zwischendatei, damit ein Absturz mitten im Schreiben nichts zerstört."""
     try:
-        r = run_backtest(progress=progress)
+        r = run_backtest(days=days, progress=progress)
     except Exception as e:
         import traceback
         r = dict(ts=time.time(), error=str(e), ort=traceback.format_exc().strip().splitlines()[-3:])

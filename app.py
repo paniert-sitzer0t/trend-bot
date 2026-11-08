@@ -9,6 +9,7 @@ engine = bot.Engine()
 fwd = strats.Forward(start=bot.START_BALANCE)
 BT = {"running": False, "progress": "", "last_error": None}
 MIN_FREE_MB = int(bot.env("MIN_FREE_MB", "90"))      # darunter wird ein laufender Backtest abgebrochen
+BACKTEST_DAYS = max(365, int(bot.env("BACKTEST_DAYS", "2700")))  # expliziter Suchzeitraum, standardmäßig ca. 7,4 Jahre
 _bt_cache = {}
 
 
@@ -49,7 +50,7 @@ def run_bt():
         except Exception:
             pass
         try:
-            r = strats.run_and_save("backtest.json", progress=prog)
+            r = strats.run_and_save("backtest.json", progress=prog, days=BACKTEST_DAYS)
             if "error" in r:
                 BT["last_error"] = dict(ts=time.time(), error=r["error"], ort=r.get("ort"))
             else:
@@ -163,7 +164,7 @@ def compare(x_token: str = Header("")):
                 pnl=o["total_pnl"], pct=o["total_pnl"] / o["start"] * 100, rebalances=o["trades"], costs=0,
                 positions=[dict(symbol=p["symbol"], side=p["side"], value=p["notional"]) for p in o["open"]])
     return {"forward": fwd.snapshot() + [orig], "backtest": load_bt(), "running": BT["running"], "progress": BT["progress"], "started_at": BT.get("started"), "eta": bt_eta(),
-            "start": bot.START_BALANCE, "server": strats.sysinfo(), "last_error": BT.get("last_error")}
+            "start": bot.START_BALANCE, "days_requested": BACKTEST_DAYS, "days_actual": (load_bt() or {}).get("days"), "server": strats.sysinfo(), "last_error": BT.get("last_error")}
 
 
 @app.get("/api/status/token")
@@ -189,7 +190,7 @@ def status_token_set(body: dict, x_token: str = Header("")):
 def backtest_progress(x_token: str = Header("")):
     """Leichter Status-Endpunkt: zeigt Fortschritt auch dann, wenn der Strategievergleich gerade Datenbankzugriffe abarbeitet."""
     auth(x_token)
-    return {"running": BT["running"], "progress": BT["progress"], "started_at": BT.get("started"), "eta": bt_eta(), "last_error": BT.get("last_error")}
+    return {"running": BT["running"], "progress": BT["progress"], "started_at": BT.get("started"), "eta": bt_eta(), "days_requested": BACKTEST_DAYS, "days_actual": (load_bt() or {}).get("days"), "last_error": BT.get("last_error")}
 
 
 @app.post("/api/backtest/run")

@@ -1606,9 +1606,10 @@ class Forward:
         self.db.executescript("CREATE TABLE IF NOT EXISTS st(k TEXT PRIMARY KEY, v TEXT);"
                               "CREATE TABLE IF NOT EXISTS eq(ts REAL, k TEXT, v REAL);"
                               "CREATE INDEX IF NOT EXISTS eq_k ON eq(k, ts);")
-        self.lock = threading.Lock()
+        self.lock = threading.RLock()
         self.start = start
         self.px, self.msg, self.last_eq = {}, "", 0.0
+        self._snapshot_cache = None
         for k in NAMES:
             s = self.get(k)
             if s is None:
@@ -1617,6 +1618,8 @@ class Forward:
                 r = self.db.execute("SELECT MIN(ts) FROM eq WHERE k=?", (k,)).fetchone()
                 s["created"] = (r[0] if r and r[0] else time.time())
                 self.put(k, s)
+
+        self._snapshot_cache = self._build_snapshot()
 
     def get(self, k):
         r = self.db.execute("SELECT v FROM st WHERE k=?", (k,)).fetchone()
@@ -1800,6 +1803,7 @@ class Forward:
                         s.update(ev=ev, inv_now=flag)
                         self.put(k, s)
                 self.db.commit()
+            self._snapshot_cache = self._build_snapshot()
 
     def thin_eq(self, keep_days=7):
         """Kontoverlauf ausdünnen: die letzten 7 Tage bleiben im 10-Minuten-Takt, älteres wird auf eine Messung pro Stunde reduziert.
@@ -1852,25 +1856,33 @@ class Forward:
             self.put(m, s)
 
     def snapshot(self):
+        cached = self._snapshot_cache
+        if cached is not None:
+            return cached
         with self.lock:
-            out = []
-            for k in NAMES:
-                s = self.get(k)
-                acc = Account(s["cash"], s["pos"])
-                eq = acc.equity(self.px) if self.px else s["cash"]
-                pos = [dict(symbol=a, side="long" if q > 0 else "short", value=abs(q * self.px.get(a, 0)))
-                       for a, q in s["pos"].items()]
-                pos += [dict(symbol=a, side="carry", value=s.get("cnot", 0)) for a in s.get("carry") or []]
-                if k in MIX:
-                    pos = [dict(symbol=a, side="mix", value=eq * x) for a, x in sorted((s.get("w") or {}).items(), key=lambda t: -t[1])]
-                cv = [[r[0], r[1]] for r in self.db.execute(
-                    "SELECT ts, v FROM (SELECT ts, v FROM eq WHERE k=? ORDER BY ts DESC LIMIT 500) ORDER BY ts", (k,))]
-                out.append(dict(key=k, name=NAMES[k], curve=cv, equity=eq, pnl=eq - self.start, pct=(eq / self.start - 1) * 100,
-                                positions=pos, rebalances=s["rebs"], costs=s["costs"], lev=LEV.get(k, 1),
-                                liq=s.get("liq_ts"), stops=s.get("stops", 0), since=s.get("created"),
-                                investiert=ev_intervals(s.get("ev") or [], time.time()),
-                                base=BASEOF.get(k), trail=TRAIL[k][1] if k in TRAIL else None))
-            return out
+            if self._snapshot_cache is None:
+                self._snapshot_cache = self._build_snapshot()
+            return self._snapshot_cache
+
+    def _build_snapshot(self):
+        out = []
+        for k in NAMES:
+            s = self.get(k)
+            acc = Account(s["cash"], s["pos"])
+            eq = acc.equity(self.px) if self.px else s["cash"]
+            pos = [dict(symbol=a, side="long" if q > 0 else "short", value=abs(q * self.px.get(a, 0)))
+                   for a, q in s["pos"].items()]
+            pos += [dict(symbol=a, side="carry", value=s.get("cnot", 0)) for a in s.get("carry") or []]
+            if k in MIX:
+                pos = [dict(symbol=a, side="mix", value=eq * x) for a, x in sorted((s.get("w") or {}).items(), key=lambda t: -t[1])]
+            cv = [[r[0], r[1]] for r in self.db.execute(
+                "SELECT ts, v FROM (SELECT ts, v FROM eq WHERE k=? ORDER BY ts DESC LIMIT 500) ORDER BY ts", (k,))]
+            out.append(dict(key=k, name=NAMES[k], curve=cv, equity=eq, pnl=eq - self.start, pct=(eq / self.start - 1) * 100,
+                            positions=pos, rebalances=s["rebs"], costs=s["costs"], lev=LEV.get(k, 1),
+                            liq=s.get("liq_ts"), stops=s.get("stops", 0), since=s.get("created"),
+                            investiert=ev_intervals(s.get("ev") or [], time.time()),
+                            base=BASEOF.get(k), trail=TRAIL[k][1] if k in TRAIL else None))
+        return out
 
     def run(self):
         while True:

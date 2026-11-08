@@ -162,7 +162,7 @@ def compare(x_token: str = Header("")):
     orig = dict(key="ORIG", since=since, investiert=ivs, name="Original: Top-Mover mit 8-h-Rotation (Hauptbot)", curve=o["curve"], equity=o["equity"],
                 pnl=o["total_pnl"], pct=o["total_pnl"] / o["start"] * 100, rebalances=o["trades"], costs=0,
                 positions=[dict(symbol=p["symbol"], side=p["side"], value=p["notional"]) for p in o["open"]])
-    return {"forward": fwd.snapshot() + [orig], "backtest": load_bt(), "running": BT["running"], "progress": BT["progress"], "eta": bt_eta(),
+    return {"forward": fwd.snapshot() + [orig], "backtest": load_bt(), "running": BT["running"], "progress": BT["progress"], "started_at": BT.get("started"), "eta": bt_eta(),
             "start": bot.START_BALANCE, "server": strats.sysinfo(), "last_error": BT.get("last_error")}
 
 
@@ -183,6 +183,13 @@ def status_token_set(body: dict, x_token: str = Header("")):
         raise HTTPException(400, str(e))
     status._force[0] = True
     return {"set": True}
+
+
+@app.get("/api/backtest/progress")
+def backtest_progress(x_token: str = Header("")):
+    """Leichter Status-Endpunkt: zeigt Fortschritt auch dann, wenn der Strategievergleich gerade Datenbankzugriffe abarbeitet."""
+    auth(x_token)
+    return {"running": BT["running"], "progress": BT["progress"], "started_at": BT.get("started"), "eta": bt_eta(), "last_error": BT.get("last_error")}
 
 
 @app.post("/api/backtest/run")

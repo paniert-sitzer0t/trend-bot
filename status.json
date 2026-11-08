@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-08 22:16:13 UTC",
+ "erzeugt": "2026-11-08 22:46:20 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -2402,8 +2402,8 @@
   {
    "key": "ORIG",
    "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -20.87,
-   "equity": 60.93,
+   "pct": -20.77,
+   "equity": 61.01,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -9465,13 +9465,13 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 354,
+  "ram_frei_mb": 156,
   "swap_mb": 0,
-  "prozess_mb": 99,
+  "prozess_mb": 289,
   "last": [
-   0.02,
-   0.06,
-   0.08
+   0.01,
+   0.13,
+   0.19
   ],
   "kerne": 2,
   "disk_frei_gb": 42.0,
@@ -9483,7 +9483,15 @@
    "backtest.json": 1.3
   }
  },
- "letzter_fehler": null,
+ "letzter_fehler": {
+  "ts": 1794177840.3911085,
+  "error": "Nur noch 87 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
+  "ort": [
+   "  File \"/home/ubuntu/pionex-bot/app.py\", line 43, in prog",
+   "    raise MemoryError(f\"Nur noch {free} MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen\")",
+   "MemoryError: Nur noch 87 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
+  ]
+ },
  "tunnel": {
   "ok": true,
   "bad": 0,

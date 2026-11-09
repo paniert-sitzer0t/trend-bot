@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-09 22:02:08 UTC",
+ "erzeugt": "2026-11-09 22:32:15 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -9921,17 +9921,17 @@
   },
   "fehler": null
  },
- "backtest_laeuft": true,
- "fortschritt": "Binance-Archiv: Katalog 100/707",
+ "backtest_laeuft": false,
+ "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 246,
+  "ram_frei_mb": 240,
   "swap_mb": 0,
-  "prozess_mb": 208,
+  "prozess_mb": 213,
   "last": [
-   0.19,
-   0.1,
-   0.02
+   0.04,
+   0.21,
+   0.59
   ],
   "kerne": 2,
   "disk_frei_gb": 41.8,
@@ -9944,12 +9944,12 @@
   }
  },
  "letzter_fehler": {
-  "ts": 1794250621.149772,
-  "error": "Nur noch 37 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
+  "ts": 1794262402.7386377,
+  "error": "Nur noch 44 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
   "ort": [
    "  File \"/home/ubuntu/pionex-bot/app.py\", line 53, in prog",
    "    raise MemoryError(f\"Nur noch {free} MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen\")",
-   "MemoryError: Nur noch 37 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
+   "MemoryError: Nur noch 44 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
   ]
  },
  "tunnel": {

@@ -1345,7 +1345,7 @@ def clean_daily(closes, ext=None, up=10.0, spike=4.0):
     return rep
 
 
-def run_backtest(days=2700, progress=None, data=None, hourly=None):
+def run_backtest(days=1826, progress=None, data=None, hourly=None):
     dfund, note_extra, members, data_ext, ext = None, "", None, False, None
     check = None
     daily_check = {}
@@ -1570,7 +1570,7 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
                      + note_extra)
 
 
-def run_and_save(path="backtest.json", progress=None, days=2700):
+def run_and_save(path="backtest.json", progress=None, days=1826):
     """Rechnet den Backtest. Bei einem Fehler bleiben die alten Ergebnisse erhalten, der Fehler wird separat gemerkt.
     Geschrieben wird über eine Zwischendatei, damit ein Absturz mitten im Schreiben nichts zerstört."""
     try:

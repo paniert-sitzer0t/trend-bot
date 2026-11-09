@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-09 03:47:05 UTC",
+ "erzeugt": "2026-11-09 04:17:10 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -3919,6 +3919,22 @@
    ]
   },
   {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -19.73,
+   "equity": 61.81,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 48,
+   "kosten": 0,
+   "positionen": [
+    "short CYBER_USDT 15.2",
+    "short ONE_USDT 12.6",
+    "short LSK_USDT 15.9"
+   ]
+  },
+  {
    "key": "R_CL10",
    "name": "R_CL10: Gegen den Trend: Long auf die schwächsten (10 Coins je Seite, 6 h)",
    "pct": -19.93,
@@ -3939,22 +3955,6 @@
     "long NVDABUSDT 5.9",
     "long ETHUSDT 5.9",
     "long ONEUSDT 5.9"
-   ]
-  },
-  {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -20.0,
-   "equity": 61.6,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 48,
-   "kosten": 0,
-   "positionen": [
-    "short CYBER_USDT 15.2",
-    "short ONE_USDT 12.6",
-    "short LSK_USDT 15.9"
    ]
   },
   {
@@ -9445,13 +9445,13 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 158,
+  "ram_frei_mb": 153,
   "swap_mb": 0,
   "prozess_mb": 285,
   "last": [
-   0.09,
-   0.06,
-   0.01
+   0.01,
+   0.04,
+   0.0
   ],
   "kerne": 2,
   "disk_frei_gb": 42.0,

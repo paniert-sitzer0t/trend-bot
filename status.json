@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-09 17:16:14 UTC",
+ "erzeugt": "2026-11-09 17:31:13 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -2302,8 +2302,8 @@
   {
    "key": "D",
    "name": "D: Gegenbewegung zu A",
-   "pct": -11.05,
-   "equity": 68.49,
+   "pct": -11.29,
+   "equity": 68.31,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -2336,8 +2336,8 @@
   {
    "key": "F",
    "name": "F: wie B, fest 35 % Einsatz (Kontrolle)",
-   "pct": -15.29,
-   "equity": 65.23,
+   "pct": -15.37,
+   "equity": 65.16,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -2355,8 +2355,8 @@
   {
    "key": "G",
    "name": "G: wie B, Martingale x1,1 nach Verlustwoche",
-   "pct": -15.69,
-   "equity": 64.92,
+   "pct": -15.78,
+   "equity": 64.85,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -2374,8 +2374,8 @@
   {
    "key": "H",
    "name": "H: wie B, Martingale x1,4 nach Verlustwoche",
-   "pct": -16.91,
-   "equity": 63.98,
+   "pct": -17.02,
+   "equity": 63.89,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -2393,8 +2393,8 @@
   {
    "key": "ORIG",
    "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -20.83,
-   "equity": 60.96,
+   "pct": -20.89,
+   "equity": 60.92,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -2543,8 +2543,8 @@
   {
    "key": "B",
    "name": "B: Momentum 7d/30d Long+Short (wöchentlich)",
-   "pct": -28.24,
-   "equity": 55.25,
+   "pct": -28.49,
+   "equity": 55.07,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -2790,8 +2790,8 @@
   {
    "key": "A",
    "name": "A: Top-Mover 24h (täglich)",
-   "pct": -60.99,
-   "equity": 30.04,
+   "pct": -61.07,
+   "equity": 29.97,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -9925,13 +9925,13 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 202,
+  "ram_frei_mb": 322,
   "swap_mb": 0,
-  "prozess_mb": 249,
+  "prozess_mb": 126,
   "last": [
-   0.13,
-   0.19,
-   0.2
+   0.33,
+   0.16,
+   0.14
   ],
   "kerne": 2,
   "disk_frei_gb": 41.9,
@@ -9943,15 +9943,7 @@
    "backtest.json": 1.9
   }
  },
- "letzter_fehler": {
-  "ts": 1794244098.1337976,
-  "error": "list index out of range",
-  "ort": [
-   "  File \"/home/ubuntu/pionex-bot/strats.py\", line 734, in weights_idea",
-   "    if len(base) >= 20 and v[j] and r is not None and v[j] > 3 * sum(base) / len(base) and r > 0.05:",
-   "IndexError: list index out of range"
-  ]
- },
+ "letzter_fehler": null,
  "tunnel": {
   "ok": true,
   "bad": 0,

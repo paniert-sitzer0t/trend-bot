@@ -9,7 +9,7 @@ SLIP = 0.0008           # 0,08 % pro Seite, vorsichtig für Altcoins
 SHORT_FUND = 0.0003     # ca. 0,03 % pro Tag Funding auf Short-Positionen
 INVEST = 0.95
 NUM = 40                # Anzahl Coins im Universum
-STABLE = ("USDC", "TUSD", "FDUSD", "USDP", "DAI", "BUSD", "EUR", "AEUR", "USD1", "XUSD", "PAXG", "UST", "USTC")
+STABLE = ("USDC", "TUSD", "FDUSD", "USDP", "DAI", "BUSD", "EUR", "AEUR", "USD1", "XUSD", "PAXG", "UST", "USTC", "U", "BFUSD", "RLUSD", "USDE", "USDS", "USDD", "PYUSD", "GUSD", "USDG", "USDQ", "EURC", "EURS")
 NAMES = {
     "A": "A: Top-Mover 24h (täglich)",
     "D": "D: Gegenbewegung zu A",
@@ -376,6 +376,10 @@ def api(path, params=None):
     raise last
 
 
+def is_stable_pair(symbol):
+    """Binance-USDT-Paare mit Stablecoin als Basis-Asset aus dem Strategie-Universum ausschließen."""
+    return symbol.endswith("USDT") and symbol[:-4] in STABLE
+
 def universe():
     t = api("/api/v3/ticker/24hr")
     out = []
@@ -384,7 +388,7 @@ def universe():
         if not s.endswith("USDT"):
             continue
         base = s[:-4]
-        if s in EXCLUDE or base in STABLE or (len(base) > 4 and base.endswith(("UP", "DOWN", "BULL", "BEAR"))):
+        if s in EXCLUDE or is_stable_pair(s) or (len(base) > 4 and base.endswith(("UP", "DOWN", "BULL", "BEAR"))):
             continue
         out.append((float(x["quoteVolume"]), s))
     out.sort(reverse=True)
@@ -1166,10 +1170,10 @@ def pool(min_vol=1e6, cap=None):
     out = []
     for x in api("/api/v3/ticker/24hr"):
         sy = x["symbol"]
-        if not sy.endswith("USDT") or sy in EXCLUDE:
+        if not sy.endswith("USDT") or sy in EXCLUDE or is_stable_pair(sy):
             continue
         base = sy[:-4]
-        if base in STABLE or (len(base) > 4 and base.endswith(("UP", "DOWN", "BULL", "BEAR"))):
+        if len(base) > 4 and base.endswith(("UP", "DOWN", "BULL", "BEAR")):
             continue
         v = float(x["quoteVolume"])
         if v >= min_vol:
@@ -1186,6 +1190,8 @@ def rolling_members(closes, vol, n, top=NUM, window=30):
     import array
     pre, cnt = {}, {}
     for sy in closes:
+        if is_stable_pair(sy):
+            continue
         p, k = array.array("d", [0.0]) * (n + 1), array.array("i", [0]) * (n + 1)
         v = vol.get(sy) or []
         for d in range(n):

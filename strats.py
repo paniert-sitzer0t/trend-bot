@@ -1350,26 +1350,16 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
     check = None
     daily_check = {}
     import hbt
+    archive_meta = None
     if data is None:
-        syms = pool()
-        closes0, ext = {}, {"v": {}, "h": {}, "l": {}}
-        for c0 in range(0, len(syms), 25):
-            if progress:
-                progress(f"Tageskerzen {min(c0 + 25, len(syms))}/{len(syms)}")
-            n0, cl, start0, ex = load_history(syms[c0:c0 + 25], days)
-            closes0.update(cl)
-            for key in ("v", "h", "l"):
-                ext[key].update(ex[key])
+        import binance_archive
+        n0, closes0, start0, ext, members, daily_check, symbol_count, end_day0 = binance_archive.load_point_in_time(
+            days, STABLE, EXCLUDE, NUM, MEMES, progress, clean_daily=clean_daily, rolling_members=rolling_members)
         data_ext = True
-        daily_check = clean_daily(closes0, ext)
-        members = rolling_members(closes0, ext["v"], n0)
-        if progress:
-            progress("Lade Meme-Coins ...")
-        mdata = load_history(MEMES, days)
-        daily_check.update(clean_daily(mdata[1], mdata[3]))
-        hi = dict(ext["h"]); hi.update(mdata[3]["h"])
-        lo = dict(ext["l"]); lo.update(mdata[3]["l"])
-        data = (n0, closes0, start0, None, mdata[1], mdata[3]["v"], hi, lo)
+        memes = {s: closes0[s] for s in MEMES if s in closes0}
+        memv = {s: ext["v"][s] for s in memes if s in ext["v"]}
+        data = (n0, closes0, start0, None, memes, memv, ext["h"], ext["l"])
+        archive_meta = dict(source="Binance Vision Spot archive", symbols=symbol_count, end_day=end_day0)
         cnt = {}
         for m in members[31:]:
             for sy in m:
@@ -1380,8 +1370,8 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
         import gc
         gc.collect()
         try:
-            import hbt
-            hourly = hbt.load_all(hsyms, days, progress)
+            binance_archive.prefill_hourly(hsyms, start0, end_day0, progress)
+            hourly = hbt.load_all(hsyms, days, progress, end_day=end_day0)
             if hourly["start"] != start0:
                 raise ValueError("Zeitraum passt nicht")
             dfund = hbt.derive_funding(hourly)

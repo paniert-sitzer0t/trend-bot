@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-09 07:47:43 UTC",
+ "erzeugt": "2026-11-09 08:17:51 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -3921,17 +3921,17 @@
   {
    "key": "ORIG",
    "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -18.19,
-   "equity": 62.99,
+   "pct": -18.4,
+   "equity": 62.84,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 48,
+   "anpassungen": 49,
    "kosten": 0,
    "positionen": [
     "short CYBER_USDT 15.2",
     "short ONE_USDT 12.6",
-    "short LSK_USDT 15.9"
+    "short XRP_USDT 31.8"
    ]
   },
   {
@@ -9441,24 +9441,24 @@
   },
   "fehler": null
  },
- "backtest_laeuft": false,
- "fortschritt": "",
+ "backtest_laeuft": true,
+ "fortschritt": "Suche 140/2376: Varianten",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 147,
+  "ram_frei_mb": 117,
   "swap_mb": 0,
-  "prozess_mb": 300,
+  "prozess_mb": 324,
   "last": [
-   0.1,
-   0.06,
-   0.01
+   0.4,
+   0.43,
+   0.2
   ],
   "kerne": 2,
   "disk_frei_gb": 41.9,
   "disk_gesamt_gb": 48.3,
   "dateien_mb": {
    "fwd.db": 4.1,
-   "candles.db": 852.4,
+   "candles.db": 856.1,
    "trend.db": 0.3,
    "backtest.json": 1.3
   }

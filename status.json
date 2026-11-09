@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-09 10:18:16 UTC",
+ "erzeugt": "2026-11-09 10:22:44 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -3921,8 +3921,8 @@
   {
    "key": "ORIG",
    "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -18.36,
-   "equity": 62.87,
+   "pct": -18.19,
+   "equity": 62.99,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -9925,13 +9925,13 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 50,
+  "ram_frei_mb": 60,
   "swap_mb": 0,
-  "prozess_mb": 299,
+  "prozess_mb": 297,
   "last": [
-   25.52,
-   25.07,
-   24.93
+   21.39,
+   23.19,
+   24.21
   ],
   "kerne": 2,
   "disk_frei_gb": 41.9,
@@ -9947,8 +9947,8 @@
  "tunnel": {
   "ok": false,
   "bad": 0,
-  "neustarts": 2,
-  "letzter_neustart": "2026-11-09 09:26:47 UTC",
-  "fehler": "Command '['sudo', '-n', 'systemctl', 'restart', 'pionex-tunnel']' timed out after 60 seconds"
+  "neustarts": 3,
+  "letzter_neustart": "2026-11-09 10:22:14 UTC",
+  "fehler": null
  }
 }

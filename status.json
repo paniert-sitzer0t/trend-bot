@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-09 18:01:19 UTC",
+ "erzeugt": "2026-11-09 18:31:26 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -2393,8 +2393,8 @@
   {
    "key": "ORIG",
    "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -21.21,
-   "equity": 60.67,
+   "pct": -21.68,
+   "equity": 60.3,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -9922,23 +9922,23 @@
   "fehler": null
  },
  "backtest_laeuft": true,
- "fortschritt": "Binance-Archiv: Kerzen 5000/22438",
+ "fortschritt": "Binance-Archiv: Kerzen 14600/22438",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 249,
+  "ram_frei_mb": 251,
   "swap_mb": 0,
   "prozess_mb": 208,
   "last": [
-   0.24,
-   1.46,
-   1.24
+   4.38,
+   2.62,
+   1.99
   ],
   "kerne": 2,
   "disk_frei_gb": 41.9,
   "disk_gesamt_gb": 48.3,
   "dateien_mb": {
    "fwd.db": 4.1,
-   "candles.db": 871.8,
+   "candles.db": 895.0,
    "trend.db": 0.4,
    "backtest.json": 1.9
   }

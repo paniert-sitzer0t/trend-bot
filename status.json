@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-09 01:46:48 UTC",
+ "erzeugt": "2026-11-09 02:16:52 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -3960,8 +3960,8 @@
   {
    "key": "ORIG",
    "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -20.55,
-   "equity": 61.18,
+   "pct": -20.7,
+   "equity": 61.06,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -9441,35 +9441,35 @@
   },
   "fehler": null
  },
- "backtest_laeuft": true,
- "fortschritt": "Tageskerzen 50/143",
+ "backtest_laeuft": false,
+ "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 160,
+  "ram_frei_mb": 154,
   "swap_mb": 0,
-  "prozess_mb": 287,
+  "prozess_mb": 286,
   "last": [
    0.01,
-   0.04,
-   0.0
+   0.03,
+   0.02
   ],
   "kerne": 2,
   "disk_frei_gb": 42.0,
   "disk_gesamt_gb": 48.3,
   "dateien_mb": {
    "fwd.db": 4.1,
-   "candles.db": 852.2,
+   "candles.db": 852.4,
    "trend.db": 0.3,
    "backtest.json": 1.3
   }
  },
  "letzter_fehler": {
-  "ts": 1794177840.3911085,
-  "error": "Nur noch 87 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
+  "ts": 1794189222.368519,
+  "error": "Nur noch 89 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
   "ort": [
    "  File \"/home/ubuntu/pionex-bot/app.py\", line 43, in prog",
    "    raise MemoryError(f\"Nur noch {free} MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen\")",
-   "MemoryError: Nur noch 87 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
+   "MemoryError: Nur noch 89 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
   ]
  },
  "tunnel": {

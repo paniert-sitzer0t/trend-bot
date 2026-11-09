@@ -57,10 +57,10 @@ def _fetch_funding(db, sym, start_ms, end_ms, pause):
     db.commit()
 
 
-def load_all(syms, days, progress=None, path="candles.db", pause=0.12):
+def load_all(syms, days, progress=None, path="candles.db", pause=0.12, end_day=None):
     """Lädt Stundenkerzen und Funding (inkrementell). Gibt ein Bündel mit Arrays je Symbol zurück."""
     db = _db(path)
-    end_day = int(time.time() // S.DAY)
+    end_day = int(time.time() // S.DAY) if end_day is None else int(end_day)
     start_day = end_day - days
     start_ms, end_ms = start_day * S.DAY * 1000, end_day * S.DAY * 1000
     H = days * 24

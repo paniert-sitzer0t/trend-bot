@@ -78,7 +78,7 @@ def _db(path):
     return db
 
 
-def _parse_zip(symbol, month, raw, start_day, end_day):
+def _parse_zip(symbol, month, raw):
     rows = []
     with zipfile.ZipFile(io.BytesIO(raw)) as z:
         names = [n for n in z.namelist() if n.endswith(".csv")]
@@ -90,10 +90,9 @@ def _parse_zip(symbol, month, raw, start_day, end_day):
             ts = int(float(row[0]))
             ts = ts // 1_000_000 if ts >= 100_000_000_000_000 else ts // 1000
             day = ts // 86400
-            if start_day <= day < end_day:
-                close, quote, high, low = float(row[4]), float(row[7]), float(row[2]), float(row[3])
-                if close > 0:
-                    rows.append((symbol, day, close, quote, high, low))
+            close, quote, high, low = float(row[4]), float(row[7]), float(row[2]), float(row[3])
+            if close > 0:
+                rows.append((symbol, day, close, quote, high, low))
     return rows
 
 
@@ -144,7 +143,7 @@ def load_point_in_time(days, stable_assets, excluded_symbols, top, extra_symbols
             symbol, month, key = job
             r = requests.get(DATA_URL + key, timeout=TIMEOUT)
             r.raise_for_status()
-            rows = _parse_zip(symbol, month, r.content, start_day, end_day)
+            rows = _parse_zip(symbol, month, r.content)
             return symbol, month, rows
 
         if progress:

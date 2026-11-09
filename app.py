@@ -9,7 +9,7 @@ engine = bot.Engine()
 fwd = strats.Forward(start=bot.START_BALANCE)
 BT = {"running": False, "progress": "", "last_error": None}
 MIN_FREE_MB = int(bot.env("MIN_FREE_MB", "90"))      # darunter wird ein laufender Backtest abgebrochen
-BACKTEST_DAYS = max(365, int(bot.env("BACKTEST_DAYS", "2700")))  # expliziter Suchzeitraum, standardmäßig ca. 7,4 Jahre
+BACKTEST_DAYS = max(365, int(bot.env("BACKTEST_DAYS", "1826")))  # standardmäßig etwa fünf Jahre; per BACKTEST_DAYS anpassbar
 _bt_cache = {}
 
 
@@ -18,6 +18,16 @@ def _frac(m):
     import re
     x = re.search(r"(\d+)/(\d+)", m or "")
     p = int(x.group(1)) / max(int(x.group(2)), 1) if x else 0.0
+    if m.startswith("Binance-Archiv: Katalog"):
+        return 0.01 + 0.04 * p
+    if m.startswith("Binance-Archiv: Kerzen"):
+        return 0.05 + 0.35 * p
+    if m.startswith("Binance-Archiv:"):
+        return 0.01
+    if m.startswith("Binance-Stunden: Katalog"):
+        return 0.40 + 0.04 * p
+    if m.startswith("Binance-Stunden: Kerzen"):
+        return 0.44 + 0.16 * p
     if m.startswith("Tageskerzen"):
         return 0.02 + 0.18 * p
     if m.startswith("Lade Meme"):

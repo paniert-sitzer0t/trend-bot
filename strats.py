@@ -1556,13 +1556,14 @@ def run_backtest(days=2700, progress=None, data=None, hourly=None):
                 a["backtest"] = round(res[key]["total"], 1) if key in res else None
         except Exception as e:
             optim = dict(fehler=str(e)[:300])
-    return dict(ts=time.time(), days=n, coins=len(closes), optimierung=optim, mix_auswahl=mix_now, universe=("mitwandernd: je Tag Top %d nach 30-Tage-Umsatz" % NUM) if members else "heutige Top %d" % NUM, start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
-                results=res,
+    return dict(ts=time.time(), days=n, coins=len(closes), optimierung=optim, mix_auswahl=mix_now, universe=("historisch mitwandernd: Top %d nach 30-Tage-Umsatz aus Binance-Spot-Archiven" % NUM) if members else "heutige Top %d" % NUM, start=time.strftime("%d.%m.%Y", time.gmtime(start * DAY)),
+                results=res, archive=archive_meta,
+                universe_end=(time.strftime("%d.%m.%Y", time.gmtime(archive_meta["end_day"] * DAY - 1)) if archive_meta else None),
                 hourly=bool(hourly), funding_real=bool(dfund), datenpruefung=dict(check or {}, tagesdaten=daily_check),
                 note=("Stundenkerzen: Korb-Strategien rotieren alle 6 h, Trailing-Stops und Liquidationen werden stundengenau geprüft. "
                       if hourly is not None else "Nur Tagesdaten: Korb-Strategien werden täglich statt alle 6 h gerechnet. ")
-                     + ("Funding mit echten Binance-Raten (wo vorhanden, sonst 0,03 % pro Tag). " if dfund else "Funding pauschal 0,03 % pro Tag. ")
-                     + ("Universum: je Tag die 40 umsatzstärksten Coins der letzten 30 Tage aus allen heute noch gelisteten Binance-USDT-Paaren (Delistete fehlen, Rest-Survivorship-Bias). " if members else "Universum = heutige Top-Coins nach Umsatz (Survivorship-Bias begünstigt Long-Strategien). ")
+                     + ("Funding aus verfügbaren Binance-Futures-Daten; für nicht mehr gelistete Futures können historische Raten fehlen und durch den pauschalen Satz ersetzt sein. " if dfund else "Funding pauschal 0,03 % pro Tag. ")
+                     + (f"Universum: historisch je Tag die {NUM} umsatzstärksten USDT-Spot-Coins der letzten 30 Tage aus Binance-Vision-Archiven; Backtest bis {time.strftime('%d.%m.%Y', time.gmtime(archive_meta['end_day'] * DAY - 1))}. " if members and archive_meta else "Universum = heutige Top-Coins nach Umsatz (Survivorship-Bias begünstigt Long-Strategien). ")
                      + "Keine Parameter wurden angepasst. Kosten 0,13 % pro Seite."
                      + (f" Datenprüfung: Stundendaten von {check['korrigiert']} Coins bereinigt, {len(check['entfernt'])} Coins wegen fehlerhafter Stundendaten entfernt." if check else "")
                      + (f" Tagesdaten von {len(daily_check)} Coins korrigiert ({', '.join(sorted(daily_check)[:8])})." if daily_check else "")

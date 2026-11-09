@@ -9,7 +9,7 @@ engine = bot.Engine()
 fwd = strats.Forward(start=bot.START_BALANCE)
 BT = {"running": False, "progress": "", "last_error": None}
 MIN_FREE_MB = int(bot.env("MIN_FREE_MB", "90"))      # darunter wird ein laufender Backtest abgebrochen
-BACKTEST_DAYS = max(365, int(bot.env("BACKTEST_DAYS", "1826")))  # standardmäßig etwa fünf Jahre; per BACKTEST_DAYS anpassbar
+BACKTEST_DAYS = min(1826, max(365, int(bot.env("BACKTEST_DAYS", "1826"))))  # höchstens die gewünschten fünf Jahre; per BACKTEST_DAYS kürzer anpassbar
 _bt_cache = {}
 
 

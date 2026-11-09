@@ -199,3 +199,63 @@ def load_point_in_time(days, stable_assets, excluded_symbols, top, extra_symbols
         return days, closes, start_day, ext, members, data_check, len(symbols), end_day
     finally:
         db.close()
+
+
+def prefill_hourly(symbols, start_day, end_day, progress=None, path="candles.db"):
+    """Load historic spot 1h archives for selected symbols, including later-delisted pairs."""
+    db = sqlite3.connect(path, timeout=60)
+    db.execute("PRAGMA journal_mode=WAL")
+    db.execute("PRAGMA synchronous=NORMAL")
+    db.executescript(
+        "CREATE TABLE IF NOT EXISTS k(s TEXT, t INTEGER, c REAL, h REAL, l REAL, PRIMARY KEY(s,t));"
+        "CREATE TABLE IF NOT EXISTS vision_hour_month(s TEXT, m TEXT, PRIMARY KEY(s,m));"
+    )
+    start_ms, end_ms = start_day * 86400000, end_day * 86400000
+    wanted = _months(start_day, end_day)
+    jobs = []
+    for i, symbol in enumerate(sorted(set(symbols)), 1):
+        if progress and i % 25 == 0:
+            progress(f"Binance-Stunden: Katalog {i}/{len(set(symbols))}")
+        for key in _listing(f"{PREFIX}{symbol}/1h/"):
+            match = re.search(r"-1h-(\d{4}-\d{2})\.zip$", key)
+            if not match or match.group(1) not in wanted:
+                continue
+            month = match.group(1)
+            if not db.execute("SELECT 1 FROM vision_hour_month WHERE s=? AND m=?", (symbol, month)).fetchone():
+                jobs.append((symbol, month, key))
+
+    def fetch(job):
+        symbol, month, key = job
+        r = requests.get(DATA_URL + key, timeout=TIMEOUT)
+        r.raise_for_status()
+        rows = []
+        with zipfile.ZipFile(io.BytesIO(r.content)) as z:
+            names = [n for n in z.namelist() if n.endswith(".csv")]
+            if len(names) != 1:
+                raise ValueError(f"{symbol} {month} 1h: unerwarteter Binance-Archivinhalt")
+            for row in csv.reader(io.TextIOWrapper(z.open(names[0]), encoding="utf-8")):
+                if len(row) < 5:
+                    continue
+                raw_ts = int(float(row[0]))
+                ts = raw_ts // 1000 if raw_ts >= 100_000_000_000_000 else raw_ts
+                if start_ms <= ts < end_ms:
+                    close, high, low = float(row[4]), float(row[2]), float(row[3])
+                    if close > 0:
+                        rows.append((symbol, ts, close, high, low))
+        return symbol, month, rows
+
+    try:
+        if progress:
+            progress(f"Binance-Stunden: Kerzen 0/{len(jobs)}")
+        with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as ex:
+            for i, result in enumerate(ex.map(fetch, jobs), 1):
+                symbol, month, rows = result
+                db.executemany("INSERT OR REPLACE INTO k VALUES(?,?,?,?,?)", rows)
+                db.execute("INSERT OR REPLACE INTO vision_hour_month VALUES(?,?)", (symbol, month))
+                if i % 100 == 0 or i == len(jobs):
+                    db.commit()
+                    if progress:
+                        progress(f"Binance-Stunden: Kerzen {i}/{len(jobs)}")
+        db.commit()
+    finally:
+        db.close()

@@ -85,14 +85,20 @@ def bt_eta():
         return None
     el = time.time() - BT.get("started", time.time())
     fr = BT.get("frac", 0.0)
-    last = (load_bt() or {}).get("duration")
+    previous = load_bt() or {}
+    # Ignore an old result from a different window: its runtime is not a valid
+    # estimate for a cold five-year import.
+    last = previous.get("duration") if previous.get("days") == BACKTEST_DAYS else None
     if fr >= 0.25:
         total = el / fr
+        eta = max(1, round((total - el) / 60))
     elif last:
         total = max(last, el / max(fr, 0.01) if fr > 0.05 else last)
+        eta = max(1, round((total - el) / 60))
     else:
-        total = 45 * 60
-    return dict(eta=max(1, round((total - el) / 60)), elapsed=round(el / 60), pct=round(fr * 100))
+        # Avoid presenting a fabricated countdown before enough progress exists.
+        eta = None
+    return dict(eta=eta, elapsed=round(el / 60), pct=round(fr * 100))
 
 
 def load_bt():

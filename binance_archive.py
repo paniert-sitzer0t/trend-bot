@@ -24,6 +24,24 @@ TIMEOUT = 45
 WORKERS = 6
 
 
+def _get(url, params=None):
+    """Retry temporary Binance Vision/S3 failures instead of aborting a multi-hour import."""
+    last_error = None
+    for attempt in range(4):
+        try:
+            r = requests.get(url, params=params, timeout=(10, TIMEOUT))
+            if r.status_code in (429, 500, 502, 503, 504):
+                r.raise_for_status()
+            r.raise_for_status()
+            return r
+        except requests.RequestException as exc:
+            last_error = exc
+            if attempt == 3:
+                raise
+            time.sleep(min(2 ** attempt, 8))
+    raise last_error
+
+
 def _tag(node, name):
     return next((x for x in node if x.tag.rsplit("}", 1)[-1] == name), None)
 
@@ -37,7 +55,7 @@ def _listing(prefix, delimiter=None):
             params["delimiter"] = delimiter
         if marker:
             params["marker"] = marker
-        r = requests.get(LIST_URL, params=params, timeout=TIMEOUT)
+        r = _get(LIST_URL, params=params)
         r.raise_for_status()
         root = ET.fromstring(r.content)
         if root.tag.rsplit("}", 1)[-1] != "ListBucketResult":
@@ -128,20 +146,22 @@ def load_point_in_time(days, stable_assets, excluded_symbols, top, extra_symbols
             raise RuntimeError("Binance Vision hat keine historischen USDT-Spot-Symbole geliefert")
 
         jobs = []
-        for i, symbol in enumerate(symbols, 1):
-            if progress and i % 50 == 0:
-                progress(f"Binance-Archiv: Katalog {i}/{len(symbols)}")
-            keys = _listing(f"{PREFIX}{symbol}/1d/")
-            for key in keys:
-                m = re.search(r"-1d-(\d{4}-\d{2})\.zip$", key)
-                if m and m.group(1) in wanted:
-                    exists = db.execute("SELECT 1 FROM vision_month WHERE s=? AND m=?", (symbol, m.group(1))).fetchone()
-                    if not exists:
-                        jobs.append((symbol, m.group(1), key))
+        # Keep network catalog requests concurrent; SQLite stays on this thread.
+        with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as ex:
+            listings = ex.map(lambda symbol: (symbol, _listing(f"{PREFIX}{symbol}/1d/")), symbols)
+            for i, (symbol, keys) in enumerate(listings, 1):
+                if progress and i % 25 == 0:
+                    progress(f"Binance-Archiv: Katalog {i}/{len(symbols)}")
+                for key in keys:
+                    m = re.search(r"-1d-(\d{4}-\d{2})\.zip$", key)
+                    if m and m.group(1) in wanted:
+                        exists = db.execute("SELECT 1 FROM vision_month WHERE s=? AND m=?", (symbol, m.group(1))).fetchone()
+                        if not exists:
+                            jobs.append((symbol, m.group(1), key))
 
         def fetch(job):
             symbol, month, key = job
-            r = requests.get(DATA_URL + key, timeout=TIMEOUT)
+            r = _get(DATA_URL + key)
             r.raise_for_status()
             rows = _parse_zip(symbol, month, r.content)
             return symbol, month, rows
@@ -213,20 +233,23 @@ def prefill_hourly(symbols, start_day, end_day, progress=None, path="candles.db"
     start_ms, end_ms = start_day * 86400000, end_day * 86400000
     wanted = _months(start_day, end_day)
     jobs = []
-    for i, symbol in enumerate(sorted(set(symbols)), 1):
-        if progress and i % 25 == 0:
-            progress(f"Binance-Stunden: Katalog {i}/{len(set(symbols))}")
-        for key in _listing(f"{PREFIX}{symbol}/1h/"):
-            match = re.search(r"-1h-(\d{4}-\d{2})\.zip$", key)
-            if not match or match.group(1) not in wanted:
-                continue
-            month = match.group(1)
-            if not db.execute("SELECT 1 FROM vision_hour_month WHERE s=? AND m=?", (symbol, month)).fetchone():
-                jobs.append((symbol, month, key))
+    symbols = sorted(set(symbols))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as ex:
+        listings = ex.map(lambda symbol: (symbol, _listing(f"{PREFIX}{symbol}/1h/")), symbols)
+        for i, (symbol, keys) in enumerate(listings, 1):
+            if progress and i % 10 == 0:
+                progress(f"Binance-Stunden: Katalog {i}/{len(symbols)}")
+            for key in keys:
+                match = re.search(r"-1h-(\d{4}-\d{2})\.zip$", key)
+                if not match or match.group(1) not in wanted:
+                    continue
+                month = match.group(1)
+                if not db.execute("SELECT 1 FROM vision_hour_month WHERE s=? AND m=?", (symbol, month)).fetchone():
+                    jobs.append((symbol, month, key))
 
     def fetch(job):
         symbol, month, key = job
-        r = requests.get(DATA_URL + key, timeout=TIMEOUT)
+        r = _get(DATA_URL + key)
         r.raise_for_status()
         rows = []
         with zipfile.ZipFile(io.BytesIO(r.content)) as z:

@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-10 17:05:25 UTC",
+ "erzeugt": "2026-11-10 17:35:31 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -4004,22 +4004,6 @@
    ]
   },
   {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -23.14,
-   "equity": 59.18,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 58,
-   "kosten": 0,
-   "positionen": [
-    "long ONE_USDT 13.2",
-    "short ZEC_USDT 25.2",
-    "long CYBER_USDT 16.3"
-   ]
-  },
-  {
    "key": "R_TL5_T5",
    "name": "R_TL5_T5: Trend: Long auf die stärksten (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
    "pct": -23.28,
@@ -4085,6 +4069,22 @@
     "long BEAMXUSDT 41.7",
     "long QNTUSDT 47.4",
     "long ZROUSDT 39.1"
+   ]
+  },
+  {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -24.27,
+   "equity": 58.31,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 58,
+   "kosten": 0,
+   "positionen": [
+    "long ONE_USDT 13.2",
+    "short ZEC_USDT 25.2",
+    "long CYBER_USDT 16.3"
    ]
   },
   {
@@ -9925,13 +9925,13 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 242,
+  "ram_frei_mb": 235,
   "swap_mb": 0,
-  "prozess_mb": 211,
+  "prozess_mb": 212,
   "last": [
-   0.07,
-   0.03,
-   0.0
+   0.02,
+   0.09,
+   0.11
   ],
   "kerne": 2,
   "disk_frei_gb": 41.8,
@@ -9944,7 +9944,7 @@
   }
  },
  "letzter_fehler": {
-  "ts": 1794320473.0869763,
+  "ts": 1794331801.9634798,
   "error": "HTTPSConnectionPool(host='s3-ap-northeast-1.amazonaws.com', port=443): Read timed out. (read timeout=45)",
   "ort": [
    "  File \"/home/ubuntu/pionex-bot/venv/lib/python3.10/site-packages/requests/adapters.py\", line 742, in send",

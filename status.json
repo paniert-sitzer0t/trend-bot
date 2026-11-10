@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-10 07:03:42 UTC",
+ "erzeugt": "2026-11-10 07:33:46 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -3969,22 +3969,6 @@
    ]
   },
   {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -22.38,
-   "equity": 59.77,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 52,
-   "kosten": 0,
-   "positionen": [
-    "short ONE_USDT 12.6",
-    "long AVAX_USDT 26.7",
-    "long DODO_USDT 18.0"
-   ]
-  },
-  {
    "key": "C",
    "name": "C: Momentum nur Long mit BTC-Filter (wöchentlich)",
    "pct": -22.39,
@@ -4017,6 +4001,22 @@
     "long ACTUSDT 4.0",
     "long INJUSDT 5.5",
     "short TRUMPUSDT 5.3"
+   ]
+  },
+  {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -23.0,
+   "equity": 59.29,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 52,
+   "kosten": 0,
+   "positionen": [
+    "short ONE_USDT 12.6",
+    "long AVAX_USDT 26.7",
+    "long DODO_USDT 18.0"
    ]
   },
   {
@@ -9925,13 +9925,13 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 242,
+  "ram_frei_mb": 235,
   "swap_mb": 0,
   "prozess_mb": 208,
   "last": [
-   0.08,
-   0.03,
-   0.01
+   0.07,
+   0.04,
+   0.0
   ],
   "kerne": 2,
   "disk_frei_gb": 41.8,

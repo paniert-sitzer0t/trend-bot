@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-10 21:56:20 UTC",
+ "erzeugt": "2026-11-10 22:26:26 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -2492,6 +2492,21 @@
    ]
   },
   {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -24.91,
+   "equity": 57.82,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 59,
+   "kosten": 0,
+   "positionen": [
+    "long ONE_USDT 13.2",
+    "short ZEC_USDT 25.2"
+   ]
+  },
+  {
    "key": "VBRK_T15",
    "name": "VBRK_T15: Volumen-Ausbruch (3x Umsatz und +5 %), 3 Tage halten mit Trailing-Stop 15 %",
    "pct": -25.03,
@@ -2503,21 +2518,6 @@
    "kosten": 0.03,
    "positionen": [
     "long BEAMXUSDT 0.0"
-   ]
-  },
-  {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -25.84,
-   "equity": 57.1,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 59,
-   "kosten": 0,
-   "positionen": [
-    "long ONE_USDT 13.2",
-    "short ZEC_USDT 25.2"
    ]
   },
   {
@@ -9924,13 +9924,13 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 333,
+  "ram_frei_mb": 326,
   "swap_mb": 0,
-  "prozess_mb": 119,
+  "prozess_mb": 117,
   "last": [
-   0.01,
-   0.01,
-   0.04
+   0.0,
+   0.02,
+   0.0
   ],
   "kerne": 2,
   "disk_frei_gb": 41.8,

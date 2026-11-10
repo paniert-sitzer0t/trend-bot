@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-10 22:56:30 UTC",
+ "erzeugt": "2026-11-10 23:26:35 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -2372,6 +2372,21 @@
    ]
   },
   {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -24.83,
+   "equity": 57.88,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 59,
+   "kosten": 0,
+   "positionen": [
+    "long ONE_USDT 13.2",
+    "short ZEC_USDT 25.2"
+   ]
+  },
+  {
    "key": "MG_MOMF_12_3_T15",
    "name": "MG_MOMF_12_3_T15: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 60 %) mit Trailing-Stop 15 %",
    "pct": -24.9,
@@ -2489,21 +2504,6 @@
    "positionen": [
     "long BEAMXUSDT 0.0",
     "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -24.92,
-   "equity": 57.81,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 59,
-   "kosten": 0,
-   "positionen": [
-    "long ONE_USDT 13.2",
-    "short ZEC_USDT 25.2"
    ]
   },
   {
@@ -9924,12 +9924,12 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 330,
+  "ram_frei_mb": 329,
   "swap_mb": 0,
-  "prozess_mb": 116,
+  "prozess_mb": 115,
   "last": [
-   0.01,
-   0.02,
+   0.03,
+   0.03,
    0.0
   ],
   "kerne": 2,

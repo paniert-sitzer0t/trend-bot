@@ -24,6 +24,24 @@ TIMEOUT = 45
 WORKERS = 6
 
 
+def _get(url, params=None):
+    """Retry temporary Binance Vision/S3 failures instead of aborting a multi-hour import."""
+    last_error = None
+    for attempt in range(4):
+        try:
+            r = requests.get(url, params=params, timeout=(10, TIMEOUT))
+            if r.status_code in (429, 500, 502, 503, 504):
+                r.raise_for_status()
+            r.raise_for_status()
+            return r
+        except requests.RequestException as exc:
+            last_error = exc
+            if attempt == 3:
+                raise
+            time.sleep(min(2 ** attempt, 8))
+    raise last_error
+
+
 def _tag(node, name):
     return next((x for x in node if x.tag.rsplit("}", 1)[-1] == name), None)
 
@@ -37,7 +55,7 @@ def _listing(prefix, delimiter=None):
             params["delimiter"] = delimiter
         if marker:
             params["marker"] = marker
-        r = requests.get(LIST_URL, params=params, timeout=TIMEOUT)
+        r = _get(LIST_URL, params=params)
         r.raise_for_status()
         root = ET.fromstring(r.content)
         if root.tag.rsplit("}", 1)[-1] != "ListBucketResult":
@@ -141,7 +159,7 @@ def load_point_in_time(days, stable_assets, excluded_symbols, top, extra_symbols
 
         def fetch(job):
             symbol, month, key = job
-            r = requests.get(DATA_URL + key, timeout=TIMEOUT)
+            r = _get(DATA_URL + key)
             r.raise_for_status()
             rows = _parse_zip(symbol, month, r.content)
             return symbol, month, rows

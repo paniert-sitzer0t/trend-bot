@@ -507,7 +507,7 @@ function btBanner(){
   var e = CMP.eta || {}, pct = e.pct || 0;
   return '<div class="card" style="border-color:var(--acc)"><div style="display:flex;justify-content:space-between;gap:8px;font-weight:700"><span>Backtest läuft</span><span class="num">'+pct+' %</span></div>'
     + '<div style="height:8px;border-radius:9px;background:var(--s2);margin:10px 0;overflow:hidden"><div style="height:100%;width:'+Math.max(2, pct)+'%;background:var(--acc);transition:width .5s"></div></div>'
-    + '<div class="mut">'+(e.eta ? 'Noch ca. '+e.eta+' Min, läuft seit '+(e.elapsed || 0)+' Min.' : 'Wird gestartet ...')+' '+esc(CMP.progress || '')+'</div></div>';
+    + '<div class="mut">'+(e.eta ? 'Noch ca. '+e.eta+' Min, läuft seit '+(e.elapsed || 0)+' Min.' : 'Restzeit wird noch ermittelt · läuft seit '+(e.elapsed || 0)+' Min.')+' '+esc(CMP.progress || '')+'</div></div>';
 }
 function startBt(){
   if (CMP && CMP.running) return;

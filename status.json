@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-11 09:28:17 UTC",
+ "erzeugt": "2026-11-11 09:58:23 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -4035,21 +4035,6 @@
    ]
   },
   {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -25.54,
-   "equity": 57.34,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 61,
-   "kosten": 0,
-   "positionen": [
-    "short ZEC_USDT 25.2",
-    "short ARB_USDT 19.4"
-   ]
-  },
-  {
    "key": "R_TL5",
    "name": "R_TL5: Trend: Long auf die stärksten (5 Coins je Seite, 6 h)",
    "pct": -25.71,
@@ -4065,6 +4050,21 @@
     "long GRAMUSDT 11.0",
     "long ONEUSDT 11.1",
     "long CYBERUSDT 11.0"
+   ]
+  },
+  {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -25.77,
+   "equity": 57.16,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 61,
+   "kosten": 0,
+   "positionen": [
+    "short ZEC_USDT 25.2",
+    "short ARB_USDT 19.4"
    ]
   },
   {
@@ -9885,16 +9885,16 @@
   },
   "fehler": null
  },
- "backtest_laeuft": true,
- "fortschritt": "Binance-Archiv: Kerzen 0/0",
+ "backtest_laeuft": false,
+ "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 140,
+  "ram_frei_mb": 293,
   "swap_mb": 0,
-  "prozess_mb": 306,
+  "prozess_mb": 149,
   "last": [
-   0.24,
-   0.17,
+   0.06,
+   0.05,
    0.06
   ],
   "kerne": 2,
@@ -9908,12 +9908,12 @@
   }
  },
  "letzter_fehler": {
-  "ts": 1794378218.2371411,
-  "error": "Nur noch 57 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
+  "ts": 1794389325.0769901,
+  "error": "Nur noch 45 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
   "ort": [
    "  File \"/home/ubuntu/pionex-bot/app.py\", line 53, in prog",
    "    raise MemoryError(f\"Nur noch {free} MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen\")",
-   "MemoryError: Nur noch 57 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
+   "MemoryError: Nur noch 45 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
   ]
  },
  "tunnel": {

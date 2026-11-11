@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-11 18:29:59 UTC",
+ "erzeugt": "2026-11-11 19:00:04 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -4035,6 +4035,22 @@
    ]
   },
   {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -25.42,
+   "equity": 57.43,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 62,
+   "kosten": 0,
+   "positionen": [
+    "short ZEC_USDT 25.2",
+    "short CYBER_USDT 16.7",
+    "short ONE_USDT 12.1"
+   ]
+  },
+  {
    "key": "R_TL5",
    "name": "R_TL5: Trend: Long auf die stärksten (5 Coins je Seite, 6 h)",
    "pct": -25.71,
@@ -4050,22 +4066,6 @@
     "long GRAMUSDT 11.0",
     "long ONEUSDT 11.1",
     "long CYBERUSDT 11.0"
-   ]
-  },
-  {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -25.87,
-   "equity": 57.08,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 62,
-   "kosten": 0,
-   "positionen": [
-    "short ZEC_USDT 25.2",
-    "short CYBER_USDT 16.7",
-    "short ONE_USDT 12.1"
    ]
   },
   {
@@ -9890,13 +9890,13 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 281,
+  "ram_frei_mb": 275,
   "swap_mb": 0,
-  "prozess_mb": 163,
+  "prozess_mb": 173,
   "last": [
-   0.0,
-   0.02,
-   0.0
+   0.17,
+   0.15,
+   0.27
   ],
   "kerne": 2,
   "disk_frei_gb": 41.8,
@@ -9909,12 +9909,12 @@
   }
  },
  "letzter_fehler": {
-  "ts": 1794411529.1774757,
-  "error": "Nur noch 44 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
+  "ts": 1794422629.366713,
+  "error": "Nur noch 41 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
   "ort": [
    "  File \"/home/ubuntu/pionex-bot/app.py\", line 53, in prog",
    "    raise MemoryError(f\"Nur noch {free} MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen\")",
-   "MemoryError: Nur noch 44 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
+   "MemoryError: Nur noch 41 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
   ]
  },
  "tunnel": {

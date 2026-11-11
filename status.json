@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-11 22:30:46 UTC",
+ "erzeugt": "2026-11-11 23:00:50 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -4003,6 +4003,22 @@
    ]
   },
   {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -24.07,
+   "equity": 58.47,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 62,
+   "kosten": 0,
+   "positionen": [
+    "short ZEC_USDT 25.2",
+    "short CYBER_USDT 16.7",
+    "short ONE_USDT 12.1"
+   ]
+  },
+  {
    "key": "K2",
    "name": "K2: Strategie K mit 2x Hebel",
    "pct": -24.5,
@@ -4032,22 +4048,6 @@
     "long BEAMXUSDT 42.8",
     "long QNTUSDT 44.2",
     "long ZROUSDT 40.8"
-   ]
-  },
-  {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -25.12,
-   "equity": 57.66,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 62,
-   "kosten": 0,
-   "positionen": [
-    "short ZEC_USDT 25.2",
-    "short CYBER_USDT 16.7",
-    "short ONE_USDT 12.1"
    ]
   },
   {
@@ -9892,10 +9892,10 @@
   "ram_gesamt_mb": 956,
   "ram_frei_mb": 269,
   "swap_mb": 0,
-  "prozess_mb": 181,
+  "prozess_mb": 179,
   "last": [
-   0.03,
-   0.02,
+   0.23,
+   0.09,
    0.02
   ],
   "kerne": 2,

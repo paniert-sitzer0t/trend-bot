@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-11 23:00:50 UTC",
+ "erzeugt": "2026-11-11 23:30:55 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -3984,6 +3984,22 @@
    ]
   },
   {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -23.85,
+   "equity": 58.64,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 62,
+   "kosten": 0,
+   "positionen": [
+    "short ZEC_USDT 25.2",
+    "short CYBER_USDT 16.7",
+    "short ONE_USDT 12.1"
+   ]
+  },
+  {
    "key": "H",
    "name": "H: wie B, Martingale x1,4 nach Verlustwoche",
    "pct": -23.87,
@@ -4000,22 +4016,6 @@
     "long ACTUSDT 4.4",
     "long INJUSDT 5.4",
     "short TRUMPUSDT 5.4"
-   ]
-  },
-  {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -24.07,
-   "equity": 58.47,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 62,
-   "kosten": 0,
-   "positionen": [
-    "short ZEC_USDT 25.2",
-    "short CYBER_USDT 16.7",
-    "short ONE_USDT 12.1"
    ]
   },
   {
@@ -9890,13 +9890,13 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 269,
+  "ram_frei_mb": 272,
   "swap_mb": 0,
   "prozess_mb": 179,
   "last": [
-   0.23,
-   0.09,
-   0.02
+   0.04,
+   0.06,
+   0.01
   ],
   "kerne": 2,
   "disk_frei_gb": 41.8,

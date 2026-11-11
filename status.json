@@ -1,403 +1,340 @@
 {
- "erzeugt": "2026-11-10 23:56:40 UTC",
+ "erzeugt": "2026-11-11 00:26:46 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
-   "key": "R_CS5",
-   "name": "R_CS5: Gegen den Trend: Short auf die stärksten (5 Coins je Seite, 6 h)",
-   "pct": 152.34,
-   "equity": 194.3,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 22,
-   "kosten": 2.77,
-   "positionen": [
-    "short INITUSDT 0.0",
-    "short AVAXUSDT 0.0",
-    "short KORUBUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "short MUBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_CS3",
-   "name": "R_CS3: Gegen den Trend: Short auf die stärksten (3 Coins je Seite, 6 h)",
-   "pct": 147.62,
-   "equity": 190.66,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 22,
-   "kosten": 2.64,
-   "positionen": [
-    "short KORUBUSDT 0.0",
-    "short INITUSDT 0.0",
-    "short MUBUSDT 0.0"
-   ]
-  },
-  {
    "key": "R_TS3",
    "name": "R_TS3: Trend: Short auf die schwächsten (3 Coins je Seite, 6 h)",
-   "pct": 144.62,
-   "equity": 188.36,
+   "pct": 30.57,
+   "equity": 100.54,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 22,
-   "kosten": 2.6,
+   "anpassungen": 23,
+   "kosten": 2.76,
    "positionen": [
-    "short ZECUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "short XRPUSDT 0.0"
+    "short ZECUSDT 32.0",
+    "short ARBUSDT 31.9",
+    "short QNTUSDT 32.0"
    ]
   },
   {
    "key": "R_TS5",
    "name": "R_TS5: Trend: Short auf die schwächsten (5 Coins je Seite, 6 h)",
-   "pct": 134.93,
-   "equity": 180.9,
+   "pct": 25.54,
+   "equity": 96.66,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 22,
-   "kosten": 2.5,
+   "anpassungen": 23,
+   "kosten": 2.64,
    "positionen": [
-    "short XRPUSDT 0.0",
-    "short ZECUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "short BCHUSDT 0.0",
-    "short QNTUSDT 0.0"
+    "short ZECUSDT 18.4",
+    "short QNTUSDT 18.4",
+    "short NVDABUSDT 18.4",
+    "short AAVEUSDT 18.4",
+    "short ARBUSDT 18.4"
    ]
   },
   {
-   "key": "R_CS10",
-   "name": "R_CS10: Gegen den Trend: Short auf die stärksten (10 Coins je Seite, 6 h)",
-   "pct": 133.9,
-   "equity": 180.1,
+   "key": "R_CS5",
+   "name": "R_CS5: Gegen den Trend: Short auf die stärksten (5 Coins je Seite, 6 h)",
+   "pct": 21.47,
+   "equity": 93.53,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 22,
-   "kosten": 2.36,
+   "anpassungen": 23,
+   "kosten": 2.97,
    "positionen": [
-    "short SKHYBUSDT 0.0",
-    "short SPCXBUSDT 0.0",
-    "short INTCBUSDT 0.0",
-    "short KORUBUSDT 0.0",
-    "short MUBUSDT 0.0",
-    "short INITUSDT 0.0",
-    "short ONDOUSDT 0.0",
-    "short AVAXUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "short ARBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_CS5_T5",
-   "name": "R_CS5_T5: Gegen den Trend: Short auf die stärksten (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": 132.19,
-   "equity": 178.79,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 18,
-   "anpassungen": 20,
-   "kosten": 2.83,
-   "positionen": [
-    "short INITUSDT 0.0",
-    "short AVAXUSDT 0.0",
-    "short KORUBUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "short MUBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_CS3_T5",
-   "name": "R_CS3_T5: Gegen den Trend: Short auf die stärksten (3 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": 128.75,
-   "equity": 176.14,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 4,
-   "anpassungen": 13,
-   "kosten": 2.07,
-   "positionen": [
-    "short KORUBUSDT 0.0",
-    "short INITUSDT 0.0",
-    "short MUBUSDT 0.0"
+    "short INITUSDT 16.6",
+    "short PEPEUSDT 17.9",
+    "short GRAMUSDT 17.8",
+    "short ONEUSDT 18.0",
+    "short CYBERUSDT 17.8"
    ]
   },
   {
    "key": "R_TS10",
    "name": "R_TS10: Trend: Short auf die schwächsten (10 Coins je Seite, 6 h)",
-   "pct": 126.75,
-   "equity": 174.6,
+   "pct": 19.74,
+   "equity": 92.2,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 22,
-   "kosten": 2.17,
+   "anpassungen": 23,
+   "kosten": 2.3,
    "positionen": [
-    "short XRPUSDT 0.0",
-    "short ETHUSDT 0.0",
-    "short SOLUSDT 0.0",
-    "short BTCUSDT 0.0",
-    "short RWUSDUSDT 0.0",
-    "short INJUSDT 0.0",
-    "short QNTUSDT 0.0",
-    "short ZECUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "short BCHUSDT 0.0"
+    "short XRPUSDT 8.8",
+    "short SOLUSDT 8.8",
+    "short QNTUSDT 8.8",
+    "short ZECUSDT 8.8",
+    "short NVDABUSDT 8.8",
+    "short MSTRBUSDT 8.8",
+    "short AAVEUSDT 8.8",
+    "short CRCLBUSDT 8.8",
+    "short UNIUSDT 8.8",
+    "short ARBUSDT 8.8"
+   ]
+  },
+  {
+   "key": "R_CS10",
+   "name": "R_CS10: Gegen den Trend: Short auf die stärksten (10 Coins je Seite, 6 h)",
+   "pct": 17.52,
+   "equity": 90.49,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 2.55,
+   "positionen": [
+    "short SPCXBUSDT 8.6",
+    "short INITUSDT 8.0",
+    "short RWUSDUSDT 8.6",
+    "short CYBERUSDT 8.6",
+    "short FILUSDT 8.6",
+    "short GOOGLBUSDT 8.6",
+    "short PEPEUSDT 8.7",
+    "short GRAMUSDT 8.6",
+    "short ONEUSDT 8.7",
+    "short TRXUSDT 8.6"
    ]
   },
   {
    "key": "R_TS3_T5",
    "name": "R_TS3_T5: Trend: Short auf die schwächsten (3 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": 119.81,
-   "equity": 169.26,
+   "pct": 17.33,
+   "equity": 90.34,
    "lev": 1,
    "liquidiert": null,
    "stops": 2,
-   "anpassungen": 13,
-   "kosten": 1.87,
+   "anpassungen": 14,
+   "kosten": 2.02,
    "positionen": [
-    "short ZECUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "short XRPUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_CS10_T5",
-   "name": "R_CS10_T5: Gegen den Trend: Short auf die stärksten (10 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": 119.54,
-   "equity": 169.04,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 8,
-   "anpassungen": 13,
-   "kosten": 1.68,
-   "positionen": [
-    "short SKHYBUSDT 0.0",
-    "short SPCXBUSDT 0.0",
-    "short INTCBUSDT 0.0",
-    "short KORUBUSDT 0.0",
-    "short MUBUSDT 0.0",
-    "short INITUSDT 0.0",
-    "short ONDOUSDT 0.0",
-    "short AVAXUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "short ARBUSDT 0.0"
+    "short ZECUSDT 28.7",
+    "short ARBUSDT 28.7",
+    "short QNTUSDT 28.7"
    ]
   },
   {
    "key": "R_TS5_T5",
    "name": "R_TS5_T5: Trend: Short auf die schwächsten (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": 119.43,
-   "equity": 168.96,
+   "pct": 17.26,
+   "equity": 90.29,
    "lev": 1,
    "liquidiert": null,
    "stops": 4,
-   "anpassungen": 13,
-   "kosten": 1.76,
+   "anpassungen": 14,
+   "kosten": 1.9,
    "positionen": [
-    "short XRPUSDT 0.0",
-    "short ZECUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "short BCHUSDT 0.0",
-    "short QNTUSDT 0.0"
+    "short ZECUSDT 17.2",
+    "short QNTUSDT 17.2",
+    "short NVDABUSDT 17.2",
+    "short AAVEUSDT 17.2",
+    "short ARBUSDT 17.2"
    ]
   },
   {
-   "key": "R_CS15",
-   "name": "R_CS15: Gegen den Trend: Short auf die stärksten (15 Coins je Seite, 6 h)",
-   "pct": 119.25,
-   "equity": 168.82,
+   "key": "R_CS5_T5",
+   "name": "R_CS5_T5: Gegen den Trend: Short auf die stärksten (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": 16.51,
+   "equity": 89.71,
    "lev": 1,
    "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 22,
-   "kosten": 1.9,
+   "stops": 19,
+   "anpassungen": 21,
+   "kosten": 3.03,
    "positionen": [
-    "short CRCLBUSDT 0.0",
-    "short ARBUSDT 0.0",
-    "short PEPEUSDT 0.0",
-    "short SKHYBUSDT 0.0",
-    "short UNIUSDT 0.0",
-    "short SPCXBUSDT 0.0",
-    "short INTCBUSDT 0.0",
-    "short KORUBUSDT 0.0",
-    "short MUBUSDT 0.0",
-    "short INITUSDT 0.0",
-    "short ONDOUSDT 0.0",
-    "short GOOGLBUSDT 0.0",
-    "short AAVEUSDT 0.0",
-    "short AVAXUSDT 0.0",
-    "short SNDKBUSDT 0.0"
+    "short PEPEUSDT 16.4",
+    "short GRAMUSDT 16.3",
+    "short ONEUSDT 16.6",
+    "short CYBERUSDT 16.3"
    ]
   },
   {
    "key": "R_TS15",
    "name": "R_TS15: Trend: Short auf die schwächsten (15 Coins je Seite, 6 h)",
-   "pct": 116.1,
-   "equity": 166.4,
+   "pct": 13.87,
+   "equity": 87.68,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 22,
-   "kosten": 1.83,
+   "anpassungen": 23,
+   "kosten": 1.94,
    "positionen": [
-    "short XRPUSDT 0.0",
-    "short ZECUSDT 0.0",
-    "short HYPEUSDT 0.0",
-    "short NVDABUSDT 0.0",
-    "short ETHUSDT 0.0",
-    "short NEARUSDT 0.0",
-    "short SOLUSDT 0.0",
-    "short BTCUSDT 0.0",
-    "short RWUSDUSDT 0.0",
-    "short INJUSDT 0.0",
-    "short QNTUSDT 0.0",
-    "short BNBUSDT 0.0",
-    "short ADAUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "short BCHUSDT 0.0"
+    "short XRPUSDT 5.6",
+    "short ZECUSDT 5.6",
+    "short HYPEUSDT 5.6",
+    "short NVDABUSDT 5.6",
+    "short ETHUSDT 5.6",
+    "short SOLUSDT 5.6",
+    "short QNTUSDT 5.6",
+    "short LINKUSDT 5.6",
+    "short MSTRBUSDT 5.6",
+    "short AAVEUSDT 5.6",
+    "short SNDKBUSDT 5.6",
+    "short AVAXUSDT 5.6",
+    "short CRCLBUSDT 5.6",
+    "short UNIUSDT 5.6",
+    "short ARBUSDT 5.6"
    ]
   },
   {
    "key": "R_TS10_T5",
    "name": "R_TS10_T5: Trend: Short auf die schwächsten (10 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": 115.27,
-   "equity": 165.76,
+   "pct": 13.68,
+   "equity": 87.53,
    "lev": 1,
    "liquidiert": null,
    "stops": 6,
-   "anpassungen": 13,
-   "kosten": 1.57,
+   "anpassungen": 14,
+   "kosten": 1.7,
    "positionen": [
-    "short XRPUSDT 0.0",
-    "short ETHUSDT 0.0",
-    "short SOLUSDT 0.0",
-    "short BTCUSDT 0.0",
-    "short RWUSDUSDT 0.0",
-    "short INJUSDT 0.0",
-    "short QNTUSDT 0.0",
-    "short ZECUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "short BCHUSDT 0.0"
+    "short XRPUSDT 8.4",
+    "short SOLUSDT 8.3",
+    "short QNTUSDT 8.3",
+    "short ZECUSDT 8.3",
+    "short NVDABUSDT 8.3",
+    "short MSTRBUSDT 8.3",
+    "short AAVEUSDT 8.3",
+    "short CRCLBUSDT 8.3",
+    "short UNIUSDT 8.4",
+    "short ARBUSDT 8.3"
+   ]
+  },
+  {
+   "key": "R_CS10_T5",
+   "name": "R_CS10_T5: Gegen den Trend: Short auf die stärksten (10 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": 12.65,
+   "equity": 86.74,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 9,
+   "anpassungen": 14,
+   "kosten": 1.86,
+   "positionen": [
+    "short SPCXBUSDT 8.1",
+    "short RWUSDUSDT 8.1",
+    "short CYBERUSDT 8.1",
+    "short FILUSDT 8.1",
+    "short GOOGLBUSDT 8.1",
+    "short PEPEUSDT 8.1",
+    "short GRAMUSDT 8.1",
+    "short ONEUSDT 8.2",
+    "short TRXUSDT 8.1"
+   ]
+  },
+  {
+   "key": "R_CS3",
+   "name": "R_CS3: Gegen den Trend: Short auf die stärksten (3 Coins je Seite, 6 h)",
+   "pct": 12.3,
+   "equity": 86.47,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 2.81,
+   "positionen": [
+    "short INITUSDT 25.4",
+    "short GRAMUSDT 27.1",
+    "short ONEUSDT 27.5"
+   ]
+  },
+  {
+   "key": "R_CS15",
+   "name": "R_CS15: Gegen den Trend: Short auf die stärksten (15 Coins je Seite, 6 h)",
+   "pct": 11.58,
+   "equity": 85.91,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 2.04,
+   "positionen": [
+    "short PEPEUSDT 5.5",
+    "short SPCXBUSDT 5.4",
+    "short MUBUSDT 5.5",
+    "short INITUSDT 5.1",
+    "short GOOGLBUSDT 5.4",
+    "short LTCUSDT 5.5",
+    "short RWUSDUSDT 5.4",
+    "short TQQQBUSDT 5.5",
+    "short CYBERUSDT 5.5",
+    "short FILUSDT 5.5",
+    "short INJUSDT 5.5",
+    "short NEARUSDT 5.5",
+    "short GRAMUSDT 5.5",
+    "short ONEUSDT 5.5",
+    "short TRXUSDT 5.4"
+   ]
+  },
+  {
+   "key": "R_CS3_T5",
+   "name": "R_CS3_T5: Gegen den Trend: Short auf die stärksten (3 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": 11.0,
+   "equity": 85.47,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 5,
+   "anpassungen": 14,
+   "kosten": 2.26,
+   "positionen": [
+    "short GRAMUSDT 25.1",
+    "short ONEUSDT 25.4"
    ]
   },
   {
    "key": "R_TS15_T5",
    "name": "R_TS15_T5: Trend: Short auf die schwächsten (15 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": 109.23,
-   "equity": 161.1,
+   "pct": 10.25,
+   "equity": 84.89,
    "lev": 1,
    "liquidiert": null,
    "stops": 9,
-   "anpassungen": 13,
-   "kosten": 1.25,
+   "anpassungen": 14,
+   "kosten": 1.36,
    "positionen": [
-    "short XRPUSDT 0.0",
-    "short ZECUSDT 0.0",
-    "short HYPEUSDT 0.0",
-    "short NVDABUSDT 0.0",
-    "short ETHUSDT 0.0",
-    "short NEARUSDT 0.0",
-    "short SOLUSDT 0.0",
-    "short BTCUSDT 0.0",
-    "short RWUSDUSDT 0.0",
-    "short INJUSDT 0.0",
-    "short QNTUSDT 0.0",
-    "short BNBUSDT 0.0",
-    "short ADAUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "short BCHUSDT 0.0"
+    "short XRPUSDT 5.4",
+    "short ZECUSDT 5.4",
+    "short HYPEUSDT 5.4",
+    "short NVDABUSDT 5.4",
+    "short ETHUSDT 5.4",
+    "short SOLUSDT 5.4",
+    "short QNTUSDT 5.4",
+    "short LINKUSDT 5.4",
+    "short MSTRBUSDT 5.4",
+    "short AAVEUSDT 5.4",
+    "short SNDKBUSDT 5.4",
+    "short AVAXUSDT 5.4",
+    "short CRCLBUSDT 5.4",
+    "short UNIUSDT 5.4",
+    "short ARBUSDT 5.4"
    ]
   },
   {
    "key": "R_CS15_T5",
    "name": "R_CS15_T5: Gegen den Trend: Short auf die stärksten (15 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": 104.32,
-   "equity": 157.33,
+   "pct": 8.73,
+   "equity": 83.72,
    "lev": 1,
    "liquidiert": null,
-   "stops": 11,
-   "anpassungen": 13,
-   "kosten": 1.41,
+   "stops": 13,
+   "anpassungen": 14,
+   "kosten": 1.55,
    "positionen": [
-    "short CRCLBUSDT 0.0",
-    "short PEPEUSDT 0.0",
-    "short SKHYBUSDT 0.0",
-    "short UNIUSDT 0.0",
-    "short SPCXBUSDT 0.0",
-    "short INTCBUSDT 0.0",
-    "short KORUBUSDT 0.0",
-    "short MUBUSDT 0.0",
-    "short INITUSDT 0.0",
-    "short ONDOUSDT 0.0",
-    "short GOOGLBUSDT 0.0",
-    "short AAVEUSDT 0.0",
-    "short AVAXUSDT 0.0",
-    "short SNDKBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "DONLS",
-   "name": "DONLS: Bitcoin Donchian-Ausbruch 20/10, Long und Short",
-   "pct": 96.5,
-   "equity": 151.31,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.05,
-   "positionen": [
-    "short BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "DONLS_T15",
-   "name": "DONLS_T15: Bitcoin Donchian-Ausbruch 20/10, Long und Short mit Trailing-Stop 15 %",
-   "pct": 94.91,
-   "equity": 150.08,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "short BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "B_T8",
-   "name": "B_T8: Momentum 7d/30d Long+Short (wöchentlich) mit Trailing-Stop 8 %",
-   "pct": 30.84,
-   "equity": 100.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 4,
-   "anpassungen": 1,
-   "kosten": 0.16,
-   "positionen": [
-    "short WLDUSDT 0.0",
-    "short FETUSDT 0.0"
-   ]
-  },
-  {
-   "key": "B_T15",
-   "name": "B_T15: Momentum 7d/30d Long+Short (wöchentlich) mit Trailing-Stop 15 %",
-   "pct": 12.49,
-   "equity": 86.62,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 3,
-   "anpassungen": 1,
-   "kosten": 0.14,
-   "positionen": [
-    "long PEPEUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "short FETUSDT 0.0"
+    "short SPCXBUSDT 5.2",
+    "short MUBUSDT 5.2",
+    "short GOOGLBUSDT 5.2",
+    "short LTCUSDT 5.2",
+    "short RWUSDUSDT 5.2",
+    "short TQQQBUSDT 5.2",
+    "short CYBERUSDT 5.2",
+    "short FILUSDT 5.2",
+    "short INJUSDT 5.2",
+    "short NEARUSDT 5.2",
+    "short GRAMUSDT 5.2",
+    "short ONEUSDT 5.3",
+    "short TRXUSDT 5.2"
    ]
   },
   {
@@ -413,110 +350,742 @@
    "positionen": []
   },
   {
-   "key": "FCON_T15",
-   "name": "FCON_T15: Funding-Kontra, Short auf überhitzte Longs, Long auf überhitzte Shorts mit Trailing-Stop 15 %",
-   "pct": 5.82,
-   "equity": 81.48,
+   "key": "DONLS",
+   "name": "DONLS: Bitcoin Donchian-Ausbruch 20/10, Long und Short",
+   "pct": 4.55,
+   "equity": 80.5,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.05,
+   "positionen": [
+    "short BTCUSDT 70.8"
+   ]
+  },
+  {
+   "key": "B_T8",
+   "name": "B_T8: Momentum 7d/30d Long+Short (wöchentlich) mit Trailing-Stop 8 %",
+   "pct": 4.07,
+   "equity": 80.13,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 4,
+   "anpassungen": 1,
+   "kosten": 0.16,
+   "positionen": [
+    "short WLDUSDT 9.5",
+    "short FETUSDT 11.1"
+   ]
+  },
+  {
+   "key": "RG3_T15",
+   "name": "RG3_T15: K-Long im Aufwärtstrend, Bitcoin short im Bärenmarkt mit Trailing-Stop 15 %",
+   "pct": 3.96,
+   "equity": 80.05,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BEAMXUSDT 24.3",
+    "long RLUSDUSDT 24.4",
+    "long PEPEUSDT 27.6"
+   ]
+  },
+  {
+   "key": "MAXLS",
+   "name": "MAXLS: Lotterie-Effekt, Short auf Coins mit größtem Tagessprung, Long auf die ruhigsten",
+   "pct": 3.84,
+   "equity": 79.95,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.09,
+   "positionen": [
+    "long BTCUSDT 7.0",
+    "short SOPHUSDT 6.7",
+    "short RSRUSDT 7.9",
+    "long ETHUSDT 6.7",
+    "short BEAMXUSDT 6.4",
+    "long RLUSDUSDT 7.3",
+    "short NILUSDT 5.7",
+    "short LSKUSDT 4.9",
+    "long SOLUSDT 6.4",
+    "long UUSDT 7.3"
+   ]
+  },
+  {
+   "key": "DONLS_T15",
+   "name": "DONLS_T15: Bitcoin Donchian-Ausbruch 20/10, Long und Short mit Trailing-Stop 15 %",
+   "pct": 3.67,
+   "equity": 79.83,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "short BTCUSDT 70.3"
+   ]
+  },
+  {
+   "key": "R_TB3_T5",
+   "name": "R_TB3_T5: Trend: Long stärkste, Short schwächste (3 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": 3.3,
+   "equity": 79.54,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 7,
+   "anpassungen": 14,
+   "kosten": 1.93,
+   "positionen": [
+    "short ZECUSDT 12.7",
+    "short ARBUSDT 12.7",
+    "long GRAMUSDT 12.7",
+    "long ONEUSDT 12.9",
+    "short QNTUSDT 12.7"
+   ]
+  },
+  {
+   "key": "MAXLS_T15",
+   "name": "MAXLS_T15: Lotterie-Effekt, Short auf Coins mit größtem Tagessprung, Long auf die ruhigsten mit Trailing-Stop 15 %",
+   "pct": 3.21,
+   "equity": 79.47,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 1,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "short NEARUSDT 6.8",
+    "short UNIUSDT 6.9",
+    "short XPLUSDT 5.8",
+    "short 牛来USDT 6.7",
+    "long UUSDT 7.3",
+    "long RLUSDUSDT 7.3",
+    "long SOLUSDT 6.6",
+    "long GOOGLBUSDT 7.5",
+    "long QQQBUSDT 7.3"
+   ]
+  },
+  {
+   "key": "R_TB3",
+   "name": "R_TB3: Trend: Long stärkste, Short schwächste (3 Coins je Seite, 6 h)",
+   "pct": 2.95,
+   "equity": 79.27,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 2.42,
+   "positionen": [
+    "long INITUSDT 11.9",
+    "short ZECUSDT 12.7",
+    "short ARBUSDT 12.7",
+    "long GRAMUSDT 12.7",
+    "long ONEUSDT 12.9",
+    "short QNTUSDT 12.7"
+   ]
+  },
+  {
+   "key": "B_T15",
+   "name": "B_T15: Momentum 7d/30d Long+Short (wöchentlich) mit Trailing-Stop 15 %",
+   "pct": 2.91,
+   "equity": 79.24,
    "lev": 1,
    "liquidiert": null,
    "stops": 3,
    "anpassungen": 1,
-   "kosten": 0.11,
+   "kosten": 0.14,
    "positionen": [
-    "long AVAXUSDT 0.0",
-    "long ADAUSDT 0.0",
-    "short ETHUSDT 0.0",
-    "short SOLUSDT 0.0",
-    "short BNBUSDT 0.0",
-    "long DOGEUSDT 0.0",
-    "short BTCUSDT 0.0"
+    "long PEPEUSDT 13.2",
+    "short WLDUSDT 9.5",
+    "short FETUSDT 11.1"
    ]
   },
   {
-   "key": "R_CB5_T5",
-   "name": "R_CB5_T5: Gegen den Trend: Short stärkste, Long schwächste (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": 1.0,
-   "equity": 77.77,
+   "key": "F_T15",
+   "name": "F_T15: wie B, fest 35 % Einsatz (Kontrolle) mit Trailing-Stop 15 %",
+   "pct": 2.34,
+   "equity": 78.81,
    "lev": 1,
    "liquidiert": null,
-   "stops": 16,
-   "anpassungen": 13,
-   "kosten": 1.76,
+   "stops": 2,
+   "anpassungen": 1,
+   "kosten": 0.05,
    "positionen": [
-    "short KORUBUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "short MUBUSDT 0.0",
-    "short INITUSDT 0.0",
-    "long XRPUSDT 0.0",
-    "short AVAXUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "long ZECUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "long BCHUSDT 0.0"
+    "long BEAMXUSDT 4.5",
+    "long PEPEUSDT 5.1",
+    "short WLDUSDT 3.7",
+    "short SNDKBUSDT 3.6"
    ]
   },
   {
-   "key": "R_CB5",
-   "name": "R_CB5: Gegen den Trend: Short stärkste, Long schwächste (5 Coins je Seite, 6 h)",
-   "pct": 0.23,
-   "equity": 77.18,
+   "key": "G_T15",
+   "name": "G_T15: wie B, Martingale x1,1 nach Verlustwoche mit Trailing-Stop 15 %",
+   "pct": 2.34,
+   "equity": 78.81,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 2,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BEAMXUSDT 4.5",
+    "long PEPEUSDT 5.1",
+    "short WLDUSDT 3.7",
+    "short SNDKBUSDT 3.6"
+   ]
+  },
+  {
+   "key": "H_T15",
+   "name": "H_T15: wie B, Martingale x1,4 nach Verlustwoche mit Trailing-Stop 15 %",
+   "pct": 2.34,
+   "equity": 78.81,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 2,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BEAMXUSDT 4.5",
+    "long PEPEUSDT 5.1",
+    "short WLDUSDT 3.7",
+    "short SNDKBUSDT 3.6"
+   ]
+  },
+  {
+   "key": "MG_B_12_3_T15",
+   "name": "MG_B_12_3_T15: Momentum Long+Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 60 %) mit Trailing-Stop 15 %",
+   "pct": 2.34,
+   "equity": 78.81,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 2,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BEAMXUSDT 4.5",
+    "long PEPEUSDT 5.1",
+    "short WLDUSDT 3.7",
+    "short SNDKBUSDT 3.6"
+   ]
+  },
+  {
+   "key": "MG_B_12_6_T15",
+   "name": "MG_B_12_6_T15: Momentum Long+Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
+   "pct": 2.34,
+   "equity": 78.81,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 2,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BEAMXUSDT 4.5",
+    "long PEPEUSDT 5.1",
+    "short WLDUSDT 3.7",
+    "short SNDKBUSDT 3.6"
+   ]
+  },
+  {
+   "key": "MG_B_15_3_T15",
+   "name": "MG_B_15_3_T15: Momentum Long+Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
+   "pct": 2.34,
+   "equity": 78.81,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 2,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BEAMXUSDT 4.5",
+    "long PEPEUSDT 5.1",
+    "short WLDUSDT 3.7",
+    "short SNDKBUSDT 3.6"
+   ]
+  },
+  {
+   "key": "MG_B_15_6_T15",
+   "name": "MG_B_15_6_T15: Momentum Long+Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
+   "pct": 2.34,
+   "equity": 78.81,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 2,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BEAMXUSDT 4.5",
+    "long PEPEUSDT 5.1",
+    "short WLDUSDT 3.7",
+    "short SNDKBUSDT 3.6"
+   ]
+  },
+  {
+   "key": "MG_B_12_3",
+   "name": "MG_B_12_3: Momentum Long+Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 60 %)",
+   "pct": 2.26,
+   "equity": 78.74,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 22,
-   "kosten": 2.36,
+   "anpassungen": 1,
+   "kosten": 0.04,
    "positionen": [
-    "short KORUBUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "short MUBUSDT 0.0",
-    "short INITUSDT 0.0",
-    "long XRPUSDT 0.0",
-    "short AVAXUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "long ZECUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "long BCHUSDT 0.0"
+    "long BEAMXUSDT 4.5",
+    "long PEPEUSDT 5.1",
+    "long HYPEUSDT 3.9",
+    "short WLDUSDT 3.7",
+    "short SNDKBUSDT 3.6",
+    "short INTCBUSDT 4.3"
    ]
   },
   {
-   "key": "R_CB15_T5",
-   "name": "R_CB15_T5: Gegen den Trend: Short stärkste, Long schwächste (15 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": 0.17,
-   "equity": 77.13,
+   "key": "MG_B_12_6",
+   "name": "MG_B_12_6: Momentum Long+Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %)",
+   "pct": 2.26,
+   "equity": 78.74,
    "lev": 1,
    "liquidiert": null,
-   "stops": 35,
-   "anpassungen": 13,
-   "kosten": 1.33,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.04,
    "positionen": [
-    "short AAVEUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "long BTCUSDT 0.0",
-    "short UNIUSDT 0.0",
-    "long BNBUSDT 0.0",
-    "short PEPEUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "long ETHUSDT 0.0",
-    "long NEARUSDT 0.0",
-    "short CRCLBUSDT 0.0",
-    "long RWUSDUSDT 0.0",
-    "long HYPEUSDT 0.0",
-    "long NVDABUSDT 0.0",
-    "long SOLUSDT 0.0",
-    "short INTCBUSDT 0.0",
-    "long INJUSDT 0.0",
-    "short GOOGLBUSDT 0.0",
-    "short AVAXUSDT 0.0",
-    "long ADAUSDT 0.0",
-    "long BCHUSDT 0.0",
-    "short SKHYBUSDT 0.0",
-    "short SPCXBUSDT 0.0",
-    "short KORUBUSDT 0.0",
-    "short MUBUSDT 0.0",
-    "short INITUSDT 0.0",
-    "short ONDOUSDT 0.0",
-    "long XRPUSDT 0.0",
-    "short SNDKBUSDT 0.0"
+    "long BEAMXUSDT 4.5",
+    "long PEPEUSDT 5.1",
+    "long HYPEUSDT 3.9",
+    "short WLDUSDT 3.7",
+    "short SNDKBUSDT 3.6",
+    "short INTCBUSDT 4.3"
+   ]
+  },
+  {
+   "key": "MG_B_15_3",
+   "name": "MG_B_15_3: Momentum Long+Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 100 %)",
+   "pct": 2.26,
+   "equity": 78.74,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.04,
+   "positionen": [
+    "long BEAMXUSDT 4.5",
+    "long PEPEUSDT 5.1",
+    "long HYPEUSDT 3.9",
+    "short WLDUSDT 3.7",
+    "short SNDKBUSDT 3.6",
+    "short INTCBUSDT 4.3"
+   ]
+  },
+  {
+   "key": "MG_B_15_6",
+   "name": "MG_B_15_6: Momentum Long+Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %)",
+   "pct": 2.26,
+   "equity": 78.74,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.04,
+   "positionen": [
+    "long BEAMXUSDT 4.5",
+    "long PEPEUSDT 5.1",
+    "long HYPEUSDT 3.9",
+    "short WLDUSDT 3.7",
+    "short SNDKBUSDT 3.6",
+    "short INTCBUSDT 4.3"
+   ]
+  },
+  {
+   "key": "H180F",
+   "name": "H180F: Nähe 180-Tage-Hoch, Top 5 Long, nur wenn Bitcoin über 100-Tage-Schnitt, alle 3 Tage (aus der Strategie-Suche, beste ohne Hebel)",
+   "pct": 1.18,
+   "equity": 77.91,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.09,
+   "positionen": [
+    "long UUSDT 14.6",
+    "long PEPEUSDT 16.6",
+    "long RLUSDUSDT 14.6",
+    "long BNBUSDT 14.2",
+    "long BTCUSDT 14.1"
+   ]
+  },
+  {
+   "key": "H180F_T15",
+   "name": "H180F_T15: Nähe 180-Tage-Hoch, Top 5 Long, nur wenn Bitcoin über 100-Tage-Schnitt, alle 3 Tage (aus der Strategie-Suche, beste ohne Hebel) mit Trailing-Stop 15 %",
+   "pct": 1.18,
+   "equity": 77.91,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.09,
+   "positionen": [
+    "long UUSDT 14.6",
+    "long PEPEUSDT 16.6",
+    "long RLUSDUSDT 14.6",
+    "long BNBUSDT 14.2",
+    "long BTCUSDT 14.1"
+   ]
+  },
+  {
+   "key": "H180_T15",
+   "name": "H180_T15: Nähe zum 180-Tage-Hoch, Top 5 Long im Aufwärtstrend mit Trailing-Stop 15 %",
+   "pct": 1.18,
+   "equity": 77.91,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.09,
+   "positionen": [
+    "long UUSDT 14.6",
+    "long PEPEUSDT 16.6",
+    "long RLUSDUSDT 14.6",
+    "long BNBUSDT 14.2",
+    "long BTCUSDT 14.1"
+   ]
+  },
+  {
+   "key": "MOMF2",
+   "name": "MOMF2: Momentum 14 Tage, Top 3 Long, nur wenn Bitcoin über 200-Tage-Schnitt, wöchentlich",
+   "pct": 1.12,
+   "equity": 77.86,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BEAMXUSDT 24.3",
+    "long 牛来USDT 22.2",
+    "long PEPEUSDT 27.6"
+   ]
+  },
+  {
+   "key": "MOMF",
+   "name": "MOMF: Momentum 14 Tage, Top 3 Long, nur wenn Bitcoin über 100-Tage-Schnitt, wöchentlich (aus der Strategie-Suche)",
+   "pct": 1.12,
+   "equity": 77.86,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BEAMXUSDT 24.3",
+    "long 牛来USDT 22.2",
+    "long PEPEUSDT 27.6"
+   ]
+  },
+  {
+   "key": "AD2_3_100",
+   "name": "AD2_3_100: Adaptiv (zwei Zustände): Long auf die Top 3 im Aufwärtstrend, Short auf die schwächsten 3 im Abwärtstrend, Bitcoin-Schnitt 100 Tage, Momentum 14 Tage, wöchentlich",
+   "pct": 1.12,
+   "equity": 77.86,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BEAMXUSDT 24.3",
+    "long 牛来USDT 22.2",
+    "long PEPEUSDT 27.6"
+   ]
+  },
+  {
+   "key": "AD2_3_200",
+   "name": "AD2_3_200: Adaptiv (zwei Zustände): Long auf die Top 3 im Aufwärtstrend, Short auf die schwächsten 3 im Abwärtstrend, Bitcoin-Schnitt 200 Tage, Momentum 14 Tage, wöchentlich",
+   "pct": 1.12,
+   "equity": 77.86,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BEAMXUSDT 24.3",
+    "long 牛来USDT 22.2",
+    "long PEPEUSDT 27.6"
+   ]
+  },
+  {
+   "key": "TSM",
+   "name": "TSM: Zeitreihen-Momentum je Coin (28 Tage), Long oder Short, nach Risiko gewichtet",
+   "pct": 0.82,
+   "equity": 77.63,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.09,
+   "positionen": [
+    "short LINKUSDT 0.2",
+    "short QNTUSDT 0.2",
+    "short FETUSDT 0.1",
+    "short PUMPUSDT 0.1",
+    "long PEPEUSDT 0.2",
+    "short XPLUSDT 0.1",
+    "short NEARUSDT 0.1",
+    "short TAOUSDT 0.2",
+    "short ZAMAUSDT 0.1",
+    "short DOGEUSDT 0.3",
+    "short NILUSDT 0.1",
+    "short LSKUSDT 0.1",
+    "short LTCUSDT 0.3",
+    "short ENAUSDT 0.1",
+    "short BTCUSDT 0.5",
+    "short STXUSDT 0.2",
+    "short CELOUSDT 0.2",
+    "short SOPHUSDT 0.1",
+    "long BEAMXUSDT 0.1",
+    "long RLUSDUSDT 31.3",
+    "short ONDOUSDT 0.2",
+    "short SUIUSDT 0.2",
+    "short XRPUSDT 0.3",
+    "short AVAXUSDT 0.2",
+    "short SOLUSDT 0.3",
+    "long UUSDT 34.2",
+    "short BNBUSDT 0.4",
+    "short ZROUSDT 0.1",
+    "short ZECUSDT 0.1",
+    "short WLDUSDT 0.1",
+    "short ETHUSDT 0.4",
+    "short RSRUSDT 0.1",
+    "short UNIUSDT 0.2",
+    "short TRXUSDT 0.4",
+    "short PROMUSDT 0.1",
+    "short AAVEUSDT 0.2",
+    "short INJUSDT 0.2",
+    "short HYPEUSDT 0.2"
+   ]
+  },
+  {
+   "key": "TSM_T15",
+   "name": "TSM_T15: Zeitreihen-Momentum je Coin (28 Tage), Long oder Short, nach Risiko gewichtet mit Trailing-Stop 15 %",
+   "pct": 0.79,
+   "equity": 77.61,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 4,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "short WLDUSDT 0.1",
+    "short NEARUSDT 0.1",
+    "short TRXUSDT 0.3",
+    "long UUSDT 32.5",
+    "long BEAMXUSDT 0.1",
+    "short CELOUSDT 0.2",
+    "short SKHYBUSDT 0.2",
+    "short MUBUSDT 0.2",
+    "short ONDOUSDT 0.2",
+    "short AVAXUSDT 0.2",
+    "short UNIUSDT 0.2",
+    "long PEPEUSDT 0.2",
+    "short AAVEUSDT 0.2",
+    "short XRPUSDT 0.3",
+    "short ENAUSDT 0.1",
+    "short BNBUSDT 0.4",
+    "short GOOGLBUSDT 0.4",
+    "short DOGEUSDT 0.3",
+    "short QQQBUSDT 0.7",
+    "short NVDABUSDT 0.4",
+    "short TAOUSDT 0.2",
+    "short ETHUSDT 0.4",
+    "short CRCLBUSDT 0.2",
+    "short XPLUSDT 0.1",
+    "short HYPEUSDT 0.2",
+    "short SOLUSDT 0.3",
+    "short TRUMPUSDT 0.2",
+    "short LINKUSDT 0.2",
+    "short ADAUSDT 0.2",
+    "short MSTRBUSDT 0.2",
+    "short 牛来USDT 0.1",
+    "long RLUSDUSDT 31.0",
+    "short SUIUSDT 0.2",
+    "short SNDKBUSDT 0.2",
+    "short BTCUSDT 0.5"
+   ]
+  },
+  {
+   "key": "B2",
+   "name": "B2: Strategie B mit 2x Hebel",
+   "pct": 0.58,
+   "equity": 77.44,
+   "lev": 2,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.19,
+   "positionen": [
+    "long PEPEUSDT 26.5",
+    "short WLDUSDT 19.1",
+    "long LSKUSDT 16.3",
+    "short SOPHUSDT 22.2",
+    "short FETUSDT 22.2",
+    "long BEAMXUSDT 21.4"
+   ]
+  },
+  {
+   "key": "MG_MOMF_12_3",
+   "name": "MG_MOMF_12_3: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 60 %)",
+   "pct": 0.41,
+   "equity": 77.32,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.04,
+   "positionen": [
+    "long BEAMXUSDT 8.9",
+    "long 牛来USDT 8.2",
+    "long PEPEUSDT 10.2"
+   ]
+  },
+  {
+   "key": "MG_MOMF_12_6",
+   "name": "MG_MOMF_12_6: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %)",
+   "pct": 0.41,
+   "equity": 77.32,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.04,
+   "positionen": [
+    "long BEAMXUSDT 8.9",
+    "long 牛来USDT 8.2",
+    "long PEPEUSDT 10.2"
+   ]
+  },
+  {
+   "key": "MG_MOMF_15_3",
+   "name": "MG_MOMF_15_3: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 100 %)",
+   "pct": 0.41,
+   "equity": 77.32,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.04,
+   "positionen": [
+    "long BEAMXUSDT 8.9",
+    "long 牛来USDT 8.2",
+    "long PEPEUSDT 10.2"
+   ]
+  },
+  {
+   "key": "MG_MOMF_15_6",
+   "name": "MG_MOMF_15_6: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %)",
+   "pct": 0.41,
+   "equity": 77.32,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.04,
+   "positionen": [
+    "long BEAMXUSDT 8.9",
+    "long 牛来USDT 8.2",
+    "long PEPEUSDT 10.2"
+   ]
+  },
+  {
+   "key": "MG_AD2_3_200_12_3",
+   "name": "MG_AD2_3_200_12_3: Adaptiv Long/Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 60 %)",
+   "pct": 0.41,
+   "equity": 77.32,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.04,
+   "positionen": [
+    "long BEAMXUSDT 8.9",
+    "long 牛来USDT 8.2",
+    "long PEPEUSDT 10.2"
+   ]
+  },
+  {
+   "key": "MG_AD2_3_200_12_6",
+   "name": "MG_AD2_3_200_12_6: Adaptiv Long/Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %)",
+   "pct": 0.41,
+   "equity": 77.32,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.04,
+   "positionen": [
+    "long BEAMXUSDT 8.9",
+    "long 牛来USDT 8.2",
+    "long PEPEUSDT 10.2"
+   ]
+  },
+  {
+   "key": "MG_AD2_3_200_15_3",
+   "name": "MG_AD2_3_200_15_3: Adaptiv Long/Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 100 %)",
+   "pct": 0.41,
+   "equity": 77.32,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.04,
+   "positionen": [
+    "long BEAMXUSDT 8.9",
+    "long 牛来USDT 8.2",
+    "long PEPEUSDT 10.2"
+   ]
+  },
+  {
+   "key": "MG_AD2_3_200_15_6",
+   "name": "MG_AD2_3_200_15_6: Adaptiv Long/Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %)",
+   "pct": 0.41,
+   "equity": 77.32,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.04,
+   "positionen": [
+    "long BEAMXUSDT 8.9",
+    "long 牛来USDT 8.2",
+    "long PEPEUSDT 10.2"
+   ]
+  },
+  {
+   "key": "FCON",
+   "name": "FCON: Funding-Kontra, Short auf überhitzte Longs, Long auf überhitzte Shorts",
+   "pct": 0.03,
+   "equity": 77.03,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.09,
+   "positionen": [
+    "short BTCUSDT 7.0",
+    "short WLDUSDT 5.7",
+    "short QNTUSDT 6.6",
+    "long SOPHUSDT 6.7",
+    "long STXUSDT 7.1",
+    "long TRXUSDT 7.6",
+    "long NILUSDT 5.7",
+    "short XRPUSDT 6.2",
+    "long LSKUSDT 4.9",
+    "short SOLUSDT 6.4"
    ]
   },
   {
@@ -1456,144 +2025,241 @@
    "positionen": []
   },
   {
-   "key": "MG_B_12_3",
-   "name": "MG_B_12_3: Momentum Long+Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 60 %)",
-   "pct": -0.05,
-   "equity": 76.96,
+   "key": "MG_MOMF_12_3_T15",
+   "name": "MG_MOMF_12_3_T15: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 60 %) mit Trailing-Stop 15 %",
+   "pct": -0.06,
+   "equity": 76.95,
    "lev": 1,
    "liquidiert": null,
-   "stops": 0,
+   "stops": 1,
    "anpassungen": 1,
-   "kosten": 0.04,
+   "kosten": 0.05,
    "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "long HYPEUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "short INTCBUSDT 0.0"
+    "long BEAMXUSDT 8.9",
+    "long PEPEUSDT 10.2"
    ]
   },
   {
-   "key": "MG_B_12_6",
-   "name": "MG_B_12_6: Momentum Long+Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %)",
-   "pct": -0.05,
-   "equity": 76.96,
+   "key": "MG_MOMF_12_6_T15",
+   "name": "MG_MOMF_12_6_T15: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
+   "pct": -0.06,
+   "equity": 76.95,
    "lev": 1,
    "liquidiert": null,
-   "stops": 0,
+   "stops": 1,
    "anpassungen": 1,
-   "kosten": 0.04,
+   "kosten": 0.05,
    "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "long HYPEUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "short INTCBUSDT 0.0"
+    "long BEAMXUSDT 8.9",
+    "long PEPEUSDT 10.2"
    ]
   },
   {
-   "key": "MG_B_15_3",
-   "name": "MG_B_15_3: Momentum Long+Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 100 %)",
-   "pct": -0.05,
-   "equity": 76.96,
+   "key": "MG_MOMF_15_3_T15",
+   "name": "MG_MOMF_15_3_T15: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
+   "pct": -0.06,
+   "equity": 76.95,
    "lev": 1,
    "liquidiert": null,
-   "stops": 0,
+   "stops": 1,
    "anpassungen": 1,
-   "kosten": 0.04,
+   "kosten": 0.05,
    "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "long HYPEUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "short INTCBUSDT 0.0"
+    "long BEAMXUSDT 8.9",
+    "long PEPEUSDT 10.2"
    ]
   },
   {
-   "key": "MG_B_15_6",
-   "name": "MG_B_15_6: Momentum Long+Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %)",
-   "pct": -0.05,
-   "equity": 76.96,
+   "key": "MG_MOMF_15_6_T15",
+   "name": "MG_MOMF_15_6_T15: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
+   "pct": -0.06,
+   "equity": 76.95,
    "lev": 1,
    "liquidiert": null,
-   "stops": 0,
+   "stops": 1,
    "anpassungen": 1,
-   "kosten": 0.04,
+   "kosten": 0.05,
    "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "long HYPEUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "short INTCBUSDT 0.0"
+    "long BEAMXUSDT 8.9",
+    "long PEPEUSDT 10.2"
    ]
   },
   {
-   "key": "MAXLS",
-   "name": "MAXLS: Lotterie-Effekt, Short auf Coins mit größtem Tagessprung, Long auf die ruhigsten",
-   "pct": -0.15,
-   "equity": 76.88,
+   "key": "MG_AD2_3_200_12_3_T15",
+   "name": "MG_AD2_3_200_12_3_T15: Adaptiv Long/Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 60 %) mit Trailing-Stop 15 %",
+   "pct": -0.06,
+   "equity": 76.95,
    "lev": 1,
    "liquidiert": null,
-   "stops": 0,
+   "stops": 1,
    "anpassungen": 1,
-   "kosten": 0.09,
+   "kosten": 0.05,
    "positionen": [
-    "long BTCUSDT 0.0",
-    "short SOPHUSDT 0.0",
-    "short RSRUSDT 0.0",
-    "long ETHUSDT 0.0",
-    "short BEAMXUSDT 0.0",
-    "long RLUSDUSDT 0.0",
-    "short NILUSDT 0.0",
-    "short LSKUSDT 0.0",
-    "long SOLUSDT 0.0",
-    "long UUSDT 0.0"
+    "long BEAMXUSDT 8.9",
+    "long PEPEUSDT 10.2"
    ]
   },
   {
-   "key": "FCON",
-   "name": "FCON: Funding-Kontra, Short auf überhitzte Longs, Long auf überhitzte Shorts",
-   "pct": -0.16,
-   "equity": 76.88,
+   "key": "MG_AD2_3_200_12_6_T15",
+   "name": "MG_AD2_3_200_12_6_T15: Adaptiv Long/Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
+   "pct": -0.06,
+   "equity": 76.95,
    "lev": 1,
    "liquidiert": null,
-   "stops": 0,
+   "stops": 1,
    "anpassungen": 1,
-   "kosten": 0.09,
+   "kosten": 0.05,
    "positionen": [
-    "short BTCUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "short QNTUSDT 0.0",
-    "long SOPHUSDT 0.0",
-    "long STXUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "long NILUSDT 0.0",
-    "short XRPUSDT 0.0",
-    "long LSKUSDT 0.0",
-    "short SOLUSDT 0.0"
+    "long BEAMXUSDT 8.9",
+    "long PEPEUSDT 10.2"
    ]
   },
   {
-   "key": "B2",
-   "name": "B2: Strategie B mit 2x Hebel",
-   "pct": -0.41,
-   "equity": 76.68,
-   "lev": 2,
+   "key": "MG_AD2_3_200_15_3_T15",
+   "name": "MG_AD2_3_200_15_3_T15: Adaptiv Long/Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
+   "pct": -0.06,
+   "equity": 76.95,
+   "lev": 1,
    "liquidiert": null,
-   "stops": 0,
+   "stops": 1,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BEAMXUSDT 8.9",
+    "long PEPEUSDT 10.2"
+   ]
+  },
+  {
+   "key": "MG_AD2_3_200_15_6_T15",
+   "name": "MG_AD2_3_200_15_6_T15: Adaptiv Long/Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
+   "pct": -0.06,
+   "equity": 76.95,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 1,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BEAMXUSDT 8.9",
+    "long PEPEUSDT 10.2"
+   ]
+  },
+  {
+   "key": "K_T8",
+   "name": "K_T8: Long-Momentum mit Trendfilter und Risikosteuerung (wöchentlich) mit Trailing-Stop 8 %",
+   "pct": -0.1,
+   "equity": 76.92,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 3,
    "anpassungen": 1,
    "kosten": 0.19,
+   "positionen": []
+  },
+  {
+   "key": "VBRK_T15",
+   "name": "VBRK_T15: Volumen-Ausbruch (3x Umsatz und +5 %), 3 Tage halten mit Trailing-Stop 15 %",
+   "pct": -0.14,
+   "equity": 76.89,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.03,
    "positionen": [
-    "long PEPEUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "long LSKUSDT 0.0",
-    "short SOPHUSDT 0.0",
-    "short FETUSDT 0.0",
-    "long BEAMXUSDT 0.0"
+    "long BEAMXUSDT 19.2"
+   ]
+  },
+  {
+   "key": "MOMF_T15",
+   "name": "MOMF_T15: Momentum 14 Tage, Top 3 Long, nur wenn Bitcoin über 100-Tage-Schnitt, wöchentlich (aus der Strategie-Suche) mit Trailing-Stop 15 %",
+   "pct": -0.17,
+   "equity": 76.87,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 1,
+   "anpassungen": 1,
+   "kosten": 0.12,
+   "positionen": [
+    "long BEAMXUSDT 24.3",
+    "long PEPEUSDT 27.6"
+   ]
+  },
+  {
+   "key": "MOMF2_T15",
+   "name": "MOMF2_T15: Momentum 14 Tage, Top 3 Long, nur wenn Bitcoin über 200-Tage-Schnitt, wöchentlich mit Trailing-Stop 15 %",
+   "pct": -0.17,
+   "equity": 76.87,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 1,
+   "anpassungen": 1,
+   "kosten": 0.12,
+   "positionen": [
+    "long BEAMXUSDT 24.3",
+    "long PEPEUSDT 27.6"
+   ]
+  },
+  {
+   "key": "AD2_3_100_T15",
+   "name": "AD2_3_100_T15: Adaptiv (zwei Zustände): Long auf die Top 3 im Aufwärtstrend, Short auf die schwächsten 3 im Abwärtstrend, Bitcoin-Schnitt 100 Tage, Momentum 14 Tage, wöchentlich mit Trailing-Stop 15 %",
+   "pct": -0.17,
+   "equity": 76.87,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 1,
+   "anpassungen": 1,
+   "kosten": 0.12,
+   "positionen": [
+    "long BEAMXUSDT 24.3",
+    "long PEPEUSDT 27.6"
+   ]
+  },
+  {
+   "key": "AD2_3_200_T15",
+   "name": "AD2_3_200_T15: Adaptiv (zwei Zustände): Long auf die Top 3 im Aufwärtstrend, Short auf die schwächsten 3 im Abwärtstrend, Bitcoin-Schnitt 200 Tage, Momentum 14 Tage, wöchentlich mit Trailing-Stop 15 %",
+   "pct": -0.17,
+   "equity": 76.87,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 1,
+   "anpassungen": 1,
+   "kosten": 0.12,
+   "positionen": [
+    "long BEAMXUSDT 24.3",
+    "long PEPEUSDT 27.6"
+   ]
+  },
+  {
+   "key": "R_TB10_T5",
+   "name": "R_TB10_T5: Trend: Long stärkste, Short schwächste (10 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": -0.44,
+   "equity": 76.66,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 15,
+   "anpassungen": 14,
+   "kosten": 1.64,
+   "positionen": [
+    "long TRXUSDT 3.7",
+    "long RWUSDUSDT 3.7",
+    "short XRPUSDT 3.7",
+    "short SOLUSDT 3.7",
+    "short QNTUSDT 3.7",
+    "short ZECUSDT 3.7",
+    "long SPCXBUSDT 3.7",
+    "short ARBUSDT 3.7",
+    "short MSTRBUSDT 3.7",
+    "short AAVEUSDT 3.7",
+    "long FILUSDT 3.7",
+    "long PEPEUSDT 3.7",
+    "long ONEUSDT 3.7",
+    "short NVDABUSDT 3.7",
+    "long CYBERUSDT 3.7",
+    "long GOOGLBUSDT 3.7",
+    "short CRCLBUSDT 3.7",
+    "short UNIUSDT 3.7",
+    "long GRAMUSDT 3.7"
    ]
   },
   {
@@ -1615,36 +2281,19 @@
    ]
   },
   {
-   "key": "R_CB10_T5",
-   "name": "R_CB10_T5: Gegen den Trend: Short stärkste, Long schwächste (10 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -0.52,
-   "equity": 76.6,
+   "key": "H365F",
+   "name": "H365F: Nähe 365-Tage-Hoch, Top 3 Long, nur wenn Bitcoin über 100-Tage-Schnitt, alle 3 Tage (aus der Strategie-Suche)",
+   "pct": -0.59,
+   "equity": 76.55,
    "lev": 1,
    "liquidiert": null,
-   "stops": 24,
-   "anpassungen": 13,
-   "kosten": 1.56,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.1,
    "positionen": [
-    "long TRXUSDT 0.0",
-    "long ETHUSDT 0.0",
-    "long RWUSDUSDT 0.0",
-    "long XRPUSDT 0.0",
-    "long SOLUSDT 0.0",
-    "long BTCUSDT 0.0",
-    "short SKHYBUSDT 0.0",
-    "short SPCXBUSDT 0.0",
-    "short INTCBUSDT 0.0",
-    "short KORUBUSDT 0.0",
-    "long INJUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "short MUBUSDT 0.0",
-    "short INITUSDT 0.0",
-    "short ONDOUSDT 0.0",
-    "short AVAXUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "short ARBUSDT 0.0",
-    "long ZECUSDT 0.0",
-    "long BCHUSDT 0.0"
+    "long UUSDT 24.4",
+    "long BFUSDUSDT 24.4",
+    "long TRXUSDT 24.0"
    ]
   },
   {
@@ -1660,312 +2309,353 @@
    "positionen": []
   },
   {
-   "key": "F_T15",
-   "name": "F_T15: wie B, fest 35 % Einsatz (Kontrolle) mit Trailing-Stop 15 %",
-   "pct": -0.61,
-   "equity": 76.53,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 2,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "short SNDKBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "G_T15",
-   "name": "G_T15: wie B, Martingale x1,1 nach Verlustwoche mit Trailing-Stop 15 %",
-   "pct": -0.61,
-   "equity": 76.53,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 2,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "short SNDKBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "H_T15",
-   "name": "H_T15: wie B, Martingale x1,4 nach Verlustwoche mit Trailing-Stop 15 %",
-   "pct": -0.61,
-   "equity": 76.53,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 2,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "short SNDKBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_B_12_3_T15",
-   "name": "MG_B_12_3_T15: Momentum Long+Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 60 %) mit Trailing-Stop 15 %",
-   "pct": -0.61,
-   "equity": 76.53,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 2,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "short SNDKBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_B_12_6_T15",
-   "name": "MG_B_12_6_T15: Momentum Long+Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
-   "pct": -0.61,
-   "equity": 76.53,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 2,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "short SNDKBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_B_15_3_T15",
-   "name": "MG_B_15_3_T15: Momentum Long+Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
-   "pct": -0.61,
-   "equity": 76.53,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 2,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "short SNDKBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_B_15_6_T15",
-   "name": "MG_B_15_6_T15: Momentum Long+Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
-   "pct": -0.61,
-   "equity": 76.53,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 2,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "short SNDKBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_CB3_T5",
-   "name": "R_CB3_T5: Gegen den Trend: Short stärkste, Long schwächste (3 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -1.0,
-   "equity": 76.23,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 7,
-   "anpassungen": 13,
-   "kosten": 1.88,
-   "positionen": [
-    "short INITUSDT 0.0",
-    "long XRPUSDT 0.0",
-    "short KORUBUSDT 0.0",
-    "long ZECUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "short MUBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_CB10",
-   "name": "R_CB10: Gegen den Trend: Short stärkste, Long schwächste (10 Coins je Seite, 6 h)",
-   "pct": -1.42,
-   "equity": 75.9,
+   "key": "H365F_T15",
+   "name": "H365F_T15: Nähe 365-Tage-Hoch, Top 3 Long, nur wenn Bitcoin über 100-Tage-Schnitt, alle 3 Tage (aus der Strategie-Suche) mit Trailing-Stop 15 %",
+   "pct": -0.59,
+   "equity": 76.55,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 22,
-   "kosten": 2.07,
+   "anpassungen": 2,
+   "kosten": 0.1,
    "positionen": [
-    "long TRXUSDT 0.0",
-    "long ETHUSDT 0.0",
-    "long RWUSDUSDT 0.0",
-    "long XRPUSDT 0.0",
-    "long SOLUSDT 0.0",
-    "long BTCUSDT 0.0",
-    "short INTCBUSDT 0.0",
-    "long INJUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "short AVAXUSDT 0.0",
-    "long ZECUSDT 0.0",
-    "long BCHUSDT 0.0",
-    "short SKHYBUSDT 0.0",
-    "short SPCXBUSDT 0.0",
-    "short KORUBUSDT 0.0",
-    "short MUBUSDT 0.0",
-    "short INITUSDT 0.0",
-    "short ONDOUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "short ARBUSDT 0.0"
+    "long UUSDT 24.4",
+    "long BFUSDUSDT 24.4",
+    "long TRXUSDT 24.0"
    ]
   },
   {
-   "key": "R_CB15",
-   "name": "R_CB15: Gegen den Trend: Short stärkste, Long schwächste (15 Coins je Seite, 6 h)",
-   "pct": -1.74,
-   "equity": 75.66,
+   "key": "R_CB15_T5",
+   "name": "R_CB15_T5: Gegen den Trend: Short stärkste, Long schwächste (15 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": -0.73,
+   "equity": 76.43,
    "lev": 1,
    "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 22,
-   "kosten": 1.75,
+   "stops": 39,
+   "anpassungen": 14,
+   "kosten": 1.45,
    "positionen": [
-    "long ZECUSDT 0.0",
-    "short AAVEUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "long BTCUSDT 0.0",
-    "short UNIUSDT 0.0",
-    "long BNBUSDT 0.0",
-    "short PEPEUSDT 0.0",
-    "long XRPUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "long ETHUSDT 0.0",
-    "long NEARUSDT 0.0",
-    "short CRCLBUSDT 0.0",
-    "long RWUSDUSDT 0.0",
-    "long HYPEUSDT 0.0",
-    "short ARBUSDT 0.0",
-    "long NVDABUSDT 0.0",
-    "long SOLUSDT 0.0",
-    "short INTCBUSDT 0.0",
-    "long INJUSDT 0.0",
-    "short GOOGLBUSDT 0.0",
-    "short AVAXUSDT 0.0",
-    "long ADAUSDT 0.0",
-    "long BCHUSDT 0.0",
-    "short SKHYBUSDT 0.0",
-    "short SPCXBUSDT 0.0",
-    "short KORUBUSDT 0.0",
-    "short MUBUSDT 0.0",
-    "short INITUSDT 0.0",
-    "short ONDOUSDT 0.0",
-    "short SNDKBUSDT 0.0"
+    "long AAVEUSDT 2.4",
+    "short TRXUSDT 2.4",
+    "long UNIUSDT 2.4",
+    "long ETHUSDT 2.4",
+    "short NEARUSDT 2.4",
+    "long CRCLBUSDT 2.4",
+    "short RWUSDUSDT 2.4",
+    "long HYPEUSDT 2.4",
+    "long SOLUSDT 2.4",
+    "short INJUSDT 2.4",
+    "short GOOGLBUSDT 2.4",
+    "long AVAXUSDT 2.4",
+    "short SPCXBUSDT 2.4",
+    "short MUBUSDT 2.4",
+    "long XRPUSDT 2.4",
+    "long SNDKBUSDT 2.4",
+    "long LINKUSDT 2.4",
+    "short TQQQBUSDT 2.4",
+    "long MSTRBUSDT 2.4",
+    "short FILUSDT 2.4",
+    "short ONEUSDT 2.4",
+    "long ZECUSDT 2.4",
+    "short LTCUSDT 2.4",
+    "short CYBERUSDT 2.4",
+    "short GRAMUSDT 2.4",
+    "long ARBUSDT 2.4"
    ]
   },
   {
    "key": "R_TB15_T5",
    "name": "R_TB15_T5: Trend: Long stärkste, Short schwächste (15 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -2.53,
-   "equity": 75.05,
+   "pct": -0.95,
+   "equity": 76.27,
    "lev": 1,
    "liquidiert": null,
-   "stops": 20,
-   "anpassungen": 13,
-   "kosten": 1.25,
+   "stops": 21,
+   "anpassungen": 14,
+   "kosten": 1.36,
    "positionen": [
-    "long AAVEUSDT 0.0",
-    "short ZECUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "long UNIUSDT 0.0",
-    "short BNBUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "short XRPUSDT 0.0",
-    "short BTCUSDT 0.0",
-    "short QNTUSDT 0.0",
-    "short ETHUSDT 0.0",
-    "short NEARUSDT 0.0",
-    "long CRCLBUSDT 0.0",
-    "short RWUSDUSDT 0.0",
-    "short HYPEUSDT 0.0",
-    "long ARBUSDT 0.0",
-    "short NVDABUSDT 0.0",
-    "short SOLUSDT 0.0",
-    "long INTCBUSDT 0.0",
-    "short INJUSDT 0.0",
-    "long GOOGLBUSDT 0.0",
-    "long AVAXUSDT 0.0",
-    "short ADAUSDT 0.0",
-    "short BCHUSDT 0.0",
-    "long SKHYBUSDT 0.0",
-    "long SPCXBUSDT 0.0",
-    "long KORUBUSDT 0.0",
-    "long MUBUSDT 0.0",
-    "long INITUSDT 0.0",
-    "long ONDOUSDT 0.0",
-    "long SNDKBUSDT 0.0"
+    "short AAVEUSDT 2.4",
+    "short ZECUSDT 2.4",
+    "long TRXUSDT 2.4",
+    "short UNIUSDT 2.4",
+    "long PEPEUSDT 2.4",
+    "short XRPUSDT 2.4",
+    "short QNTUSDT 2.4",
+    "short ETHUSDT 2.4",
+    "long NEARUSDT 2.4",
+    "short CRCLBUSDT 2.4",
+    "long RWUSDUSDT 2.4",
+    "short HYPEUSDT 2.4",
+    "short ARBUSDT 2.4",
+    "short NVDABUSDT 2.4",
+    "short SOLUSDT 2.4",
+    "long INJUSDT 2.4",
+    "long GOOGLBUSDT 2.4",
+    "short AVAXUSDT 2.4",
+    "long SPCXBUSDT 2.4",
+    "long MUBUSDT 2.4",
+    "short SNDKBUSDT 2.4",
+    "short LINKUSDT 2.4",
+    "long TQQQBUSDT 2.4",
+    "short MSTRBUSDT 2.4",
+    "long FILUSDT 2.4",
+    "long ONEUSDT 2.5",
+    "long LTCUSDT 2.4",
+    "long CYBERUSDT 2.4",
+    "long GRAMUSDT 2.4"
    ]
   },
   {
-   "key": "R_CB3",
-   "name": "R_CB3: Gegen den Trend: Short stärkste, Long schwächste (3 Coins je Seite, 6 h)",
-   "pct": -2.59,
-   "equity": 75.01,
+   "key": "H365F_2",
+   "name": "H365F_2: wie H365F mit 2x Hebel (die rückblickend beste Variante der Suche)",
+   "pct": -1.17,
+   "equity": 76.1,
+   "lev": 2,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.19,
+   "positionen": [
+    "long UUSDT 48.8",
+    "long BFUSDUSDT 48.8",
+    "long TRXUSDT 48.0"
+   ]
+  },
+  {
+   "key": "R_TB15",
+   "name": "R_TB15: Trend: Long stärkste, Short schwächste (15 Coins je Seite, 6 h)",
+   "pct": -1.48,
+   "equity": 75.86,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 22,
-   "kosten": 2.28,
+   "anpassungen": 23,
+   "kosten": 1.86,
    "positionen": [
-    "short INITUSDT 0.0",
-    "long XRPUSDT 0.0",
-    "short KORUBUSDT 0.0",
-    "long ZECUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "short MUBUSDT 0.0"
+    "short ZECUSDT 2.4",
+    "short AAVEUSDT 2.4",
+    "long TRXUSDT 2.4",
+    "short UNIUSDT 2.4",
+    "long PEPEUSDT 2.4",
+    "short XRPUSDT 2.4",
+    "short QNTUSDT 2.4",
+    "short ETHUSDT 2.4",
+    "long NEARUSDT 2.4",
+    "short CRCLBUSDT 2.4",
+    "long RWUSDUSDT 2.4",
+    "short HYPEUSDT 2.4",
+    "short ARBUSDT 2.4",
+    "short NVDABUSDT 2.4",
+    "short SOLUSDT 2.4",
+    "long INJUSDT 2.4",
+    "long GOOGLBUSDT 2.4",
+    "short AVAXUSDT 2.4",
+    "long SPCXBUSDT 2.4",
+    "long MUBUSDT 2.4",
+    "long INITUSDT 2.3",
+    "short SNDKBUSDT 2.4",
+    "short LINKUSDT 2.4",
+    "long TQQQBUSDT 2.4",
+    "short MSTRBUSDT 2.4",
+    "long FILUSDT 2.4",
+    "long ONEUSDT 2.4",
+    "long LTCUSDT 2.4",
+    "long CYBERUSDT 2.4",
+    "long GRAMUSDT 2.4"
    ]
   },
   {
-   "key": "R_TB10_T5",
-   "name": "R_TB10_T5: Trend: Long stärkste, Short schwächste (10 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -2.7,
-   "equity": 74.92,
+   "key": "R_CB5_T5",
+   "name": "R_CB5_T5: Gegen den Trend: Short stärkste, Long schwächste (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": -1.58,
+   "equity": 75.78,
    "lev": 1,
    "liquidiert": null,
-   "stops": 14,
-   "anpassungen": 13,
-   "kosten": 1.5,
+   "stops": 19,
+   "anpassungen": 14,
+   "kosten": 1.92,
    "positionen": [
-    "short TRXUSDT 0.0",
-    "short ETHUSDT 0.0",
-    "short RWUSDUSDT 0.0",
-    "short XRPUSDT 0.0",
-    "short SOLUSDT 0.0",
-    "short BTCUSDT 0.0",
-    "long INTCBUSDT 0.0",
-    "short INJUSDT 0.0",
-    "short QNTUSDT 0.0",
-    "long AVAXUSDT 0.0",
-    "short ZECUSDT 0.0",
-    "short BCHUSDT 0.0",
-    "long SKHYBUSDT 0.0",
-    "long SPCXBUSDT 0.0",
-    "long KORUBUSDT 0.0",
-    "long MUBUSDT 0.0",
-    "long INITUSDT 0.0",
-    "long ONDOUSDT 0.0",
-    "long SNDKBUSDT 0.0",
-    "long ARBUSDT 0.0"
+    "long NVDABUSDT 7.0",
+    "long AAVEUSDT 7.0",
+    "short CYBERUSDT 7.0",
+    "short PEPEUSDT 7.0",
+    "short GRAMUSDT 7.0",
+    "long ARBUSDT 7.0",
+    "short ONEUSDT 7.1"
+   ]
+  },
+  {
+   "key": "R_TB5_T5",
+   "name": "R_TB5_T5: Trend: Long stärkste, Short schwächste (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": -1.73,
+   "equity": 75.67,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 24,
+   "anpassungen": 21,
+   "kosten": 2.5,
+   "positionen": [
+    "short QNTUSDT 7.2",
+    "short ZECUSDT 7.2",
+    "short NVDABUSDT 7.2",
+    "short AAVEUSDT 7.2",
+    "long CYBERUSDT 7.2",
+    "long PEPEUSDT 7.3",
+    "long GRAMUSDT 7.2",
+    "short ARBUSDT 7.2",
+    "long ONEUSDT 7.3"
+   ]
+  },
+  {
+   "key": "R_CB10_T5",
+   "name": "R_CB10_T5: Gegen den Trend: Short stärkste, Long schwächste (10 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": -1.73,
+   "equity": 75.67,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 28,
+   "anpassungen": 14,
+   "kosten": 1.7,
+   "positionen": [
+    "short TRXUSDT 3.5",
+    "short RWUSDUSDT 3.5",
+    "long SOLUSDT 3.5",
+    "short SPCXBUSDT 3.5",
+    "long ARBUSDT 3.5",
+    "long MSTRBUSDT 3.5",
+    "long AAVEUSDT 3.5",
+    "short FILUSDT 3.5",
+    "short PEPEUSDT 3.6",
+    "short ONEUSDT 3.6",
+    "long NVDABUSDT 3.5",
+    "short CYBERUSDT 3.6",
+    "short GOOGLBUSDT 3.5",
+    "long CRCLBUSDT 3.5",
+    "long UNIUSDT 3.6",
+    "short GRAMUSDT 3.6"
+   ]
+  },
+  {
+   "key": "H180",
+   "name": "H180: Nähe zum 180-Tage-Hoch, Top 5 Long im Aufwärtstrend",
+   "pct": -1.75,
+   "equity": 75.65,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.09,
+   "positionen": [
+    "long PEPEUSDT 15.9",
+    "long BTCUSDT 13.9",
+    "long BEAMXUSDT 12.8",
+    "long UUSDT 14.6",
+    "long RLUSDUSDT 14.6"
+   ]
+  },
+  {
+   "key": "R_TB10",
+   "name": "R_TB10: Trend: Long stärkste, Short schwächste (10 Coins je Seite, 6 h)",
+   "pct": -2.06,
+   "equity": 75.41,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 2.18,
+   "positionen": [
+    "long TRXUSDT 3.6",
+    "long RWUSDUSDT 3.6",
+    "short XRPUSDT 3.6",
+    "short SOLUSDT 3.6",
+    "short QNTUSDT 3.6",
+    "short ZECUSDT 3.6",
+    "long SPCXBUSDT 3.6",
+    "long INITUSDT 3.4",
+    "short ARBUSDT 3.6",
+    "short MSTRBUSDT 3.6",
+    "short AAVEUSDT 3.6",
+    "long FILUSDT 3.6",
+    "long PEPEUSDT 3.6",
+    "long ONEUSDT 3.7",
+    "short NVDABUSDT 3.6",
+    "long CYBERUSDT 3.6",
+    "long GOOGLBUSDT 3.6",
+    "short CRCLBUSDT 3.6",
+    "short UNIUSDT 3.6",
+    "long GRAMUSDT 3.6"
+   ]
+  },
+  {
+   "key": "RG1_T10",
+   "name": "RG1_T10: Aufwärtstrend K-Long, Bärenmarkt Short auf die 3 schwächsten Coins mit Trailing-Stop 10 %",
+   "pct": -2.17,
+   "equity": 75.33,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 3,
+   "anpassungen": 1,
+   "kosten": 0.19,
+   "positionen": []
+  },
+  {
+   "key": "R_TB5",
+   "name": "R_TB5: Trend: Long stärkste, Short schwächste (5 Coins je Seite, 6 h)",
+   "pct": -2.26,
+   "equity": 75.26,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 2.43,
+   "positionen": [
+    "short QNTUSDT 7.2",
+    "long INITUSDT 6.7",
+    "short ZECUSDT 7.2",
+    "short NVDABUSDT 7.2",
+    "short AAVEUSDT 7.2",
+    "long CYBERUSDT 7.2",
+    "long PEPEUSDT 7.3",
+    "long GRAMUSDT 7.2",
+    "short ARBUSDT 7.2",
+    "long ONEUSDT 7.3"
+   ]
+  },
+  {
+   "key": "MOM28_T20",
+   "name": "MOM28_T20: Querschnitts-Momentum 28 Tage, Top 5 Long, wöchentlich mit Trailing-Stop 20 %",
+   "pct": -2.65,
+   "equity": 74.96,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 1,
+   "anpassungen": 1,
+   "kosten": 0.11,
+   "positionen": [
+    "long PEPEUSDT 15.9",
+    "long HYPEUSDT 12.0",
+    "long UUSDT 14.6",
+    "long RLUSDUSDT 14.6"
+   ]
+  },
+  {
+   "key": "FCON_T15",
+   "name": "FCON_T15: Funding-Kontra, Short auf überhitzte Longs, Long auf überhitzte Shorts mit Trailing-Stop 15 %",
+   "pct": -2.77,
+   "equity": 74.87,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 3,
+   "anpassungen": 1,
+   "kosten": 0.11,
+   "positionen": [
+    "long AVAXUSDT 7.3",
+    "long ADAUSDT 6.8",
+    "short ETHUSDT 6.7",
+    "short SOLUSDT 6.6",
+    "short BNBUSDT 7.1",
+    "long DOGEUSDT 6.7",
+    "short BTCUSDT 7.0"
    ]
   },
   {
@@ -1981,117 +2671,350 @@
    "positionen": []
   },
   {
-   "key": "R_TB15",
-   "name": "R_TB15: Trend: Long stärkste, Short schwächste (15 Coins je Seite, 6 h)",
-   "pct": -3.01,
-   "equity": 74.68,
+   "key": "AD2_10_100_T15",
+   "name": "AD2_10_100_T15: Adaptiv (zwei Zustände): Long auf die Top 10 im Aufwärtstrend, Short auf die schwächsten 10 im Abwärtstrend, Bitcoin-Schnitt 100 Tage, Momentum 14 Tage, wöchentlich mit Trailing-Stop 15 %",
+   "pct": -3.0,
+   "equity": 74.69,
    "lev": 1,
    "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 22,
-   "kosten": 1.75,
+   "stops": 4,
+   "anpassungen": 1,
+   "kosten": 0.13,
    "positionen": [
-    "short ZECUSDT 0.0",
-    "long AAVEUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "short BTCUSDT 0.0",
-    "long UNIUSDT 0.0",
-    "short BNBUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "short XRPUSDT 0.0",
-    "short QNTUSDT 0.0",
-    "short ETHUSDT 0.0",
-    "short NEARUSDT 0.0",
-    "long CRCLBUSDT 0.0",
-    "short RWUSDUSDT 0.0",
-    "short HYPEUSDT 0.0",
-    "long ARBUSDT 0.0",
-    "short NVDABUSDT 0.0",
-    "short SOLUSDT 0.0",
-    "long INTCBUSDT 0.0",
-    "short INJUSDT 0.0",
-    "long GOOGLBUSDT 0.0",
-    "long AVAXUSDT 0.0",
-    "short ADAUSDT 0.0",
-    "short BCHUSDT 0.0",
-    "long SKHYBUSDT 0.0",
-    "long SPCXBUSDT 0.0",
-    "long KORUBUSDT 0.0",
-    "long MUBUSDT 0.0",
-    "long INITUSDT 0.0",
-    "long ONDOUSDT 0.0",
-    "long SNDKBUSDT 0.0"
+    "long UNIUSDT 6.9",
+    "long BEAMXUSDT 7.3",
+    "long PEPEUSDT 8.3",
+    "long RLUSDUSDT 7.3",
+    "long UUSDT 7.3",
+    "long RWUSDUSDT 7.3"
    ]
   },
   {
-   "key": "R_TB3_T5",
-   "name": "R_TB3_T5: Trend: Long stärkste, Short schwächste (3 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -4.08,
-   "equity": 73.86,
+   "key": "AD2_10_200_T15",
+   "name": "AD2_10_200_T15: Adaptiv (zwei Zustände): Long auf die Top 10 im Aufwärtstrend, Short auf die schwächsten 10 im Abwärtstrend, Bitcoin-Schnitt 200 Tage, Momentum 14 Tage, wöchentlich mit Trailing-Stop 15 %",
+   "pct": -3.0,
+   "equity": 74.69,
    "lev": 1,
    "liquidiert": null,
-   "stops": 6,
-   "anpassungen": 13,
-   "kosten": 1.78,
+   "stops": 4,
+   "anpassungen": 1,
+   "kosten": 0.13,
    "positionen": [
-    "long INITUSDT 0.0",
-    "short XRPUSDT 0.0",
-    "long KORUBUSDT 0.0",
-    "short ZECUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "long MUBUSDT 0.0"
+    "long UNIUSDT 6.9",
+    "long BEAMXUSDT 7.3",
+    "long PEPEUSDT 8.3",
+    "long RLUSDUSDT 7.3",
+    "long UUSDT 7.3",
+    "long RWUSDUSDT 7.3"
    ]
   },
   {
-   "key": "R_TB3",
-   "name": "R_TB3: Trend: Long stärkste, Short schwächste (3 Coins je Seite, 6 h)",
-   "pct": -4.23,
-   "equity": 73.74,
+   "key": "DM",
+   "name": "DM: Dual Momentum BTC/ETH/BNB, stärkster der letzten 60 Tage, sonst bar",
+   "pct": -3.21,
+   "equity": 74.53,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 22,
-   "kosten": 2.29,
+   "anpassungen": 1,
+   "kosten": 0.1,
    "positionen": [
-    "long INITUSDT 0.0",
-    "short XRPUSDT 0.0",
-    "long KORUBUSDT 0.0",
-    "short ZECUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "long MUBUSDT 0.0"
+    "long BNBUSDT 70.8"
    ]
   },
   {
-   "key": "R_TB10",
-   "name": "R_TB10: Trend: Long stärkste, Short schwächste (10 Coins je Seite, 6 h)",
-   "pct": -4.24,
-   "equity": 73.74,
+   "key": "LVOL_T15",
+   "name": "LVOL_T15: Niedrig-Volatilitäts-Anomalie, 5 ruhigste Coins Long, wöchentlich mit Trailing-Stop 15 %",
+   "pct": -3.31,
+   "equity": 74.45,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 1,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BTCUSDT 14.1",
+    "long UUSDT 14.6",
+    "long RLUSDUSDT 14.6",
+    "long QQQBUSDT 14.5"
+   ]
+  },
+  {
+   "key": "LVOL",
+   "name": "LVOL: Niedrig-Volatilitäts-Anomalie, 5 ruhigste Coins Long, wöchentlich",
+   "pct": -3.37,
+   "equity": 74.4,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 22,
-   "kosten": 2.05,
+   "anpassungen": 1,
+   "kosten": 0.08,
    "positionen": [
-    "short TRXUSDT 0.0",
-    "short ETHUSDT 0.0",
-    "short RWUSDUSDT 0.0",
-    "short XRPUSDT 0.0",
-    "short SOLUSDT 0.0",
-    "short BTCUSDT 0.0",
-    "long INTCBUSDT 0.0",
-    "short INJUSDT 0.0",
-    "short QNTUSDT 0.0",
-    "long AVAXUSDT 0.0",
-    "short ZECUSDT 0.0",
-    "short BCHUSDT 0.0",
-    "long SKHYBUSDT 0.0",
-    "long SPCXBUSDT 0.0",
-    "long KORUBUSDT 0.0",
-    "long MUBUSDT 0.0",
-    "long INITUSDT 0.0",
-    "long ONDOUSDT 0.0",
-    "long SNDKBUSDT 0.0",
-    "long ARBUSDT 0.0"
+    "long BTCUSDT 13.9",
+    "long BNBUSDT 14.2",
+    "long ETHUSDT 13.3",
+    "long RLUSDUSDT 14.6",
+    "long UUSDT 14.6"
+   ]
+  },
+  {
+   "key": "AD2_10_100",
+   "name": "AD2_10_100: Adaptiv (zwei Zustände): Long auf die Top 10 im Aufwärtstrend, Short auf die schwächsten 10 im Abwärtstrend, Bitcoin-Schnitt 100 Tage, Momentum 14 Tage, wöchentlich",
+   "pct": -3.5,
+   "equity": 74.31,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long ZECUSDT 6.7",
+    "long UNIUSDT 6.9",
+    "long BEAMXUSDT 7.3",
+    "long PEPEUSDT 8.3",
+    "long 牛来USDT 6.7",
+    "long HYPEUSDT 6.3",
+    "long RLUSDUSDT 7.3",
+    "long UUSDT 7.3",
+    "long RWUSDUSDT 7.3",
+    "long SKHYBUSDT 6.5"
+   ]
+  },
+  {
+   "key": "AD2_10_200",
+   "name": "AD2_10_200: Adaptiv (zwei Zustände): Long auf die Top 10 im Aufwärtstrend, Short auf die schwächsten 10 im Abwärtstrend, Bitcoin-Schnitt 200 Tage, Momentum 14 Tage, wöchentlich",
+   "pct": -3.5,
+   "equity": 74.31,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long ZECUSDT 6.7",
+    "long UNIUSDT 6.9",
+    "long BEAMXUSDT 7.3",
+    "long PEPEUSDT 8.3",
+    "long 牛来USDT 6.7",
+    "long HYPEUSDT 6.3",
+    "long RLUSDUSDT 7.3",
+    "long UUSDT 7.3",
+    "long RWUSDUSDT 7.3",
+    "long SKHYBUSDT 6.5"
+   ]
+  },
+  {
+   "key": "R_CB15",
+   "name": "R_CB15: Gegen den Trend: Short stärkste, Long schwächste (15 Coins je Seite, 6 h)",
+   "pct": -3.59,
+   "equity": 74.23,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 1.86,
+   "positionen": [
+    "long ZECUSDT 2.4",
+    "long AAVEUSDT 2.4",
+    "short TRXUSDT 2.4",
+    "long UNIUSDT 2.4",
+    "short PEPEUSDT 2.4",
+    "long XRPUSDT 2.4",
+    "long QNTUSDT 2.4",
+    "long ETHUSDT 2.4",
+    "short NEARUSDT 2.4",
+    "long CRCLBUSDT 2.4",
+    "short RWUSDUSDT 2.4",
+    "long HYPEUSDT 2.4",
+    "long ARBUSDT 2.4",
+    "long NVDABUSDT 2.4",
+    "long SOLUSDT 2.4",
+    "short INJUSDT 2.4",
+    "short GOOGLBUSDT 2.4",
+    "long AVAXUSDT 2.4",
+    "short SPCXBUSDT 2.4",
+    "short MUBUSDT 2.4",
+    "short INITUSDT 2.2",
+    "long SNDKBUSDT 2.4",
+    "long LINKUSDT 2.4",
+    "short TQQQBUSDT 2.4",
+    "long MSTRBUSDT 2.4",
+    "short FILUSDT 2.4",
+    "short ONEUSDT 2.4",
+    "short LTCUSDT 2.4",
+    "short CYBERUSDT 2.4",
+    "short GRAMUSDT 2.4"
+   ]
+  },
+  {
+   "key": "H180_2",
+   "name": "H180_2: 180-Tage-Hoch mit 2x Hebel",
+   "pct": -3.67,
+   "equity": 74.18,
+   "lev": 2,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.17,
+   "positionen": [
+    "long PEPEUSDT 31.8",
+    "long BTCUSDT 27.8",
+    "long BEAMXUSDT 25.7",
+    "long UUSDT 29.3",
+    "long RLUSDUSDT 29.3"
+   ]
+  },
+  {
+   "key": "GX_T15",
+   "name": "GX_T15: Bitcoin Golden Cross (50 über 200 Tage), sonst bar mit Trailing-Stop 15 %",
+   "pct": -3.83,
+   "equity": 74.05,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 70.3"
+   ]
+  },
+  {
+   "key": "GXLS_T15",
+   "name": "GXLS_T15: Bitcoin Golden Cross Long, Death Cross Short mit Trailing-Stop 15 %",
+   "pct": -3.83,
+   "equity": 74.05,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 70.3"
+   ]
+  },
+  {
+   "key": "RSI2_T15",
+   "name": "RSI2_T15: Bitcoin Rücksetzer kaufen (RSI 2 unter 10 im Aufwärtstrend), Ausstieg über 5-Tage-Linie mit Trailing-Stop 15 %",
+   "pct": -3.83,
+   "equity": 74.05,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 70.3"
+   ]
+  },
+  {
+   "key": "TOM_T15",
+   "name": "TOM_T15: Monatswechsel, Bitcoin nur vom 28. bis 3. halten mit Trailing-Stop 15 %",
+   "pct": -3.83,
+   "equity": 74.05,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 70.3"
+   ]
+  },
+  {
+   "key": "ETHBTC_T15",
+   "name": "ETHBTC_T15: Rotation Ethereum oder Bitcoin nach ETH/BTC-Trend mit Trailing-Stop 15 %",
+   "pct": -3.83,
+   "equity": 74.05,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 70.3"
+   ]
+  },
+  {
+   "key": "ALTS_T15",
+   "name": "ALTS_T15: Altcoin-Saison-Schalter, Altcoin-Momentum oder Bitcoin mit Trailing-Stop 15 %",
+   "pct": -3.83,
+   "equity": 74.05,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 70.3"
+   ]
+  },
+  {
+   "key": "R_CB10",
+   "name": "R_CB10: Gegen den Trend: Short stärkste, Long schwächste (10 Coins je Seite, 6 h)",
+   "pct": -4.02,
+   "equity": 73.91,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 2.2,
+   "positionen": [
+    "short TRXUSDT 3.5",
+    "short RWUSDUSDT 3.5",
+    "long XRPUSDT 3.5",
+    "long SOLUSDT 3.5",
+    "long QNTUSDT 3.5",
+    "long ZECUSDT 3.5",
+    "short SPCXBUSDT 3.5",
+    "short INITUSDT 3.3",
+    "long ARBUSDT 3.5",
+    "long MSTRBUSDT 3.5",
+    "long AAVEUSDT 3.5",
+    "short FILUSDT 3.5",
+    "short PEPEUSDT 3.5",
+    "short ONEUSDT 3.6",
+    "long NVDABUSDT 3.5",
+    "short CYBERUSDT 3.5",
+    "short GOOGLBUSDT 3.5",
+    "long CRCLBUSDT 3.5",
+    "long UNIUSDT 3.5",
+    "short GRAMUSDT 3.5"
+   ]
+  },
+  {
+   "key": "MOM7F",
+   "name": "MOM7F: Momentum 7 Tage, Top 5 Long, nur wenn Bitcoin über 200-Tage-Schnitt, wöchentlich",
+   "pct": -4.16,
+   "equity": 73.8,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BEAMXUSDT 14.6",
+    "long 牛来USDT 13.3",
+    "long PEPEUSDT 16.6",
+    "long HYPEUSDT 12.5",
+    "long SKHYBUSDT 13.0"
+   ]
+  },
+  {
+   "key": "MOM28",
+   "name": "MOM28: Querschnitts-Momentum 28 Tage, Top 5 Long, wöchentlich",
+   "pct": -4.22,
+   "equity": 73.75,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long PEPEUSDT 15.9",
+    "long BEAMXUSDT 12.8",
+    "long HYPEUSDT 12.0",
+    "long UUSDT 14.6",
+    "long RLUSDUSDT 14.6"
    ]
   },
   {
@@ -2107,31 +3030,81 @@
    "positionen": []
   },
   {
-   "key": "MIXALL",
-   "name": "MIXALL: Alle Strategien ohne Hebel zu gleichen Teilen, nie umgeschichtet",
-   "pct": -4.41,
-   "equity": 73.6,
+   "key": "E",
+   "name": "E: BTC halten",
+   "pct": -4.35,
+   "equity": 73.65,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 1,
    "kosten": 0.1,
    "positionen": [
-    "mix R_CS5 1.1",
-    "mix R_CS3 1.0",
-    "mix R_TS3 1.0",
-    "mix R_CS5_T5 1.0",
-    "mix R_TS5 1.0",
-    "mix R_CS10 1.0",
+    "long BTCUSDT 69.9"
+   ]
+  },
+  {
+   "key": "MOM7_T15",
+   "name": "MOM7_T15: Querschnitts-Momentum 7 Tage, Top 5 Long, wöchentlich mit Trailing-Stop 15 %",
+   "pct": -4.53,
+   "equity": 73.51,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 3,
+   "anpassungen": 1,
+   "kosten": 0.15,
+   "positionen": [
+    "long BEAMXUSDT 14.6",
+    "long PEPEUSDT 16.6"
+   ]
+  },
+  {
+   "key": "MOM7F_T15",
+   "name": "MOM7F_T15: Momentum 7 Tage, Top 5 Long, nur wenn Bitcoin über 200-Tage-Schnitt, wöchentlich mit Trailing-Stop 15 %",
+   "pct": -4.53,
+   "equity": 73.51,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 3,
+   "anpassungen": 1,
+   "kosten": 0.15,
+   "positionen": [
+    "long BEAMXUSDT 14.6",
+    "long PEPEUSDT 16.6"
+   ]
+  },
+  {
+   "key": "MIXALL",
+   "name": "MIXALL: Alle Strategien ohne Hebel zu gleichen Teilen, nie umgeschichtet",
+   "pct": -4.67,
+   "equity": 73.4,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "mix R_TS3 1.1",
+    "mix R_TS5 1.1",
     "mix R_TS10 1.0",
-    "mix R_CS15 1.0",
+    "mix R_CS5_T5 1.0",
     "mix R_TS15 1.0",
+    "mix R_CS10 1.0",
+    "mix R_CS5 1.0",
+    "mix R_CS15 1.0",
     "mix B_T15 0.9",
-    "mix A_T5 0.9",
-    "mix B_T8 0.9",
+    "mix R_TB3 0.9",
     "mix DONLS 0.9",
-    "mix MAXLS 0.9",
+    "mix B_T8 0.9",
+    "mix A_T5 0.9",
+    "mix FCON 0.9",
+    "mix R_CS3 0.9",
+    "mix R_TB5 0.9",
+    "mix MOMF 0.9",
     "mix TSM 0.9",
+    "mix MAXLS 0.9",
+    "mix R_TB10 0.9",
+    "mix R_TB5_T5 0.9",
     "mix M 0.9",
     "mix N 0.9",
     "mix RG4 0.9",
@@ -2146,116 +3119,244 @@
     "mix OVN 0.9",
     "mix NL1_T15 0.9",
     "mix NL2_T20 0.9",
-    "mix FCON 0.9",
     "mix FCAR 0.9",
-    "mix H22 0.9",
-    "mix R_CB5 0.9",
-    "mix K_T8 0.9",
-    "mix R_CB15 0.9",
-    "mix MOM28_T20 0.9",
-    "mix RG1_T10 0.9",
-    "mix C_T10 0.9",
-    "mix R_CB10 0.9",
-    "mix DM 0.9",
-    "mix H180 0.9",
-    "mix R_CB3 0.9",
-    "mix R_TB10 0.9",
     "mix R_TB15 0.9",
-    "mix LVOL 0.9",
-    "mix MOMF 0.9",
-    "mix R_TB3 0.9",
-    "mix RG2 0.9",
-    "mix GX 0.9",
-    "mix GXLS 0.9",
-    "mix RSI2 0.9",
-    "mix TOM 0.9",
-    "mix ETHBTC 0.9",
-    "mix BTC_T10 0.9",
-    "mix BTC_T20 0.9",
-    "mix RG2_T10 0.9",
-    "mix ALTS 0.9",
-    "mix E 0.9",
-    "mix K_T15 0.9",
+    "mix H22 0.9",
+    "mix H180 0.9",
+    "mix MOM28_T20 0.9",
+    "mix C_T10 0.9",
+    "mix K_T8 0.9",
     "mix MOM28 0.9",
-    "mix R_TB5 0.9",
-    "mix R_TB5_T5 0.9",
+    "mix R_CB15 0.9",
+    "mix RG1_T10 0.9",
+    "mix DM 0.9",
+    "mix LVOL 0.9",
     "mix VBRK 0.9",
+    "mix R_CB10 0.9",
+    "mix RG2 0.8",
+    "mix GX 0.8",
+    "mix GXLS 0.8",
+    "mix RSI2 0.8",
+    "mix TOM 0.8",
+    "mix ETHBTC 0.8",
+    "mix BTC_T10 0.8",
+    "mix BTC_T20 0.8",
+    "mix RG2_T10 0.8",
+    "mix ALTS 0.8",
+    "mix E 0.8",
+    "mix K_T15 0.8",
+    "mix R_CB5 0.8",
     "mix MOM7 0.8",
     "mix MAXM 0.8",
     "mix RG1 0.8",
     "mix RG3 0.8",
-    "mix R_CL15 0.8",
+    "mix K 0.8",
+    "mix R_CB3 0.8",
+    "mix R_TL3 0.8",
     "mix R_TL15 0.8",
+    "mix C 0.8",
     "mix R_TL10_T8 0.8",
-    "mix R_CL5_T5 0.8",
     "mix R_TL10 0.8",
-    "mix R_CL10 0.8",
-    "mix K 0.7",
+    "mix R_CL15 0.8",
+    "mix R_TL5_T5 0.8",
+    "mix R_TL5 0.7",
+    "mix R_CL5_T5 0.7",
     "mix F 0.7",
+    "mix R_CL10 0.7",
     "mix G 0.7",
+    "mix H 0.7",
     "mix R_CL5 0.7",
     "mix R_CL3 0.7",
-    "mix R_TL5_T5 0.7",
-    "mix R_TL3 0.7",
-    "mix H 0.7",
-    "mix C 0.7",
-    "mix R_TL5 0.7",
-    "mix B 0.6",
     "mix A 0.6",
-    "mix D 0.5"
+    "mix B 0.5",
+    "mix D 0.4"
    ]
   },
   {
-   "key": "R_TB5_T5",
-   "name": "R_TB5_T5: Trend: Long stärkste, Short schwächste (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -6.44,
-   "equity": 72.04,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 23,
-   "anpassungen": 20,
-   "kosten": 2.36,
-   "positionen": [
-    "long KORUBUSDT 0.0",
-    "short QNTUSDT 0.0",
-    "long MUBUSDT 0.0",
-    "long INITUSDT 0.0",
-    "short XRPUSDT 0.0",
-    "long AVAXUSDT 0.0",
-    "long SNDKBUSDT 0.0",
-    "short ZECUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "short BCHUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_TB5",
-   "name": "R_TB5: Trend: Long stärkste, Short schwächste (5 Coins je Seite, 6 h)",
-   "pct": -6.84,
-   "equity": 71.73,
+   "key": "RG2",
+   "name": "RG2: Bitcoin long im Aufwärtstrend, Bitcoin short im Bärenmarkt",
+   "pct": -4.74,
+   "equity": 73.35,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 22,
-   "kosten": 2.3,
+   "anpassungen": 3,
+   "kosten": 0.05,
    "positionen": [
-    "long KORUBUSDT 0.0",
-    "short QNTUSDT 0.0",
-    "long MUBUSDT 0.0",
-    "long INITUSDT 0.0",
-    "short XRPUSDT 0.0",
-    "long AVAXUSDT 0.0",
-    "long SNDKBUSDT 0.0",
-    "short ZECUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "short BCHUSDT 0.0"
+    "long BTCUSDT 69.5"
+   ]
+  },
+  {
+   "key": "GX",
+   "name": "GX: Bitcoin Golden Cross (50 über 200 Tage), sonst bar",
+   "pct": -4.74,
+   "equity": 73.35,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 69.5"
+   ]
+  },
+  {
+   "key": "GXLS",
+   "name": "GXLS: Bitcoin Golden Cross Long, Death Cross Short",
+   "pct": -4.74,
+   "equity": 73.35,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 69.5"
+   ]
+  },
+  {
+   "key": "RSI2",
+   "name": "RSI2: Bitcoin Rücksetzer kaufen (RSI 2 unter 10 im Aufwärtstrend), Ausstieg über 5-Tage-Linie",
+   "pct": -4.74,
+   "equity": 73.35,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 69.5"
+   ]
+  },
+  {
+   "key": "TOM",
+   "name": "TOM: Monatswechsel, Bitcoin nur vom 28. bis 3. halten",
+   "pct": -4.74,
+   "equity": 73.35,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 69.5"
+   ]
+  },
+  {
+   "key": "ETHBTC",
+   "name": "ETHBTC: Rotation Ethereum oder Bitcoin nach ETH/BTC-Trend",
+   "pct": -4.74,
+   "equity": 73.35,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 69.5"
+   ]
+  },
+  {
+   "key": "ALTS",
+   "name": "ALTS: Altcoin-Saison-Schalter, Altcoin-Momentum oder Bitcoin",
+   "pct": -4.74,
+   "equity": 73.35,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 69.6"
+   ]
+  },
+  {
+   "key": "BTC_T10",
+   "name": "BTC_T10: BTC über 200-Tage-Linie mit Trailing-Stop 10 %",
+   "pct": -4.74,
+   "equity": 73.35,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 69.5"
+   ]
+  },
+  {
+   "key": "BTC_T20",
+   "name": "BTC_T20: BTC über 200-Tage-Linie mit Trailing-Stop 20 %",
+   "pct": -4.74,
+   "equity": 73.35,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 69.5"
+   ]
+  },
+  {
+   "key": "RG2_T10",
+   "name": "RG2_T10: Bitcoin long im Aufwärtstrend, Bitcoin short im Bärenmarkt mit Trailing-Stop 10 %",
+   "pct": -4.74,
+   "equity": 73.35,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.05,
+   "positionen": [
+    "long BTCUSDT 69.5"
+   ]
+  },
+  {
+   "key": "R_CB3_T5",
+   "name": "R_CB3_T5: Gegen den Trend: Short stärkste, Long schwächste (3 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": -4.75,
+   "equity": 73.34,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 9,
+   "anpassungen": 14,
+   "kosten": 2.03,
+   "positionen": [
+    "long ARBUSDT 11.0",
+    "short GRAMUSDT 11.1",
+    "short ONEUSDT 11.2",
+    "long QNTUSDT 11.1"
+   ]
+  },
+  {
+   "key": "R_CB5",
+   "name": "R_CB5: Gegen den Trend: Short stärkste, Long schwächste (5 Coins je Seite, 6 h)",
+   "pct": -5.11,
+   "equity": 73.07,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 2.49,
+   "positionen": [
+    "long QNTUSDT 6.9",
+    "short INITUSDT 6.5",
+    "long ZECUSDT 6.9",
+    "long NVDABUSDT 6.9",
+    "long AAVEUSDT 6.9",
+    "short CYBERUSDT 7.0",
+    "short PEPEUSDT 7.0",
+    "short GRAMUSDT 6.9",
+    "long ARBUSDT 6.9",
+    "short ONEUSDT 7.0"
    ]
   },
   {
    "key": "MIX10",
    "name": "MIX10: Jeden Monat die 10 Strategien mit dem besten Rendite-Risiko-Verhältnis der letzten 365 Tage",
-   "pct": -7.11,
-   "equity": 71.52,
+   "pct": -5.82,
+   "equity": 72.51,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -2263,239 +3364,681 @@
    "kosten": 0.1,
    "positionen": [
     "mix A_T5 8.0",
+    "mix MOMF 7.8",
     "mix RG5 7.7",
     "mix NL4 7.7",
-    "mix H180 7.6",
-    "mix MOMF 7.5",
-    "mix RG2_T10 7.4",
-    "mix RG2 7.4",
-    "mix MOM7F 7.3",
-    "mix C 6.1",
-    "mix A 4.8"
+    "mix H180 7.7",
+    "mix MOM7F 7.4",
+    "mix RG2_T10 7.3",
+    "mix RG2 7.3",
+    "mix C 6.7",
+    "mix A 5.1"
    ]
   },
   {
-   "key": "MAXLS_T15",
-   "name": "MAXLS_T15: Lotterie-Effekt, Short auf Coins mit größtem Tagessprung, Long auf die ruhigsten mit Trailing-Stop 15 %",
-   "pct": -9.77,
-   "equity": 69.48,
+   "key": "K_T15",
+   "name": "K_T15: Long-Momentum mit Trendfilter und Risikosteuerung (wöchentlich) mit Trailing-Stop 15 %",
+   "pct": -6.13,
+   "equity": 72.28,
    "lev": 1,
    "liquidiert": null,
-   "stops": 1,
+   "stops": 2,
    "anpassungen": 1,
-   "kosten": 0.1,
+   "kosten": 0.16,
    "positionen": [
-    "short NEARUSDT 0.0",
-    "short UNIUSDT 0.0",
-    "short XPLUSDT 0.0",
-    "short 牛来USDT 0.0",
-    "long UUSDT 0.0",
-    "long RLUSDUSDT 0.0",
-    "long SOLUSDT 0.0",
-    "long GOOGLBUSDT 0.0",
-    "long QQQBUSDT 0.0"
+    "long QNTUSDT 22.1"
+   ]
+  },
+  {
+   "key": "D_T15",
+   "name": "D_T15: Gegenbewegung zu A mit Trailing-Stop 15 %",
+   "pct": -6.67,
+   "equity": 71.87,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 2,
+   "anpassungen": 1,
+   "kosten": 0.16,
+   "positionen": [
+    "long NEARUSDT 22.6"
    ]
   },
   {
    "key": "MIX5",
    "name": "MIX5: Jeden Monat die 5 Strategien mit dem besten Rendite-Risiko-Verhältnis der letzten 180 Tage",
-   "pct": -10.28,
-   "equity": 69.09,
+   "pct": -7.47,
+   "equity": 71.25,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 1,
    "kosten": 0.1,
    "positionen": [
-    "mix MOMF 15.0",
-    "mix BTC_T10 14.9",
-    "mix BTC_T20 14.9",
-    "mix R_TL3 12.2",
-    "mix R_TL5 12.1"
+    "mix MOMF 15.5",
+    "mix BTC_T10 14.6",
+    "mix BTC_T20 14.6",
+    "mix R_TL3 13.7",
+    "mix R_TL5 12.9"
+   ]
+  },
+  {
+   "key": "MAXM_T15",
+   "name": "MAXM_T15: MAX-Momentum, Long auf Coins mit größtem Tagessprung der letzten 30 Tage mit Trailing-Stop 15 %",
+   "pct": -7.97,
+   "equity": 70.87,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 2,
+   "anpassungen": 1,
+   "kosten": 0.13,
+   "positionen": [
+    "long BEAMXUSDT 14.6",
+    "long NEARUSDT 13.5",
+    "long UNIUSDT 13.8"
+   ]
+  },
+  {
+   "key": "VT",
+   "name": "VT: Bitcoin mit Volatilitätssteuerung, Ziel 50 % Schwankung, bis 1,9x Hebel",
+   "pct": -8.94,
+   "equity": 70.11,
+   "lev": 2,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.1,
+   "positionen": [
+    "long BTCUSDT 127.9"
+   ]
+  },
+  {
+   "key": "E2",
+   "name": "E2: BTC halten mit 2x Hebel",
+   "pct": -9.65,
+   "equity": 69.57,
+   "lev": 2,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BTCUSDT 139.1"
+   ]
+  },
+  {
+   "key": "R_CL15_T5",
+   "name": "R_CL15_T5: Gegen den Trend: Long auf die schwächsten (15 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": -10.19,
+   "equity": 69.16,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 26,
+   "anpassungen": 14,
+   "kosten": 1.36,
+   "positionen": [
+    "long HYPEUSDT 4.4",
+    "long ETHUSDT 4.4",
+    "long SOLUSDT 4.4",
+    "long XRPUSDT 4.4",
+    "long LINKUSDT 4.4",
+    "long MSTRBUSDT 4.4",
+    "long AAVEUSDT 4.4",
+    "long SNDKBUSDT 4.4",
+    "long AVAXUSDT 4.4",
+    "long CRCLBUSDT 4.4",
+    "long UNIUSDT 4.4",
+    "long ARBUSDT 4.4",
+    "long ZECUSDT 4.4"
+   ]
+  },
+  {
+   "key": "R_CB3",
+   "name": "R_CB3: Gegen den Trend: Short stärkste, Long schwächste (3 Coins je Seite, 6 h)",
+   "pct": -10.36,
+   "equity": 69.02,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 2.41,
+   "positionen": [
+    "short INITUSDT 10.2",
+    "long ZECUSDT 10.9",
+    "long ARBUSDT 10.9",
+    "short GRAMUSDT 10.9",
+    "short ONEUSDT 11.0",
+    "long QNTUSDT 10.9"
+   ]
+  },
+  {
+   "key": "VBRK",
+   "name": "VBRK: Volumen-Ausbruch (3x Umsatz und +5 %), 3 Tage halten",
+   "pct": -10.86,
+   "equity": 68.64,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.26,
+   "positionen": [
+    "long BEAMXUSDT 17.1"
+   ]
+  },
+  {
+   "key": "R_TL3_T5",
+   "name": "R_TL3_T5: Trend: Long auf die stärksten (3 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": -11.34,
+   "equity": 68.26,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 5,
+   "anpassungen": 14,
+   "kosten": 1.83,
+   "positionen": [
+    "long GRAMUSDT 21.9",
+    "long ONEUSDT 22.2"
+   ]
+  },
+  {
+   "key": "K",
+   "name": "K: Long-Momentum mit Trendfilter und Risikosteuerung (wöchentlich)",
+   "pct": -11.78,
+   "equity": 67.93,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.26,
+   "positionen": [
+    "long ONEUSDT 19.2",
+    "long INJUSDT 21.1",
+    "long PEPEUSDT 24.4"
+   ]
+  },
+  {
+   "key": "R_TL15_T5",
+   "name": "R_TL15_T5: Trend: Long auf die stärksten (15 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": -11.93,
+   "equity": 67.81,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 12,
+   "anpassungen": 14,
+   "kosten": 1.37,
+   "positionen": [
+    "long PEPEUSDT 4.3",
+    "long SPCXBUSDT 4.3",
+    "long MUBUSDT 4.3",
+    "long GOOGLBUSDT 4.3",
+    "long LTCUSDT 4.3",
+    "long RWUSDUSDT 4.3",
+    "long TQQQBUSDT 4.3",
+    "long CYBERUSDT 4.3",
+    "long FILUSDT 4.3",
+    "long INJUSDT 4.3",
+    "long NEARUSDT 4.3",
+    "long GRAMUSDT 4.3",
+    "long ONEUSDT 4.4",
+    "long TRXUSDT 4.3"
+   ]
+  },
+  {
+   "key": "RG1",
+   "name": "RG1: Aufwärtstrend K-Long, Bärenmarkt Short auf die 3 schwächsten Coins",
+   "pct": -12.17,
+   "equity": 67.63,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BEAMXUSDT 21.4",
+    "long QNTUSDT 22.1",
+    "long ZROUSDT 20.4"
+   ]
+  },
+  {
+   "key": "RG3",
+   "name": "RG3: K-Long im Aufwärtstrend, Bitcoin short im Bärenmarkt",
+   "pct": -12.17,
+   "equity": 67.63,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long BEAMXUSDT 21.4",
+    "long QNTUSDT 22.1",
+    "long ZROUSDT 20.4"
+   ]
+  },
+  {
+   "key": "MOM7",
+   "name": "MOM7: Querschnitts-Momentum 7 Tage, Top 5 Long, wöchentlich",
+   "pct": -12.28,
+   "equity": 67.54,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long PEPEUSDT 15.9",
+    "long LSKUSDT 9.8",
+    "long QNTUSDT 13.3",
+    "long BEAMXUSDT 12.8",
+    "long HYPEUSDT 12.0"
+   ]
+  },
+  {
+   "key": "MAXM",
+   "name": "MAXM: MAX-Momentum, Long auf Coins mit größtem Tagessprung der letzten 30 Tage",
+   "pct": -13.16,
+   "equity": 66.87,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.1,
+   "positionen": [
+    "long LSKUSDT 9.8",
+    "long SOPHUSDT 13.3",
+    "long RSRUSDT 15.7",
+    "long BEAMXUSDT 12.8",
+    "long NILUSDT 11.5"
+   ]
+  },
+  {
+   "key": "C",
+   "name": "C: Momentum nur Long mit BTC-Filter (wöchentlich)",
+   "pct": -13.84,
+   "equity": 66.35,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.27,
+   "positionen": [
+    "long ONEUSDT 22.8",
+    "long CYBERUSDT 19.0",
+    "long INJUSDT 21.3"
+   ]
+  },
+  {
+   "key": "T3",
+   "name": "T3: BTC 3x Hebel mit Trendfilter",
+   "pct": -14.3,
+   "equity": 65.99,
+   "lev": 3,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.16,
+   "positionen": [
+    "long BTCUSDT 203.8"
+   ]
+  },
+  {
+   "key": "RG2_3",
+   "name": "RG2_3: RG2 mit 3x Hebel",
+   "pct": -14.3,
+   "equity": 65.99,
+   "lev": 3,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.16,
+   "positionen": [
+    "long BTCUSDT 203.8"
+   ]
+  },
+  {
+   "key": "GX_3",
+   "name": "GX_3: Golden Cross mit 3x Hebel",
+   "pct": -14.3,
+   "equity": 65.99,
+   "lev": 3,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.16,
+   "positionen": [
+    "long BTCUSDT 203.8"
+   ]
+  },
+  {
+   "key": "E3",
+   "name": "E3: BTC halten mit 3x Hebel",
+   "pct": -14.47,
+   "equity": 65.85,
+   "lev": 3,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 1,
+   "kosten": 0.15,
+   "positionen": [
+    "long BTCUSDT 208.7"
+   ]
+  },
+  {
+   "key": "R_CL10_T5",
+   "name": "R_CL10_T5: Gegen den Trend: Long auf die schwächsten (10 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": -15.63,
+   "equity": 64.97,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 19,
+   "anpassungen": 14,
+   "kosten": 1.55,
+   "positionen": [
+    "long SOLUSDT 6.1",
+    "long NVDABUSDT 6.1",
+    "long MSTRBUSDT 6.1",
+    "long AAVEUSDT 6.1",
+    "long CRCLBUSDT 6.1",
+    "long UNIUSDT 6.1",
+    "long ARBUSDT 6.1"
+   ]
+  },
+  {
+   "key": "R_TL15",
+   "name": "R_TL15: Trend: Long auf die stärksten (15 Coins je Seite, 6 h)",
+   "pct": -15.7,
+   "equity": 64.91,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 1.79,
+   "positionen": [
+    "long PEPEUSDT 4.2",
+    "long SPCXBUSDT 4.1",
+    "long MUBUSDT 4.1",
+    "long INITUSDT 3.9",
+    "long GOOGLBUSDT 4.1",
+    "long LTCUSDT 4.1",
+    "long RWUSDUSDT 4.1",
+    "long TQQQBUSDT 4.1",
+    "long CYBERUSDT 4.1",
+    "long FILUSDT 4.1",
+    "long INJUSDT 4.1",
+    "long NEARUSDT 4.1",
+    "long GRAMUSDT 4.1",
+    "long ONEUSDT 4.2",
+    "long TRXUSDT 4.1"
+   ]
+  },
+  {
+   "key": "R_CL15",
+   "name": "R_CL15: Gegen den Trend: Long auf die schwächsten (15 Coins je Seite, 6 h)",
+   "pct": -17.62,
+   "equity": 63.43,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 1.7,
+   "positionen": [
+    "long XRPUSDT 4.0",
+    "long ZECUSDT 4.0",
+    "long HYPEUSDT 4.0",
+    "long NVDABUSDT 4.0",
+    "long ETHUSDT 4.0",
+    "long SOLUSDT 4.0",
+    "long QNTUSDT 4.0",
+    "long LINKUSDT 4.0",
+    "long MSTRBUSDT 4.0",
+    "long AAVEUSDT 4.0",
+    "long SNDKBUSDT 4.0",
+    "long AVAXUSDT 4.0",
+    "long CRCLBUSDT 4.0",
+    "long UNIUSDT 4.0",
+    "long ARBUSDT 4.0"
+   ]
+  },
+  {
+   "key": "R_TL5_T5",
+   "name": "R_TL5_T5: Trend: Long auf die stärksten (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": -19.36,
+   "equity": 62.09,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 17,
+   "anpassungen": 21,
+   "kosten": 2.42,
+   "positionen": [
+    "long PEPEUSDT 12.0",
+    "long GRAMUSDT 11.9",
+    "long ONEUSDT 12.1",
+    "long CYBERUSDT 11.9"
+   ]
+  },
+  {
+   "key": "R_TL10_T8",
+   "name": "R_TL10_T8: Trend: Long auf die stärksten (10 Coins je Seite, 6 h) mit Trailing-Stop 8 %",
+   "pct": -19.99,
+   "equity": 61.61,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 13,
+   "anpassungen": 21,
+   "kosten": 1.98,
+   "positionen": [
+    "long SPCXBUSDT 5.9",
+    "long INITUSDT 5.5",
+    "long RWUSDUSDT 5.9",
+    "long CYBERUSDT 5.9",
+    "long FILUSDT 5.9",
+    "long GOOGLBUSDT 5.9",
+    "long PEPEUSDT 5.9",
+    "long GRAMUSDT 5.9",
+    "long ONEUSDT 6.0",
+    "long TRXUSDT 5.9"
    ]
   },
   {
    "key": "F",
    "name": "F: wie B, fest 35 % Einsatz (Kontrolle)",
-   "pct": -18.35,
-   "equity": 62.87,
+   "pct": -20.26,
+   "equity": 61.4,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 2,
    "kosten": 0.09,
    "positionen": [
-    "short WLDUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "long ONEUSDT 0.0",
-    "long ACTUSDT 0.0",
-    "long INJUSDT 0.0",
-    "short TRUMPUSDT 0.0"
+    "short WLDUSDT 3.7",
+    "short SNDKBUSDT 4.2",
+    "long ONEUSDT 3.5",
+    "long ACTUSDT 3.1",
+    "long INJUSDT 3.9",
+    "short TRUMPUSDT 3.9"
+   ]
+  },
+  {
+   "key": "R_CL3_T5",
+   "name": "R_CL3_T5: Gegen den Trend: Long auf die schwächsten (3 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": -20.45,
+   "equity": 61.25,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 4,
+   "anpassungen": 14,
+   "kosten": 1.81,
+   "positionen": [
+    "long ARBUSDT 19.0",
+    "long QNTUSDT 19.0"
+   ]
+  },
+  {
+   "key": "R_TL10",
+   "name": "R_TL10: Trend: Long auf die stärksten (10 Coins je Seite, 6 h)",
+   "pct": -21.14,
+   "equity": 60.72,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 2.07,
+   "positionen": [
+    "long SPCXBUSDT 5.8",
+    "long INITUSDT 5.4",
+    "long RWUSDUSDT 5.8",
+    "long CYBERUSDT 5.8",
+    "long FILUSDT 5.8",
+    "long GOOGLBUSDT 5.8",
+    "long PEPEUSDT 5.8",
+    "long GRAMUSDT 5.8",
+    "long ONEUSDT 5.9",
+    "long TRXUSDT 5.8"
    ]
   },
   {
    "key": "G",
    "name": "G: wie B, Martingale x1,1 nach Verlustwoche",
-   "pct": -19.07,
-   "equity": 62.32,
+   "pct": -21.16,
+   "equity": 60.7,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 2,
    "kosten": 0.09,
    "positionen": [
-    "short WLDUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "long ONEUSDT 0.0",
-    "long ACTUSDT 0.0",
-    "long INJUSDT 0.0",
-    "short TRUMPUSDT 0.0"
+    "short WLDUSDT 4.1",
+    "short SNDKBUSDT 4.6",
+    "long ONEUSDT 3.9",
+    "long ACTUSDT 3.4",
+    "long INJUSDT 4.3",
+    "short TRUMPUSDT 4.2"
+   ]
+  },
+  {
+   "key": "R_TL3",
+   "name": "R_TL3: Trend: Long auf die stärksten (3 Coins je Seite, 6 h)",
+   "pct": -21.2,
+   "equity": 60.68,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 2.12,
+   "positionen": [
+    "long INITUSDT 18.3",
+    "long GRAMUSDT 19.6",
+    "long ONEUSDT 19.8"
+   ]
+  },
+  {
+   "key": "R_CL5_T5",
+   "name": "R_CL5_T5: Gegen den Trend: Long auf die schwächsten (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
+   "pct": -21.98,
+   "equity": 60.08,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 18,
+   "anpassungen": 21,
+   "kosten": 2.37,
+   "positionen": [
+    "long NVDABUSDT 11.3",
+    "long AAVEUSDT 11.3",
+    "long ARBUSDT 11.2"
+   ]
+  },
+  {
+   "key": "R_CL10",
+   "name": "R_CL10: Gegen den Trend: Long auf die schwächsten (10 Coins je Seite, 6 h)",
+   "pct": -22.89,
+   "equity": 59.38,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 23,
+   "kosten": 1.89,
+   "positionen": [
+    "long XRPUSDT 5.7",
+    "long SOLUSDT 5.6",
+    "long QNTUSDT 5.6",
+    "long ZECUSDT 5.6",
+    "long NVDABUSDT 5.7",
+    "long MSTRBUSDT 5.6",
+    "long AAVEUSDT 5.6",
+    "long CRCLBUSDT 5.6",
+    "long UNIUSDT 5.7",
+    "long ARBUSDT 5.6"
+   ]
+  },
+  {
+   "key": "T5",
+   "name": "T5: BTC 5x Hebel mit Trendfilter",
+   "pct": -23.56,
+   "equity": 58.86,
+   "lev": 5,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 3,
+   "kosten": 0.28,
+   "positionen": [
+    "long BTCUSDT 331.4"
    ]
   },
   {
    "key": "H",
    "name": "H: wie B, Martingale x1,4 nach Verlustwoche",
-   "pct": -21.2,
-   "equity": 60.68,
+   "pct": -23.87,
+   "equity": 58.62,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 2,
    "kosten": 0.1,
    "positionen": [
-    "short WLDUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "long ONEUSDT 0.0",
-    "long ACTUSDT 0.0",
-    "long INJUSDT 0.0",
-    "short TRUMPUSDT 0.0"
+    "short WLDUSDT 5.2",
+    "short SNDKBUSDT 5.8",
+    "long ONEUSDT 5.0",
+    "long ACTUSDT 4.4",
+    "long INJUSDT 5.4",
+    "short TRUMPUSDT 5.4"
    ]
   },
   {
-   "key": "MG_MOMF_12_3_T15",
-   "name": "MG_MOMF_12_3_T15: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 60 %) mit Trailing-Stop 15 %",
-   "pct": -24.9,
-   "equity": 57.83,
-   "lev": 1,
+   "key": "K2",
+   "name": "K2: Strategie K mit 2x Hebel",
+   "pct": -24.5,
+   "equity": 58.14,
+   "lev": 2,
    "liquidiert": null,
-   "stops": 1,
+   "stops": 0,
    "anpassungen": 1,
-   "kosten": 0.05,
+   "kosten": 0.19,
    "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0"
+    "long BEAMXUSDT 42.8",
+    "long QNTUSDT 44.2",
+    "long ZROUSDT 40.8"
    ]
   },
   {
-   "key": "MG_MOMF_12_6_T15",
-   "name": "MG_MOMF_12_6_T15: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
-   "pct": -24.9,
-   "equity": 57.83,
-   "lev": 1,
+   "key": "RG1_2",
+   "name": "RG1_2: RG1 mit 2x Hebel",
+   "pct": -24.5,
+   "equity": 58.14,
+   "lev": 2,
    "liquidiert": null,
-   "stops": 1,
+   "stops": 0,
    "anpassungen": 1,
-   "kosten": 0.05,
+   "kosten": 0.19,
    "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_MOMF_15_3_T15",
-   "name": "MG_MOMF_15_3_T15: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
-   "pct": -24.9,
-   "equity": 57.83,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 1,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_MOMF_15_6_T15",
-   "name": "MG_MOMF_15_6_T15: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
-   "pct": -24.9,
-   "equity": 57.83,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 1,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_AD2_3_200_12_3_T15",
-   "name": "MG_AD2_3_200_12_3_T15: Adaptiv Long/Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 60 %) mit Trailing-Stop 15 %",
-   "pct": -24.9,
-   "equity": 57.83,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 1,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_AD2_3_200_12_6_T15",
-   "name": "MG_AD2_3_200_12_6_T15: Adaptiv Long/Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
-   "pct": -24.9,
-   "equity": 57.83,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 1,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_AD2_3_200_15_3_T15",
-   "name": "MG_AD2_3_200_15_3_T15: Adaptiv Long/Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
-   "pct": -24.9,
-   "equity": 57.83,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 1,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_AD2_3_200_15_6_T15",
-   "name": "MG_AD2_3_200_15_6_T15: Adaptiv Long/Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %) mit Trailing-Stop 15 %",
-   "pct": -24.9,
-   "equity": 57.83,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 1,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0"
+    "long BEAMXUSDT 42.8",
+    "long QNTUSDT 44.2",
+    "long ZROUSDT 40.8"
    ]
   },
   {
    "key": "ORIG",
    "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -25.02,
-   "equity": 57.74,
+   "pct": -24.88,
+   "equity": 57.84,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -2503,1704 +4046,127 @@
    "kosten": 0,
    "positionen": [
     "long ONE_USDT 13.2",
-    "short ZEC_USDT 25.2"
-   ]
-  },
-  {
-   "key": "VBRK_T15",
-   "name": "VBRK_T15: Volumen-Ausbruch (3x Umsatz und +5 %), 3 Tage halten mit Trailing-Stop 15 %",
-   "pct": -25.03,
-   "equity": 57.72,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.03,
-   "positionen": [
-    "long BEAMXUSDT 0.0"
-   ]
-  },
-  {
-   "key": "A",
-   "name": "A: Top-Mover 24h (täglich)",
-   "pct": -26.32,
-   "equity": 56.73,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 11,
-   "kosten": 1.66,
-   "positionen": [
-    "short KORUBUSDT 0.0",
-    "long INITUSDT 0.0",
-    "short MUBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "K_T8",
-   "name": "K_T8: Long-Momentum mit Trendfilter und Risikosteuerung (wöchentlich) mit Trailing-Stop 8 %",
-   "pct": -29.86,
-   "equity": 54.01,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 2,
-   "anpassungen": 1,
-   "kosten": 0.16,
-   "positionen": [
-    "long QNTUSDT 0.0"
-   ]
-  },
-  {
-   "key": "RG1_T10",
-   "name": "RG1_T10: Aufwärtstrend K-Long, Bärenmarkt Short auf die 3 schwächsten Coins mit Trailing-Stop 10 %",
-   "pct": -31.28,
-   "equity": 52.92,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 2,
-   "anpassungen": 1,
-   "kosten": 0.16,
-   "positionen": [
-    "long QNTUSDT 0.0"
-   ]
-  },
-  {
-   "key": "VBRK",
-   "name": "VBRK: Volumen-Ausbruch (3x Umsatz und +5 %), 3 Tage halten",
-   "pct": -33.09,
-   "equity": 51.52,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.26,
-   "positionen": [
-    "long BEAMXUSDT 0.0"
-   ]
-  },
-  {
-   "key": "K_T15",
-   "name": "K_T15: Long-Momentum mit Trendfilter und Risikosteuerung (wöchentlich) mit Trailing-Stop 15 %",
-   "pct": -34.83,
-   "equity": 50.18,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 2,
-   "anpassungen": 1,
-   "kosten": 0.16,
-   "positionen": [
-    "long QNTUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_MOMF_12_3",
-   "name": "MG_MOMF_12_3: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 60 %)",
-   "pct": -35.05,
-   "equity": 50.01,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.04,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_MOMF_12_6",
-   "name": "MG_MOMF_12_6: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %)",
-   "pct": -35.05,
-   "equity": 50.01,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.04,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_MOMF_15_3",
-   "name": "MG_MOMF_15_3: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 100 %)",
-   "pct": -35.05,
-   "equity": 50.01,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.04,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_MOMF_15_6",
-   "name": "MG_MOMF_15_6: Momentum 14 Tage, Top 3 mit BTC-Filter mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %)",
-   "pct": -35.05,
-   "equity": 50.01,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.04,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_AD2_3_200_12_3",
-   "name": "MG_AD2_3_200_12_3: Adaptiv Long/Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 60 %)",
-   "pct": -35.05,
-   "equity": 50.01,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.04,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_AD2_3_200_12_6",
-   "name": "MG_AD2_3_200_12_6: Adaptiv Long/Short mit Martingale x1,2 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %)",
-   "pct": -35.05,
-   "equity": 50.01,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.04,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_AD2_3_200_15_3",
-   "name": "MG_AD2_3_200_15_3: Adaptiv Long/Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 3 (Einsatz 35 % bis 100 %)",
-   "pct": -35.05,
-   "equity": 50.01,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.04,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MG_AD2_3_200_15_6",
-   "name": "MG_AD2_3_200_15_6: Adaptiv Long/Short mit Martingale x1,5 nach Verlustperiode, höchstens Stufe 6 (Einsatz 35 % bis 100 %)",
-   "pct": -35.05,
-   "equity": 50.01,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.04,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "D_T15",
-   "name": "D_T15: Gegenbewegung zu A mit Trailing-Stop 15 %",
-   "pct": -35.99,
-   "equity": 49.29,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 2,
-   "anpassungen": 1,
-   "kosten": 0.16,
-   "positionen": [
-    "long NEARUSDT 0.0"
-   ]
-  },
-  {
-   "key": "B",
-   "name": "B: Momentum 7d/30d Long+Short (wöchentlich)",
-   "pct": -37.07,
-   "equity": 48.46,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.26,
-   "positionen": [
-    "short TRUMPUSDT 0.0",
-    "long INJUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "short SNXXBUSDT 0.0",
-    "long ONEUSDT 0.0",
-    "long CYBERUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MOM7_T15",
-   "name": "MOM7_T15: Querschnitts-Momentum 7 Tage, Top 5 Long, wöchentlich mit Trailing-Stop 15 %",
-   "pct": -44.98,
-   "equity": 42.36,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 3,
-   "anpassungen": 1,
-   "kosten": 0.15,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MOM7F_T15",
-   "name": "MOM7F_T15: Momentum 7 Tage, Top 5 Long, nur wenn Bitcoin über 200-Tage-Schnitt, wöchentlich mit Trailing-Stop 15 %",
-   "pct": -44.98,
-   "equity": 42.36,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 3,
-   "anpassungen": 1,
-   "kosten": 0.15,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "D",
-   "name": "D: Gegenbewegung zu A",
-   "pct": -62.34,
-   "equity": 29.0,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 11,
-   "kosten": 1.76,
-   "positionen": [
-    "long KORUBUSDT 0.0",
-    "short INITUSDT 0.0",
-    "long MUBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MAXM_T15",
-   "name": "MAXM_T15: MAX-Momentum, Long auf Coins mit größtem Tagessprung der letzten 30 Tage mit Trailing-Stop 15 %",
-   "pct": -62.35,
-   "equity": 28.99,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 2,
-   "anpassungen": 1,
-   "kosten": 0.13,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long NEARUSDT 0.0",
-    "long UNIUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MOMF_T15",
-   "name": "MOMF_T15: Momentum 14 Tage, Top 3 Long, nur wenn Bitcoin über 100-Tage-Schnitt, wöchentlich (aus der Strategie-Suche) mit Trailing-Stop 15 %",
-   "pct": -67.59,
-   "equity": 24.96,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 1,
-   "anpassungen": 1,
-   "kosten": 0.12,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MOMF2_T15",
-   "name": "MOMF2_T15: Momentum 14 Tage, Top 3 Long, nur wenn Bitcoin über 200-Tage-Schnitt, wöchentlich mit Trailing-Stop 15 %",
-   "pct": -67.59,
-   "equity": 24.96,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 1,
-   "anpassungen": 1,
-   "kosten": 0.12,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "AD2_3_100_T15",
-   "name": "AD2_3_100_T15: Adaptiv (zwei Zustände): Long auf die Top 3 im Aufwärtstrend, Short auf die schwächsten 3 im Abwärtstrend, Bitcoin-Schnitt 100 Tage, Momentum 14 Tage, wöchentlich mit Trailing-Stop 15 %",
-   "pct": -67.59,
-   "equity": 24.96,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 1,
-   "anpassungen": 1,
-   "kosten": 0.12,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "AD2_3_200_T15",
-   "name": "AD2_3_200_T15: Adaptiv (zwei Zustände): Long auf die Top 3 im Aufwärtstrend, Short auf die schwächsten 3 im Abwärtstrend, Bitcoin-Schnitt 200 Tage, Momentum 14 Tage, wöchentlich mit Trailing-Stop 15 %",
-   "pct": -67.59,
-   "equity": 24.96,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 1,
-   "anpassungen": 1,
-   "kosten": 0.12,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "AD2_10_100_T15",
-   "name": "AD2_10_100_T15: Adaptiv (zwei Zustände): Long auf die Top 10 im Aufwärtstrend, Short auf die schwächsten 10 im Abwärtstrend, Bitcoin-Schnitt 100 Tage, Momentum 14 Tage, wöchentlich mit Trailing-Stop 15 %",
-   "pct": -70.05,
-   "equity": 23.06,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 3,
-   "anpassungen": 1,
-   "kosten": 0.12,
-   "positionen": [
-    "long ZECUSDT 0.0",
-    "long UNIUSDT 0.0",
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "long RLUSDUSDT 0.0",
-    "long UUSDT 0.0",
-    "long RWUSDUSDT 0.0"
-   ]
-  },
-  {
-   "key": "AD2_10_200_T15",
-   "name": "AD2_10_200_T15: Adaptiv (zwei Zustände): Long auf die Top 10 im Aufwärtstrend, Short auf die schwächsten 10 im Abwärtstrend, Bitcoin-Schnitt 200 Tage, Momentum 14 Tage, wöchentlich mit Trailing-Stop 15 %",
-   "pct": -70.05,
-   "equity": 23.06,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 3,
-   "anpassungen": 1,
-   "kosten": 0.12,
-   "positionen": [
-    "long ZECUSDT 0.0",
-    "long UNIUSDT 0.0",
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "long RLUSDUSDT 0.0",
-    "long UUSDT 0.0",
-    "long RWUSDUSDT 0.0"
-   ]
-  },
-  {
-   "key": "TSM_T15",
-   "name": "TSM_T15: Zeitreihen-Momentum je Coin (28 Tage), Long oder Short, nach Risiko gewichtet mit Trailing-Stop 15 %",
-   "pct": -71.73,
-   "equity": 21.77,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 4,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "short WLDUSDT 0.0",
-    "short NEARUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "long UUSDT 0.0",
-    "long BEAMXUSDT 0.0",
-    "short CELOUSDT 0.0",
-    "short SKHYBUSDT 0.0",
-    "short MUBUSDT 0.0",
-    "short ONDOUSDT 0.0",
-    "short AVAXUSDT 0.0",
-    "short UNIUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "short AAVEUSDT 0.0",
-    "short XRPUSDT 0.0",
-    "short ENAUSDT 0.0",
-    "short BNBUSDT 0.0",
-    "short GOOGLBUSDT 0.0",
-    "short DOGEUSDT 0.0",
-    "short QQQBUSDT 0.0",
-    "short NVDABUSDT 0.0",
-    "short TAOUSDT 0.0",
-    "short ETHUSDT 0.0",
-    "short CRCLBUSDT 0.0",
-    "short XPLUSDT 0.0",
-    "short HYPEUSDT 0.0",
-    "short SOLUSDT 0.0",
-    "short TRUMPUSDT 0.0",
-    "short LINKUSDT 0.0",
-    "short ADAUSDT 0.0",
-    "short MSTRBUSDT 0.0",
-    "short 牛来USDT 0.0",
-    "long RLUSDUSDT 0.0",
-    "short SUIUSDT 0.0",
-    "short SNDKBUSDT 0.0",
-    "short BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "TSM",
-   "name": "TSM: Zeitreihen-Momentum je Coin (28 Tage), Long oder Short, nach Risiko gewichtet",
-   "pct": -75.89,
-   "equity": 18.57,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.09,
-   "positionen": [
-    "short LINKUSDT 0.0",
-    "short QNTUSDT 0.0",
-    "short FETUSDT 0.0",
-    "short PUMPUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "short XPLUSDT 0.0",
-    "short NEARUSDT 0.0",
-    "short TAOUSDT 0.0",
-    "short ZAMAUSDT 0.0",
-    "short DOGEUSDT 0.0",
-    "short NILUSDT 0.0",
-    "short LSKUSDT 0.0",
-    "short LTCUSDT 0.0",
-    "short ENAUSDT 0.0",
-    "short BTCUSDT 0.0",
-    "short STXUSDT 0.0",
-    "short CELOUSDT 0.0",
-    "short SOPHUSDT 0.0",
-    "long BEAMXUSDT 0.0",
-    "long RLUSDUSDT 0.0",
-    "short ONDOUSDT 0.0",
-    "short SUIUSDT 0.0",
-    "short XRPUSDT 0.0",
-    "short AVAXUSDT 0.0",
-    "short SOLUSDT 0.0",
-    "long UUSDT 0.0",
-    "short BNBUSDT 0.0",
-    "short ZROUSDT 0.0",
-    "short ZECUSDT 0.0",
-    "short WLDUSDT 0.0",
-    "short ETHUSDT 0.0",
-    "short RSRUSDT 0.0",
-    "short UNIUSDT 0.0",
-    "short TRXUSDT 0.0",
-    "short PROMUSDT 0.0",
-    "short AAVEUSDT 0.0",
-    "short INJUSDT 0.0",
-    "short HYPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MOM28_T20",
-   "name": "MOM28_T20: Querschnitts-Momentum 28 Tage, Top 5 Long, wöchentlich mit Trailing-Stop 20 %",
-   "pct": -76.89,
-   "equity": 17.79,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 1,
-   "anpassungen": 1,
-   "kosten": 0.11,
-   "positionen": [
-    "long PEPEUSDT 0.0",
-    "long HYPEUSDT 0.0",
-    "long UUSDT 0.0",
-    "long RLUSDUSDT 0.0"
-   ]
-  },
-  {
-   "key": "LVOL_T15",
-   "name": "LVOL_T15: Niedrig-Volatilitäts-Anomalie, 5 ruhigste Coins Long, wöchentlich mit Trailing-Stop 15 %",
-   "pct": -78.43,
-   "equity": 16.61,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 1,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BTCUSDT 0.0",
-    "long UUSDT 0.0",
-    "long RLUSDUSDT 0.0",
-    "long QQQBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_CL15_T5",
-   "name": "R_CL15_T5: Gegen den Trend: Long auf die schwächsten (15 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -89.54,
-   "equity": 8.05,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 24,
-   "anpassungen": 13,
-   "kosten": 1.25,
-   "positionen": [
-    "long HYPEUSDT 0.0",
-    "long NVDABUSDT 0.0",
-    "long ETHUSDT 0.0",
-    "long NEARUSDT 0.0",
-    "long SOLUSDT 0.0",
-    "long BTCUSDT 0.0",
-    "long RWUSDUSDT 0.0",
-    "long INJUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "long XRPUSDT 0.0",
-    "long BNBUSDT 0.0",
-    "long ADAUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "long BCHUSDT 0.0"
-   ]
-  },
-  {
-   "key": "RG2",
-   "name": "RG2: Bitcoin long im Aufwärtstrend, Bitcoin short im Bärenmarkt",
-   "pct": -95.05,
-   "equity": 3.81,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "GX",
-   "name": "GX: Bitcoin Golden Cross (50 über 200 Tage), sonst bar",
-   "pct": -95.05,
-   "equity": 3.81,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "GXLS",
-   "name": "GXLS: Bitcoin Golden Cross Long, Death Cross Short",
-   "pct": -95.05,
-   "equity": 3.81,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "RSI2",
-   "name": "RSI2: Bitcoin Rücksetzer kaufen (RSI 2 unter 10 im Aufwärtstrend), Ausstieg über 5-Tage-Linie",
-   "pct": -95.05,
-   "equity": 3.81,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "TOM",
-   "name": "TOM: Monatswechsel, Bitcoin nur vom 28. bis 3. halten",
-   "pct": -95.05,
-   "equity": 3.81,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "ETHBTC",
-   "name": "ETHBTC: Rotation Ethereum oder Bitcoin nach ETH/BTC-Trend",
-   "pct": -95.05,
-   "equity": 3.81,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "BTC_T10",
-   "name": "BTC_T10: BTC über 200-Tage-Linie mit Trailing-Stop 10 %",
-   "pct": -95.05,
-   "equity": 3.81,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "BTC_T20",
-   "name": "BTC_T20: BTC über 200-Tage-Linie mit Trailing-Stop 20 %",
-   "pct": -95.05,
-   "equity": 3.81,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "RG2_T10",
-   "name": "RG2_T10: Bitcoin long im Aufwärtstrend, Bitcoin short im Bärenmarkt mit Trailing-Stop 10 %",
-   "pct": -95.05,
-   "equity": 3.81,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "ALTS",
-   "name": "ALTS: Altcoin-Saison-Schalter, Altcoin-Momentum oder Bitcoin",
-   "pct": -95.07,
-   "equity": 3.8,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "GX_T15",
-   "name": "GX_T15: Bitcoin Golden Cross (50 über 200 Tage), sonst bar mit Trailing-Stop 15 %",
-   "pct": -95.07,
-   "equity": 3.8,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "GXLS_T15",
-   "name": "GXLS_T15: Bitcoin Golden Cross Long, Death Cross Short mit Trailing-Stop 15 %",
-   "pct": -95.07,
-   "equity": 3.8,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "RSI2_T15",
-   "name": "RSI2_T15: Bitcoin Rücksetzer kaufen (RSI 2 unter 10 im Aufwärtstrend), Ausstieg über 5-Tage-Linie mit Trailing-Stop 15 %",
-   "pct": -95.07,
-   "equity": 3.8,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "TOM_T15",
-   "name": "TOM_T15: Monatswechsel, Bitcoin nur vom 28. bis 3. halten mit Trailing-Stop 15 %",
-   "pct": -95.07,
-   "equity": 3.8,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "ETHBTC_T15",
-   "name": "ETHBTC_T15: Rotation Ethereum oder Bitcoin nach ETH/BTC-Trend mit Trailing-Stop 15 %",
-   "pct": -95.07,
-   "equity": 3.8,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "ALTS_T15",
-   "name": "ALTS_T15: Altcoin-Saison-Schalter, Altcoin-Momentum oder Bitcoin mit Trailing-Stop 15 %",
-   "pct": -95.07,
-   "equity": 3.8,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.05,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "LVOL",
-   "name": "LVOL: Niedrig-Volatilitäts-Anomalie, 5 ruhigste Coins Long, wöchentlich",
-   "pct": -95.1,
-   "equity": 3.77,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.08,
-   "positionen": [
-    "long BTCUSDT 0.0",
-    "long BNBUSDT 0.0",
-    "long ETHUSDT 0.0",
-    "long RLUSDUSDT 0.0",
-    "long UUSDT 0.0"
-   ]
-  },
-  {
-   "key": "H180F",
-   "name": "H180F: Nähe 180-Tage-Hoch, Top 5 Long, nur wenn Bitcoin über 100-Tage-Schnitt, alle 3 Tage (aus der Strategie-Suche, beste ohne Hebel)",
-   "pct": -95.11,
-   "equity": 3.76,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.09,
-   "positionen": [
-    "long UUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "long RLUSDUSDT 0.0",
-    "long BNBUSDT 0.0",
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "H180",
-   "name": "H180: Nähe zum 180-Tage-Hoch, Top 5 Long im Aufwärtstrend",
-   "pct": -95.11,
-   "equity": 3.76,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.09,
-   "positionen": [
-    "long PEPEUSDT 0.0",
-    "long BTCUSDT 0.0",
-    "long BEAMXUSDT 0.0",
-    "long UUSDT 0.0",
-    "long RLUSDUSDT 0.0"
-   ]
-  },
-  {
-   "key": "H180F_T15",
-   "name": "H180F_T15: Nähe 180-Tage-Hoch, Top 5 Long, nur wenn Bitcoin über 100-Tage-Schnitt, alle 3 Tage (aus der Strategie-Suche, beste ohne Hebel) mit Trailing-Stop 15 %",
-   "pct": -95.11,
-   "equity": 3.76,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.09,
-   "positionen": [
-    "long UUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "long RLUSDUSDT 0.0",
-    "long BNBUSDT 0.0",
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "H180_T15",
-   "name": "H180_T15: Nähe zum 180-Tage-Hoch, Top 5 Long im Aufwärtstrend mit Trailing-Stop 15 %",
-   "pct": -95.11,
-   "equity": 3.76,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.09,
-   "positionen": [
-    "long UUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "long RLUSDUSDT 0.0",
-    "long BNBUSDT 0.0",
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "E",
-   "name": "E: BTC halten",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "RG1",
-   "name": "RG1: Aufwärtstrend K-Long, Bärenmarkt Short auf die 3 schwächsten Coins",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "long ZROUSDT 0.0"
-   ]
-  },
-  {
-   "key": "RG3",
-   "name": "RG3: K-Long im Aufwärtstrend, Bitcoin short im Bärenmarkt",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "long ZROUSDT 0.0"
-   ]
-  },
-  {
-   "key": "DM",
-   "name": "DM: Dual Momentum BTC/ETH/BNB, stärkster der letzten 60 Tage, sonst bar",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BNBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MOM28",
-   "name": "MOM28: Querschnitts-Momentum 28 Tage, Top 5 Long, wöchentlich",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long PEPEUSDT 0.0",
-    "long BEAMXUSDT 0.0",
-    "long HYPEUSDT 0.0",
-    "long UUSDT 0.0",
-    "long RLUSDUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MOM7F",
-   "name": "MOM7F: Momentum 7 Tage, Top 5 Long, nur wenn Bitcoin über 200-Tage-Schnitt, wöchentlich",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long PEPEUSDT 0.0",
-    "long HYPEUSDT 0.0",
-    "long SKHYBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MOMF2",
-   "name": "MOMF2: Momentum 14 Tage, Top 3 Long, nur wenn Bitcoin über 200-Tage-Schnitt, wöchentlich",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MOMF",
-   "name": "MOMF: Momentum 14 Tage, Top 3 Long, nur wenn Bitcoin über 100-Tage-Schnitt, wöchentlich (aus der Strategie-Suche)",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "H365F",
-   "name": "H365F: Nähe 365-Tage-Hoch, Top 3 Long, nur wenn Bitcoin über 100-Tage-Schnitt, alle 3 Tage (aus der Strategie-Suche)",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.1,
-   "positionen": [
-    "long UUSDT 0.0",
-    "long BFUSDUSDT 0.0",
-    "long TRXUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MOM7",
-   "name": "MOM7: Querschnitts-Momentum 7 Tage, Top 5 Long, wöchentlich",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long PEPEUSDT 0.0",
-    "long LSKUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "long BEAMXUSDT 0.0",
-    "long HYPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "MAXM",
-   "name": "MAXM: MAX-Momentum, Long auf Coins mit größtem Tagessprung der letzten 30 Tage",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long LSKUSDT 0.0",
-    "long SOPHUSDT 0.0",
-    "long RSRUSDT 0.0",
-    "long BEAMXUSDT 0.0",
-    "long NILUSDT 0.0"
-   ]
-  },
-  {
-   "key": "AD2_3_100",
-   "name": "AD2_3_100: Adaptiv (zwei Zustände): Long auf die Top 3 im Aufwärtstrend, Short auf die schwächsten 3 im Abwärtstrend, Bitcoin-Schnitt 100 Tage, Momentum 14 Tage, wöchentlich",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "AD2_3_200",
-   "name": "AD2_3_200: Adaptiv (zwei Zustände): Long auf die Top 3 im Aufwärtstrend, Short auf die schwächsten 3 im Abwärtstrend, Bitcoin-Schnitt 200 Tage, Momentum 14 Tage, wöchentlich",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "AD2_10_100",
-   "name": "AD2_10_100: Adaptiv (zwei Zustände): Long auf die Top 10 im Aufwärtstrend, Short auf die schwächsten 10 im Abwärtstrend, Bitcoin-Schnitt 100 Tage, Momentum 14 Tage, wöchentlich",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long ZECUSDT 0.0",
-    "long UNIUSDT 0.0",
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long HYPEUSDT 0.0",
-    "long RLUSDUSDT 0.0",
-    "long UUSDT 0.0",
-    "long RWUSDUSDT 0.0",
-    "long SKHYBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "AD2_10_200",
-   "name": "AD2_10_200: Adaptiv (zwei Zustände): Long auf die Top 10 im Aufwärtstrend, Short auf die schwächsten 10 im Abwärtstrend, Bitcoin-Schnitt 200 Tage, Momentum 14 Tage, wöchentlich",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long ZECUSDT 0.0",
-    "long UNIUSDT 0.0",
-    "long BEAMXUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "long 牛来USDT 0.0",
-    "long HYPEUSDT 0.0",
-    "long RLUSDUSDT 0.0",
-    "long UUSDT 0.0",
-    "long RWUSDUSDT 0.0",
-    "long SKHYBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "RG3_T15",
-   "name": "RG3_T15: K-Long im Aufwärtstrend, Bitcoin short im Bärenmarkt mit Trailing-Stop 15 %",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long RLUSDUSDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "H365F_T15",
-   "name": "H365F_T15: Nähe 365-Tage-Hoch, Top 3 Long, nur wenn Bitcoin über 100-Tage-Schnitt, alle 3 Tage (aus der Strategie-Suche) mit Trailing-Stop 15 %",
-   "pct": -95.12,
-   "equity": 3.75,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.1,
-   "positionen": [
-    "long UUSDT 0.0",
-    "long BFUSDUSDT 0.0",
-    "long TRXUSDT 0.0"
-   ]
-  },
-  {
-   "key": "C",
-   "name": "C: Momentum nur Long mit BTC-Filter (wöchentlich)",
-   "pct": -95.7,
-   "equity": 3.31,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.27,
-   "positionen": [
-    "long ONEUSDT 0.0",
-    "long CYBERUSDT 0.0",
-    "long INJUSDT 0.0"
-   ]
-  },
-  {
-   "key": "K",
-   "name": "K: Long-Momentum mit Trendfilter und Risikosteuerung (wöchentlich)",
-   "pct": -95.77,
-   "equity": 3.25,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.26,
-   "positionen": [
-    "long ONEUSDT 0.0",
-    "long INJUSDT 0.0",
-    "long PEPEUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_TL15_T5",
-   "name": "R_TL15_T5: Trend: Long auf die stärksten (15 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -95.78,
-   "equity": 3.25,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 11,
-   "anpassungen": 13,
-   "kosten": 1.25,
-   "positionen": [
-    "long CRCLBUSDT 0.0",
-    "long ARBUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "long SKHYBUSDT 0.0",
-    "long UNIUSDT 0.0",
-    "long SPCXBUSDT 0.0",
-    "long INTCBUSDT 0.0",
-    "long KORUBUSDT 0.0",
-    "long MUBUSDT 0.0",
-    "long INITUSDT 0.0",
-    "long ONDOUSDT 0.0",
-    "long GOOGLBUSDT 0.0",
-    "long AAVEUSDT 0.0",
-    "long AVAXUSDT 0.0",
-    "long SNDKBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_CL10_T5",
-   "name": "R_CL10_T5: Gegen den Trend: Long auf die schwächsten (10 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -95.8,
-   "equity": 3.24,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 16,
-   "anpassungen": 13,
-   "kosten": 1.44,
-   "positionen": [
-    "long XRPUSDT 0.0",
-    "long ETHUSDT 0.0",
-    "long SOLUSDT 0.0",
-    "long BTCUSDT 0.0",
-    "long RWUSDUSDT 0.0",
-    "long INJUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "long ZECUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "long BCHUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_CL15",
-   "name": "R_CL15: Gegen den Trend: Long auf die schwächsten (15 Coins je Seite, 6 h)",
-   "pct": -95.87,
-   "equity": 3.18,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 22,
-   "kosten": 1.62,
-   "positionen": [
-    "long XRPUSDT 0.0",
-    "long ZECUSDT 0.0",
-    "long HYPEUSDT 0.0",
-    "long NVDABUSDT 0.0",
-    "long ETHUSDT 0.0",
-    "long NEARUSDT 0.0",
-    "long SOLUSDT 0.0",
-    "long BTCUSDT 0.0",
-    "long RWUSDUSDT 0.0",
-    "long INJUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "long BNBUSDT 0.0",
-    "long ADAUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "long BCHUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_TL15",
-   "name": "R_TL15: Trend: Long auf die stärksten (15 Coins je Seite, 6 h)",
-   "pct": -95.95,
-   "equity": 3.12,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 22,
-   "kosten": 1.68,
-   "positionen": [
-    "long CRCLBUSDT 0.0",
-    "long ARBUSDT 0.0",
-    "long PEPEUSDT 0.0",
-    "long SKHYBUSDT 0.0",
-    "long UNIUSDT 0.0",
-    "long SPCXBUSDT 0.0",
-    "long INTCBUSDT 0.0",
-    "long KORUBUSDT 0.0",
-    "long MUBUSDT 0.0",
-    "long INITUSDT 0.0",
-    "long ONDOUSDT 0.0",
-    "long GOOGLBUSDT 0.0",
-    "long AAVEUSDT 0.0",
-    "long AVAXUSDT 0.0",
-    "long SNDKBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_CL3_T5",
-   "name": "R_CL3_T5: Gegen den Trend: Long auf die schwächsten (3 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -96.11,
-   "equity": 3.0,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 3,
-   "anpassungen": 13,
-   "kosten": 1.68,
-   "positionen": [
-    "long ZECUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "long XRPUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_CL5_T5",
-   "name": "R_CL5_T5: Gegen den Trend: Long auf die schwächsten (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -96.14,
-   "equity": 2.97,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 16,
-   "anpassungen": 20,
-   "kosten": 2.25,
-   "positionen": [
-    "long XRPUSDT 0.0",
-    "long ZECUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "long BCHUSDT 0.0",
-    "long QNTUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_CL10",
-   "name": "R_CL10: Gegen den Trend: Long auf die schwächsten (10 Coins je Seite, 6 h)",
-   "pct": -96.16,
-   "equity": 2.96,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 22,
-   "kosten": 1.81,
-   "positionen": [
-    "long XRPUSDT 0.0",
-    "long ETHUSDT 0.0",
-    "long SOLUSDT 0.0",
-    "long BTCUSDT 0.0",
-    "long RWUSDUSDT 0.0",
-    "long INJUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "long ZECUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "long BCHUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_TL3_T5",
-   "name": "R_TL3_T5: Trend: Long auf die stärksten (3 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -96.2,
-   "equity": 2.93,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 4,
-   "anpassungen": 13,
-   "kosten": 1.69,
-   "positionen": [
-    "long KORUBUSDT 0.0",
-    "long INITUSDT 0.0",
-    "long MUBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_TL10_T8",
-   "name": "R_TL10_T8: Trend: Long auf die stärksten (10 Coins je Seite, 6 h) mit Trailing-Stop 8 %",
-   "pct": -96.24,
-   "equity": 2.89,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 13,
-   "anpassungen": 20,
-   "kosten": 1.86,
-   "positionen": [
-    "long SKHYBUSDT 0.0",
-    "long SPCXBUSDT 0.0",
-    "long INTCBUSDT 0.0",
-    "long KORUBUSDT 0.0",
-    "long MUBUSDT 0.0",
-    "long INITUSDT 0.0",
-    "long ONDOUSDT 0.0",
-    "long AVAXUSDT 0.0",
-    "long SNDKBUSDT 0.0",
-    "long ARBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_TL10",
-   "name": "R_TL10: Trend: Long auf die stärksten (10 Coins je Seite, 6 h)",
-   "pct": -96.3,
-   "equity": 2.85,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 22,
-   "kosten": 1.95,
-   "positionen": [
-    "long SKHYBUSDT 0.0",
-    "long SPCXBUSDT 0.0",
-    "long INTCBUSDT 0.0",
-    "long KORUBUSDT 0.0",
-    "long MUBUSDT 0.0",
-    "long INITUSDT 0.0",
-    "long ONDOUSDT 0.0",
-    "long AVAXUSDT 0.0",
-    "long SNDKBUSDT 0.0",
-    "long ARBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_TL5_T5",
-   "name": "R_TL5_T5: Trend: Long auf die stärksten (5 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
-   "pct": -96.37,
-   "equity": 2.8,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 16,
-   "anpassungen": 20,
-   "kosten": 2.28,
-   "positionen": [
-    "long INITUSDT 0.0",
-    "long AVAXUSDT 0.0",
-    "long KORUBUSDT 0.0",
-    "long SNDKBUSDT 0.0",
-    "long MUBUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_CL5",
-   "name": "R_CL5: Gegen den Trend: Long auf die schwächsten (5 Coins je Seite, 6 h)",
-   "pct": -96.39,
-   "equity": 2.78,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 22,
-   "kosten": 1.99,
-   "positionen": [
-    "long XRPUSDT 0.0",
-    "long ZECUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "long BCHUSDT 0.0",
-    "long QNTUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_CL3",
-   "name": "R_CL3: Gegen den Trend: Long auf die schwächsten (3 Coins je Seite, 6 h)",
-   "pct": -96.53,
-   "equity": 2.67,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 22,
-   "kosten": 1.96,
-   "positionen": [
-    "long ZECUSDT 0.0",
-    "long TRXUSDT 0.0",
-    "long XRPUSDT 0.0"
-   ]
-  },
-  {
-   "key": "R_TL3",
-   "name": "R_TL3: Trend: Long auf die stärksten (3 Coins je Seite, 6 h)",
-   "pct": -96.61,
-   "equity": 2.61,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 22,
-   "kosten": 2.02,
-   "positionen": [
-    "long KORUBUSDT 0.0",
-    "long INITUSDT 0.0",
-    "long MUBUSDT 0.0"
+    "short ZEC_USDT 25.2",
+    "short DASH_USDT 16.4"
    ]
   },
   {
    "key": "R_TL5",
    "name": "R_TL5: Trend: Long auf die stärksten (5 Coins je Seite, 6 h)",
-   "pct": -96.65,
-   "equity": 2.58,
+   "pct": -25.71,
+   "equity": 57.21,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 22,
-   "kosten": 2.13,
+   "anpassungen": 23,
+   "kosten": 2.25,
    "positionen": [
-    "long INITUSDT 0.0",
-    "long AVAXUSDT 0.0",
-    "long KORUBUSDT 0.0",
-    "long SNDKBUSDT 0.0",
-    "long MUBUSDT 0.0"
+    "long INITUSDT 10.3",
+    "long PEPEUSDT 11.1",
+    "long GRAMUSDT 11.0",
+    "long ONEUSDT 11.1",
+    "long CYBERUSDT 11.0"
    ]
   },
   {
-   "key": "VT",
-   "name": "VT: Bitcoin mit Volatilitätssteuerung, Ziel 50 % Schwankung, bis 1,9x Hebel",
-   "pct": -175.09,
-   "equity": -57.82,
-   "lev": 2,
+   "key": "R_CL5",
+   "name": "R_CL5: Gegen den Trend: Long auf die schwächsten (5 Coins je Seite, 6 h)",
+   "pct": -27.67,
+   "equity": 55.7,
+   "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.1,
+   "anpassungen": 23,
+   "kosten": 2.07,
    "positionen": [
-    "long BTCUSDT 0.0"
+    "long ZECUSDT 10.6",
+    "long QNTUSDT 10.6",
+    "long NVDABUSDT 10.6",
+    "long AAVEUSDT 10.6",
+    "long ARBUSDT 10.6"
    ]
   },
   {
-   "key": "H365F_2",
-   "name": "H365F_2: wie H365F mit 2x Hebel (die rückblickend beste Variante der Suche)",
-   "pct": -190.25,
-   "equity": -69.49,
-   "lev": 2,
+   "key": "R_CL3",
+   "name": "R_CL3: Gegen den Trend: Long auf die schwächsten (3 Coins je Seite, 6 h)",
+   "pct": -30.58,
+   "equity": 53.46,
+   "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 2,
-   "kosten": 0.19,
+   "anpassungen": 23,
+   "kosten": 2.05,
    "positionen": [
-    "long UUSDT 0.0",
-    "long BFUSDUSDT 0.0",
-    "long TRXUSDT 0.0"
-   ]
-  },
-  {
-   "key": "E2",
-   "name": "E2: BTC halten mit 2x Hebel",
-   "pct": -190.3,
-   "equity": -69.53,
-   "lev": 2,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.1,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "H180_2",
-   "name": "H180_2: 180-Tage-Hoch mit 2x Hebel",
-   "pct": -190.39,
-   "equity": -69.6,
-   "lev": 2,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.17,
-   "positionen": [
-    "long PEPEUSDT 0.0",
-    "long BTCUSDT 0.0",
-    "long BEAMXUSDT 0.0",
-    "long UUSDT 0.0",
-    "long RLUSDUSDT 0.0"
-   ]
-  },
-  {
-   "key": "K2",
-   "name": "K2: Strategie K mit 2x Hebel",
-   "pct": -190.42,
-   "equity": -69.62,
-   "lev": 2,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.19,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "long ZROUSDT 0.0"
-   ]
-  },
-  {
-   "key": "RG1_2",
-   "name": "RG1_2: RG1 mit 2x Hebel",
-   "pct": -190.42,
-   "equity": -69.62,
-   "lev": 2,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.19,
-   "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "long ZROUSDT 0.0"
-   ]
-  },
-  {
-   "key": "T3",
-   "name": "T3: BTC 3x Hebel mit Trendfilter",
-   "pct": -279.0,
-   "equity": -137.83,
-   "lev": 3,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.16,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "RG2_3",
-   "name": "RG2_3: RG2 mit 3x Hebel",
-   "pct": -279.0,
-   "equity": -137.83,
-   "lev": 3,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.16,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "GX_3",
-   "name": "GX_3: Golden Cross mit 3x Hebel",
-   "pct": -279.0,
-   "equity": -137.83,
-   "lev": 3,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.16,
-   "positionen": [
-    "long BTCUSDT 0.0"
-   ]
-  },
-  {
-   "key": "E3",
-   "name": "E3: BTC halten mit 3x Hebel",
-   "pct": -285.46,
-   "equity": -142.8,
-   "lev": 3,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 1,
-   "kosten": 0.15,
-   "positionen": [
-    "long BTCUSDT 0.0"
+    "long ZECUSDT 17.0",
+    "long ARBUSDT 16.9",
+    "long QNTUSDT 17.0"
    ]
   },
   {
    "key": "K3",
    "name": "K3: Strategie K mit 3x Hebel",
-   "pct": -285.62,
-   "equity": -142.93,
+   "pct": -36.75,
+   "equity": 48.7,
    "lev": 3,
    "liquidiert": null,
    "stops": 0,
    "anpassungen": 1,
    "kosten": 0.29,
    "positionen": [
-    "long BEAMXUSDT 0.0",
-    "long QNTUSDT 0.0",
-    "long ZROUSDT 0.0"
+    "long BEAMXUSDT 64.2",
+    "long QNTUSDT 66.3",
+    "long ZROUSDT 61.2"
    ]
   },
   {
-   "key": "T5",
-   "name": "T5: BTC 5x Hebel mit Trendfilter",
-   "pct": -454.0,
-   "equity": -272.58,
-   "lev": 5,
+   "key": "A",
+   "name": "A: Top-Mover 24h (täglich)",
+   "pct": -39.26,
+   "equity": 46.77,
+   "lev": 1,
    "liquidiert": null,
    "stops": 0,
-   "anpassungen": 3,
-   "kosten": 0.28,
+   "anpassungen": 11,
+   "kosten": 1.66,
    "positionen": [
-    "long BTCUSDT 0.0"
+    "short KORUBUSDT 14.2",
+    "long INITUSDT 19.5",
+    "short MUBUSDT 14.6"
+   ]
+  },
+  {
+   "key": "B",
+   "name": "B: Momentum 7d/30d Long+Short (wöchentlich)",
+   "pct": -40.9,
+   "equity": 45.5,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 2,
+   "kosten": 0.26,
+   "positionen": [
+    "short TRUMPUSDT 10.5",
+    "long INJUSDT 10.7",
+    "short SNDKBUSDT 11.5",
+    "short SNXXBUSDT 11.8",
+    "long ONEUSDT 11.4",
+    "long CYBERUSDT 9.5"
+   ]
+  },
+  {
+   "key": "D",
+   "name": "D: Gegenbewegung zu A",
+   "pct": -50.78,
+   "equity": 37.9,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 11,
+   "kosten": 1.76,
+   "positionen": [
+    "long KORUBUSDT 14.2",
+    "short INITUSDT 19.5",
+    "long MUBUSDT 14.7"
    ]
   }
  ],
@@ -9924,13 +9890,13 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 327,
+  "ram_frei_mb": 308,
   "swap_mb": 0,
-  "prozess_mb": 122,
+  "prozess_mb": 132,
   "last": [
-   0.05,
-   0.02,
-   0.0
+   0.07,
+   0.18,
+   0.17
   ],
   "kerne": 2,
   "disk_frei_gb": 41.8,
@@ -9943,12 +9909,12 @@
   }
  },
  "letzter_fehler": {
-  "ts": 1794344913.8188698,
-  "error": "Nur noch 65 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
+  "ts": 1794356026.571831,
+  "error": "Nur noch 53 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
   "ort": [
    "  File \"/home/ubuntu/pionex-bot/app.py\", line 53, in prog",
    "    raise MemoryError(f\"Nur noch {free} MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen\")",
-   "MemoryError: Nur noch 65 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
+   "MemoryError: Nur noch 53 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
   ]
  },
  "tunnel": {

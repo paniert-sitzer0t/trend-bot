@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-11 02:57:10 UTC",
+ "erzeugt": "2026-11-11 03:27:16 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -3984,22 +3984,6 @@
    ]
   },
   {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -23.82,
-   "equity": 58.66,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 59,
-   "kosten": 0,
-   "positionen": [
-    "long ONE_USDT 13.2",
-    "short ZEC_USDT 25.2",
-    "short DASH_USDT 16.4"
-   ]
-  },
-  {
    "key": "H",
    "name": "H: wie B, Martingale x1,4 nach Verlustwoche",
    "pct": -23.87,
@@ -4066,6 +4050,22 @@
     "long GRAMUSDT 11.0",
     "long ONEUSDT 11.1",
     "long CYBERUSDT 11.0"
+   ]
+  },
+  {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -26.04,
+   "equity": 56.95,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 59,
+   "kosten": 0,
+   "positionen": [
+    "long ONE_USDT 13.2",
+    "short ZEC_USDT 25.2",
+    "short DASH_USDT 16.4"
    ]
   },
   {
@@ -9890,13 +9890,13 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 319,
+  "ram_frei_mb": 300,
   "swap_mb": 0,
-  "prozess_mb": 133,
+  "prozess_mb": 138,
   "last": [
-   0.0,
-   0.0,
-   0.0
+   0.12,
+   0.31,
+   0.28
   ],
   "kerne": 2,
   "disk_frei_gb": 41.8,
@@ -9909,12 +9909,12 @@
   }
  },
  "letzter_fehler": {
-  "ts": 1794356026.571831,
-  "error": "Nur noch 53 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
+  "ts": 1794367121.833529,
+  "error": "Nur noch 55 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
   "ort": [
    "  File \"/home/ubuntu/pionex-bot/app.py\", line 53, in prog",
    "    raise MemoryError(f\"Nur noch {free} MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen\")",
-   "MemoryError: Nur noch 53 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
+   "MemoryError: Nur noch 55 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
   ]
  },
  "tunnel": {

@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-12 13:46:30 UTC",
+ "erzeugt": "2026-11-12 14:16:37 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -2498,8 +2498,8 @@
   {
    "key": "ORIG",
    "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -24.1,
-   "equity": 58.44,
+   "pct": -23.02,
+   "equity": 59.28,
    "lev": 1,
    "liquidiert": null,
    "stops": 0,
@@ -9865,13 +9865,13 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 305,
+  "ram_frei_mb": 300,
   "swap_mb": 0,
-  "prozess_mb": 139,
+  "prozess_mb": 146,
   "last": [
-   0.02,
-   0.01,
-   0.0
+   0.05,
+   0.29,
+   0.24
   ],
   "kerne": 2,
   "disk_frei_gb": 41.6,
@@ -9884,7 +9884,7 @@
   }
  },
  "letzter_fehler": {
-  "ts": 1794481376.857656,
+  "ts": 1794492491.551102,
   "error": "Nur noch 54 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
   "ort": [
    "  File \"/home/ubuntu/pionex-bot/app.py\", line 53, in prog",

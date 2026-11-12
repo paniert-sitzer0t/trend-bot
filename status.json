@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-12 10:45:57 UTC",
+ "erzeugt": "2026-11-12 11:16:02 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -2496,6 +2496,21 @@
    ]
   },
   {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -24.75,
+   "equity": 57.94,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 65,
+   "kosten": 0,
+   "positionen": [
+    "short PEPE_USDT 26.2",
+    "short NVDAX_USDT 23.7"
+   ]
+  },
+  {
    "key": "VBRK_T15",
    "name": "VBRK_T15: Volumen-Ausbruch (3x Umsatz und +5 %), 3 Tage halten mit Trailing-Stop 15 %",
    "pct": -25.03,
@@ -2507,21 +2522,6 @@
    "kosten": 0.03,
    "positionen": [
     "long BEAMXUSDT 0.0"
-   ]
-  },
-  {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -25.36,
-   "equity": 57.47,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 65,
-   "kosten": 0,
-   "positionen": [
-    "short PEPE_USDT 26.2",
-    "short NVDAX_USDT 23.7"
    ]
   },
   {
@@ -9867,11 +9867,11 @@
   "ram_gesamt_mb": 956,
   "ram_frei_mb": 299,
   "swap_mb": 0,
-  "prozess_mb": 121,
+  "prozess_mb": 144,
   "last": [
-   0.01,
-   0.02,
-   0.02
+   0.04,
+   0.1,
+   0.12
   ],
   "kerne": 2,
   "disk_frei_gb": 41.6,
@@ -9884,12 +9884,12 @@
   }
  },
  "letzter_fehler": {
-  "ts": 1794470274.256356,
-  "error": "Nur noch 51 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
+  "ts": 1794481376.857656,
+  "error": "Nur noch 54 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen",
   "ort": [
    "  File \"/home/ubuntu/pionex-bot/app.py\", line 53, in prog",
    "    raise MemoryError(f\"Nur noch {free} MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen\")",
-   "MemoryError: Nur noch 51 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
+   "MemoryError: Nur noch 54 MB Arbeitsspeicher frei, Backtest zur Sicherheit abgebrochen"
   ]
  },
  "tunnel": {

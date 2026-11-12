@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-12 22:18:02 UTC",
+ "erzeugt": "2026-11-12 22:48:07 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -2510,22 +2510,6 @@
    ]
   },
   {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -25.31,
-   "equity": 57.51,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 66,
-   "kosten": 0,
-   "positionen": [
-    "short PEPE_USDT 26.2",
-    "short ARB_USDT 17.7",
-    "long DODO_USDT 10.7"
-   ]
-  },
-  {
    "key": "H",
    "name": "H: wie B, Martingale x1,4 nach Verlustwoche",
    "pct": -26.02,
@@ -2542,6 +2526,22 @@
     "long ACTUSDT 0.0",
     "long INJUSDT 0.0",
     "short TRUMPUSDT 0.0"
+   ]
+  },
+  {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -26.1,
+   "equity": 56.9,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 66,
+   "kosten": 0,
+   "positionen": [
+    "short PEPE_USDT 26.2",
+    "short ARB_USDT 17.7",
+    "long DODO_USDT 10.7"
    ]
   },
   {
@@ -9868,10 +9868,10 @@
   "ram_gesamt_mb": 956,
   "ram_frei_mb": 285,
   "swap_mb": 0,
-  "prozess_mb": 160,
+  "prozess_mb": 159,
   "last": [
-   0.13,
-   0.07,
+   0.04,
+   0.06,
    0.01
   ],
   "kerne": 2,

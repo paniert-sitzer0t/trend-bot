@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-13 15:57:17 UTC",
+ "erzeugt": "2026-11-13 16:27:22 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -2485,6 +2485,21 @@
    ]
   },
   {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -24.92,
+   "equity": 57.81,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 70,
+   "kosten": 0,
+   "positionen": [
+    "long DODO_USDT 10.7",
+    "short OSMO_USDT 17.6"
+   ]
+  },
+  {
    "key": "VBRK_T15",
    "name": "VBRK_T15: Volumen-Ausbruch (3x Umsatz und +5 %), 3 Tage halten mit Trailing-Stop 15 %",
    "pct": -25.03,
@@ -2496,21 +2511,6 @@
    "kosten": 0.03,
    "positionen": [
     "long BEAMXUSDT 0.0"
-   ]
-  },
-  {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -25.56,
-   "equity": 57.32,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 70,
-   "kosten": 0,
-   "positionen": [
-    "long DODO_USDT 10.7",
-    "short OSMO_USDT 17.6"
    ]
   },
   {
@@ -9053,9 +9053,9 @@
   "swap_mb": 0,
   "prozess_mb": 216,
   "last": [
-   0.07,
-   0.04,
-   0.01
+   0.05,
+   0.05,
+   0.0
   ],
   "kerne": 2,
   "disk_frei_gb": 41.6,

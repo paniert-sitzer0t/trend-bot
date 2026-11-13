@@ -179,11 +179,12 @@ def load_point_in_time(days, stable_assets, excluded_symbols, top, extra_symbols
                         progress(f"Binance-Archiv: Kerzen {i}/{len(jobs)}")
         db.commit()
 
-        records = db.execute(
-            "SELECT s,d,c,q FROM vision_daily WHERE d>=? AND d<? ORDER BY s,d",
-            (start_day, end_day)).fetchall()
+        # Stream SQLite rows instead of materializing the entire five-year
+        # history as a second large list of Python tuples and float objects.
         closes_all, vol_all = {}, {}
-        for symbol, day, close, quote in records:
+        for symbol, day, close, quote in db.execute(
+                "SELECT s,d,c,q FROM vision_daily WHERE d>=? AND d<? ORDER BY s,d",
+                (start_day, end_day)):
             c = closes_all.setdefault(symbol, [None] * days)
             v = vol_all.setdefault(symbol, [None] * days)
             j = day - start_day
@@ -208,11 +209,11 @@ def load_point_in_time(days, stable_assets, excluded_symbols, top, extra_symbols
         ext = {"v": {s: vol_all[s] for s in selected if s in vol_all},
                "h": {s: [None] * days for s in selected},
                "l": {s: [None] * days for s in selected}}
-        rows = db.execute(
-            "SELECT s,d,h,l FROM vision_daily WHERE d>=? AND d<? AND s IN (%s) ORDER BY s,d"
-            % ",".join("?" for _ in selected),
-            (start_day, end_day, *sorted(selected))).fetchall()
-        for symbol, day, high, low in rows:
+        # Stream OHLC rows as well to keep peak memory bounded.
+        for symbol, day, high, low in db.execute(
+                "SELECT s,d,h,l FROM vision_daily WHERE d>=? AND d<? AND s IN (%s) ORDER BY s,d"
+                % ",".join("?" for _ in selected),
+                (start_day, end_day, *sorted(selected))):
             j = day - start_day
             if 0 <= j < days and closes[symbol][j] is not None:
                 ext["h"][symbol][j], ext["l"][symbol][j] = high, low

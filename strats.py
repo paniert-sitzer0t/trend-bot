@@ -729,6 +729,8 @@ def weights_idea(strat, closes, i):
             if not v:
                 continue
             for j in (i, i - 1, i - 2):
+                if j < 0 or j >= len(v) or j >= len(c):
+                    continue
                 base = [x for x in v[max(0, j - 30):j] if x]
                 r = ret(c, j, 1)
                 if len(base) >= 20 and v[j] and r is not None and v[j] > 3 * sum(base) / len(base) and r > 0.05:

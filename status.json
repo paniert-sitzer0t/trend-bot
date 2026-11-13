@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-13 14:27:00 UTC",
+ "erzeugt": "2026-11-13 14:57:06 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -2499,6 +2499,21 @@
    ]
   },
   {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -25.4,
+   "equity": 57.44,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 70,
+   "kosten": 0,
+   "positionen": [
+    "long DODO_USDT 10.7",
+    "short OSMO_USDT 17.6"
+   ]
+  },
+  {
    "key": "G",
    "name": "G: wie B, Martingale x1,1 nach Verlustwoche",
    "pct": -26.02,
@@ -2515,21 +2530,6 @@
     "long ACTUSDT 0.0",
     "long INJUSDT 0.0",
     "short TRUMPUSDT 0.0"
-   ]
-  },
-  {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -26.24,
-   "equity": 56.79,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 70,
-   "kosten": 0,
-   "positionen": [
-    "long DODO_USDT 10.7",
-    "short OSMO_USDT 17.6"
    ]
   },
   {
@@ -9049,13 +9049,13 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 225,
+  "ram_frei_mb": 220,
   "swap_mb": 0,
-  "prozess_mb": 217,
+  "prozess_mb": 216,
   "last": [
-   0.01,
-   0.02,
-   0.01
+   0.04,
+   0.03,
+   0.0
   ],
   "kerne": 2,
   "disk_frei_gb": 41.7,

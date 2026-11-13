@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-13 13:56:52 UTC",
+ "erzeugt": "2026-11-13 14:27:00 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -2485,21 +2485,6 @@
    ]
   },
   {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -24.78,
-   "equity": 57.92,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 70,
-   "kosten": 0,
-   "positionen": [
-    "long DODO_USDT 10.7",
-    "short OSMO_USDT 17.6"
-   ]
-  },
-  {
    "key": "VBRK_T15",
    "name": "VBRK_T15: Volumen-Ausbruch (3x Umsatz und +5 %), 3 Tage halten mit Trailing-Stop 15 %",
    "pct": -25.03,
@@ -2530,6 +2515,21 @@
     "long ACTUSDT 0.0",
     "long INJUSDT 0.0",
     "short TRUMPUSDT 0.0"
+   ]
+  },
+  {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -26.24,
+   "equity": 56.79,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 70,
+   "kosten": 0,
+   "positionen": [
+    "long DODO_USDT 10.7",
+    "short OSMO_USDT 17.6"
    ]
   },
   {
@@ -9049,13 +9049,13 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 217,
+  "ram_frei_mb": 225,
   "swap_mb": 0,
   "prozess_mb": 217,
   "last": [
-   0.12,
-   0.09,
-   0.15
+   0.01,
+   0.02,
+   0.01
   ],
   "kerne": 2,
   "disk_frei_gb": 41.7,

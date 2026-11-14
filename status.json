@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-14 00:58:47 UTC",
+ "erzeugt": "2026-11-14 01:28:51 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -3621,6 +3621,22 @@
    ]
   },
   {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -22.63,
+   "equity": 59.57,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 72,
+   "kosten": 0,
+   "positionen": [
+    "short BAT_USDT 13.4",
+    "short IMX_USDT 15.5",
+    "short ETH_USDT 27.3"
+   ]
+  },
+  {
    "key": "E2",
    "name": "E2: BTC halten mit 2x Hebel",
    "pct": -22.64,
@@ -3632,22 +3648,6 @@
    "kosten": 0.1,
    "positionen": [
     "long BTCUSDT 129.1"
-   ]
-  },
-  {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -22.91,
-   "equity": 59.36,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 72,
-   "kosten": 0,
-   "positionen": [
-    "short BAT_USDT 13.4",
-    "short IMX_USDT 15.5",
-    "short ETH_USDT 27.3"
    ]
   },
   {
@@ -9039,9 +9039,9 @@
   "ram_gesamt_mb": 956,
   "ram_frei_mb": 228,
   "swap_mb": 0,
-  "prozess_mb": 214,
+  "prozess_mb": 215,
   "last": [
-   0.03,
+   0.04,
    0.05,
    0.0
   ],

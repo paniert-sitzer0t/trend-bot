@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-14 03:29:11 UTC",
+ "erzeugt": "2026-11-14 03:59:16 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -3563,6 +3563,22 @@
    ]
   },
   {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -20.69,
+   "equity": 61.07,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 72,
+   "kosten": 0,
+   "positionen": [
+    "short BAT_USDT 13.4",
+    "short IMX_USDT 15.5",
+    "short ETH_USDT 27.3"
+   ]
+  },
+  {
    "key": "VT",
    "name": "VT: Bitcoin mit Volatilitätssteuerung, Ziel 50 % Schwankung, bis 1,9x Hebel",
    "pct": -20.89,
@@ -3590,22 +3606,6 @@
     "long INJUSDT 19.4",
     "long SHELLUSDT 19.0",
     "long SOXSBUSDT 19.2"
-   ]
-  },
-  {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -21.84,
-   "equity": 60.18,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 72,
-   "kosten": 0,
-   "positionen": [
-    "short BAT_USDT 13.4",
-    "short IMX_USDT 15.5",
-    "short ETH_USDT 27.3"
    ]
   },
   {
@@ -8971,12 +8971,12 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 207,
+  "ram_frei_mb": 205,
   "swap_mb": 0,
   "prozess_mb": 235,
   "last": [
-   0.04,
-   0.03,
+   0.0,
+   0.02,
    0.0
   ],
   "kerne": 2,

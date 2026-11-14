@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-14 04:59:26 UTC",
+ "erzeugt": "2026-11-14 05:29:30 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -3577,22 +3577,6 @@
    ]
   },
   {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -21.14,
-   "equity": 60.72,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 72,
-   "kosten": 0,
-   "positionen": [
-    "short BAT_USDT 13.4",
-    "short IMX_USDT 15.5",
-    "short ETH_USDT 27.3"
-   ]
-  },
-  {
    "key": "R_TL3_T5",
    "name": "R_TL3_T5: Trend: Long auf die stärksten (3 Coins je Seite, 6 h) mit Trailing-Stop 5 %",
    "pct": -21.36,
@@ -3606,6 +3590,22 @@
     "long INJUSDT 19.4",
     "long SHELLUSDT 19.0",
     "long SOXSBUSDT 19.2"
+   ]
+  },
+  {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -21.47,
+   "equity": 60.46,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 72,
+   "kosten": 0,
+   "positionen": [
+    "short BAT_USDT 13.4",
+    "short IMX_USDT 15.5",
+    "short ETH_USDT 27.3"
    ]
   },
   {
@@ -8971,11 +8971,11 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 205,
+  "ram_frei_mb": 197,
   "swap_mb": 0,
   "prozess_mb": 235,
   "last": [
-   0.07,
+   0.06,
    0.04,
    0.0
   ],

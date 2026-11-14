@@ -1,5 +1,5 @@
 {
- "erzeugt": "2026-11-14 08:29:58 UTC",
+ "erzeugt": "2026-11-14 09:00:03 UTC",
  "dashboard_adresse": "https://trendbot.tail360671.ts.net",
  "paper_ranking": [
   {
@@ -3593,22 +3593,6 @@
    ]
   },
   {
-   "key": "ORIG",
-   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
-   "pct": -21.9,
-   "equity": 60.14,
-   "lev": 1,
-   "liquidiert": null,
-   "stops": 0,
-   "anpassungen": 74,
-   "kosten": 0,
-   "positionen": [
-    "short BAT_USDT 13.4",
-    "long DODO_USDT 23.2",
-    "short OSMO_USDT 15.7"
-   ]
-  },
-  {
    "key": "R_CL15",
    "name": "R_CL15: Gegen den Trend: Long auf die schwächsten (15 Coins je Seite, 6 h)",
    "pct": -22.39,
@@ -3648,6 +3632,22 @@
    "kosten": 0.1,
    "positionen": [
     "long BTCUSDT 129.1"
+   ]
+  },
+  {
+   "key": "ORIG",
+   "name": "Original: Top-Mover mit 8-h-Rotation (Hauptbot)",
+   "pct": -22.73,
+   "equity": 59.5,
+   "lev": 1,
+   "liquidiert": null,
+   "stops": 0,
+   "anpassungen": 74,
+   "kosten": 0,
+   "positionen": [
+    "short BAT_USDT 13.4",
+    "long DODO_USDT 23.2",
+    "short OSMO_USDT 15.7"
    ]
   },
   {
@@ -8971,12 +8971,12 @@
  "fortschritt": "",
  "server": {
   "ram_gesamt_mb": 956,
-  "ram_frei_mb": 210,
+  "ram_frei_mb": 200,
   "swap_mb": 0,
   "prozess_mb": 234,
   "last": [
-   0.01,
-   0.06,
+   0.12,
+   0.07,
    0.02
   ],
   "kerne": 2,
